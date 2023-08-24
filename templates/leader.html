@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+
+<h4>Campus Ministries Leaders</h4>
+<br>
+<div class="row" style="justify-content: space-between;">
+  {%for user in users%} 
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="{{url_for("list", userid=user.id)}}" style="text-decoration: none; color: #992621;">
+        <h5 class="names"> {{user.director}}</h5>
+        <h5 class="names"> {{user.directress}}</h5>
+        <h6 class="text-muted">{{user.ministries}}</h6>
+        
+        <h6 class="" style="color:red;">{{user.total_number}}</h6>
+        
+    </a>
+    </div>
+  </div>
+  {% endfor %}    
+  
+</div>
+
+
+
+
+
+{% endblock body %}
+
+
+
+
+
+
+

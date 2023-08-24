@@ -1,0 +1,235 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+  <main>
+    <article>
+
+     
+     
+          <section class="section newslettr" aria-label="newsletter">
+            <div class="container" >
+    
+    
+              <div class="newsletter-content" data-reveal="right">
+                
+                <h2 class="h4 section-title" style="text-align:center;">
+                  Campus Ministry
+                 </h2>
+                 <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
+                   Magna sit amet purus gravida quis blandit turpis cursus. Venenatis tellus in
+                   metus vulputate eu scelerisque felis.
+                 </p>
+                 <form >
+                  
+              </form>
+                 <form action='' method="post" enctype="multipart/form-data" >
+                  {{form.hidden_tag()}}
+                  <label for="image-picker" style="margin-left:100px;">
+                    <div>
+                        {% if editCandidate %}
+                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src={{candidate.testField}} alt="your image" />
+                        {% else %}
+                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src="https://www.pngkit.com/png/full/129-1298005_png-file-upload-image-icon-png.png" alt="your image" />
+                        {% endif %}
+                    </div>      
+                    <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
+                </label>
+               
+                <div class="input-wrapper">
+                  {{form.fullname(class="form-control  my-5 my-lg-2 mt-2 space", style="  margin-bottom:90px;",  placeholder="Fullname",id="floatingInput")}}
+                  {{form.gender(class="form-control  my-5 my-lg-2 mt-2 space",placeholder="Gender",id="floatingInput")}}
+                  {{form.program(class="form-control  my-5 my-lg-2 mt-2 space",placeholder="program",id="floatingInput")}}
+                  {{form.telephone( class="form-control  my-5 my-lg-2 mt-2 space", style="  margin-bottom:90px;",placeholder="Phone Number",id="floatingInput")}}
+                  {{form.ministry( class="form-control  my-5 my-lg-2 mt-2 space", style="  margin-bottom:90px;",placeholder="Ministry",id="floatingInput")}}
+                  {{form.email( class="form-control  my-5 my-lg-2 mt-2 space", style="  margin-bottom:90px;",placeholder="Email",id="floatingInput")}}
+                 
+                  
+                  {{form.image_file (class="form-control", id="firebaseLink" )}}
+                 
+                
+                <input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
+                
+<div id="submitButton">
+
+  <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the form</button>
+</div>  
+    
+                   
+                  </button>
+                </div>
+                
+              </div>
+    
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+
+
+     
+
+     
+
+    </article>
+  </main>
+
+
+
+
+
+
+              
+</form>
+
+<script>
+
+$("#image-picker").change(function (event) {
+  readURL(this);
+  console.log ('touch image')
+    document.getElementById('error').style.display = 'none';
+
+});
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        pushImage(input.files[0])
+
+        reader.onload = function (e) {
+            $('#image-preview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+
+
+    }
+}
+</script>
+
+  
+<script>
+
+  
+  
+  // Push batch images to storage and store references in the database
+  var pushImage = function (file) {
+   document.getElementById('submitButton').innerHTML = `
+         <button class="button" style="background-color: #7272F2;"><i class="fa fa-pause-circle-o" aria-hidden="true" style="color:'white'"></i>Uploading</button>
+         `
+     // var uid = firebase.auth().currentUser.uid;
+     // Create storage reference
+     var ref = firebase.storage().ref(`/alumni/`).child(file.name + ".jpg");
+     //var ref = firebase.storage().ref(``).child(file.name + ".jpg");
+ 
+     // Upload file and get task
+     var task = ref.put(file, {contentType: file.type});
+  
+     // Monitor task for progress
+     task.on('state_changed',
+         // Shows progress of task
+         function progress(snapshot) {
+             var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+             console.log(percentage);
+         },
+         // Shows any errors occurring during progress
+         function error(err) {
+             // Handle unsuccessful uploads
+             console.log(err.message);
+ 
+         },
+         // Shows when task is completed
+         );  
+ };
+ 
+ 
+   function changeimagesss(event) {
+     console.log(event)
+     // console.log(event.target.files[0])
+     // var uploadItem = event.target.files[0]
+     // console.log(uploadItem)
+     pushImage(event)
+ 
+     
+   }
+ 
+  </script>
+
+  <script>
+
+    var firebaseLink = document.getElementById("firebaseLink").innerText
+    // Push batch images to storage and store references in the database
+    var pushImage = function (file) {
+        document.getElementById('submitButton').innerHTML = `
+        <button class="button" style="background-color: #da2d2770;"><i class="fa fa-pause-circle-o" aria-hidden="true" style="color:'white'"></i>Please wait while we upload your image</button>
+        `
+
+       // var uid = firebase.auth().currentUser.uid;
+       // Create storage reference
+       var ref = firebase.storage().ref(`/ineruu-142dc-default-rtdb/Images/`).child(file.name + ".jpg");
+   
+       // Upload file and get task
+       var task = ref.put(file, {contentType: file.type});
+    
+       // Monitor task for progress
+       task.on('state_changed',
+           // Shows progress of task
+           function progress(snapshot) {
+               var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+               console.log(percentage);
+           },
+           // Shows any errors occurring during progress
+           function error(err) {
+               // Handle unsuccessful uploads
+               console.log(err.message);
+   
+           },
+           // Shows when task is completed
+           function complete() {
+               // Handle successful uploads on complete
+               var image = task.snapshot.downloadUrl;
+               var secondImage = task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+           console.log('File available at', downloadURL);
+        //    firebaseLink = downloadURL
+           document.getElementById("firebaseLink").value = downloadURL
+        //    console.log("Firebase Link: " + firebaseLink)
+            document.getElementById('submitButton').innerHTML = `{{form.submit (class="button")}}`
+
+         });
+            //    console.log(task);
+            //    console.log(image);
+            //    console.log(secondImage.PromiseResult).then(res => {
+            //        console.log("THis is" + res)
+                   
+            //    });
+   
+               // Data model to be uploaded to the database
+               var data = {
+                   imageUrl: image
+               };
+               
+               // var db = firebase.database().ref(/GHotelBookMan/Hotels/${uid}/Images).push();
+               // db.set(data).then(() => {
+               //     row.empty();
+               //     loadCurrentHotel(uid);
+               // });
+           });  
+   };
+   
+   
+     function changeimagesss(event) {
+       console.log(event)
+       // console.log(event.target.files[0])
+       // var uploadItem = event.target.files[0]
+       // console.log(uploadItem)
+       pushImage(event)
+   
+       
+     }
+   
+    </script> 
+
+
+{% endblock body %}

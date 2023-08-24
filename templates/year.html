@@ -2,19 +2,135 @@
 {% block body %}
 
 
-
-<h4><b>Year Groups</b></h4>
+<h4>Campus Ministries</h4>
 <br>
-<div class="row">
-  {%for year in years%} 
-  <a href
+
+
+<div class="row" style="justify-content: space-between;">
+  
   <div class="col-md-4 ">
-    <div class="dashboard-item" data-aos="fade-up">
-        <p class="text-muted">{{year.name}}</p>
-        <a href="{{url_for("newschools", year=year.name)}}"style="text-decoration: none;"><h4 class="dashboard-item-text" ><b>{{year.name}}</b></h4></a>
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/media" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Media</h5>
+        <h5 class="names" style="color:red;">{{ media_count }}</h5>
+    </a>
     </div>
   </div>
-  {%endfor%}
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/praise" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Praise & Worship</h5>
+        <h5 class="names" style="color:red;"> {{praise_count}}</h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/mcc" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > MCC </h5>
+        <h5 class="names" style="color:red;"> {{mcc_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/cjc" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > CJC</h5>
+        <h5 class="names" style="color:red;"> {{cjc_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/lg" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" >Levite Generation</h5>
+        <h5 class="names" style="color:red;"> {{lv_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/communion" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Communion
+        </h5>
+        <h5 class="names" style="color:red;"> {{communion_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/protocol" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Protocol </h5>
+        <h5 class="names" style="color:red;"> {{protocol_count}}</h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/dis" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" >Discipleship</h5>
+        <h5 class="names" style="color:red;">{{dis_count}}</h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/mission" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Missions</h5>
+        <h5 class="names" style="color:red;"> {{missions_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/counselling" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Counseling </h5>
+        <h5 class="names" style="color:red;"> {{coun_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/prayer" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Prayer Ministry</h5>
+        <h5 class="names" style="color:red;"> {{prayer_count}} </h5>
+    </a>
+    </div>
+  </div>
+
+  <div class="col-md-4 ">
+    <div class="department-item" data-aos="fade-down-left">
+      <a href="/lords" style="text-decoration: none; color: #992621;">
+        
+        <h5 class="names" > Lords Band</h5>
+        <h5 class="names" style="color:red;">{{lord_count}}</h5>
+    </a>
+    </div>
+  </div>
+
+  
+</div>
 </div>
 
 

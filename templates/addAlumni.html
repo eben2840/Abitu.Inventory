@@ -1,132 +1,234 @@
-{% extends 'layout.html' %}
+{% extends 'home.html' %}
 {% block body %}
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h4>Add a New Alumni</h4>
-<p class="text-muted" style="margin-bottom: 0;">Please fill in this form :</p>
-<br>
-<form action='' method="post" enctype="multipart/form-data">
-  {{form.hidden_tag()}}
+  <!-- 
+    - primary meta tags
+  -->
+  <title>DocuTrack</title>
+  <meta name="title" content="Fasteat - The Best Restaurants In Your Home">
+  <meta name="description" content="This is a food html template made by codewithsadee">
 
-  <label for="image-picker">
-    <div>
-        {% if editCandidate %}
-        <img id="image-preview" style="height: 30vh; object-fit:contain" src={{candidate.testField}} alt="your image" />
-        {% else %}
-        <img id="image-preview" style="height: 30vh; object-fit:contain" src="{{url_for('static', filename='img/ig.png')}}" alt="your image" />
-        {% endif %}
-    </div>      
-    <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
-</label>
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favico.svg" type="image/svg+xml">
 
-<input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="static/assets/css/style.css">
 
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <div class="form-floating mb-3" >
-    {{form.fullname(class="form-control",placeholder="fullname",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Full Name</label>
+  <!-- 
+    - preload images
+  -->
+
+  <!-- 
+    - #PRELOADER
+  -->
+
+  <div class="loading-container" data-loading-container>
+    <div class="loading-circle"></div>
   </div>
-  
-
-  <div class="form-floating mb-3">
-    {{form.indexnumber(class="form-control",placeholder="INT/19/01/5837",id="floatingInput" )}}
-    <label for="floatingInput" class="text-muted">Index Number</label>
-  </div>
 
 
-    <div class="form-floating mb-3">
-      {{form.gender(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-      <label for="floatingInput" class="text-muted">Gender</label>
+
+
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="#" class="logo">
+
+       
+        <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" width="100" height="100" alt="">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+       
+        <!--<ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#" class="btn btn-primary has-after">upload</a>
+          </li>
+
+          <li class="navbar-item">
+            
+            <a href="#" class="btn btn-primary has-after">Order Now</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="btn btn-primary has-after">Order Now</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-nav-link>Contacts</a>
+          </li>
+
+        </ul>-->
+     </nav>
+
+     <div class="header-action">
+        
+
+      <a href="upload.html" class="btn btn-primary has-after" style="font-size:14px;">Contact Us!</a>
     </div>
+
+    <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+      <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+    </button>
+
+    <div class="overlay" data-overlay data-nav-toggler></div>
+
+  </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+     
+     
+          <section class="section newslettr" aria-label="newsletter">
+            <div class="container" >
     
-  <div class="form-floating mb-3">
-    {{form.school(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">School / Faculty</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.department(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Department</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.program(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Program</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.completed(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Year Completed</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.admitted(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Year Admitted</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.email(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">E-mail</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.telephone(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Telephone</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.hall(class="form-control",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Hall of Residence</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.nationality(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Nationality</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.address(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Home Address</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.work(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Current Place of Work</label>
-  </div>
-
-  <div class="form-floating mb-3">
-    {{form.guardian(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Current Position</label>
-  </div>
-
-
-
-  <div class="form-floating mb-3">
-    {{form.marital(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Marital Status</label>
-  </div>
-
-  
-
-  <div class="form-floating mb-3">
-    {{form.extra(class="form-control",placeholder="INT/19/01/5837",id="floatingInput")}}
-    <label for="floatingInput" class="text-muted">Extra Curicullum Activities</label>
-  </div>
-
-  
-  <div class="form-floating mb-3" style="display: none;" >
-    {{form.image_file (class="form-control", id="firebaseLink" )}}
-   
-  </div>
-
+    
+              <div class="newsletter-content" data-reveal="right">
+                
+                <h2 class="h4 section-title" style="text-align:center;">
+                  Campus Ministry
+                 </h2>
+                 <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
+                   Magna sit amet purus gravida quis blandit turpis cursus. Venenatis tellus in
+                   metus vulputate eu scelerisque felis.
+                 </p>
+                 <form >
+                  <input type="text"
+                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="" style="width:85%; border: none">
+                   
+              </form>
+                 <form action="{{ url_for('addalumni') }}" method="post" enctype="multipart/form-data" >
+                  {{form.hidden_tag()}}
+                  <div class="alert alert-primary" role="alert">
+                    Click on the Image to upload an image
+                   </div>
+                  <label for="image-picker" style="margin-left:100px;">
+                    <div>
+                        {% if editCandidate %}
+                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src={{candidate.testField}} alt="your image" />
+                        {% else %}
+                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src="https://www.pngkit.com/png/full/129-1298005_png-file-upload-image-icon-png.png" alt="your image" />
+                        {% endif %}
+                    </div>      
+                    <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
+                </label>
+               
+               
+                <div class="input-wrapper">
+                  {{form.fullname(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Fullname",id="floatingInput")}}
+                  {{form.gender(class="form-check my-5 my-lg-5 mt-2 space",placeholder="Gender",id="floatingInput")}}
+                  {{form.program(class="form-check my-5 my-lg-5 mt-2 space",placeholder="program",id="floatingInput")}}
+                  {{form.telephone( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Phone Number",id="floatingInput")}}
+                  {{form.ministry( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Index",id="floatingInput")}}
+                  <input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Index",id="floatingInput" placeholder="Email" required>
+                  <div class="alert alert-primary" role="alert">
+                   Please fill if you hold any position.
+                  </div>
+                  {{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
+                  
+                  {{form.image_file (class="form-control",style="display:none;", id="firebaseLink" )}}
+                 
+                
+                <input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
+                
 <div id="submitButton">
 
-  <button class="btn" style="color: #fff; background: #992621; border: none;" type="submit" >Register</button>
-</div>
+  <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the form</button>
+</div>  
+    
+                   
+                  </button>
+                </div>
+                
+              </div>
+    
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+
+
+     
+
+     
+
+    </article>
+  </main>
+
+
+
+
+
 
               
 </form>
+
+<script>
+  // JavaScript code to send the email after form submission
+  const form = document.querySelector('form');
+  form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent the default form submission
+      
+      // Perform the form submission using AJAX or Fetch
+      try {
+          const response = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form)
+          });
+          
+          if (response.ok) {
+              // Form submitted successfully, now trigger the email sending
+              await fetch('/send_email', {
+                  method: 'POST'
+              });
+              alert('Form submitted and email sent successfully!');
+          } else {
+              alert('Form submission failed.');
+          }
+      } catch (error) {
+          console.error('An error occurred:', error);
+      }
+  });
+</script>
+
+
+
 
 <script>
 

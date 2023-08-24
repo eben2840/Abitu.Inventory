@@ -1,8 +1,12 @@
 
 import os
-
+from email.message import EmailMessage
+import ssl
+import smtplib
+import os
 import secrets
 import urllib.request, urllib.parse
+from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, render_template, url_for,request,jsonify,get_flashed_messages
 from flask_migrate import Migrate
@@ -49,40 +53,10 @@ def load_user(user_id):
 
 
 def sendtelegram(params):
-    url = "https://api.telegram.org/bot5787281305:AAE1S8DSnMAyQuzAnXOHfxLq-iyvPwYJeAo/sendMessage?chat_id=-1001556929308&text=" + urllib.parse.quote(params)
+    url = "" + urllib.parse.quote(params)
     content = urllib.request.urlopen(url).read()
     print(content)
     return content
-
-''''
-#login for admin
-class User:
-    username = StringField('username', validators=[DataRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[DataRequired(), Length(min=8, max=80)])
-    submit = SubmitField('Login')
-    def __init__(self, id, username, password):
-        self.id = id
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f'<User: {self.username}>'
-
-users = []
-users.append(User(id=1, username='admin', password='central'))
-users.append(User(id=2, username='likem', password='likem'))
-users.append(User(id=3, username='john', password='some'))
-
-
-
-@app.before_request
-def before_request():
-    g.user = None
-
-    if 'user_id' in session:
-        user = [x for x in users if x.id == session['user_id']][0]
-        g.user = user
-'''
 
 #DATABASE MODEL
 #person table
@@ -135,28 +109,17 @@ class alumni(db.Model, UserMixin):
 class User(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     fullname= db.Column(db.String()  )
-    indexnumber= db.Column(db.Integer())
+    ministry = db.Column(db.Integer())
     gender= db.Column(db.String()    )
-    school= db.Column(db.String()    )
-    department= db.Column(db.String()    )
     program= db.Column(db.String()   )
-    completed= db.Column(db.Integer()     )
-    admitted= db.Column(db.Integer()  )
     email= db.Column(db.String()     )
-    telephone= db.Column(db.String()     )
-    hall= db.Column(db.String()  )
-    nationality= db.Column(db.String()   )
-    address= db.Column(db.String()   )
-    work= db.Column(db.String()  )
-    guardian= db.Column(db.String()  )
-    kin= db.Column(db.String()   )
-    relationship= db.Column(db.String()  )
-    marital= db.Column(db.String()   )
-    health= db.Column(db.String()    )
-    extra= db.Column(db.String()     )
+    telephone= db.Column(db.String()     )  
+    position= db.Column(db.String()     )  
     image_file = db.Column(db.String(20))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
+    
+    
     
 class Department(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -178,11 +141,11 @@ class School(db.Model,UserMixin):
         return f"School('{self.id}', {self.slug}')"
     
         
-class Year(db.Model,UserMixin):
+class Album(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String)
+    image_album=db.Column(db.String)
     def __repr__(self):
-        return f"year('{self.id}', {self.name}'"
+        return f"year('{self.id}', {self.image_album}'"
     
 class Program(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -194,173 +157,323 @@ class Program(db.Model,UserMixin):
         return f"Program('{self.id}', {self.name}'"
     
     
+   
+class Leaders(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    director=db.Column(db.String)
+    directress=db.Column(db.String)
+    others=db.Column(db.String)
+    ministries =db.Column(db.String)
+    total_number = db.Column(db.String)
+
+    def __repr__(self):
+        return f"School('{self.id}', {self.others}')"
+   
+
+email_sender = 'yboateng057@gmail.com'
+email_password = 'hsgtqiervnkabcma'
 
 
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    if request.method == 'POST':
+        email_receiver = request.form['email']
+
+        subject = '"Does what i do really matter?"'
+        # html_content = render_template('try.html') 
+        html_content = """
+#         <!DOCTYPE html>
+# <html>
+# <head>
+#     <style>
+#     @font-face {
+#         font-family: 'Plus Jakarta';
+#         src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+#              url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+#         font-weight: 100 900; /* Adjust font weights based on available weights */
+#         font-style: normal;
+#     }
+
+#     body {
+#         font-family: 'Plus Jakarta', sans-serif;
+#     }
+# </style>
+
+# </head>
+# <body>
+#  <div class="container">
+ 
+    
+#             <h1 class="h1 hero-title">Central University Campus Ministry</h1>
+#     <p>Hello there!. 
+#     <br/> We are grateful for your patience, your data has been retreived successfully.
+#     <br/> Have an amazing day.</p>
+
+#     <h1>
+#     </div>
+# </body>
+# </html>
+#         """
+
+
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        em['Subject'] = subject
+        em.set_content('')  
+        em.add_alternative(html_content, subtype='html')
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_password)
+            smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+        return redirect(url_for('userbase'))
+    
+    
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    total_students = User.query.count()
+    users_with_positions = db.session.query(User.fullname, User.position).all()
+    total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+
+    print(users_with_positions)
+    total_male = User.query.filter_by(gender='Male').count()
+    total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
         flash("Welcome to the CentralAlumina " + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('dashboard.html', title='dashboard')
+    return render_template('dashboard.html', title='dashboard',total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
 
-    eay
-@app.route('/getstudent')
-def getstudent():
-    return render_template('getstudent.html')
-
-
-
-@app.route('/years', methods=['GET', 'POST'])
-def years():
-    responseBody = {
-        "Year":{
-            "year":2001,
-            "graduats":12
-            }
-    }
-    return responseBody
-
-@app.route('/api/schools', methods=['GET', 'POST'])
-def schoolsapi():
-    responseBody = {
-        "entries":15,
-        "year":2023,
-        "schools":[
-            {
-                "schoolName": "School Of Pharmacy",
-                "active": True,
-                "year":2023,
-                "graduants":2000,
-                "image":"googleimage.com",
-                "departments": [
-                    {
-                        "name":"IT",
-                        "students":2000
-                     }
-                    ]
-            }
-            ]
-        }
-    return jsonify(responseBody)
-
-@app.route('/api/departments', methods=['GET', 'POST'])
-def departmentsapi():
-    responseBody = {
-        "entries":15,
-        "year":2023,
-        "school":"School Of Pharmacy",
-        "schoolSlug":"GPSU",
-        "schoolId":12,
-        "departments": [
-            {
-                "name":"Information Technology",
-                "graduants":2000,
-                "slug":"IT"
-            }
-            ]
-        }
-    return jsonify(responseBody)
-
-@app.route('/privacypolicy', methods=['GET', 'POST'])
-def privacypolicy():
-    return render_template('privacypolicy.html')
-
-@app.route('/api/graduants', methods=['GET', 'POST'])
-def graduantsapi():
-    responseBody = {
-        "entries":15,
-        "year":2023,
-        "school":"School Of Pharmacy",
-        "schoolSlug":"GPSU",
-        "schoolId":12,
-        "departmentId":20,
-        "graduants": [
-            {
-                "name":"Information Technology",
-                "graduants":2000,
-                "image":"googleimagecom",
-                "description":"A lot of text",
-                "msisdn":["0545977791", "0244342642"],
-                "classification":"1st Class Upper",
-                "slug":"IT",
-                "placeOfWork":[{
-                    "name":"Ghana Water",
-                    "role":"MD",
-                    "startYear":2020,
-                    "endYear":2023
-                }],
-                "socials":
-                    {
-                        "facebook":"nanakweku",
-                        "instagram":"nanakweku",
-                        "twitter":"nanakweku",
-                        "whatsapp":"nanakweku",
-                        "linkedIn":"nanakweku"
-                    }
-            }
-        ]
-        }
-    return jsonify(responseBody)
+@app.route('/ministries', methods=['GET', 'POST'])
+def ministries():
+    total_media = User.query.filter_by(ministry='Media').count()
+    media_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Media').scalar()
+    mcc_count = db.session.query(func.count(User.id)).filter(User.ministry == 'MCC').scalar()
+    praise_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Praise & Worship').scalar()
+    cjc_count = db.session.query(func.count(User.id)).filter(User.ministry == 'CJC').scalar()
+    lv_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Levite Generation').scalar()
+    communion_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Communion').scalar()
+    protocol_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Protocol').scalar()
+    dis_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Discipleship').scalar()
+    missions_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Missons').scalar()
+    coun_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Counselling').scalar()
+    prayer_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Prayer Ministry').scalar()
+    lord_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Lords Band').scalar()
+    return render_template('year.html',title='Ministries',total_media=total_media,mcc_count=mcc_count, lord_count=lord_count,prayer_count=prayer_count,coun_count=coun_count,missions_count=missions_count,lv_count=lv_count,cjc_count=cjc_count, praise_count=praise_count,dis_count=dis_count, communion_count=communion_count, media_count=media_count,protocol_count=protocol_count)
+    
 
 @app.route('/addalumni', methods=['GET', 'POST'])
-@login_required
 def addalumni():
     form=Adduser()
     if form.validate_on_submit():
   
             new=User(fullname=form.fullname.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   completed=form.completed.data,
-                   admitted=form.admitted.data,
+                 
                    email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hall=form.hall.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
+                   ministry=form.ministry.data,  
+                   gender=form.gender.data,  
+                   program=form.program.data,  
+                   telephone=form.telephone.data,      
+                   position=form.position.data,      
                image_file=form.image_file.data
                   )
        
             db.session.add(new)
             db.session.commit()
-            flash("New Alumni Added", "success")
-            return redirect('list')
+            send_email()
+        
+            flash("Thank you for filling the form, Please check your email for our latest program updates.", "success")
+            return redirect('/')
+            
     print(form.errors)
     return render_template("addAlumni.html", form=form, title='addalumni')
 
 
-@app.route('/department', methods=['GET', 'POST'])
+
+@app.route('/leadersadd', methods=['GET', 'POST'])
+def leadersadd():
+    form=LeaderForm()
+    if form.validate_on_submit():
+  
+            new=Leaders(director=form.director.data,
+                 directress=form.directress.data,
+                 others=form.others.data,
+                   ministries=form.ministries.data,  
+                   total_number=form.total_number.data,  
+                         
+               
+                  )
+       
+            db.session.add(new)
+            db.session.commit()
+            flash("Thank you for filling the form", "success")
+            return redirect('/')
+    print(form.errors)
+    return render_template("leadersadd.html", form=form, title='addalumni')
+
+
+
+@app.route('/adminadd', methods=['GET', 'POST'])
+def adminadd():
+    form=Adduser()
+    if form.validate_on_submit():
+  
+            new=User(fullname=form.fullname.data,
+                    ministry=form.ministry.data,
+                   email=form.email.data,  
+                   gender=form.gender.data,  
+                   program=form.program.data,  
+                   telephone=form.telephone.data,      
+               image_file=form.image_file.data
+                  )
+       
+            db.session.add(new)
+            db.session.commit()
+            flash("New Person added", "success")
+            return redirect('dashboard')
+    print(form.errors)
+    return render_template("adminadd.html", form=form, title='addalumni')
+
+
+
+
+@app.route('/tryme', methods=['GET', 'POST'])
+def tryme():   
+    return render_template("try.html")
+
+@app.route('/sms', methods=['GET', 'POST'])
+def sms():   
+    return render_template("sms.html")
+
+
+
+@app.route('/album', methods=['GET', 'POST'])
+def album():   
+    form=Adduser()
+    if form.validate_on_submit():
+  
+            new=User(fullname=form.fullname.data,
+                    ministry=form.ministry.data,
+                   email=form.email.data,  
+                   gender=form.gender.data,  
+                   program=form.program.data,  
+                   telephone=form.telephone.data,      
+               image_file=form.image_file.data
+                  )
+       
+            db.session.add(new)
+            db.session.commit()
+            flash("New Person added", "success")
+            return redirect('dashboard')
+    print(form.errors)
+    return render_template("album.html", form=form, title='addalumni')
+
+
+
+@app.route('/users_by_position')
+def users_by_position():
+    users_with_positions = db.session.query(User.fullname, User.position).order_by(User.position.desc()).all()
+    print(users_with_positions)
+    return render_template('position.html', users_with_positions=users_with_positions)
+
+
+# catergory by ministry
+@app.route('/media', methods=['GET', 'POST'])
 @login_required
-def department():
-    return render_template('department.html')
+def media():
+    media = User.query.filter_by(ministry='Media').all()
+    return render_template('media.html', media=media)
 
-
-@app.route('/current', methods=['GET', 'POST'])
+@app.route('/praise', methods=['GET', 'POST'])
 @login_required
-def current():
-    return render_template('current.html')
+def praise():
+    praise = User.query.filter_by(ministry='Praise & Worship').all()
+    return render_template('praise.html', praise=praise)
+
+@app.route('/mcc', methods=['GET', 'POST'])
+@login_required
+def mcc():
+    mcc = User.query.filter_by(ministry='MCC').all()
+    return render_template('mcc.html', mcc=mcc)
+
+@app.route('/cjc', methods=['GET', 'POST'])
+@login_required
+def cjc():
+    cjc = User.query.filter_by(ministry='CJC').all()
+    return render_template('cjc.html', cjc=cjc)
+
+@app.route('/lg', methods=['GET', 'POST'])
+@login_required
+def lg():
+    lg = User.query.filter_by(ministry='Levite Generation').all()
+    return render_template('lg.html', lg=lg)
+
+@app.route('/communion', methods=['GET', 'POST'])
+@login_required
+def communion():
+    communion = User.query.filter_by(ministry='Communion').all()
+    return render_template('communion.html', communion=communion)
+
+@app.route('/protocol', methods=['GET', 'POST'])
+@login_required
+def protocol():
+    protocol = User.query.filter_by(ministry='Protocol').all()
+    return render_template('protocol.html', protocol=protocol)
+
+@app.route('/dis', methods=['GET', 'POST'])
+@login_required
+def dis():
+    dis = User.query.filter_by(ministry='Discipleship').all()
+    return render_template('dis.html', dis=dis)
+
+@app.route('/mission', methods=['GET', 'POST'])
+@login_required
+def mission():
+    mission = User.query.filter_by(ministry='Misson').all()
+    return render_template('mission.html', mission=mission)
+
+@app.route('/counselling', methods=['GET', 'POST'])
+@login_required
+def counselling():
+    counselling = User.query.filter_by(ministry='Counselling').all()
+    return render_template('counselling.html', counselling=counselling)
+
+@app.route('/prayer', methods=['GET', 'POST'])
+@login_required
+def prayer():
+    prayer = User.query.filter_by(ministry='Prayer Ministry').all()
+    return render_template('prayer.html', prayer=prayer)
+
+@app.route('/lords', methods=['GET', 'POST'])
+@login_required
+def lords():
+    lords = User.query.filter_by(ministry='Lords Band').all()
+    return render_template('lords.html', lords=lords)
 
 
+# end of ministry
+
+@app.route('/female_users')
+def female_users():
+    female_users = User.query.filter_by(gender='Female').all()
+    return render_template('female.html', female_users=female_users)
+
+
+@app.route('/male_users')
+def male_users():
+    male_users = User.query.filter_by(gender='Male').all()
+    return render_template('male.html', male_users=male_users)
 
 @app.route('/newreport')
-
-def upload_image():
-    return render_template('newreport.html')
-
-@app.route('/')
-def index():    
-    session['selectedYear'] = "2022"
-    sendtelegram('Current selected Year: ' + session['selectedYear'])
-    return render_template('index.html')
-
 @app.route('/addschool' , methods=['GET', 'POST'])
 def addschool():    
     form=AddSchool()
@@ -389,53 +502,6 @@ def adddepartment():
     return render_template('adddepartment.html',form=form, departments=departments)
 
 
-@app.route('/addprogram' , methods=['GET', 'POST'])
-def addprogram():    
-    form=AddProgram()
-    programs=Program.query.all()
-    print(programs)
-    if form.validate_on_submit():
-        newProgram= Program(name=form.name.data, department = form.department.data, school = form.school.data)
-        db.session.add(newProgram)
-        db.session.commit()
-        flash("New Program Added", "success")
-        return redirect('addprogram')
-    print(form.errors)
-    return render_template('addprogram.html',form=form, programs=programs)
-
-@app.route('/userprofile', methods=['GET', 'POST'])
-def userprofile():
-    form=RegistrationForm()
-    if form.validate_on_submit():
-  
-            new=Person(name=form.name.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   yearCompleted=form.yearCompleted.data,
-                   admitted=form.admitted.data,
-                   email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hallofresidence=form.hallofresidence.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
-            
-                  )
-       
-            db.session.add(new)
-            db.session.commit()
-            flash("New Alumni Added", "success")
-            return redirect('information')
-    print(form.errors)
-    return render_template("userprofile.html", form=form, title='addalumni')
- 
-
-
 @app.context_processor
 def base():
     form=Search()
@@ -450,58 +516,11 @@ def search():
         if form.validate_on_submit():
             postsearched=form.searched.data
             posts =posts.filter(User.fullname.like('%'+ postsearched + '%') )
-            posts =posts.order_by(User.indexnumber).all() 
+            posts =posts.order_by(User.ministry).all() 
+            # posts =posts.order_by(User.position).all() 
             flash("You searched for "+ postsearched, "success")  
             print(posts)   
     return render_template("search.html", form=form, searched =postsearched, posts=posts)
-
-
-
-@app.route('/newreport', methods=[ 'POST'])
-@login_required
-def newreport():
-    form= Adsearch()
-    if request.method == 'POST': 
-        posts =User.query
-        if form.validate_on_submit():
-            postsearched=form.searched.data
-            # posts =posts.filter(User.fullname.like('%'+ postsearched + '%') )
-            #posts =posts.filter(User.indexnumber.like('%'+ postsearched + '%') )
-            posts =posts.filter(User.completed.like('%'+ postsearched + '%') )
-            # posts =posts.filter(User.department.like('%'+ postsearched + '%') )
-            posts =posts.order_by(User.indexnumber).all() 
-            flash("You searched for "+ postsearched, "success")  
-            print(posts)   
-    return render_template("newreport.html", form=form, searched =postsearched, posts=posts)
-
-#search for user
-@app.route('/usersearch', methods=[ 'POST'])
-def usersearch():
-    form= UserSearch()
-    if request.method == 'POST': 
-        posts =User.query
-        if form.validate_on_submit():
-            postsearched=form.searched.data
-            posts =posts.filter(User.fullname.like('%'+ postsearched + '%') )
-            posts =posts.order_by(User.indexnumber).all() 
-            flash("You searched for "+ postsearched, "success")  
-            print(posts)   
-    return render_template("usersearch.html", form=form, searched =postsearched, posts=posts, header="Year Group", smalltitle="Central Alumni Platform", name="", numberofentries="16 entries")
-
-
-
-@app.route('/year', methods=['GET', 'POST'])
-@login_required
-def year():
-    form=Addyear()
-    years=Year.query.all()
-    if request.method== 'POST':
-        schools=Year(name=form.data)
-        db.session.add(schools)
-        db.session.commit()
-        
-    return render_template('year.html', form=form, title="newschools",years=years)
-
 
 
 @app.route('/list/<int:userid>', methods=['GET', 'POST'])
@@ -523,17 +542,20 @@ def lists():
     print(current_user)
     return render_template("list.html", users=users, current_user=current_user, title="list")
  
+ 
+ 
+
+@app.route('/leader', methods=['GET', 'POST'])
+@login_required
+def leader():
+    print("Fetching all")
+    users=Leaders.query.order_by(Leaders.id.desc()).all()
+    print(users)
+    print(current_user)
+    return render_template("leader.html", users=users, current_user=current_user)
+ 
 
 
-@app.route('/<int:year>/newschools', methods=['GET', 'POST'])
-def newschools(year ):
-    form=AddSchool()
-    schools=School.query.all()
-    if request.method== 'POST':
-        schools=School(name=form.data)
-        db.session.add(schools)
-        db.session.commit()
-    return render_template('newschools.html', form=form, title="newschools",schools=schools,year=year)
 
 
 @app.route('/logout')
@@ -548,38 +570,20 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route('/userlogout')
-@login_required
-def userlogout():
-    if current_user:
-        logout_user()
-        print(current_user.email)
-    else:
-        print("Well that didnt work")
-    flash('You have been logged out.','danger')
-    return redirect(url_for("userlogin"))
-
 @app.route('/report')
 @login_required
 def report():
-    return render_template('report.html')
+    print("Fetching all")
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    print(current_user)
+    return render_template("report.html", users=users, current_user=current_user, title="report")
+ 
 
 
 
 
 
-
-
-
-@app.route('/newforms')
-@login_required
-def newforms():
-    form=RegistrationForm()
-    if form.validate_on_submit():
-        print(form.lastname.data)
-    
-    return render_template("newforms.html", form=form)
-   
 
 @app.route('/home',methods=['GET','POST'])
 def home():
@@ -592,36 +596,6 @@ def home():
 def members():
     persons=Person.query.all()
     return render_template('members.html', persons=persons)
-
-@app.route('/schools')
-@login_required
-def schools():
-    return render_template('schools.html')
-
-@app.route('/form', methods=['POST', 'GET'])
-def form():
-    form=RegistrationForm()
-    if form.validate_on_submit():
-       
-        new=Person(name=form.name.data, yearCompleted=form.yearCompleted.data,
-                   nationality=form.nationality.data, 
-                   contact=form.contact.data, email=form.email.data,faculty=form.faculty.data,
-                   hallofresidence=form.hallofresidence.data, password=form.password.data)
-        db.session.add(new)
-        db.session.commit()
-        return redirect('information')
-       
-    flash("Added a New Alumni", "success")
-    print(form.errors)
-    return render_template("form.html", form=form)
-
-@app.route('/information')
-@login_required
-def information():
-    persons=Person.query.order_by(Person.id.desc()).all()
-    print(persons)
-    return render_template("information.html", persons=persons)
- 
 
 
 
@@ -676,56 +650,6 @@ def update(id):
     return render_template("addAlumni.html", form=form)
     
     
-#CRUD(update and delete routes)
-@app.route("/updateuser/<int:id>", methods=['POST', 'GET'])
-def updateuser(id):
-    form=RegistrationForm()
-    user=Person.query.get_or_404(id)
-    if request.method== 'GET':
-        form.name.data = user.name
-        form.indexnumber.data = user.indexnumber
-        form.gender.data = user.gender
-        form.school.data = user.school
-        form.department.data = user.department
-        form.yearCompleted.data = user.yearCompleted
-        form.admitted.data = user.admitted
-        form.email.data = user.email   
-        form.telephone.data = user.telephone  
-        form.hallofresidence.data = user.hallofresidence  
-        form.nationality.data = user.nationality   
-        form.address.data = user.address  
-        form.work.data = user.work 
-        form.guardian.data = user.guardian   
-        form.marital.data = user.marital   
-        form.extra.data = user.extra  
-        form.image_file.data = user.image_file 
-    if request.method== 'POST':
-        new=Person(name=form.name.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   yearCompleted=form.yearCompleted.data,
-                   admitted=form.admitted.data,
-                   email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hallofresidence=form.hallofresidence.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
-               image_file=form.image_file.data
-                  )
-        try:    
-            db.session.add(new)
-            db.session.commit()
-            return redirect(url_for('information')) 
-        except:
-            return "errror"
-    return render_template("userprofile.html", form=form)
-    
     
 #delete route
 @app.route("/delete/<int:id>")
@@ -741,23 +665,6 @@ def delete(id):
 
 
 
-''''
-#login routes for admin
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session.pop('user_id', None)
-        username = request.form['username']
-        password = request.form['password']
-        user = [x for x in users if x.username == username][0]
-        if user and user.password == password:
-            return redirect(url_for('test'))
-
-        return redirect(url_for('login'))
-    else:
-        flash("wrong password-try again!" "danger")
-    return render_template('login.html')
-'''
 
 @app.route('/login', methods=['POST','GET'])
 def login():
@@ -769,20 +676,23 @@ def login():
     if form.validate_on_submit():
         print("form Validated successfully")
         user = Person.query.filter_by(email = form.email.data).first()
-        print("user:" + user.email + "found")
-      
-        print(user.password)
-        if user and form.password.data == user.password:
-            print(user.email + "validored successfully")
-            if user == None:
-                flash(f"There was a problem")   
-            login_user(user)
-            flash (f' ' + user.email + ',Welcome Admin!!! ' ,'success')
-            return redirect(url_for('dashboard'))
+        if user:
+            print("user:" + user.email + "found")
+        
+        if user:
+            print(user.password)
+            if user and form.password.data == user.password:
+                print(user.email + "validored successfully")
+            # if user == None:
+            #     flash(f"There was a problem")   
+                login_user(user)
+                flash (f' ' 'Welcome,' + user.name + '' )
+                return redirect(url_for('dashboard'))
             # next = request.args.get('next')
+            else:
+                flash (f'Wrong Password ', 'success')
         else:
-            flash (f'Wrong Password ', 'success')
-   
+            flash("User not found", 'danger') 
     return render_template('login.html', form=form)
  
 
@@ -810,82 +720,6 @@ def signup():
             
     return render_template('signup.html', form=form)
 
-#user land area
-@app.route('/userlanding')
-def userlanding():
-    sendtelegram("firsttrail")
-    return render_template('userlanding.html')
-
-@app.route('/usersignup', methods=['POST','GET'])
-def usersignup():
-    form = Registration()
-    print(form.indexnumber.data)
-    print(form.email.data)
-    print(form.name.data)
-    
-    if request.method == "POST": 
-        if form.validate_on_submit():
-            print('Success')
-            user =Person(password="central@123", email=form.email.data, indexnumber=form.indexnumber.data, name=form.name.data)
-            db.session.add(user)
-            db.session.commit()
-            login_user(user, remember=True)
-            print(current_user)
-            sendtelegram('New User'+ ' ' + current_user.email +' '+ 'Just Signed Up' )
-            return redirect(url_for('ulogin'))
-        else:
-            print(form.errors)
-           
-    return render_template('usersignup.html', form=form)
-   
-
-@app.route('/userlogin', methods=['POST','GET'])
-def ulogin():
-    form = LoginForm()
-    print ('try')
-    print(form.email.data)
-    print(form.password.data)
-    
-    if form.validate_on_submit():
-        print("form Validated successfully")
-        user = Person.query.filter_by(email = form.email.data).first()
-            # flash (f'Wrong Password', 'success')
-            # sendtelegram('Entered Wrong Emai')
-        if user != None:
-            print("user:" + user.email + "found")
-            print(user.password)
-            if user and form.password.data == user.password:
-                print(user.email + "validored successfully")
-                login_user(user)
-                sendtelegram(user.email +' '+ user.password +' '+ 'Logged in successfully' )
-                flash ('Welcome, Finish Setting up your profile ' ,'success')
-                return redirect(url_for('useryeargroup'))
-                # next = request.args.get('next')
-            else:
-                flash (f'Wrong Password', 'success')
-                sendtelegram(user.email +' '+ 'Entered Wrong Password')
-        else:
-            sendtelegram("BEANS")
-            flash (f'Wrong Password', 'danger')
-            
-            
-    return render_template('userlogin.html', form=form)
-
-
-@app.route('/useryeargroup', methods=['GET', 'POST'])
-@login_required
-def useryeargroup():  
-    # fetch all departments
-    return render_template("useryeargroup.html", header="Year Group", smalltitle="Central Alumni Platform", name="", numberofentries="16 entries")
-
-@app.route('/allschools')
-@login_required
-def usernewform():
-    print(session['selectedYear'])
-    sendtelegram(current_user.name + " selected Year: " + session['selectedYear'])
-    # flash(f'Sample form', 'success')
-    schools = School.query.all()
-    return render_template('usernewform.html', items=schools, header="Schools / Faculty", smalltitle="2021", name="", numberofentries="16 entries")
 
 @app.route('/departments/<string:schoolSlug>')
 @login_required
@@ -912,66 +746,20 @@ def programs(departmentSlug):
     # sendtelegram(current_user.name + " selected Year: " + session['selectedYear'] + " Department " + school.name + ". Found: " + str(len(departments)) + " result(s) ")
     return render_template('userprograms.html', items=programs, header=department.name, smalltitle="2021", name="", numberofentries="16 entries")
 
-@app.route('/alumni/<string:programSlug>')
-@login_required
-def alumni(programSlug):
-    program = Program.query.filter_by()
-    programs = Program.query.all()
-    school = department.school
-    print(school)
-    print(programs)
-    print(department)
-    print(session['selectedYear'])
-    # sendtelegram(current_user.name + " selected Year: " + session['selectedYear'] + " Department " + school.name + ". Found: " + str(len(departments)) + " result(s) ")
-    return render_template('userprograms.html', items=programs, header=department.name, smalltitle="2021", name="", numberofentries="16 entries")
 
 
-@app.route('/userschool')
-@login_required
-def userschool():
-    return render_template('userschool.html', header="Department", smalltitle="2021", name="- CCSITA", numberofentries="16 entries")
-
-# @app.route('/userdisplay')=
-# @login_required
-# def userdisplay(userid):
-#     profile=User.query.get_or_404(userid)
-#     print(current_user)
-#     return render_template("userdisplay.html",current_user=current_user, profile=profile)
-
- 
-@app.route('/userdisplay/<int:userid>', methods=['GET', 'POST'])
-@login_required
-def userdisplay(userid):
-  
-    profile=User.query.get_or_404(userid)
-    print(current_user)
-    return render_template("userdisplay.html",current_user=current_user, profile=profile, title="list")
- 
-   
 
 
-@app.route('/userbase')
-@login_required
+@app.route('/', methods=['POST','GET'])
 def userbase():
     print("Fetching all")
-    users=User.query.order_by(User.id.desc()).all()
-    print(users)
-    print(current_user)
-    return render_template("userbase.html", users=users, current_user=current_user, header="Information Technology", smalltitle="2021", name="- CCSITA", numberofentries="16 entries")
+    total_students = User.query.count()
+    total_male = User.query.filter_by(gender='Male').count()
+    total_female = User.query.filter_by(gender='Female').count()
+    image=User.query.order_by(User.id.desc()).all()
+    print(image)
+    return render_template("userbase.html",total_male=total_male,total_female=total_female,  header="Information Technology", smalltitle="2021", name="- CCSITA", numberofentries="16 entries",image=image,total_students=total_students)
  
-
-  
-
-
-@app.route('/userinformation/<int:userid>', methods=['GET', 'POST'])
-@login_required
-def userinformation(userid):
-    profile=User.query.get_or_404(userid)
-    print(current_user)
-    return render_template("userinformation.html",current_user=current_user, profile=profile, title="list")
- 
-   
-#ending user
 
 
 

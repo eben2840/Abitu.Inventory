@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<h2>Protocol Ministry</h2>
+    <div class="row">
+        {% for user in protocol %}
+        <div class="col-md-4">
+            <div class="department-item" data-aos="fade-down-left">
+                <a href="{{ url_for('list', userid=user.id) }}" style="text-decoration: none; color: #992621;">
+                    <h5 class="names">{{ user.fullname }}</h5>
+                    <h6 class="text-muted">{{ user.position }}</h6>
+                    <h6 class="text-muted">{{ user.program }}</h6>
+                    <h6 class="" style="color:red;">{{ user.telephone }}</h6>
+                    <h6 class="text-muted">{{ user.gender }}</h6>
+                    <h6 class="text-muted">{{ user.email }}</h6>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
+
+
+  
+  
+
+
+
+
+
+
+{% endblock body %}
+
+
+
+
+
+
+

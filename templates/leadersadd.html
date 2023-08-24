@@ -1,0 +1,332 @@
+{% extends 'home.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>DocuTrack</title>
+  <meta name="title" content="Fasteat - The Best Restaurants In Your Home">
+  <meta name="description" content="This is a food html template made by codewithsadee">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favico.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="static/assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+
+  <!-- 
+    - #PRELOADER
+  -->
+
+  <div class="loading-container" data-loading-container>
+    <div class="loading-circle"></div>
+  </div>
+
+
+
+
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="#" class="logo">
+
+       
+        <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" width="100" height="100" alt="">
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+       
+        <!--<ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#" class="btn btn-primary has-after">upload</a>
+          </li>
+
+          <li class="navbar-item">
+            
+            <a href="#" class="btn btn-primary has-after">Order Now</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="btn btn-primary has-after">Order Now</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-nav-link>Contacts</a>
+          </li>
+
+        </ul>-->
+     </nav>
+
+     <div class="header-action">
+        
+
+      <a href="upload.html" class="btn btn-primary has-after" style="font-size:14px;">Contact Us!</a>
+    </div>
+
+    <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+      <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+    </button>
+
+    <div class="overlay" data-overlay data-nav-toggler></div>
+
+  </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+     
+     
+          <section class="section newslettr" aria-label="newsletter">
+            <div class="container" >
+    
+    
+              <div class="newsletter-content" data-reveal="right">
+                
+                <h2 class="h4 section-title" style="text-align:center;">
+                  Campus Ministry Leaders
+                 </h2>
+                 <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
+                   Magna sit amet purus gravida quis blandit turpis cursus. Venenatis tellus in
+                   metus vulputate eu scelerisque felis.
+                 </p>
+                 <form >
+                  <input type="text"
+                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="" style="width:85%; border: none">
+                   
+              </form>
+                 <form action='' method="post"  >
+                  {{form.hidden_tag()}}
+                 
+               
+                <div class="input-wrapper">
+                  {{form.director(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Directors/Directress",id="floatingInput")}}
+                  {{form.directress(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Directors/Directress",id="floatingInput")}}
+                  
+                  {{form.ministries(class="form-check my-5 my-lg-5 mt-2 space",placeholder="Gender",id="floatingInput")}}
+                  {{form.total_number(class="form-check my-5 my-lg-5 mt-2 space",placeholder="Total Number",id="floatingInput")}}
+                  <div class="alert alert-primary" role="alert">
+                    If there are three Leaders
+                  </div>
+                  {{form.others(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Directors/Directress",id="floatingInput")}}
+                 
+                
+               
+<div id="submitButton">
+
+  <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the form</button>
+</div>  
+    
+                   
+                  </button>
+                </div>
+                
+              </div>
+    
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+
+
+     
+
+     
+
+    </article>
+  </main>
+
+
+
+
+
+
+              
+</form>
+
+<script>
+
+$("#image-picker").change(function (event) {
+  readURL(this);
+  console.log ('touch image')
+    document.getElementById('error').style.display = 'none';
+
+});
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        pushImage(input.files[0])
+
+        reader.onload = function (e) {
+            $('#image-preview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+
+
+    }
+}
+</script>
+
+  
+<script>
+
+  
+  
+  // Push batch images to storage and store references in the database
+  var pushImage = function (file) {
+   document.getElementById('submitButton').innerHTML = `
+         <button class="button" style="background-color: #7272F2;"><i class="fa fa-pause-circle-o" aria-hidden="true" style="color:'white'"></i>Uploading</button>
+         `
+     // var uid = firebase.auth().currentUser.uid;
+     // Create storage reference
+     var ref = firebase.storage().ref(`/alumni/`).child(file.name + ".jpg");
+     //var ref = firebase.storage().ref(``).child(file.name + ".jpg");
+ 
+     // Upload file and get task
+     var task = ref.put(file, {contentType: file.type});
+  
+     // Monitor task for progress
+     task.on('state_changed',
+         // Shows progress of task
+         function progress(snapshot) {
+             var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+             console.log(percentage);
+         },
+         // Shows any errors occurring during progress
+         function error(err) {
+             // Handle unsuccessful uploads
+             console.log(err.message);
+ 
+         },
+         // Shows when task is completed
+         );  
+ };
+ 
+ 
+   function changeimagesss(event) {
+     console.log(event)
+     // console.log(event.target.files[0])
+     // var uploadItem = event.target.files[0]
+     // console.log(uploadItem)
+     pushImage(event)
+ 
+     
+   }
+ 
+  </script>
+
+  <script>
+
+    var firebaseLink = document.getElementById("firebaseLink").innerText
+    // Push batch images to storage and store references in the database
+    var pushImage = function (file) {
+        document.getElementById('submitButton').innerHTML = `
+        <button class="button" style="background-color: #da2d2770;"><i class="fa fa-pause-circle-o" aria-hidden="true" style="color:'white'"></i>Please wait while we upload your image</button>
+        `
+
+       // var uid = firebase.auth().currentUser.uid;
+       // Create storage reference
+       var ref = firebase.storage().ref(`/ineruu-142dc-default-rtdb/Images/`).child(file.name + ".jpg");
+   
+       // Upload file and get task
+       var task = ref.put(file, {contentType: file.type});
+    
+       // Monitor task for progress
+       task.on('state_changed',
+           // Shows progress of task
+           function progress(snapshot) {
+               var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+               console.log(percentage);
+           },
+           // Shows any errors occurring during progress
+           function error(err) {
+               // Handle unsuccessful uploads
+               console.log(err.message);
+   
+           },
+           // Shows when task is completed
+           function complete() {
+               // Handle successful uploads on complete
+               var image = task.snapshot.downloadUrl;
+               var secondImage = task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+           console.log('File available at', downloadURL);
+        //    firebaseLink = downloadURL
+           document.getElementById("firebaseLink").value = downloadURL
+        //    console.log("Firebase Link: " + firebaseLink)
+            document.getElementById('submitButton').innerHTML = `{{form.submit (class="button")}}`
+
+         });
+            //    console.log(task);
+            //    console.log(image);
+            //    console.log(secondImage.PromiseResult).then(res => {
+            //        console.log("THis is" + res)
+                   
+            //    });
+   
+               // Data model to be uploaded to the database
+               var data = {
+                   imageUrl: image
+               };
+               
+               // var db = firebase.database().ref(/GHotelBookMan/Hotels/${uid}/Images).push();
+               // db.set(data).then(() => {
+               //     row.empty();
+               //     loadCurrentHotel(uid);
+               // });
+           });  
+   };
+   
+   
+     function changeimagesss(event) {
+       console.log(event)
+       // console.log(event.target.files[0])
+       // var uploadItem = event.target.files[0]
+       // console.log(uploadItem)
+       pushImage(event)
+   
+       
+     }
+   
+    </script> 
+
+
+{% endblock body %}

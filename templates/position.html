@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+<h4>All Campus Ministry Executives</h4>
+<br>
+<div class="row" style="justify-content: space-between;">
+  
+{% for fullname, position in users_with_positions %}
+<div class="col-md-4">
+  <div class="department-item" data-aos="fade-down-left">
+    
+       <h5 class="names">{{ fullname }}</h5>
+       <h5 class="text-muted">{{ position }}</h5>
+       <h5 class="text-muted">{{ position }}</h5>
+    </a>
+  </div>
+</div>
+{% endfor %}
+</div>
+</body>
+</html>
+
+
+
+
+  
+  
+
+
+
+
+
+
+{% endblock body %}
+
+
+
+
+
+
+

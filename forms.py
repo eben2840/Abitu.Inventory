@@ -19,29 +19,26 @@ class RegistrationForm(FlaskForm):
 
 class Adduser(FlaskForm):
     fullname = StringField('fullname')
-    indexnumber= StringField('indexnumbe')
+    ministry= SelectField('ministry', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
     gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
-    school=SelectField('school',choices=[('Faculty/School','Faculty/School'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
-    department=SelectField('department',choices=[('Faculty/School','Faculty/School'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
-    program= SelectField('program',choices=[('Faculty/School','Faculty/School'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
-    completed= SelectField('completed',choices=[(2021,2021), (2022,2022)])
-    admitted=SelectField('admitted',choices=[(2021,2021), (2022,2022)])
+    program= SelectField('program',choices=[('Program','Program'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
     email= StringField('email')
     telephone= StringField('telephone')
-    hall= SelectField('hall', choices=[('Facult/School','Faculty/School'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
-    nationality= SelectField('nationality',choices=[('Faculty/School','Faculty/School'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
-    address= StringField('address')
-    work= StringField('work')
-    guardian= StringField('guardian')
-    marital= SelectField('Marital',  choices=[('Marital Status','Marital Status'),('Married', 'Married'), ('Divored','divored') ], default=None )
-    picture = FileField('Add a picture', validators=[ FileAllowed(['jpg', 'png','jpeg'])])
-    extra= StringField('extra')
+    position= StringField('position')
     submit = SubmitField('Register')
     image_file = StringField('image_file', validators=[FileAllowed(['jpg', 'png'])])
     
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
+ 
+class LeaderForm(FlaskForm):
+    others = StringField('Others', validators=[DataRequired()])
+    director = StringField('Director', validators=[DataRequired()])
+    directress = StringField('Directress', validators=[DataRequired()])
+    ministries = SelectField('ministries', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
+    total_number = StringField('Email', validators=[DataRequired()])
     submit = SubmitField('Login')
  
 class Registration(FlaskForm):
@@ -88,4 +85,11 @@ class AlumniSignin(FlaskForm):
     indexnumber = StringField('indexnumber', validators=[DataRequired()])
     name = StringField('name', validators=[DataRequired()])
     submit = SubmitField('SignUp')  
+    
+    
+    
+        
+class AlbumForm(FlaskForm):
+    image_album= StringField('image_album', validators=[DataRequired()])
+    submit = SubmitField('Send')  
     
