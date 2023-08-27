@@ -1,136 +1,288 @@
-{% extends 'layout.html' %}
+{% extends 'try.html' %}
 {% block body %}
 
 
-<h4>Campus Ministries</h4>
-<br>
-
-
-<div class="row" style="justify-content: space-between;">
-  
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/media" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Media</h5>
-        <h5 class="names" style="color:red;">{{ media_count }}</h5>
+<div class="container-fluid">
+    
+<!-- Card stats -->
+<div class="row g-4 mb-6">
+  <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card shadow border-0">
+        <a href="/media" style="text-decoration: none; color: #992621;">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <span class="h6 font-semibold text-muted text-sm d-block mb-2">Media</span>
+                      <span class="h3 font-bold mb-0">{{ media_count }}</span>
+                  </div>
+                  
+              </div>
+              <div class="mt-2 mb-0 text-sm">
+                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                      <i class="bi bi-arrow-up me-1"></i>
+                  </span>
+                  <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+              </div>
+          </div>
+        </a>
+      </div>
+  </div>
+  <!---->
+  <div class="col-xl-3 col-sm-6 col-12">
+    <div class="card shadow border-0">
+        <a href="/praise" style="text-decoration: none; color: #992621;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Prasie & Worship</span>
+                    <span class="h3 font-bold mb-0">{{praise_count}}</span>
+                </div>
+                
+            </div>
+            <div class="mt-2 mb-0 text-sm">
+                <span class="badge badge-pill bg-soft-success text-success me-2">
+                    <i class="bi bi-arrow-up me-1"></i>
+                </span>
+                <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+            </div>
+        </div>
     </a>
     </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/praise" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Praise & Worship</h5>
-        <h5 class="names" style="color:red;"> {{praise_count}}</h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/mcc" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > MCC </h5>
-        <h5 class="names" style="color:red;"> {{mcc_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/cjc" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > CJC</h5>
-        <h5 class="names" style="color:red;"> {{cjc_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/lg" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" >Levite Generation</h5>
-        <h5 class="names" style="color:red;"> {{lv_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/communion" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Communion
-        </h5>
-        <h5 class="names" style="color:red;"> {{communion_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/protocol" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Protocol </h5>
-        <h5 class="names" style="color:red;"> {{protocol_count}}</h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/dis" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" >Discipleship</h5>
-        <h5 class="names" style="color:red;">{{dis_count}}</h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/mission" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Missions</h5>
-        <h5 class="names" style="color:red;"> {{missions_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/counselling" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Counseling </h5>
-        <h5 class="names" style="color:red;"> {{coun_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/prayer" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Prayer Ministry</h5>
-        <h5 class="names" style="color:red;"> {{prayer_count}} </h5>
-    </a>
-    </div>
-  </div>
-
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="/lords" style="text-decoration: none; color: #992621;">
-        
-        <h5 class="names" > Lords Band</h5>
-        <h5 class="names" style="color:red;">{{lord_count}}</h5>
-    </a>
-    </div>
-  </div>
-
-  
 </div>
+<!---->
+<!---->
+<div class="col-xl-3 col-sm-6 col-12">
+  <div class="card shadow border-0">
+    <a href="/mcc" style="text-decoration: none; color: #992621;">
+      <div class="card-body">
+          <div class="row">
+              <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">MCC</span>
+                  <span class="h3 font-bold mb-0">{{mcc_count}}</span>
+              </div>
+              
+          </div>
+          <div class="mt-2 mb-0 text-sm">
+              <span class="badge badge-pill bg-soft-success text-success me-2">
+                  <i class="bi bi-arrow-up me-1"></i>
+              </span>
+              <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+<!---->
+  <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card shadow border-0">
+        <a href="/cjc" style="text-decoration: none; color: #992621;">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <span class="h6 font-semibold text-muted text-sm d-block mb-2">CJC</span>
+                      <span class="h3 font-bold mb-0">{{cjc_count}} </span>
+                  </div>
+                  
+              </div>
+              <div class="mt-2 mb-0 text-sm">
+                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                      <i class="bi bi-arrow-up me-1"></i>
+                  </span>
+                 
+              </div>
+          </div>
+        </a>
+      </div>
+  </div>
+
+  <div class="col-xl-3 col-sm-6 col-12">
+    <div class="card shadow border-0">
+        <a href="/lg" style="text-decoration: none; color: #992621;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Levite Generation</span>
+                    <span class="h3 font-bold mb-0">{{lv_count}} </span>
+                </div>
+                
+            </div>
+            <div class="mt-2 mb-0 text-sm">
+                <span class="badge badge-pill bg-soft-success text-success me-2">
+                    <i class="bi bi-arrow-up me-1"></i>
+                </span>
+                <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+            </div>
+        </div>
+    </a>
+    </div>
+</div>
+<!---->
+<div class="col-xl-3 col-sm-6 col-12">
+  <div class="card shadow border-0">
+    <a href="/communion" style="text-decoration: none; color: #992621;">
+      <div class="card-body">
+          <div class="row">
+              <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">Communion</span>
+                  <span class="h3 font-bold mb-0">{{communion_count}} </span>
+              </div>
+              
+          </div>
+          <div class="mt-2 mb-0 text-sm">
+              <span class="badge badge-pill bg-soft-success text-success me-2">
+                  <i class="bi bi-arrow-up me-1"></i>
+              </span>
+              <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+<!---->
+<!---->
+<div class="col-xl-3 col-sm-6 col-12">
+<div class="card shadow border-0">
+    <a href="/protocol" style="text-decoration: none; color: #992621;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Protocol</span>
+                <span class="h3 font-bold mb-0">{{protocol_count}}</span>
+            </div>
+            
+        </div>
+        <div class="mt-2 mb-0 text-sm">
+            <span class="badge badge-pill bg-soft-success text-success me-2">
+                <i class="bi bi-arrow-up me-1"></i>
+            </span>
+            <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+        </div>
+    </div>
+</a>
+</div>
+</div>
+<!---->
+<div class="col-xl-3 col-sm-6 col-12">
+    <div class="card shadow border-0">
+        <a href="/dis" style="text-decoration: none; color: #992621;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Discipleship</span>
+                    <span class="h3 font-bold mb-0">{{dis_count}} </span>
+                </div>
+                
+            </div>
+            <div class="mt-2 mb-0 text-sm">
+                <span class="badge badge-pill bg-soft-success text-success me-2">
+                    <i class="bi bi-arrow-up me-1"></i>
+                </span>
+               
+            </div>
+        </div>
+    </a>
+    </div>
+</div>
+<!---->
+<div class="col-xl-3 col-sm-6 col-12">
+  <div class="card shadow border-0">
+    <a href="/mission" style="text-decoration: none; color: #992621;">
+      <div class="card-body">
+          <div class="row">
+              <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">Missions</span>
+                  <span class="h3 font-bold mb-0">{{missions_count}}  </span>
+              </div>
+              
+          </div>
+          <div class="mt-2 mb-0 text-sm">
+              <span class="badge badge-pill bg-soft-success text-success me-2">
+                  <i class="bi bi-arrow-up me-1"></i>
+              </span>
+             
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="col-xl-3 col-sm-6 col-12">
+<div class="card shadow border-0">
+    <a href="/counselling" style="text-decoration: none; color: #992621;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Counseling</span>
+                <span class="h3 font-bold mb-0"> {{coun_count}}</span>
+            </div>
+            
+        </div>
+        <div class="mt-2 mb-0 text-sm">
+            <span class="badge badge-pill bg-soft-success text-success me-2">
+                <i class="bi bi-arrow-up me-1"></i>
+            </span>
+            <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+        </div>
+    </div>
+</a>
+</div>
+</div>
+<!---->
+<!---->
+
+
+<div class="col-xl-3 col-sm-6 col-12">
+  <div class="card shadow border-0">
+    <a href="/prayer" style="text-decoration: none; color: #992621;">
+      <div class="card-body">
+          <div class="row">
+              <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">Prayer Ministry</span>
+                  <span class="h3 font-bold mb-0"> {{prayer_count}}</span>
+              </div>
+              
+          </div>
+          <div class="mt-2 mb-0 text-sm">
+              <span class="badge badge-pill bg-soft-success text-success me-2">
+                  <i class="bi bi-arrow-up me-1"></i>
+              </span>
+              <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+          </div>
+      </div>
+      <a>
+  </div>
+  </div>
+  <!---->
+  <div class="col-xl-3 col-sm-6 col-12">
+  <div class="card shadow border-0">
+    <a href="/lords" style="text-decoration: none; color: #992621;">
+      
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Lord Band</span>
+                <span class="h3 font-bold mb-0">{{lord_count}}</span>
+            </div>
+            
+        </div>
+        <div class="mt-2 mb-0 text-sm">
+            <span class="badge badge-pill bg-soft-success text-success me-2">
+                <i class="bi bi-arrow-up me-1"></i>
+            </span>
+            <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+        </div>
+    </div>
+  </a>
+  </div>
+  </div>
+  <!---->
+
+</div>
+</div>
+</div>
+</div>
+
+
 </div>
 
 

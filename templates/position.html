@@ -1,28 +1,42 @@
-{% extends 'layout.html' %}
+{% extends 'try.html' %}
 {% block body %}
 
 
 
-<h4>All Campus Ministry Executives</h4>
-<br>
-<div class="row" style="justify-content: space-between;">
-  
-{% for fullname, position in users_with_positions %}
-<div class="col-md-4">
-  <div class="department-item" data-aos="fade-down-left">
-    
-       <h5 class="names">{{ fullname }}</h5>
-       <h5 class="text-muted">{{ position }}</h5>
-       <h5 class="text-muted">{{ position }}</h5>
-    </a>
+
+
+<div class="container-fluid">
+  <!-- Card stats -->
+  <div class="row g-4 mb-6">
+    {% for fullname, position in users_with_positions %}
+      <div class="col-xl-4 col-sm-6 col-12">
+          <a href="" style="text-decoration: none; color: #992621;">
+          <div class="card shadow border-0">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col">
+                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{ position }}</span>
+                          <span class="h3 font-bold mb-0">{{ fullname }} </span>
+                      </div>
+                      <div class="col-auto">
+                          <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                              <i class="bi bi-people"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                      <span class="badge badge-pill bg-soft-success text-success me-2">
+                          <i class="bi bi-arrow-up me-1"></i>
+                      </span>
+                      <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
+                  </div>
+              </div>
+          </div>
+      </a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
-{% endfor %}
-</div>
-</body>
-</html>
-
-
 
 
   

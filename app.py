@@ -182,38 +182,38 @@ def send_email():
         subject = '"Does what i do really matter?"'
         # html_content = render_template('try.html') 
         html_content = """
-#         <!DOCTYPE html>
-# <html>
-# <head>
-#     <style>
-#     @font-face {
-#         font-family: 'Plus Jakarta';
-#         src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
-#              url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
-#         font-weight: 100 900; /* Adjust font weights based on available weights */
-#         font-style: normal;
-#     }
+        <!DOCTYPE html>
+<html>
+<head>
+    <style>
+    @font-face {
+        font-family: 'Plus Jakarta';
+        src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+             url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+        font-weight: 100 900; /* Adjust font weights based on available weights */
+        font-style: normal;
+    }
 
-#     body {
-#         font-family: 'Plus Jakarta', sans-serif;
-#     }
-# </style>
+    body {
+        font-family: 'Plus Jakarta', sans-serif;
+    }
+</style>
 
-# </head>
-# <body>
-#  <div class="container">
+</head>
+<body>
+ <div class="container">
  
     
-#             <h1 class="h1 hero-title">Central University Campus Ministry</h1>
-#     <p>Hello there!. 
-#     <br/> We are grateful for your patience, your data has been retreived successfully.
-#     <br/> Have an amazing day.</p>
+            <h1 class="h1 hero-title">Central University Campus Ministry</h1>
+    <p>Hello there!. 
+    <br/> We are grateful for your patience, your data has been retreived successfully.
+    <br/> Have an amazing day.</p>
 
-#     <h1>
-#     </div>
-# </body>
-# </html>
-#         """
+    <h1>
+    </div>
+</body>
+</html>
+        """
 
 
         em = EmailMessage()
@@ -339,16 +339,40 @@ def adminadd():
             db.session.add(new)
             db.session.commit()
             flash("New Person added", "success")
-            return redirect('dashboard')
+            return redirect('main')
     print(form.errors)
     return render_template("adminadd.html", form=form, title='addalumni')
 
 
 
 
-@app.route('/tryme', methods=['GET', 'POST'])
-def tryme():   
-    return render_template("try.html")
+@app.route('/main', methods=['GET', 'POST'])
+@login_required
+def main():
+    total_students = User.query.count()
+    users_with_positions = db.session.query(User.fullname, User.position).all()
+    total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+
+    print(users_with_positions)
+    total_male = User.query.filter_by(gender='Male').count()
+    total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    print(current_user)
+    # flash(f"There was a problem", 'success')
+    if current_user == None:
+        flash("Welcome to the CentralAlumina " + current_user.email, "Success")
+        flash(f"There was a problem")
+    return render_template('current.html', title='dashboard',total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
+
+
+
+
+@app.route('/newdash', methods=['GET', 'POST'])
+def newdash():   
+    return render_template("newdash.html")
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():   
@@ -373,7 +397,7 @@ def album():
             db.session.add(new)
             db.session.commit()
             flash("New Person added", "success")
-            return redirect('dashboard')
+            return redirect('main')
     print(form.errors)
     return render_template("album.html", form=form, title='addalumni')
 
@@ -646,7 +670,7 @@ def update(id):
             db.session.commit()
             return redirect(url_for('list')) 
         except:
-            return render_template("dashboard.html")
+            return render_template("main.html")
     return render_template("addAlumni.html", form=form)
     
     
@@ -687,7 +711,7 @@ def login():
             #     flash(f"There was a problem")   
                 login_user(user)
                 flash (f' ' 'Welcome,' + user.name + '' )
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('main'))
             # next = request.args.get('next')
             else:
                 flash (f'Wrong Password ', 'success')
