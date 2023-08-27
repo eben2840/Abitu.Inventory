@@ -276,8 +276,7 @@ def addalumni():
     form=Adduser()
     if form.validate_on_submit():
   
-            new=User(fullname=form.fullname.data,
-                 
+            new=User(fullname=form.fullname.data, 
                    email=form.email.data,  
                    ministry=form.ministry.data,  
                    gender=form.gender.data,  
