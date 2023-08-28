@@ -18,7 +18,7 @@
 </head>
   <!-- Banner -->
 <a href="try" class="btn w-full btn-primary text-truncate rounded-0 py-2 bg-danger border-0 position-relative" style="z-index: 1000; background-color:#000;">
-  <strong>Try and see</strong> Fian
+  <strong>Central University Campus Ministries Database Application</strong> 
 </a>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -88,7 +88,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/list">
                         <i class="bi bi-people"></i> Members
-                        <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
+                        <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
 
                     </a>
                 </li>
@@ -96,7 +96,7 @@
                 <li class="nav-item "  >
                   <a class="nav-link" href="/list">
                       <i class="bi bi-people"></i> Members
-                      <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
+                      <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
 
                   </a>
               </li>
@@ -164,7 +164,7 @@
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      <a class="nav-link" href="{{url_for('logout')}}">
                           <i class="bi bi-box-arrow-left"></i> Logout
                       </a>
                   </li>
@@ -198,7 +198,7 @@
                                   </span>
                                   <span>Edit Member</span>
                               </a>
-                              <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                              <a href="/adminadd" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                   <span class=" pe-2">
                                       <i class="bi bi-plus"></i>
                                   </span>

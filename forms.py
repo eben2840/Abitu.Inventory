@@ -21,7 +21,41 @@ class Adduser(FlaskForm):
     fullname = StringField('fullname')
     ministry= SelectField('ministry', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
     gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
-    program= SelectField('program',choices=[('Program','Program'),('Joy Otabil', 'Joy Otabil'), ('Faith','Faith'), ('Freedom','Freedom'), ('Kathryl Kuhlman ', 'Kathryl Kuhlman '), ('Justice','Justice'), ('Billy Graham','Billy Graham'),('Billy Graham','Billy Graham'),  ('Chancellor', 'Chancellor'),('Integerity','Integerity'), ], default=None )
+    program= SelectField('program',choices=[('Program','Program'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
+                ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
+                ('MARKETING', 'MARKETING'),
+                ('ACCOUNTING', 'ACCOUNTING'),
+                ('HUMAN RESOURCE', 'HUMAN RESOURCE'),
+                ('BANKING & FINANCE', 'BANKING & FINANCE'),
+                ('Civil Engineering', 'Civil Engineering'),
+                ('Information Technology', 'Information Technology'),
+                ('Computer Science', 'Computer Science'),
+                ('MKT', 'MKT'),
+                ('BKF', 'BKF'),
+                ('HRM', 'HRM'),
+                ('Nursing', 'Nursing'),
+                ('PA Dept.', 'PA Dept.'),
+                ('Faculty of Law', 'Faculty of Law'),
+                ('Sociology', 'Sociology'),
+                ('Vision and Life', 'Vision and Life'),
+                ('Social Work', 'Social Work'),
+                ('Communications and Laguages Studies', 'Communications and Laguages Studies'),
+                ('Theology', 'Theology'),
+                ('Psychology', 'Psychology'),
+                ('Environment and Development Studies', 'Environment and Development Studies'),
+                ('Communications and Languages Studies', 'Communications and Languages Studies'),
+                ('Agribusiness', 'Agribusiness'),
+                ('Design (Interior, Graphic & Fashion)', 'Design (Interior, Graphic & Fashion)'),
+                ('Real Estate', 'Real Estate'),
+                ('Architecture', 'Architecture'),
+                ('Pharmaceutical Sciences', 'Pharmaceutical Sciences'),
+                ('Pharmacy Practice', 'Pharmacy Practice'),
+                ('MGT & P.A.', 'MGT & P.A.'),
+             
+                
+
+                ], default=None )
+                
     email= StringField('email')
     telephone= StringField('telephone')
     position= StringField('position')
@@ -46,7 +80,6 @@ class Registration(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
-    
     submit = SubmitField('SignUp')  
     
     # el4 = SelectField('el4', default='None', choices=[(user.lastname, user.lastname) for user in Person.query.all()])

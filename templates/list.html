@@ -24,9 +24,9 @@
                   </div>
                   <div class="mt-2 mb-0 text-sm">
                       <span class="badge badge-pill bg-soft-success text-success me-2">
-                          <i class="bi bi-arrow-up me-1">{{user.program}}</i>
+                          <i class="fas-fa-call me-1">{{user.telephone}}</i>
                       </span>
-                     <span class="text-nowrap text-xs text-muted">{{user.telephone}}</span>
+                     <span class="text-nowrap text-xs text-muted"><b>{{user.program}}</b></span>
                   </div>
               </div>
           </div>
@@ -36,23 +36,7 @@
     </div>
   </div>
 
-<div class="row" style="justify-content: space-between;">
-  {%for user in users%} 
-  <div class="col-md-4 ">
-    <div class="department-item" data-aos="fade-down-left">
-      <a href="{{url_for("list", userid=user.id)}}" style="text-decoration: none; color: #992621;">
-        <h5 class="names"> {{user.fullname}}</h5>
-        <h6 class="text-muted">Position: {{user.position}}</h6>
-        <h6 class="text-muted">Program: {{user.program}}</h6>
-       <a href="tel: {{user.telephone}}"> <h6 class="" style="color:red;">Telephone: {{user.telephone}}</h6></a>
-      
-        
-    </a>
-    </div>
-  </div>
-  {% endfor %}    
-  
-</div>
+
 
 
 

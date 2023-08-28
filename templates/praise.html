@@ -1,36 +1,45 @@
 {% extends 'try.html' %}
 {% block body %}
 
-<h2>Praise & Worship Ministry</h2>
-    <div class="row">
-        {% for user in praise %}
-        <div class="col-md-4">
-            <div class="department-item" data-aos="fade-down-left">
-                <a href="{{ url_for('list', userid=user.id) }}" style="text-decoration: none; color: #992621;">
-                    <h5 class="names">{{ user.fullname }}</h5>
-                    <h6 class="text-muted">{{ user.position }}</h6>
-                    <h6 class="text-muted">{{ user.program }}</h6>
-                    <h6 class="" style="color:red;">{{ user.telephone }}</h6>
-                    <h6 class="text-muted">{{ user.gender }}</h6>
-                    <h6 class="text-muted">{{ user.email }}</h6>
-                </a>
+
+
+
+<div class="container-fluid">
+    <!-- Card stats -->
+    
+    <div class="row g-4 mb-6">
+      {%for user in praise%} 
+      <div class="col-xl-4 col-sm-6 col-12">
+          <a href="{{url_for("list", userid=user.id)}}" style="text-decoration: none; color: #992621;">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{user.position}}</span>
+                            <span class="h3 font-bold mb-0">{{user.fullname}} </span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
+                                <i class="bi bi-people"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1">{{user.program}}</i>
+                        </span>
+                       <span class="text-nowrap text-xs text-muted">{{user.telephone}}</span>
+                    </div>
+                </div>
             </div>
+          </a>
         </div>
-        {% endfor %}
+        {% endfor %}    
+      </div>
     </div>
-</body>
-</html>
-
-
-
-
   
   
-
-
-
-
-
+  
 
 {% endblock body %}
 
