@@ -18,15 +18,17 @@ from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 )
 from flask_cors import CORS
-
+import random
+import json
+import time
 
 
 app=Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:password@eligibility.central.edu.gh:5432/alumni'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://post:password@eligibility.central.edu.gh:5432/alumni'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/cuministry'
+
 app.config['SECRET_KEY'] =" thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 
@@ -146,6 +148,16 @@ class Album(db.Model,UserMixin):
     image_album=db.Column(db.String)
     def __repr__(self):
         return f"year('{self.id}', {self.image_album}'"
+
+
+
+    
+class Message(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    message=db.Column(db.String)
+    def __repr__(self):
+        return f"Message('{self.id}', {self.message}'"
+    
     
 class Program(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -165,6 +177,7 @@ class Leaders(db.Model,UserMixin):
     others=db.Column(db.String)
     ministries =db.Column(db.String)
     total_number = db.Column(db.String)
+    timestamp = db.Column(db.Float, default=time.time)
 
     def __repr__(self):
         return f"School('{self.id}', {self.others}')"
@@ -270,6 +283,17 @@ def ministries():
     lord_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Lords Band').scalar()
     return render_template('year.html',title='Ministries',total_media=total_media,mcc_count=mcc_count, lord_count=lord_count,prayer_count=prayer_count,coun_count=coun_count,missions_count=missions_count,lv_count=lv_count,cjc_count=cjc_count, praise_count=praise_count,dis_count=dis_count, communion_count=communion_count, media_count=media_count,protocol_count=protocol_count)
     
+    
+# @app.route('/live_data')
+# def live_data():
+#     gender = request.args.get('gender')  
+#     users = User.query.filter_by(gender=gender).all()  
+#     data = [{
+#         'timestamp': user.id,  
+#         'value': random.randint(0, 100)
+#     } for user in users]
+#     return jsonify(data)
+
 
 @app.route('/addalumni', methods=['GET', 'POST'])
 def addalumni():
@@ -351,7 +375,7 @@ def main():
     total_students = User.query.count()
     users_with_positions = db.session.query(User.fullname, User.position).all()
     total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
-
+    message = Message.query.count()
     print(users_with_positions)
     total_male = User.query.filter_by(gender='Male').count()
     total_female = User.query.filter_by(gender='Female').count() 
@@ -364,7 +388,7 @@ def main():
     if current_user == None:
         flash("Welcome to the CentralAlumina " + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
+    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
 
 
 
@@ -376,6 +400,18 @@ def newdash():
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():   
     return render_template("sms.html")
+
+@app.route('/message', methods=['GET', 'POST'])
+def message():
+    form=MessageForm()
+    if form.validate_on_submit():
+        new=Message(message=form.message.data
+                    )
+        db.session.add(new)
+        db.session.commit()
+        flash("Thanks for Sending to Anonymous")
+        return redirect("/")
+    return render_template('message.html', form=form)
 
 
 
@@ -481,6 +517,7 @@ def prayer():
 def lords():
     lords = User.query.filter_by(ministry='Lords Band').all()
     return render_template('lords.html', lords=lords)
+
 
 
 # end of ministry
@@ -603,6 +640,15 @@ def report():
     return render_template("report.html", users=users, current_user=current_user, title="report")
  
 
+
+@app.route('/allmes')
+@login_required
+def allmes():
+    message = Message.query.count()
+    print(message)
+    
+    users=Message.query.order_by(Message.id.desc()).all()
+    return render_template('allmes.html',message=message, users=users)
 
 
 

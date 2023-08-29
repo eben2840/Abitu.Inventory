@@ -81,11 +81,6 @@ class Registration(FlaskForm):
     phone = StringField('Phone', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('SignUp')  
-    
-    # el4 = SelectField('el4', default='None', choices=[(user.lastname, user.lastname) for user in Person.query.all()])
-  
-    
-    #Program = SelectField('programs', choices=[("one", "one"),("two", "two"),("three", "three")])
     submit =SubmitField('submit')
     
 
@@ -124,5 +119,10 @@ class AlumniSignin(FlaskForm):
         
 class AlbumForm(FlaskForm):
     image_album= StringField('image_album', validators=[DataRequired()])
+    submit = SubmitField('Send')  
+    
+    
+class MessageForm(FlaskForm):
+    message= StringField('message', validators=[DataRequired()])
     submit = SubmitField('Send')  
     
