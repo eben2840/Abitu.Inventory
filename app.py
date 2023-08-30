@@ -245,7 +245,7 @@ def send_email():
         return redirect(url_for('userbase'))
     
     
-@app.route(/dashboard')
+@app.route('/dashboard')
 @login_required
 def dashboard():
     total_students = User.query.count()
