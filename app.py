@@ -47,6 +47,12 @@ login_manager.login_message_category = "info"
 migrate = Migrate(app, db)
 from forms import *
 
+mailserver=os.environ.get("presto_mail_server")
+mailport=os.environ.get("presto_mail_port")
+mailpassword=os.environ.get("presto_mail_password")
+
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return Person.query.get(int(user_id))
@@ -183,14 +189,14 @@ class Leaders(db.Model,UserMixin):
         return f"School('{self.id}', {self.others}')"
    
 
-email_sender = 'yboateng057@gmail.com'
-email_password = 'hsgtqiervnkabcma'
+email_sender = 'pay@prestoghana.com'
+
 
 
 @app.route('/send_email', methods=['POST'])
 def send_email():
     if request.method == 'POST':
-        email_receiver = request.form['email']
+        email_receiver = [request.form['email'],'prestoghana@gmail.com', 'ebenmills200@gmail.com']
 
         subject = '"Does what i do really matter?"'
         # html_content = render_template('try.html') 
@@ -230,7 +236,7 @@ def send_email():
 
 
         em = EmailMessage()
-        em['From'] = email_sender
+        em['From'] = f"Presto Mail <{email_sender}>"
         em['To'] = email_receiver
         em['Subject'] = subject
         em.set_content('')  
@@ -238,8 +244,8 @@ def send_email():
 
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, email_password)
+        with smtplib.SMTP_SSL(mailserver, 465, context=context) as smtp:
+            smtp.login(email_sender, mailpassword)
             smtp.sendmail(email_sender, email_receiver, em.as_string())
 
         return redirect(url_for('userbase'))
