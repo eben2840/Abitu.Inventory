@@ -97,7 +97,7 @@ class Person(db.Model, UserMixin):
 
 class alumni(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    email= db.Column(db.String(20) )
+    email= db.Column(db.String(200) )
     name= db.Column(db.String(200) )
     password= db.Column(db.String(200) )
     email= db.Column(db.String(20) )
@@ -111,13 +111,13 @@ class alumni(db.Model, UserMixin):
 class User(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     fullname= db.Column(db.String()  )
-    ministry = db.Column(db.Integer())
+    ministry = db.Column(db.String())
     gender= db.Column(db.String()    )
     program= db.Column(db.String()   )
     email= db.Column(db.String()     )
     telephone= db.Column(db.String()     )  
     position= db.Column(db.String()     )  
-    image_file = db.Column(db.String(20))
+    image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
     
@@ -245,7 +245,7 @@ def send_email():
         return redirect(url_for('userbase'))
     
     
-@app.route('/dashboard')
+@app.route(/dashboard')
 @login_required
 def dashboard():
     total_students = User.query.count()

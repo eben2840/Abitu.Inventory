@@ -68,7 +68,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
  
 class LeaderForm(FlaskForm):
-    others = StringField('Others', validators=[DataRequired()])
+    others = StringField('Others')
     director = StringField('Director', validators=[DataRequired()])
     directress = StringField('Directress', validators=[DataRequired()])
     ministries = SelectField('ministries', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
