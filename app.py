@@ -51,8 +51,6 @@ mailserver=os.environ.get("presto_mail_server")
 mailport=os.environ.get("presto_mail_port")
 mailpassword=os.environ.get("presto_mail_password")
 
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return Person.query.get(int(user_id))
@@ -70,17 +68,17 @@ def sendtelegram(params):
 #person table
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    name= db.Column(db.String(200), nullable=True)
-    yearCompleted= db.Column(db.String(200), nullable=True)
-    nationality= db.Column(db.String(200), nullable=True)
-    contact= db.Column(db.Integer(), nullable=True)
-    email= db.Column(db.String(200), nullable=True)
-    faculty= db.Column(db.String(200), nullable=True)
-    hallofresidence= db.Column(db.String(200), nullable=True)
-    password= db.Column(db.String(20))
-    school= db.Column(db.String(20))
-    email= db.Column(db.String(20), nullable=True)
-    phone= db.Column(db.String(10), nullable=True )
+    name= db.Column(db.String())
+    yearCompleted= db.Column(db.String())
+    nationality= db.Column(db.String())
+    contact= db.Column(db.Integer())
+    email= db.Column(db.String())
+    faculty= db.Column(db.String())
+    hallofresidence= db.Column(db.String())
+    password= db.Column(db.String())
+    school= db.Column(db.String())
+    email= db.Column(db.String())
+    phone= db.Column(db.String() )
     indexnumber=db.Column(db.String())
     password=db.Column(db.String)
     gender= db.Column(db.String()    )
@@ -97,7 +95,7 @@ class Person(db.Model, UserMixin):
     health= db.Column(db.String()    )
     form=db.Column(db.String())
     extra= db.Column(db.String()     )
-    image_file = db.Column(db.String(20))
+    image_file = db.Column(db.String())
     def __repr__(self):
         return f"Person('{self.id}', {self.name}', {self.yearCompleted})"
 
@@ -106,9 +104,9 @@ class alumni(db.Model, UserMixin):
     email= db.Column(db.String(200) )
     name= db.Column(db.String(200) )
     password= db.Column(db.String(200) )
-    email= db.Column(db.String(20) )
-    indexnumber= db.Column(db.String(10)  )
-    telephone= db.Column(db.String(10)  )
+    email= db.Column(db.String() )
+    indexnumber= db.Column(db.String()  )
+    telephone= db.Column(db.String()  )
     def __repr__(self):
         return f"alumni('{self.id}', {self.name}', {self.email})"
   
@@ -189,7 +187,20 @@ class Leaders(db.Model,UserMixin):
         return f"School('{self.id}', {self.others}')"
    
 
+
 email_sender = 'pay@prestoghana.com'
+ 
+ 
+ 
+# @app.route("/sendsms", methods=["POST"])
+# def send_sms():
+#     if request.method == "POST":
+#         data = [{
+#         'name': '',  
+#         'sender_id': '',
+#         'mesaage': '',
+#     }]
+#     return jsonify (data)
 
 
 
@@ -197,7 +208,7 @@ email_sender = 'pay@prestoghana.com'
 def send_email():
     if request.method == 'POST':
         email_receiver = [request.form['email'],'prestoghana@gmail.com', 'ebenmills200@gmail.com']
-
+        
         subject = '"Does what i do really matter?"'
         # html_content = render_template('try.html') 
         html_content = """
@@ -244,10 +255,10 @@ def send_email():
 
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL(mailserver, 465, context=context) as smtp:
+        with smtplib.SMTP_SSL(mailserver, 465, context=context, ) as smtp:
             smtp.login(email_sender, mailpassword)
             smtp.sendmail(email_sender, email_receiver, em.as_string())
-
+    
         return redirect(url_for('userbase'))
     
     
