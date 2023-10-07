@@ -12,14 +12,14 @@
   <!-- 
     - primary meta tags
   -->
-  <title>DocuTrack</title>
-  <meta name="title" content="Fasteat - The Best Restaurants In Your Home">
+  <title></title>
+  <meta name="title" content="">
   <meta name="description" content="This is a food html template made by codewithsadee">
 
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="./favico.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="https://www.central.edu.gh/static/img/Central-Uni-logo.png" type="image/svg+xml">
 
   <!-- 
     - custom css link
@@ -120,11 +120,10 @@
               <div class="newsletter-content" data-reveal="right">
                 
                 <h2 class="h4 section-title" style="text-align:center;">
-                  Campus Ministry
+                  SRC Recuitment Portal
                  </h2>
                  <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
-                   Magna sit amet purus gravida quis blandit turpis cursus. Venenatis tellus in
-                   metus vulputate eu scelerisque felis.
+                  We invite you to become an active part of thr SRC by joining our committees.
                  </p>
                  <form >
                   <input type="text"
@@ -153,10 +152,16 @@
                   {{form.gender(class="form-check my-5 my-lg-5 mt-2 space",placeholder="Gender",id="floatingInput")}}
                   {{form.program(class="form-check my-5 my-lg-5 mt-2 space",placeholder="program",id="floatingInput")}}
                   {{form.telephone( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Phone Number",id="floatingInput")}}
-                  {{form.ministry( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Index",id="floatingInput")}}
-                  <input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Index",id="floatingInput" placeholder="Email" required>
+                  <input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space",placeholder="Index",id="floatingInput" placeholder="Email" required>
+                  
+                  
+                  
+                  {{form.ministry( class="input-field my-5 my-lg-5 mt-2 space", style="  ",placeholder="Index",id="floatingInput")}}
+                  {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Why do you want to join this committee?",id="floatingInput")}}
+                  {{form.qualities( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="What are the special qualities you will bring to this committee?",id="floatingInput")}}
+                  
                   <div class="alert alert-primary" role="alert">
-                   Please fill if you hold any position.
+                    Leadership Experience, If any please state them.
                   </div>
                   {{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
                   
@@ -166,7 +171,9 @@
                 <input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
                 
 <div id="submitButton">
-
+  <div class="alert alert-primary" role="alert">
+    Make sure to add  your image before submit the form.
+  </div>
   <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the form</button>
 </div>  
     

@@ -4,19 +4,20 @@
 
 
 
-
 <div class="container-fluid">
   <!-- Card stats -->
   <div class="row g-4 mb-6">
-    {% for fullname, position in total_message %}
+    
+    {% for user in users_with_positions %}
+    {% if user.position %}
       <div class="col-xl-4 col-sm-6 col-12">
           <a href="" style="text-decoration: none; color: #992621;">
           <div class="card shadow border-0">
               <div class="card-body">
                   <div class="row">
                       <div class="col">
-                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{ position }}</span>
-                          <span class="h3 font-bold mb-0">{{ message }} </span>
+                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{ user.position }}</span>
+                          <span class="h3 font-bold mb-0">{{ user.fullname }} </span>
                       </div>
                       <div class="col-auto">
                           <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -34,6 +35,8 @@
           </div>
       </a>
       </div>
+
+      {% endif %}
       {% endfor %}
     </div>
   </div>

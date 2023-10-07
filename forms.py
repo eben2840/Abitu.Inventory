@@ -19,7 +19,25 @@ class RegistrationForm(FlaskForm):
 
 class Adduser(FlaskForm):
     fullname = StringField('fullname')
-    ministry= SelectField('ministry', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
+    ministry = SelectField('ministry', choices=[
+    ('Committee', 'Committee'),
+    ('ACADEMIC AND EDITORIAL COMMITTEE', 'ACADEMIC AND EDITORIAL COMMITTEE'),
+    ('WOMENS COMMISSION COMMITTEE', 'WOMENS COMMISSION COMMITTEE'),
+    ('BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE', 'BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE'),
+    ('COMMUNICATIONS AND PUBLIC RELATIONS COMMITTEE', 'COMMUNICATIONS AND PUBLIC RELATIONS COMMITTEE'),
+    ('ENTERTAINMENT COMMITTEE', 'ENTERTAINMENT COMMITTEE'),
+    ('FINANCE COMMITTEE', 'FINANCE COMMITTEE'),
+    ('INTERNATIONAL STUDENTS COMMITTEE', 'INTERNATIONAL STUDENTS COMMITTEE'),
+    ('LOCAL NUGS SECRETARIAT', 'LOCAL NUGS SECRETARIAT'),
+    ('LOCAL PUSAG SECRETARIAT', 'LOCAL PUSAG SECRETARIAT'),
+    ('PROJECT AND PLANNING COMMITTEE', 'PROJECT AND PLANNING COMMITTEE'),
+    ('STUDENTS CHAPLAINCY COMMITTEE', 'STUDENTS CHAPLAINCY COMMITTEE'),
+    ('SPORTS COMMITTEE', 'SPORTS COMMITTEE'),
+    ('TRANSPORT COMMITTEE', 'TRANSPORT COMMITTEE'),
+    ('WELFARE AND PROTOCOL COMMITTEE', 'WELFARE AND PROTOCOL COMMITTEE'),
+    ('PROCUREMENT COMMITTEE', 'PROCUREMENT COMMITTEE')
+], default=None)
+
     gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
     program= SelectField('program',choices=[('Program','Program'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
                 ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
@@ -57,6 +75,8 @@ class Adduser(FlaskForm):
                 ], default=None )
                 
     email= StringField('email')
+    reason= StringField('reason')
+    qualities= StringField('qualities')
     telephone= StringField('telephone')
     position= StringField('position')
     submit = SubmitField('Register')

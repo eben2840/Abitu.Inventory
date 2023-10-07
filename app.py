@@ -18,16 +18,15 @@ from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 )
 from flask_cors import CORS
-import random
 import json
 import time
 
 
 app=Flask(__name__)
 CORS(app)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/cuministry'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/cuministry'
 
 app.config['SECRET_KEY'] =" thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
@@ -40,22 +39,19 @@ migrate = Migrate(app, db)
 ma = Marshmallow(app)
 
 
-
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 migrate = Migrate(app, db)
 from forms import *
 
-mailserver=os.environ.get("presto_mail_server")
-mailport=os.environ.get("presto_mail_port")
-mailpassword=os.environ.get("presto_mail_password")
+# mailserver=os.environ.get("presto_mail_server")
+# mailport=os.environ.get("presto_mail_port")
+# mailpassword=os.environ.get("presto_mail_password")
 
 @login_manager.user_loader
 def load_user(user_id):
     return Person.query.get(int(user_id))
-
-
 
 
 def sendtelegram(params):
@@ -64,46 +60,37 @@ def sendtelegram(params):
     print(content)
     return content
 
-#DATABASE MODEL
+
 #person table
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
-    yearCompleted= db.Column(db.String())
-    nationality= db.Column(db.String())
+    
     contact= db.Column(db.Integer())
     email= db.Column(db.String())
-    faculty= db.Column(db.String())
-    hallofresidence= db.Column(db.String())
+    
     password= db.Column(db.String())
-    school= db.Column(db.String())
+    
     email= db.Column(db.String())
-    phone= db.Column(db.String() )
+   
     indexnumber=db.Column(db.String())
     password=db.Column(db.String)
-    gender= db.Column(db.String()    )
-    department= db.Column(db.String()    )
-    program= db.Column(db.String()   )
+    phone= db.Column(db.String()    )
+    
     telephone= db.Column(db.String()   )
-    admitted= db.Column(db.Integer()  )
-    address= db.Column(db.String()   )
-    work= db.Column(db.String()  )
-    guardian= db.Column(db.String()  )
-    kin= db.Column(db.String()   )
-    relationship= db.Column(db.String()  )
-    marital= db.Column(db.String()   )
-    health= db.Column(db.String()    )
+    yearCompleted= db.Column(db.Integer()  )
+    
     form=db.Column(db.String())
     extra= db.Column(db.String()     )
     image_file = db.Column(db.String())
     def __repr__(self):
-        return f"Person('{self.id}', {self.name}', {self.yearCompleted})"
+        return f"Person('{self.id}', {self.name}')"
 
 class alumni(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    email= db.Column(db.String(200) )
-    name= db.Column(db.String(200) )
-    password= db.Column(db.String(200) )
+    email= db.Column(db.String() )
+    name= db.Column(db.String() )
+    password= db.Column(db.String() )
     email= db.Column(db.String() )
     indexnumber= db.Column(db.String()  )
     telephone= db.Column(db.String()  )
@@ -120,7 +107,9 @@ class User(db.Model,UserMixin):
     program= db.Column(db.String()   )
     email= db.Column(db.String()     )
     telephone= db.Column(db.String()     )  
-    position= db.Column(db.String()     )  
+    position= db.Column(db.String()     )
+    qualities = db.Column(db.String()     )
+    reason = db.Column(db.String()     )
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
@@ -132,8 +121,6 @@ class Department(db.Model,UserMixin):
     name= db.Column(db.String())
     school= db.Column(db.String())
     slug= db.Column(db.String())
-
-    
     def __repr__(self):
         return f"Department('{self.id}', {self.name}'"
     
@@ -142,7 +129,6 @@ class School(db.Model,UserMixin):
     name=db.Column(db.String)
     slug =db.Column(db.String)
     departments = db.Column(db.String)
-
     def __repr__(self):
         return f"School('{self.id}', {self.slug}')"
     
@@ -154,8 +140,6 @@ class Album(db.Model,UserMixin):
         return f"year('{self.id}', {self.image_album}'"
 
 
-
-    
 class Message(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     message=db.Column(db.String)
@@ -172,8 +156,7 @@ class Program(db.Model,UserMixin):
     def __repr__(self):
         return f"Program('{self.id}', {self.name}'"
     
-    
-   
+     
 class Leaders(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     director=db.Column(db.String)
@@ -182,13 +165,10 @@ class Leaders(db.Model,UserMixin):
     ministries =db.Column(db.String)
     total_number = db.Column(db.String)
     timestamp = db.Column(db.Float, default=time.time)
-
     def __repr__(self):
         return f"School('{self.id}', {self.others}')"
-   
 
-
-email_sender = 'pay@prestoghana.com'
+# email_sender = 'pay@prestoghana.com'
  
  
  
@@ -204,63 +184,164 @@ email_sender = 'pay@prestoghana.com'
 
 
 
+# @app.route('/send_email', methods=['POST'])
+# def send_email():
+#     if request.method == 'POST':
+#         email_receiver = [request.form['email'],'prestoghana@gmail.com', 'ebenmills200@gmail.com']
+        
+#         subject = '"Does what i do really matter?"'
+#         # html_content = render_template('try.html') 
+#         html_content = """
+#         <!DOCTYPE html>
+# <html>
+# <head>
+#     <style>
+#     @font-face {
+#         font-family: 'Plus Jakarta';
+#         src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+#              url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+#         font-weight: 100 900; /* Adjust font weights based on available weights */
+#         font-style: normal;
+#     }
+
+#     body {
+#         font-family: 'Plus Jakarta', sans-serif;
+#     }
+# </style>
+
+# </head>
+# <body>
+#  <div class="container">
+ 
+    
+#             <h4 class="h1 hero-title">Central University Campus Ministry</h4>
+#     <p>Hello there!. 
+#     <br/> We are grateful for your patience, your data has been retreived successfully.
+#     <br/> Have an amazing day.</p>
+
+#     <h1>
+#     </div>
+# </body>
+# </html>
+#         """
+
+
+#         em = EmailMessage()
+#         em['From'] = f"Presto Mail <{email_sender}>"
+#         em['To'] = email_receiver
+#         em['Subject'] = subject
+#         em.set_content('')  
+#         em.add_alternative(html_content, subtype='html')
+
+#         context = ssl.create_default_context()
+
+#         with smtplib.SMTP_SSL(mailserver, 465, context=context, ) as smtp:
+#             smtp.login(email_sender, mailpassword)
+#             smtp.sendmail(email_sender, email_receiver, em.as_string())
+    
+#         return redirect(url_for('userbase'))
+
+    
+radio = 'yboateng057@gmail.com'
+email_password = 'hsgtqiervnkabcma'
+radio_display_name = ' Central Live Radio'
+
 @app.route('/send_email', methods=['POST'])
 def send_email():
     if request.method == 'POST':
-        email_receiver = [request.form['email'],'prestoghana@gmail.com', 'ebenmills200@gmail.com']
+        email_receiver = request.form['email']
+
+        subject = 'Central Live Radio'
         
-        subject = '"Does what i do really matter?"'
-        # html_content = render_template('try.html') 
+        # HTML content of the email
         html_content = """
         <!DOCTYPE html>
-<html>
-<head>
-    <style>
-    @font-face {
-        font-family: 'Plus Jakarta';
-        src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
-             url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
-        font-weight: 100 900; /* Adjust font weights based on available weights */
-        font-style: normal;
-    }
+        <html>
+        <head>
+            <style>
+            @font-face {
+                font-family: 'Plus Jakarta';
+                src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+                     url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+                font-weight: 100 900; /* Adjust font weights based on available weights */
+                font-style: normal;
+            }
 
-    body {
-        font-family: 'Plus Jakarta', sans-serif;
-    }
-</style>
+            body {
+                font-family: 'Plus Jakarta', sans-serif;
+            }
 
-</head>
-<body>
- <div class="container">
- 
+           
+           
+
+
+
+            </style>
+        </head>
+        <body>
+            
+              
+                <div class="container">
+                    <div style="display:flex; padding:10px; justify-content:space-between;">
+                        <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" style="width:100px;" loading="lazy" >
+                         <img src="static/images/cd.png" style="width:50px;" alt="">
+                       
+                          </div>
+                          
+                <h3 style="text-align:center; font-size:30px;">Central Live Radio
+                    <br><span style="font-size:10px;">Unique Broadcasting Platform of Central University</span></h3>
+                </h3>
+                
+                <div style="text-align:left;  font-size:13px; color:rgb(69 90 100);"><p>
+                    Hey radio lover!
+                    <br><br>
+                    Congratulations! You are part of the first group that will start using our brand new Central Live Radio app, development by IT students from CU. Download the app from Google Play store and begin to listen to our radio programs. Is the interface clear? Do the different functions work smoothly? Is the app user-friendly? <br><br>
+
+<br>
+                  Kindly give us your feedback on https://radio.central.edu.gh/ And feel free to sign up friends, family and any body who is interested in our content.
+                  <br> Also, do you want to be part of our production team?
+                  
+                  <br>
+                  <br>Then sign up now as an intern or volunteer through centrallive0@gmail.com. or https://radio.central.edu.gh/ ThXXX!.<br>
+                  
+                  
+                Have an amazing day.</p>
+
+                 
+                </div>
+
+                <div style="background-color:#ca181e; ">
+                    <h2 style="padding:50px; color:#fff; ">Central Live Radio</h2>
     
-            <h1 class="h1 hero-title">Central University Campus Ministry</h1>
-    <p>Hello there!. 
-    <br/> We are grateful for your patience, your data has been retreived successfully.
-    <br/> Have an amazing day.</p>
-
-    <h1>
-    </div>
-</body>
-</html>
+                    </div>
+            </div>
+            
+            
+        </body>
+        </html>
         """
 
-
+    
         em = EmailMessage()
-        em['From'] = f"Presto Mail <{email_sender}>"
+        em['From'] = f'{radio_display_name} <{radio}>'
+        # em['From'] = f'{radio_display_name}'
+        # em['From'] = f'{radio_display_name} <{radio}>'  # Use both display name and email address
+        # em.replace_header('From', radio_display_name)  
         em['To'] = email_receiver
         em['Subject'] = subject
-        em.set_content('')  
+        em.set_content('')
         em.add_alternative(html_content, subtype='html')
 
+        
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL(mailserver, 465, context=context, ) as smtp:
-            smtp.login(email_sender, mailpassword)
-            smtp.sendmail(email_sender, email_receiver, em.as_string())
+       
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(radio, email_password)
+            smtp.sendmail(radio, email_receiver, em.as_string())
+
     
-        return redirect(url_for('userbase'))
-    
+        return redirect(url_for('userbase')) 
     
 @app.route('/dashboard')
 @login_required
@@ -279,9 +360,10 @@ def dashboard():
     print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
-        flash("Welcome to the CentralAlumina " + current_user.email, "Success")
+        flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('dashboard.html', title='dashboard',total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
+
 
 @app.route('/ministries', methods=['GET', 'POST'])
 def ministries():
@@ -316,14 +398,16 @@ def ministries():
 def addalumni():
     form=Adduser()
     if form.validate_on_submit():
-  
+        
             new=User(fullname=form.fullname.data, 
                    email=form.email.data,  
                    ministry=form.ministry.data,  
                    gender=form.gender.data,  
                    program=form.program.data,  
                    telephone=form.telephone.data,      
-                   position=form.position.data,      
+                   position=form.position.data,
+                   reason=form.reason.data,
+                   qualities=form.qualities.data,
                image_file=form.image_file.data
                   )
        
@@ -331,7 +415,7 @@ def addalumni():
             db.session.commit()
             send_email()
         
-            flash("Thank you for filling the form, Please check your email for our latest program updates.", "success")
+            flash("Thank you for filling the form, Please check your email for a message from the President.", "success")
             return redirect('/')
             
     print(form.errors)
@@ -366,7 +450,6 @@ def leadersadd():
 def adminadd():
     form=Adduser()
     if form.validate_on_submit():
-  
             new=User(fullname=form.fullname.data,
                     ministry=form.ministry.data,
                    email=form.email.data,  
@@ -375,7 +458,6 @@ def adminadd():
                    telephone=form.telephone.data,      
                image_file=form.image_file.data
                   )
-       
             db.session.add(new)
             db.session.commit()
             flash("New Person added", "success")
@@ -390,8 +472,9 @@ def adminadd():
 @login_required
 def main():
     total_students = User.query.count()
-    users_with_positions = db.session.query(User.fullname, User.position).all()
-    total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+    users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
+    total_people_with_positions = db.session.query(User).filter(User.position != '').count()
+    # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
     message = Message.query.count()
     print(users_with_positions)
     total_male = User.query.filter_by(gender='Male').count()
@@ -403,7 +486,7 @@ def main():
     print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
-        flash("Welcome to the CentralAlumina " + current_user.email, "Success")
+        flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
 
@@ -633,8 +716,6 @@ def leader():
  
 
 
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -669,13 +750,12 @@ def allmes():
 
 
 
-
-
 @app.route('/home',methods=['GET','POST'])
 def home():
     persons=Person.query.all()  
     print(persons)
     return render_template('home.html',persons=persons)
+
 
 @app.route('/members')
 @login_required
@@ -749,9 +829,6 @@ def delete(id):
         return "errrrrorrr"
     
 
-
-
-
 @app.route('/login', methods=['POST','GET'])
 def login():
     form = LoginForm()
@@ -790,7 +867,6 @@ def signup():
     print(form.phone.data)
     print(form.email.data)
     print(form.name.data)
-    
     if request.method == "POST": 
         if form.validate_on_submit():
             print('Success')
@@ -833,9 +909,6 @@ def programs(departmentSlug):
     return render_template('userprograms.html', items=programs, header=department.name, smalltitle="2021", name="", numberofentries="16 entries")
 
 
-
-
-
 @app.route('/', methods=['POST','GET'])
 def userbase():
     print("Fetching all")
@@ -846,8 +919,6 @@ def userbase():
     print(image)
     return render_template("userbase.html",total_male=total_male,total_female=total_female,  header="Information Technology", smalltitle="2021", name="- CCSITA", numberofentries="16 entries",image=image,total_students=total_students)
  
-
-
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
