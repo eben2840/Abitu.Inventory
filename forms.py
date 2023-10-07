@@ -39,6 +39,7 @@ class Adduser(FlaskForm):
 ], default=None)
 
     gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
+    campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
     program= SelectField('program',choices=[('Program','Program'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
                 ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
                 ('MARKETING', 'MARKETING'),
@@ -57,17 +58,17 @@ class Adduser(FlaskForm):
                 ('Sociology', 'Sociology'),
                 ('Vision and Life', 'Vision and Life'),
                 ('Social Work', 'Social Work'),
-                ('Communications and Laguages Studies', 'Communications and Laguages Studies'),
+                # ('Communications and Laguages Studies', 'Communications and Laguages Studies'),
                 ('Theology', 'Theology'),
                 ('Psychology', 'Psychology'),
                 ('Environment and Development Studies', 'Environment and Development Studies'),
-                ('Communications and Languages Studies', 'Communications and Languages Studies'),
+                ('Communications and Media Studies', 'Communications and Media Studies'),
                 ('Agribusiness', 'Agribusiness'),
                 ('Design (Interior, Graphic & Fashion)', 'Design (Interior, Graphic & Fashion)'),
                 ('Real Estate', 'Real Estate'),
                 ('Architecture', 'Architecture'),
-                ('Pharmaceutical Sciences', 'Pharmaceutical Sciences'),
-                ('Pharmacy Practice', 'Pharmacy Practice'),
+                ('Doctor of Pharmacy', 'Doctor of Pharmacy'),
+                # ('Pharmacy Practice', 'Pharmacy Practice'),
                 ('MGT & P.A.', 'MGT & P.A.'),
              
                 
@@ -75,6 +76,7 @@ class Adduser(FlaskForm):
                 ], default=None )
                 
     email= StringField('email')
+   
     reason= StringField('reason')
     qualities= StringField('qualities')
     telephone= StringField('telephone')
