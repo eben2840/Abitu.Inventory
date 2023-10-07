@@ -110,6 +110,7 @@ class User(db.Model,UserMixin):
     position= db.Column(db.String()     )
     qualities = db.Column(db.String()     )
     reason = db.Column(db.String()     )
+    campus= db.Column(db.String()     )
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
@@ -414,6 +415,7 @@ def addalumni():
                    telephone=form.telephone.data,      
                    position=form.position.data,
                    reason=form.reason.data,
+                   campus=form.reason.data,
                    qualities=form.qualities.data,
                image_file=form.image_file.data
                   )
