@@ -244,14 +244,14 @@ class Leaders(db.Model,UserMixin):
     
 radio = 'yboateng057@gmail.com'
 email_password = 'hsgtqiervnkabcma'
-radio_display_name = ' Central Live Radio'
+radio_display_name = ' Central University SRC'
 
 @app.route('/send_email', methods=['POST'])
 def send_email():
     if request.method == 'POST':
         email_receiver = request.form['email']
 
-        subject = 'Central Live Radio'
+        subject = 'SRC - Recruitment Portal'
         
         # HTML content of the email
         html_content = """
@@ -288,32 +288,39 @@ def send_email():
                        
                           </div>
                           
-                <h3 style="text-align:center; font-size:30px;">Central Live Radio
-                    <br><span style="font-size:10px;">Unique Broadcasting Platform of Central University</span></h3>
+                <h3 style="text-align:center; font-size:30px;">Central University SRC
+                    <br><span style="font-size:10px;">SRC Recuitment Portal</span></h3>
                 </h3>
                 
                 <div style="text-align:left;  font-size:13px; color:rgb(69 90 100);"><p>
-                    Hey radio lover!
+                    Dear Student,
                     <br><br>
-                    Congratulations! You are part of the first group that will start using our brand new Central Live Radio app, development by IT students from CU. Download the app from Google Play store and begin to listen to our radio programs. Is the interface clear? Do the different functions work smoothly? Is the app user-friendly? <br><br>
-
-<br>
-                  Kindly give us your feedback on https://radio.central.edu.gh/ And feel free to sign up friends, family and any body who is interested in our content.
-                  <br> Also, do you want to be part of our production team?
-                  
-                  <br>
-                  <br>Then sign up now as an intern or volunteer through centrallive0@gmail.com. or https://radio.central.edu.gh/ ThXXX!.<br>
-                  
-                  
-                Have an amazing day.</p>
+                    I hope this message finds you well and refreshed after your well-deserved vacation. As your President, I want to extend a warm and hearty welcome to each one of you as we embark on a new academic season together.
+<br><br>
+Vacations are a time to rejuvenate, recharge, and reflect on our goals and aspirations. I hope you had the opportunity to spend quality time with loved ones, explore new experiences, and return with a sense of enthusiasm and purpose.
+<br><br>
+As we begin this new chapter, let's carry the positive energy and determination from our vacations into our academic journey. Remember that each day is an opportunity to learn, grow, and make a positive impact on our community.
+<br><br>
+Our university is a place of learning, collaboration, and innovation. Together, we will face new challenges, discover new opportunities, and create lasting memories. I encourage you to engage in your studies, seek out new friendships, and participate in extracurricular activities that align with your interests and passions.
+<br><br>
+Our faculty and staff are here to support you every step of the way, and your fellow students are your partners on this incredible journey. Let's work together to make this academic year the best one yet.
+<br><br>
+If you ever have questions, concerns, or ideas to share, please don't hesitate to reach out. Your voices matter, and we are committed to ensuring your success.<br><br>
+Wishing you a productive and fulfilling semester ahead!
+<br><br>
+Warm regards,
+<br><br>
+President</p>
 
                  
                 </div>
 
                 <div style="background-color:#ca181e; ">
-                    <h2 style="padding:50px; color:#fff; ">Central Live Radio</h2>
+                    <h2 style="padding:50px; color:#fff; ">
+                    Central University SRC Portal</h2>
     
                     </div>
+                    <p style="text-align:center;">Powered by Prestoghana</p>
             </div>
             
             
