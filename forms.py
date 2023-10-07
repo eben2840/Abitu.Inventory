@@ -35,7 +35,8 @@ class Adduser(FlaskForm):
     ('SPORTS COMMITTEE', 'SPORTS COMMITTEE'),
     ('TRANSPORT COMMITTEE', 'TRANSPORT COMMITTEE'),
     ('WELFARE AND PROTOCOL COMMITTEE', 'WELFARE AND PROTOCOL COMMITTEE'),
-    ('PROCUREMENT COMMITTEE', 'PROCUREMENT COMMITTEE')
+    ('PROCUREMENT COMMITTEE', 'PROCUREMENT COMMITTEE'),
+    ('ORGANIZING COMMITTEE', 'ORGANIZING COMMITTEE')
 ], default=None)
 
     gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
