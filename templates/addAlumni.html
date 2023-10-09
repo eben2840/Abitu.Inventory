@@ -61,7 +61,7 @@
       <a href="#" class="logo">
 
        
-        <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" width="100" height="100" alt="">
+        <img src="static/img/new.jpeg" width="100" height="100" alt="">
       </a>
 
       <nav class="navbar" data-navbar>
@@ -159,16 +159,25 @@
                   <input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space",placeholder="Index",id="floatingInput" placeholder="Email" required>
                   
                   
-                  
                   {{form.ministry( class="input-field my-5 my-lg-5 mt-2 space", style="  ",placeholder="Index",id="floatingInput", required="required")}}
-                  {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Why do you want to join this committee?",id="floatingInput", required="required")}}
+                  <label for="textarea">Why do you want to join this committee?</b></label>
+                  <textarea name="reason" type="reason" class="input-field my-5 my-lg-5 mt-2 space" placeholder="Why do you want to join this committee?" required="">       </textarea>
+                  
+                 <!-- {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Why do you want to join this committee?",id="floatingInput", required="required")}}
                   {{form.qualities( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="What are the special qualities you will bring to this committee?",id="floatingInput", required="required")}}
+                  -->
+                  <label for="textarea">What are the special qualities you will bring to this committee?</b></label>
+                  <textarea name="qualities" type="qualities" class="input-field my-5 my-lg-5 mt-2 space"  required="">       </textarea>
                   
                   <div class="alert alert-primary" role="alert">
                     Leadership Experience, If any please state them.
                   </div>
-                  {{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
                   
+                  <label for="textarea">Please type your Position/s</label>
+                  <textarea name="position" type="position" class="input-field my-5 my-lg-5 mt-2 space" placeholder="Position" required="">       </textarea>
+                  
+                  <!--{{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
+                  -->
                   {{form.image_file (class="form-control",style="display:none;", id="firebaseLink" )}}
                  
                 
