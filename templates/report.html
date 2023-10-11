@@ -104,7 +104,7 @@
   </div>
   
 </header>
-<div class="container" style="margin-top:120px;">
+<div class="containe" style="margin-top:120px; padding:30px;">
 
 <table class="table align-middle mb-0 bg-white">
   <thead class="bg-light">
@@ -112,7 +112,7 @@
       <th>Name & Committe</th>
       <th>Gender & Program</th>
       <th>Email & Number</th>
-      <th>Campus</th>
+      <th>Proposed Committe</th>
      
     </tr>
   </thead>
@@ -132,7 +132,7 @@
       <a href="{{url_for("list", userid=users.id)}}" style="text-decoration: none; color: #000;">
 
             <p class="fw-bold mb-1">{{users.fullname}}</p>
-            <p class="text-muted mb-0">{{users.ministry}}</p>
+            <p class="text-muted mb-0">{{users.campus}}</p>
           
           </div>
         </div>
@@ -147,7 +147,7 @@
       <td><p class="fw-normal mb-1">{{users.email}}</p>
         <p class="text-muted mb-0">{{users.telephone}}</p></td>
       
-        <td><p class="fw-normal mb-1">{{users.campus}}</p>
+        <td><p class="fw-normal mb-1">{{users.ministry}}</p>
           </td>
 
         </a>
