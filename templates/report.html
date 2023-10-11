@@ -112,14 +112,15 @@
       <th>Name & Committe</th>
       <th>Gender & Program</th>
       <th>Email & Number</th>
-      <th>Position</th>
-      <th>Admission</th>
+      <th>Campus</th>
+     
     </tr>
   </thead>
   <tbody>
+    {%for users in users%} 
     <tr>
-      {%for users in users%} 
       <td>
+        <a href="{{url_for("list", userid=users.id)}}" style="text-decoration: none; color: #000;">
         <div class="d-flex align-items-center">
           <img
               src={{users.image_file}}
@@ -128,26 +129,31 @@
               class="rounded-circle"
               />
           <div class="ms-3">
+      <a href="{{url_for("list", userid=users.id)}}" style="text-decoration: none; color: #000;">
+
             <p class="fw-bold mb-1">{{users.fullname}}</p>
             <p class="text-muted mb-0">{{users.ministry}}</p>
+          
           </div>
         </div>
       </td>
+   
 
       <td>
         <p class="fw-normal mb-1">{{users.gender}}</p>
         <p class="text-muted mb-0">{{users.program}}</p>
       </td>
+
       <td><p class="fw-normal mb-1">{{users.email}}</p>
         <p class="text-muted mb-0">{{users.telephone}}</p></td>
-      <td>
-        {{users.campus}}
-      </td>
-      <td>
-        <span> {{users.position}}</span>
-      </td>
-    </tr>
-    {%endfor%}
+      
+        <td><p class="fw-normal mb-1">{{users.campus}}</p>
+          </td>
+
+        </a>
+       
+        </tr>
+          {%endfor%}
     
   </tbody>
 </table>

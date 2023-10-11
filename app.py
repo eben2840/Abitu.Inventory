@@ -414,7 +414,7 @@ def addalumni():
                    telephone=form.telephone.data,      
                    position=form.position.data,
                    reason=form.reason.data,
-                   campus=form.reason.data,
+                   campus=form.campus.data,
                    qualities=form.qualities.data,
                image_file=form.image_file.data
                   )
@@ -422,6 +422,7 @@ def addalumni():
             db.session.add(new)
             db.session.commit()
             send_email()
+           
         
             flash("Thank you for filling the form, Please check your email for a message from the President.", "success")
             return redirect('/')
@@ -736,7 +737,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route('/report')
+@app.route('/report',methods=['GET','POST'])
 @login_required
 def report():
     print("Fetching all")
