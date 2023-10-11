@@ -285,7 +285,7 @@ def send_email():
                 <div class="container">
                     <div style="display:flex; padding:10px; justify-content:space-between;">
                         <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" style="width:100px;" loading="lazy" >
-                         
+    
                           </div>
                           
                 <h3 style="text-align:center; font-size:30px;">Central University SRC
