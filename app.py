@@ -782,6 +782,16 @@ def report():
     print(current_user)
     return render_template("report.html", users=users, current_user=current_user, title="report")
  
+ 
+@app.route('/email',methods=['GET','POST'])
+@login_required
+def email():
+    print("Fetching all")
+    users=User.query.order_by(User.id.desc()).all()
+    print(users)
+    print(current_user)
+    return render_template("email.html", users=users, current_user=current_user, title="report")
+ 
 
 
 @app.route('/allmes')
