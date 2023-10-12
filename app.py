@@ -1,4 +1,8 @@
 
+import csv
+import shutil
+import sqlite3
+import pandas as pd
 import os
 from email.message import EmailMessage
 import ssl
@@ -168,6 +172,39 @@ class Leaders(db.Model,UserMixin):
     timestamp = db.Column(db.Float, default=time.time)
     def __repr__(self):
         return f"School('{self.id}', {self.others}')"
+    
+    
+    
+@app.route('/backup_database', methods=['GET'])
+def backup_database():
+    source_db_path = 'test.db'  # Replace with the actual path to your SQLite database file.
+    backup_db_path = 'your_database_backup.db'  # Replace with the desired path for the backup file.
+
+    try:
+        shutil.copy2(source_db_path, backup_db_path)
+        return jsonify({'message': 'Database backup successful'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+
+# # Connect to the SQLite database
+# conn = sqlite3.connect('test.db')
+
+# # SQL query to select data from your table
+# query = "SELECT * FROM Person"
+
+# # Read data into a DataFrame
+# df = pd.read_sql_query(query, conn)
+
+# # Close the database connection
+# conn.close()
+
+# # Export the data to an Excel file (output.xlsx)
+# df.to_excel('output.xlsx', index=False)
+
+# print("Data has been exported to output.xlsx.")
+
 
 # email_sender = 'pay@prestoghana.com'
  
@@ -346,10 +383,8 @@ President</p>
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
             smtp.login(radio, email_password)
             smtp.sendmail(radio, email_receiver, em.as_string())
-
-    
         return redirect(url_for('userbase')) 
-    
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -399,6 +434,7 @@ def ministries():
 #         'value': random.randint(0, 100)
 #     } for user in users]
 #     return jsonify(data)
+
 
 
 @app.route('/addalumni', methods=['GET', 'POST'])
