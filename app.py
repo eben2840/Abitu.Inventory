@@ -1,8 +1,5 @@
 
-import csv
-import shutil
-import sqlite3
-import pandas as pd
+
 import os
 from email.message import EmailMessage
 import ssl
