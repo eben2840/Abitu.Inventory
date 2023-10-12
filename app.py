@@ -175,16 +175,16 @@ class Leaders(db.Model,UserMixin):
     
     
     
-@app.route('/backup_database', methods=['GET'])
-def backup_database():
-    source_db_path = 'test.db'  # Replace with the actual path to your SQLite database file.
-    backup_db_path = 'your_database_backup.db'  # Replace with the desired path for the backup file.
+# @app.route('/backup_database', methods=['GET'])
+# def backup_database():
+#     source_db_path = 'test.db'  # Replace with the actual path to your SQLite database file.
+#     backup_db_path = 'your_database_backup.db'  # Replace with the desired path for the backup file.
 
-    try:
-        shutil.copy2(source_db_path, backup_db_path)
-        return jsonify({'message': 'Database backup successful'})
-    except Exception as e:
-        return jsonify({'error': str(e)})
+#     try:
+#         shutil.copy2(source_db_path, backup_db_path)
+#         return jsonify({'message': 'Database backup successful'})
+#     except Exception as e:
+#         return jsonify({'error': str(e)})
 
 
 
@@ -384,6 +384,9 @@ President</p>
             smtp.login(radio, email_password)
             smtp.sendmail(radio, email_receiver, em.as_string())
         return redirect(url_for('userbase')) 
+
+
+
 
 @app.route('/dashboard')
 @login_required
