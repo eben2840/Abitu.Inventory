@@ -29,7 +29,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/cuministry'
 
-app.config['SECRET_KEY'] =" thisismysecretkey"
+app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 
 # photos=UploadSet('photos', IMAGES)
@@ -385,6 +385,7 @@ President</p>
 
 
 
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -423,8 +424,35 @@ def ministries():
     prayer_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Prayer Ministry').scalar()
     lord_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Lords Band').scalar()
     return render_template('year.html',title='Ministries',total_media=total_media,mcc_count=mcc_count, lord_count=lord_count,prayer_count=prayer_count,coun_count=coun_count,missions_count=missions_count,lv_count=lv_count,cjc_count=cjc_count, praise_count=praise_count,dis_count=dis_count, communion_count=communion_count, media_count=media_count,protocol_count=protocol_count)
-    
-    
+
+
+
+@app.route('/blog', methods=['GET', 'POST'])
+def blog():
+    return render_template('blog.html')
+
+@app.route('/passqo', methods=['GET', 'POST'])
+def passqo():
+    return render_template('passqo.html')
+
+@app.route('/questions', methods=['GET', 'POST'])
+def questions():
+    return render_template('questions.html')
+
+@app.route('/level', methods=['GET', 'POST'])
+def level():
+    return render_template('level.html')
+
+@app.route('/mainquestion', methods=['GET', 'POST'])
+def mainquestion():
+    return render_template('mainquestion.html')
+
+
+@app.route('/pages', methods=['GET', 'POST'])
+def pages():
+    return render_template('pages.html')
+
+ 
 # @app.route('/live_data')
 # def live_data():
 #     gender = request.args.get('gender')  
