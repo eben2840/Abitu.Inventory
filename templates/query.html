@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query PDFs by Course</title>
+</head>
+<body>
+    <h1>Select a course to query PDFs:</h1>
+    <form method="POST" action="/query_pdf">
+        <select name="course_name">
+            {% for course in courses %}
+            <option value="{{ course.name }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="level">
+            <option value="level100">Level 100</option>
+            <option value="level200">Level 200</option>
+            <option value="level300">Level 300</option>
+            <option value="level400">Level 400</option>
+        </select>
+        <input type="number" name="year" placeholder="Year" required>
+        <input type="submit" value="Query PDFs">
+    </form>
+    
+</body>
+</html>

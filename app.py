@@ -5,22 +5,25 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import os
+from datetime import datetime
 import secrets
 import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, render_template, url_for,request,jsonify,get_flashed_messages
+from sqlalchemy import distinct 
+from flask import Flask, redirect, render_template, url_for,request,jsonify,get_flashed_messages, send_from_directory
 from flask_migrate import Migrate
 import json
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
 from flask_login import login_required,login_user,logout_user,current_user,UserMixin, LoginManager
 from flask_marshmallow import Marshmallow
 from flask import(
-Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
+Flask,g,redirect,render_template,request,session,url_for,flash,jsonify, send_from_directory
 )
 from flask_cors import CORS
 import json
 import time
+from werkzeug.utils import secure_filename
 
 
 app=Flask(__name__)
@@ -31,6 +34,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
+UPLOAD_FOLDER = 'uploaded_pdfs'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # photos=UploadSet('photos', IMAGES)
 # configure_uploads(app, photos)
@@ -171,6 +176,31 @@ class Leaders(db.Model,UserMixin):
         return f"School('{self.id}', {self.others}')"
     
     
+
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    level = db.Column(db.String())
+    schools = db.Column(db.String())
+    course = db.Column(db.String())
+    year = db.Column(db.String())
+    
+
+
+
+class PDFFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    filename = db.Column(db.String(100), unique=True, nullable=False)
+    course = db.relationship('Course', backref=db.backref('pdf_files', lazy=True))
+    year = db.Column(db.Integer)
+    
+    
+
+    
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
     
 # @app.route('/backup_database', methods=['GET'])
 # def backup_database():
@@ -425,7 +455,97 @@ def ministries():
     lord_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Lords Band').scalar()
     return render_template('year.html',title='Ministries',total_media=total_media,mcc_count=mcc_count, lord_count=lord_count,prayer_count=prayer_count,coun_count=coun_count,missions_count=missions_count,lv_count=lv_count,cjc_count=cjc_count, praise_count=praise_count,dis_count=dis_count, communion_count=communion_count, media_count=media_count,protocol_count=protocol_count)
 
+@app.route('/query_pdf', methods=['GET', 'POST'])
+def query_pdf():
+    if request.method == 'POST':
+        course_name = request.form.get('course_name')
+        level = request.form.get('level')
+        year = request.form.get('year')
+        # course = Course.query.filter_by(name=course_name).first()
+        course = Course.query.filter_by(name=course_name, level=level).first()
+        if course:
+            pdf_files = PDFFile.query.filter_by(course=course, year=year).all()
+            return render_template('pdf_results.html', course=course, pdf_files=pdf_files)
+        else:
+            return "Course not found"
 
+    # Render a form to select the course for the query
+    courses = Course.query.all()
+    return render_template('query.html', courses=courses)
+
+
+
+
+@app.route('/download_pdf/<filename>')
+def download_pdf(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/add_course', methods=['GET', 'POST'])
+def add_course():
+    if request.method == 'POST':
+        course_name = request.form.get('course_name')
+        level = request.form.get('level')
+        year = request.form.get('year')
+        pdf_file = request.files.get('pdf_file')  
+
+        existing_course = Course.query.filter_by(name=course_name, level=level, year=year).first()
+        if existing_course:
+            return "Course already exists"
+
+        new_course = Course(name=course_name, level=level, year=year)
+        try:
+            db.session.add(new_course)
+            db.session.commit()
+            
+            if pdf_file:
+                filename = secure_filename(pdf_file.filename)
+
+                # Generate a unique filename by adding a timestamp
+                timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+                unique_filename = f"{timestamp}_{filename}"
+
+                pdf_file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
+                pdf = PDFFile(course=new_course, filename=unique_filename)
+                db.session.add(pdf)
+                db.session.commit()
+            return redirect('/levels')
+        except Exception as e:
+            db.session.rollback()
+            return f"Error adding the course: {str(e)}"
+    return render_template('add_course.html')
+
+
+
+
+@app.route('/level100', methods=['GET', 'POST'])
+def level100():
+    hundred = Course.query.filter_by(level='100').all()
+    
+    return render_template('level100.html', hundred=hundred)
+
+@app.route('/level200', methods=['GET', 'POST'])
+def level200():
+    two = Course.query.filter_by(level='200').all()
+    return render_template('level200.html', two=two)
+
+@app.route('/level300', methods=['GET', 'POST'])
+def level300():
+    two = Course.query.filter_by(level='300').all()
+    return render_template('level300.html', two=two)
+
+@app.route('/level400', methods=['GET', 'POST'])
+def level400():
+    two = Course.query.filter_by(level='400').all()
+    return render_template('level400.html', two=two)
+
+
+
+
+
+@app.route('/levels')
+def levels():
+    return render_template('list_levels.html')  
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
@@ -435,13 +555,32 @@ def blog():
 def passqo():
     return render_template('passqo.html')
 
-@app.route('/questions', methods=['GET', 'POST'])
-def questions():
-    return render_template('questions.html')
+
+@app.route('/school', methods=['GET', 'POST'])
+def school():
+    return render_template('school.html')
+
 
 @app.route('/level', methods=['GET', 'POST'])
 def level():
-    return render_template('level.html')
+    courses = Course.query.all() 
+    total_100 = Course.query.filter_by(level='100').count()
+    total_200 = Course.query.filter_by(level='200').count()
+    total_300 = Course.query.filter_by(level='300').count()
+    total_400 = Course.query.filter_by(level='400').count()
+    return render_template('level.html', courses=courses, total_100=total_100,total_200=total_200,total_300=total_300,total_400=total_400)
+
+
+
+@app.route('/level/<int:userid>', methods=['GET', 'POST'])
+def viewlevel(userid):
+    print("Fetching one")
+    profile=Course.query.get_or_404(userid)
+    return render_template("levelid.html", profile=profile, title="list")
+ 
+ 
+
+
 
 @app.route('/mainquestion', methods=['GET', 'POST'])
 def mainquestion():
@@ -451,6 +590,10 @@ def mainquestion():
 @app.route('/pages', methods=['GET', 'POST'])
 def pages():
     return render_template('pages.html')
+
+@app.route('/basee', methods=['GET', 'POST'])
+def basee():
+    return render_template('basee.html')
 
  
 # @app.route('/live_data')
@@ -496,26 +639,22 @@ def addalumni():
 
 
 
-@app.route('/leadersadd', methods=['GET', 'POST'])
+@app.route('/addinfo', methods=['GET', 'POST'])
 def leadersadd():
-    form=LeaderForm()
+    form=Addinfo()
     if form.validate_on_submit():
-  
-            new=Leaders(director=form.director.data,
-                 directress=form.directress.data,
-                 others=form.others.data,
-                   ministries=form.ministries.data,  
-                   total_number=form.total_number.data,  
-                         
-               
+            new=Course(
+                name=form.name.data,
+                level=form.level.data,
+                schools=form.schools.data,
+                year=form.year.data
                   )
-       
             db.session.add(new)
             db.session.commit()
-            flash("Thank you for filling the form", "success")
-            return redirect('/')
+            flash("Thank you for adding passqo", "success")
+            return redirect('/passqo')
     print(form.errors)
-    return render_template("leadersadd.html", form=form, title='addalumni')
+    return render_template("leadersadd.html", form=form)
 
 
 

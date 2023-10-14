@@ -90,21 +90,26 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
- 
-class LeaderForm(FlaskForm):
-    others = StringField('Others')
-    director = StringField('Director', validators=[DataRequired()])
-    directress = StringField('Directress', validators=[DataRequired()])
-    ministries = SelectField('ministries', choices=[('Ministry','Ministry'),('Media', 'Media'), ('Praise & Worship','Praise & Worship'),('MCC','MCC'),('CJC','CJC'),('Levite Generation','Levite Generation'),('Communion','Communion'),('Protocol','Protocol'),('Discipleship','Discipleship'),('Missons','Missons'),('Counselling','Counselling'),('Prayer Ministry','Prayer Ministry'),('Lords Band','Lords Band') ], default=None )
-    total_number = StringField('Email', validators=[DataRequired()])
-    submit = SubmitField('Login')
- 
+    
+    
+
+    
+
+class Addinfo(FlaskForm):
+    name = StringField('name')
+    level = SelectField('level', choices=[('100','100'),('200', '200'), ('300','300'), ('400','400') ], default=None)
+    schools = SelectField('schools',choices=[('Information Technology','Information Technology'),('Doctor of Pharmacy', 'Doctor of Pharmacy'), ('Nursing','Nursing') ], default=None)
+    year = SelectField('year', choices=[('2021','2021'),('2022', '2022'), ('2023','2023') ], default=None )
+    submit = SubmitField('submit')
+
+
+
+
 class Registration(FlaskForm):
     indexnumber= StringField('indexNumber')
     email = StringField('Email', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
-    submit = SubmitField('SignUp')  
+    name = StringField('Name', validators=[DataRequired()]) 
     submit =SubmitField('submit')
     
 

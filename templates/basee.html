@@ -234,65 +234,21 @@
       </div>
       <hr>
 
+
+    
+
       <span class="" style="font-size:20px; margin-top:50px;">
         Choose Level:
       </span>
-      <div class="row" style="justify-content: space-between; ">
-                  
-        <div class="col-md-3 col-6 ">
-          <div class="department-item" data-aos="fade-down-left">
-            <a href="/level100" style="text-decoration: none; color: #992621;">
-              <h5 class="names" style="font-size:16px;"> Level 100</h5>
+      
+        
+      {% block body %}
+      <div>
+          <div class="container">
               
-              <!--{% for level in levels %}
-      
-            <li>{{ level }}</li>newww
-        {% endfor %}-->
-
-       <!-- {% for course in courses %}
-        <tr>
-            <td>{{ course.name }}</td>
-            <td>{{ course.level }}</td>
-            <td>{{ course.year }}</td>
-            <td>{{ course.pdf_file }}</td>
-        </tr>
-        {% endfor %}-->
-              <h5 class="names" style="color:red; font-size:10px;">{{total_100}} Questions </h5>
-          </a>
           </div>
-        </div>
-        
-        <div class="col-md-3 col-6 ">
-          <div class="department-item" data-aos="fade-down-left">
-            <a href="/level200" style="text-decoration: none; color: #992621;">
-              <h5 class="names" style="font-size:16px;"> Level 200</h5>
-              <h5 class="names" style="color:red; font-size:10px;">{{total_200}} Questions</h5>
-          </a>
-          </div>
-        </div>
-        
-      
-        <div class="col-md-3 col-6 ">
-          <div class="department-item" data-aos="fade-down-left">
-            <a href="/level300" style="text-decoration: none; color: #992621;">
-              <h5 class="names" style="font-size:16px;"> Level 300 </h5>
-              <h5 class="names" style="color:red; font-size:10px;">{{total_300}} Questions</h5>
-          </a>
-          </div>
-        </div>
-      
-        <div class="col-md-3 col-6 ">
-          
-          <div class="department-item" data-aos="fade-down-left">
-            <a href="/level400" style="text-decoration: none; color: #992621;">
-              <h5 class="names" style="font-size:16px;">Level 400</h5>
-              <h5 class="names" style="color:red; font-size:10px;"> {{total_400}} Questions</h5>
-          </a>
-          </div>
-        </div>
-      
-        
-      
+      </div>
+      {% endblock%}
       
         
       

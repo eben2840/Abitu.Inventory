@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Files for Level {{ level }}</title>
+</head>
+<body>
+    <h1>PDF Files for Level {{ level }}</h1>
+    <ul>
+        {% for pdf in pdfs %}
+            <li><a href="{{ url_for('download_pdf', filename=pdf.filename) }}">{{ pdf.filename }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
