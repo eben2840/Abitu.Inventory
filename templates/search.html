@@ -1,4 +1,4 @@
-{% extends 'try.html' %}
+{% extends 'basee.html' %}
 {% block body %}
 
 
@@ -14,12 +14,12 @@
   {%else %}
   <div class="row">
   {% for post in posts %}
-  <div class="col-md-6">
+  <div class="col-md-3 col-6">
         <div class="department-item" data-aos="fade-down-left">
-          <a href="{{url_for("list", userid=post.id)}}" style="text-decoration: none; color: #992621;">
-          <h5 class="names">{{ post.fullname }}</h5>
-          <h6 class="text-muted">{{ post.ministry }}</h6>
-          <h6 class="text-muted">{{ post.position }}</h6>
+          <a href="{{url_for("viewlevel", userid=post.id)}}" style="text-decoration: none; color: #992621;">
+            <h5 class="names" style="font-size:16px;">{{ post.name }}</h5>
+            <td>{{ post.schools }}</td><br>
+            <td>{{ post.year }}</td>
           </a>
         </div>
         </div>

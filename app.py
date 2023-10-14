@@ -648,7 +648,7 @@ def leadersadd():
                 level=form.level.data,
                 schools=form.schools.data,
                 year=form.year.data
-                  )
+                  )    
             db.session.add(new)
             db.session.commit()
             flash("Thank you for adding passqo", "success")
@@ -884,11 +884,12 @@ def base():
 def search():
     form= Search()
     if request.method == 'POST': 
-        posts =User.query
+        posts =Course.query
         if form.validate_on_submit():
             postsearched=form.searched.data
-            posts =posts.filter(User.fullname.like('%'+ postsearched + '%') )
-            posts =posts.order_by(User.ministry).all() 
+            posts =posts.filter(Course.name.like('%'+ postsearched + '%') )
+            posts =posts.order_by(Course.schools).all()
+             
             # posts =posts.order_by(User.position).all() 
             flash("You searched for "+ postsearched, "success")  
             print(posts)   

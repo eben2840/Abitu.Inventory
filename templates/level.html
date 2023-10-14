@@ -230,7 +230,16 @@
           </span>
           <h1 class="h1 hero-title" style="margin-bottom:20px;">CU Passqo Portal</h1>
         <div class="input-wrapper">
-            <input   class="input-field my-5 my-lg-5 mt-2 space ", placeholder="Search for your course", id="floatingInput"  required>
+
+          <form class="d-flex " role="search" method='POST' action='{{url_for('search')}}'style="margin-top:20px;" >
+            {{form.hidden_tag()}}
+          
+            <input class="input-field my-0 my-lg-0 mt-1 space " type="search" name='searched' placeholder="Search for course" aria-label="Search" style="">
+            <button class="btn btn-secondary has-after" type="submit" > <i class="fa fa-search" aria-hidden="true"></i> </button>
+              
+          </form>
+
+          </form>
       </div>
       <hr>
 

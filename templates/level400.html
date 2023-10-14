@@ -230,27 +230,70 @@
           </span>
           <h1 class="h1 hero-title" style="margin-bottom:20px;">CU Passqo Portal</h1>
         <div class="input-wrapper">
-            <input   class="input-field my-5 my-lg-5 mt-2 space ", placeholder="Search for your course", id="floatingInput"  required>
-      </div>
+          <form class="d-flex " role="search" method='POST' action='{{url_for('search')}}'style="margin-top:20px;" >
+            {{form.hidden_tag()}}
+          
+            <input class="input-field my-0 my-lg-0 mt-1 space " type="search" name='searched' placeholder="Search for course" aria-label="Search" style="">
+            <button class="btn btn-secondary has-after" type="submit" > <i class="fa fa-search" aria-hidden="true"></i> </button>
+              
+          </form>
+            
+          </div>
       <hr>
 
       <span class="" style="font-size:20px; margin-top:50px;">
         Choose School:
       </span>
 
-      <select id="schoolFilter" style="padding:10px; margin-bottom:20px;">
-        <option value="all">All Schools</option>
-        <option value="Information Technology">Information Technology</option>
-        <option value="Doctor of Pharmacy">Doctor of Pharmacy</option>
-        <option value="Nursing">Nursing</option>
+     
+      <select class="btn btn-secondary" id="schoolFilter" style="padding:5px; margin-bottom:20px;">
+        <option value="all">--All Schools--</option>
+        <option value="Nursing">"Nursing"</option>
+        <option value="ECONOMICS">    "ECONOMICS"</option>
+          <option value="PUBLIC HEALTH">        "PUBLIC HEALTH"</option>
+            <option value="MANAGEMENT">        "MANAGEMENT"</option>
+              <option value="MARKETING">        "MARKETING "</option>
+                <option value="ACCOUNTING">        "ACCOUNTING "</option>
+                  <option value="HUMAN RESOURCE">        "HUMAN RESOURCE"</option>
+                    <option value="BANKING & FINANCE">        "BANKING & FINANCE"</option>
+                      <option value="Civil Engineering">              "Civil Engineering "</option>
+                        <option value="Information Technology">             "Information Technology "</option>
+                          <option value="Computer Science ">         "Computer Science "</option>
+                                  <option value="Nursing">        "Nursing"</option>
+                <option value="PA Dept">        "PA Dept"</option>
+                  <option value="Faculty of Law ">       "Faculty of Law "</option>
+                    <option value="Sociology ">       "Sociology "</option>
+                      <option value="Vision and Life ">       "Vision and Life "</option>
+                        <option value="Social Work ">       "Social Work "</option>
+                          <option value="Communications and Laguages Studies">     "Communications and Laguages Studies"</option>
+                <option value="Theology">      "Theology"</option>
+                  <option value="Psychology">      "Psychology "</option>
+                <option value="Environment and Development Studies">      "Environment and Development Studies"</option>
+                  <option value="Communications and Media Studies">     "Communications and Media Studies "</option>
+                    <option value="Agribusiness">        "Agribusiness"</option>
+                <option value="Design Interior, Graphic & Fashion">     "Design Interior, Graphic & Fashion "</option>
+                  <option value="Real Estate ">       "Real Estate "</option>
+                <option value="Architecture">       "Architecture "</option>
+                  <option value="Doctor of Pharmacy">       "Doctor of Pharmacy"</option>
+                    <option value="Pharmacy Practice ">       "Pharmacy Practice "</option>
+                      <option value="MGT & P.A.">    "MGT & P.A. "</option>
     </select>
+
+    <select class="btn btn-secondary" id="yearFilter" style="padding:5px; margin-bottom:20px;">
+      <option value="all">All Years</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+  </select>
     
       <div class="row" style="justify-content: space-between; ">
         {% for user in two %}  
 
         <div class="col-md-3 col-6 ">
-          <div class="department-item" data-aos="fade-down-left" data-school="{{ user.schools }}">
-            <a href="" style="text-decoration: none; color: #992621;">
+          <div class="department-item" data-aos="fade-down-left" data-school="{{ user.schools }}"  data-year="{{ user.year }}" >
+            <a href="{{url_for("viewlevel", userid=user.id)}}"  style="text-decoration: none; color: #992621;">
+            
+            
               <h5 class="names" style="font-size:16px;"> {{ user.name }}</h5>
               
             
@@ -968,18 +1011,22 @@ style="background-image: url('static/assets/images/hero-bg.png')">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-        $('#schoolFilter').on('change', function() {
-            var selectedSchool = $(this).val();
+        $('#schoolFilter, #yearFilter').on('change', function() {
+            var selectedSchool = $('#schoolFilter').val();
+            var selectedYear = $('#yearFilter').val();
             $('.department-item').hide();
-            if (selectedSchool === 'all') {
+            if (selectedSchool === 'all' && selectedYear === 'all') {
                 $('.department-item').show();
-            } else {
+            } else if (selectedSchool === 'all') {
+                $('.department-item[data-year="' + selectedYear + '"]').show();
+            } else if (selectedYear === 'all') {
                 $('.department-item[data-school="' + selectedSchool + '"]').show();
+            } else {
+                $('.department-item[data-school="' + selectedSchool + '"][data-year="' + selectedYear + '"]').show();
             }
         });
     });
 </script>
-
 
 
 
