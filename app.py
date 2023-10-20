@@ -1178,11 +1178,6 @@ def programs(departmentSlug):
 @app.route('/', methods=['POST','GET'])
 def userbase():
     print("Fetching all")
-    # total_students = User.query.count()
-    # total_male = User.query.filter_by(gender='Male').count()
-    # total_female = User.query.filter_by(gender='Female').count()
-    # image=User.query.order_by(User.id.desc()).all()
-    # print(image)
     return render_template("userbase.html")
  
 
