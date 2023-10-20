@@ -130,11 +130,12 @@
                       class="form-control" name="" id="" aria-describedby="helpId" placeholder="" style="width:85%; border: none">
                    
               </form>
-                 <form action='' method="post"  >
+                 <form method="POST" action="/addinfo" enctype="multipart/form-data" >
                   {{form.hidden_tag()}}
                  
                
                 <div class="input-wrapper">
+                  {{ form.pdf_file(class="form-control-file") }}
                   {{form.name(class="input-field my-5 my-lg-5 mt-2 space",  placeholder="name",id="floatingInput")}}
                   {{form.year(class="input-field my-5 my-lg-5 mt-2 space",  placeholder="",id="floatingInput")}}
                   

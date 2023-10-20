@@ -226,9 +226,9 @@
 
       <div class="container" style="margin-top:100px;">
         <span class="" style="font-size:20px;">
-            All Questions:
+            Level 300:
           </span>
-          <h1 class="h1 hero-title" style="margin-bottom:20px;">CU Passqo Portal</h1>
+          <h1 class="h1 hero-title" style="margin-bottom:20px;">CU Pasco Portal</h1>
         <div class="input-wrapper">
           <form class="d-flex " role="search" method='POST' action='{{url_for('search')}}'style="margin-top:20px;" >
             {{form.hidden_tag()}}
@@ -247,7 +247,7 @@
       </span>
 
       
-      <select class="btn btn-secondary" id="schoolFilter" style="padding:5px; margin-bottom:20px;">
+      <select class="btn btn-secondary" id="schoolFilter" style="padding:15px; margin-bottom:20px;">
         <option value="all">--All Schools--</option>
         <option value="Nursing">"Nursing"</option>
         <option value="ECONOMICS">    "ECONOMICS"</option>
@@ -280,7 +280,7 @@
                       <option value="MGT & P.A.">    "MGT & P.A. "</option>
     </select>
 
-    <select class="btn btn-secondary" id="yearFilter" style="padding:5px; margin-bottom:20px;">
+    <select class="btn btn-secondary" id="yearFilter" style="padding:15px; margin-bottom:20px;">
       <option value="all">All Years</option>
       <option value="2021">2021</option>
       <option value="2022">2022</option>
@@ -290,7 +290,7 @@
       <div class="row" style="justify-content: space-between; ">
         {% for user in two %}  
 
-        <div class="col-md-3 col-6 ">
+        <div class="col-md-3 col-12 ">
           <div class="department-item" data-aos="fade-down-left" data-school="{{ user.schools }}"  data-year="{{ user.year }}" >
             
             <a href="{{url_for("viewlevel", userid=user.id)}}"  style="text-decoration: none; color: #992621;">

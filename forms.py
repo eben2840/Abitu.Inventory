@@ -97,9 +97,11 @@ class LoginForm(FlaskForm):
 
 class Addinfo(FlaskForm):
     name = StringField('name')
-    pdf_file = StringField('pdf_file')
+    pdf_file = FileField('PDF File', validators=[FileAllowed(['pdf'], 'PDF files only!')])
     level = SelectField('level', choices=[('Level','Level'),('100','100'),('200', '200'), ('300','300'), ('400','400') ], default=None)
-    schools = SelectField('school',choices=[('School','School'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
+    schools = SelectField('school',choices=[('School','School'),
+                ('ECONOMICS', 'ECONOMICS'),
+                ('PUBLIC HEALTH', 'PUBLIC HEALTH'),
                 ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
                 ('MARKETING', 'MARKETING'),
                 ('ACCOUNTING', 'ACCOUNTING'),
@@ -187,5 +189,11 @@ class AlbumForm(FlaskForm):
     
 class MessageForm(FlaskForm):
     message= StringField('message', validators=[DataRequired()])
+    submit = SubmitField('Send')  
+    
+    
+    
+class AskForm(FlaskForm):
+    ask= StringField('ask', validators=[DataRequired()])
     submit = SubmitField('Send')  
     

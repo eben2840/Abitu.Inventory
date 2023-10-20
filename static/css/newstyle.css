@@ -67,21 +67,21 @@ h4 {
     justify-content: space-between;
 }
 
-.department-item-active {
-    background-color: #992621;
+.department-item:hover {
+    
     padding: 30px;
     border-radius: 15px;
     color: #fff;
     margin: 0;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(215, 39, 8, 0.2) 0px 8px 24px;
     margin-bottom: 5vh;
     justify-content: space-between;
 }
 
 
-.dashboard-item-text{
+.dashboard-item .names:hover{
     margin-top: 0;
-    color: #992621;
+    color: #fff;
     
 }
 

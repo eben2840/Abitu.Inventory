@@ -5,13 +5,14 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import os
+import uuid
 from datetime import datetime
 import secrets
 import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct 
-from flask import Flask, redirect, render_template, url_for,request,jsonify,get_flashed_messages, send_from_directory
+from flask import Flask, redirect, render_template, send_file, url_for,request,jsonify,get_flashed_messages, send_from_directory
 from flask_migrate import Migrate
 import json
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
@@ -34,8 +35,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
-UPLOAD_FOLDER = 'uploaded_pdfs'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = 'uploads' 
+
 
 # photos=UploadSet('photos', IMAGES)
 # configure_uploads(app, photos)
@@ -184,6 +188,14 @@ class Course(db.Model):
     schools = db.Column(db.String())
     course = db.Column(db.String())
     year = db.Column(db.String())
+    pdf_filename = db.Column(db.String()) 
+    
+    
+    
+class Ask(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ask = db.Column(db.String())
+    
     
 
 
@@ -195,8 +207,6 @@ class PDFFile(db.Model):
     course = db.relationship('Course', backref=db.backref('pdf_files', lazy=True))
     year = db.Column(db.Integer)
     
-    
-
     
 
 if not os.path.exists(UPLOAD_FOLDER):
@@ -455,30 +465,35 @@ def ministries():
     lord_count = db.session.query(func.count(User.id)).filter(User.ministry == 'Lords Band').scalar()
     return render_template('year.html',title='Ministries',total_media=total_media,mcc_count=mcc_count, lord_count=lord_count,prayer_count=prayer_count,coun_count=coun_count,missions_count=missions_count,lv_count=lv_count,cjc_count=cjc_count, praise_count=praise_count,dis_count=dis_count, communion_count=communion_count, media_count=media_count,protocol_count=protocol_count)
 
+
 @app.route('/query_pdf', methods=['GET', 'POST'])
 def query_pdf():
     if request.method == 'POST':
         course_name = request.form.get('course_name')
         level = request.form.get('level')
         year = request.form.get('year')
-        # course = Course.query.filter_by(name=course_name).first()
         course = Course.query.filter_by(name=course_name, level=level).first()
         if course:
             pdf_files = PDFFile.query.filter_by(course=course, year=year).all()
             return render_template('pdf_results.html', course=course, pdf_files=pdf_files)
         else:
             return "Course not found"
-
-    # Render a form to select the course for the query
     courses = Course.query.all()
     return render_template('query.html', courses=courses)
 
 
 
 
-@app.route('/download_pdf/<filename>')
-def download_pdf(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+
+
+
+# @app.route('/download_pdf/<filename>')
+# def download_pdf(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/add_course', methods=['GET', 'POST'])
@@ -501,7 +516,6 @@ def add_course():
             if pdf_file:
                 filename = secure_filename(pdf_file.filename)
 
-                # Generate a unique filename by adding a timestamp
                 timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
                 unique_filename = f"{timestamp}_{filename}"
 
@@ -521,8 +535,8 @@ def add_course():
 @app.route('/level100', methods=['GET', 'POST'])
 def level100():
     hundred = Course.query.filter_by(level='100').all()
-    
     return render_template('level100.html', hundred=hundred)
+
 
 @app.route('/level200', methods=['GET', 'POST'])
 def level200():
@@ -541,11 +555,15 @@ def level400():
 
 
 
+@app.route('/uploaded')
+def uploaded():
+    return render_template('uploaded.html')  
 
 
 @app.route('/levels')
 def levels():
-    return render_template('list_levels.html')  
+    return render_template('list_levels.html') 
+
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
@@ -576,6 +594,7 @@ def level():
 def viewlevel(userid):
     print("Fetching one")
     profile=Course.query.get_or_404(userid)
+    
     return render_template("levelid.html", profile=profile, title="list")
  
  
@@ -639,23 +658,47 @@ def addalumni():
 
 
 
+@app.route('/ask', methods=['GET', 'POST'])
+def ask():
+    form = AskForm()
+    if form.validate_on_submit():
+        question = Ask(
+            ask=form.ask.data,
+            
+        )
+        print(question)
+        db.session.add(question)
+        db.session.commit()
+        flash("Delivered", "success")
+        return redirect('/ask')
+    ask=Ask.query.order_by(Ask.id.desc()).all()
+    return render_template('ask.html',form=form, ask=ask)  
+
 @app.route('/addinfo', methods=['GET', 'POST'])
 def leadersadd():
-    form=Addinfo()
+    form = Addinfo()
     if form.validate_on_submit():
-            new=Course(
-                name=form.name.data,
-                level=form.level.data,
-                schools=form.schools.data,
-                year=form.year.data
-                  )    
-            db.session.add(new)
-            db.session.commit()
-            flash("Thank you for adding passqo", "success")
-            return redirect('/passqo')
+        new_course = Course(
+            name=form.name.data,
+            level=form.level.data,
+            schools=form.schools.data,
+            year=form.year.data
+        )
+        if form.pdf_file.data:
+            pdf_file = form.pdf_file.data
+            filename = secure_filename(pdf_file.filename)
+            pdf_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            new_course.pdf_filename = filename
+        
+        print(new_course)
+        db.session.add(new_course)
+        db.session.commit()
+        flash("Thank you for adding passqo", "success")
+        return redirect('/uploaded')
+    
+
     print(form.errors)
     return render_template("leadersadd.html", form=form)
-
 
 
 @app.route('/adminadd', methods=['GET', 'POST'])

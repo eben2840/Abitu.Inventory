@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/land.css')}}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+
+ 
+
+
+<aside>
+  <a>
+  <!--<svg version="1.1" id="nav-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+    <path id="list-view-icon" d="M462,108.857H50V50h412V108.857z M462,167.714H50v58.857h412V167.714z M462,285.429H50v58.857h412
+   V285.429z M462,403.143H50V462h412V403.143z"/>
+  </svg>-->
+</a>
+<!--<a href="/main">  <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" width="80%" height="100" alt="">-->
+    
+  <!--<div class="vertical-line"></div>-->
+  
+  <nav>
+    <ul>
+      
+      <li><a href="#" style="text-decoration:none;"><img src="static/img/arrow.png" alt=""style="width:15px; height:6px; margin-bottom:4px; "  >
+        Join Discord</a></li>
+      
+      
+    </ul>
+  </nav>
+  
+  
+</aside>
+
+<!--<header>
+  
+    <h4 style=" text-align:center; color:#fff; border: 0 solid #fff;padding:10px;
+    border-radius: 20px;"><a href="#" style="text-decoration:none; color:#000; font-size:14px;"class="text-muted"  ><img src="static/img/po.png" alt=""style="width:200px; height:30px; margin-bottom:7px; "  >0</a></li>
+   
+    
+    
+</h4>
+</header>-->
+
+<article>
+
+  <div class="overflow-auto" style="height:450px;">
+    
+   
+
+           
+
+            
+
+  
+
+
+
+
+
+ 
+          
+            {% for him in ask %}
+      
+            <h4 class="names"><p style="color:#fff; background-color:#ca6666; padding:15px; font-size:15px; border-radius:10px 10px 0 10px;">{{him.ask}}
+                <h6 style="text-align:right;font-size:10px; " class="text-muted"><i>Delivered</i></h6>
+            {% endfor %}
+            </p></h4>
+            
+
+        
+             
+            
+             
+
+          </div>
+ </article>
+
+ <footer class="footer" >
+
+  <form role="search"  method='POST' action=''>
+    {{form.hidden_tag()}}
+   
+    <input class="inputCard" style=" border-radius: 10px;    
+    border: none;
+    padding: 10px;
+    width: 100%;" class="border border-white"
+     name='ask'  placeholder="Ask a friend" aria-label="Search">
+  
+    <button class="btn" class="icon-button" style="color: #000; border: none; " type="submit"><i class="fas fa-check" style="width:5px; color:#000;">
+    </div>
+    </i></button>
+      
+ 
+  </form>   
+  
+ </footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
