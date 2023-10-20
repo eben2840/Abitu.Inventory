@@ -29,9 +29,9 @@ from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/cuministry'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 
 app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
@@ -1178,12 +1178,12 @@ def programs(departmentSlug):
 @app.route('/', methods=['POST','GET'])
 def userbase():
     print("Fetching all")
-    total_students = User.query.count()
-    total_male = User.query.filter_by(gender='Male').count()
-    total_female = User.query.filter_by(gender='Female').count()
-    image=User.query.order_by(User.id.desc()).all()
-    print(image)
-    return render_template("userbase.html",total_male=total_male,total_female=total_female,  header="Information Technology", smalltitle="2021", name="- CCSITA", numberofentries="16 entries",image=image,total_students=total_students)
+    # total_students = User.query.count()
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count()
+    # image=User.query.order_by(User.id.desc()).all()
+    # print(image)
+    return render_template("userbase.html")
  
 
 if __name__ == '__main__':
