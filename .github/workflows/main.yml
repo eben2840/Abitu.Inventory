@@ -45,6 +45,14 @@ jobs:
 
       - name: Check service status
         run: sudo systemctl status uwsgi.service
+      
+      - name: Set up SSH key
+        run: |
+          echo "$SSH_PRIVATE_KEY" > deploy_key.pem
+          chmod 600 deploy_key.pem
+          ssh-keyscan -t rsa 45.222.128.55 >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
 
       - name: Debug
         run: |
@@ -53,9 +61,9 @@ jobs:
       - name: Deploy to CentOS Server
         run: |
           # Create a temporary file to store the PEM key
-          echo -e "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key.pem
-          chmod 600 deploy_key.pem
-          echo "$(< deploy_key.pem )"
+          # echo -e "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key.pem
+          # chmod 600 deploy_key.pem
+          # echo "$(< deploy_key.pem )"
 
           # Use scp with -i option to copy your code to the CentOS server
           scp -i deploy_key.pem -r ./* kweku@45.222.128.55:/home/kweku/hello
