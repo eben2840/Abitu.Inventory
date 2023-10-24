@@ -40,14 +40,14 @@ jobs:
                 die-on-term = true" > uwsgi.ini
 
           # Start the uWSGI server
-          # uwsgi uwsgi.ini
-        
+          uwsgi uwsgi.ini
 
       - name: Check service status
         run: sudo systemctl status uwsgi.service
-      
-      - name: Set up SSH key
+
+      - name: Set up SSH key and known_hosts
         run: |
+          mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
           ssh-keyscan -t rsa 45.222.128.55 >> ~/.ssh/known_hosts
@@ -60,13 +60,7 @@ jobs:
 
       - name: Deploy to CentOS Server
         run: |
-          # Create a temporary file to store the PEM key
-          # echo -e "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key.pem
-          # chmod 600 deploy_key.pem
-          # echo "$(< deploy_key.pem )"
-
-          # Use scp with -i option to copy your code to the CentOS server
           scp -i deploy_key.pem -r ./* kweku@45.222.128.55:/home/kweku/hello
 
       - name: Restart uWSGI on CentOS Server
-        run: ssh username@centos-server-ip 'sudo systemctl restart uwsgi.service'
+        run: ssh kweku@45.222.128.55 'sudo systemctl restart uwsgi.service'
