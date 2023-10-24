@@ -42,6 +42,7 @@ jobs:
 
           # Start the uWSGI server
           # uwsgi uwsgi.ini
+          # uwsgi uwsgi.ini
         
 
       - name: Check service status
