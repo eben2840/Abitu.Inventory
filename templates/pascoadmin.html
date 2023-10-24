@@ -15,6 +15,7 @@
   <link rel="shortcut icon" href="no.jpeg" type="image/svg+xml">
 
   <link rel="shortcut icon" href="static/images/cl.jpg" style="border-radius:30px;" type="image/svg+xml">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/newstyle.css')}}">
   
  
   
@@ -223,12 +224,133 @@
         - #HERO
       -->
 
+      <div class="container" style="margin-top:100px;">
+        <span class="" style="font-size:20px;">
+            Level 100:
+          </span>
+          <h1 class="h1 hero-title" style="margin-bottom:20px;">CU Pasco Portal</h1>
+        <div class="input-wrapper">
+          <form class="d-flex " role="search" method='POST' action='{{url_for('search')}}'style="margin-top:20px;" >
+            {{form.hidden_tag()}}
+          
+            <input class="input-field my-0 my-lg-0 mt-1 space " type="search" name='searched' placeholder="Search for course" aria-label="Search" style="">
+            <button class="btn btn-secondary has-after" type="submit" > <i class="fa fa-search" aria-hidden="true"></i> </button>
+              
+          </form>
+            
+          </div>
+      <hr>
+
+      <span class="" style="font-size:20px; margin-top:50px;">
+        Choose School:
+      </span>
+      
+
+      <select class="btn btn-secondary" id="schoolFilter" style="padding:15px; margin-bottom:20px;">
+        <option value="all">--All Schools--</option>
+        <option value="Nursing">"Nursing"</option>
+        <option value="ECONOMICS">    "ECONOMICS"</option>
+          <option value="PUBLIC HEALTH">        "PUBLIC HEALTH"</option>
+            <option value="MANAGEMENT">        "MANAGEMENT"</option>
+              <option value="MARKETING">        "MARKETING "</option>
+                <option value="ACCOUNTING">        "ACCOUNTING "</option>
+                  <option value="HUMAN RESOURCE">        "HUMAN RESOURCE"</option>
+                    <option value="BANKING & FINANCE">        "BANKING & FINANCE"</option>
+                      <option value="Civil Engineering">              "Civil Engineering "</option>
+                        <option value="Information Technology">             "Information Technology "</option>
+                          <option value="Computer Science ">         "Computer Science "</option>
+                                  <option value="Nursing">        "Nursing"</option>
+                <option value="PA Dept">        "PA Dept"</option>
+                  <option value="Faculty of Law ">       "Faculty of Law "</option>
+                    <option value="Sociology ">       "Sociology "</option>
+                      <option value="Vision and Life ">       "Vision and Life "</option>
+                        <option value="Social Work ">       "Social Work "</option>
+                          <option value="Communications and Laguages Studies">     "Communications and Laguages Studies"</option>
+                <option value="Theology">      "Theology"</option>
+                  <option value="Psychology">      "Psychology "</option>
+                <option value="Environment and Development Studies">      "Environment and Development Studies"</option>
+                  <option value="Communications and Media Studies">     "Communications and Media Studies "</option>
+                    <option value="Agribusiness">        "Agribusiness"</option>
+                <option value="Design Interior, Graphic & Fashion">     "Design Interior, Graphic & Fashion "</option>
+                  <option value="Real Estate ">       "Real Estate "</option>
+                <option value="Architecture">       "Architecture "</option>
+                  <option value="Doctor of Pharmacy">       "Doctor of Pharmacy"</option>
+                    <option value="Pharmacy Practice ">       "Pharmacy Practice "</option>
+                      <option value="MGT & P.A.">    "MGT & P.A. "</option>
+    </select>
+
+    <select class="btn btn-secondary" id="yearFilter" style="padding:15px; margin-bottom:20px;">
+      <option value="all">All Years</option>
+      <option value="2021">2021</option> 
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+  </select>
+    
+      <div class="row" style="justify-content: space-between; ">
+        {% for user in courses %}  
+        
+        <div class="col-md-3 col-12 ">
+          
+          <div class="department-item" data-aos="fade-down-left" data-school="{{ user.schools }}" data-year="{{ user.year }}" >
+           
+              <a href="{{url_for("viewlevel", userid=user.id)}}"  style="text-decoration: none; color: #992621;">
+              <h5 class="names" style="font-size:16px;"> {{ user.name }}</h5>
+               
+          <td>{{ user.schools }}</td><br>
+          <td>{{ user.year }}</td>
+         
+              <br>
+              <a href="/delete/{{user.id}}">Delete User</a>
+              <a href="/update/{{user.id}}">update User</a>
+             <i class="fas fa-delete"></i>
+
+        
+           
+           
+      
+        
+   
+          </a>
+          </div>
+       
+        </div>
+        {% endfor %}
+        
+        <!--<div class="col-md-3 col-6 ">
+            <!--{% for level in levels %}
+      
+            <li>{{ level }}</li>newww
+        {% endfor %}
+          <div class="department-item" data-aos="fade-down-left">
+            <a href="/mainquestion" style="text-decoration: none; color: #992621;">
+              <h5 class="names" style="font-size:16px;"> Level 200</h5>
+              <h5 class="names" style="color:red; font-size:10px;"> 2342 Questions</h5>
+          </a>
+          </div>
+        </div>
+        -->
+      
+       
+      
+        
+      
+        
+      
+      
+        
+      
+        
+        
+      </div>
+      
+    </div>
+<!--
   <section class="section hero has-bg-image" aria-label="home"
         style="background-image: url('#')">
        
         
          <div class="container" style="margin-top:30px;">
-               
+           
           <div class="hero-content" data-reveal="left">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -245,14 +367,13 @@
             <span class="" style="font-size:30px;">
               Welcome to the
             </span>
-            <h1 class="h1 hero-title">Pasco Portal</h1>
+            <h1 class="h1 hero-title">CU Passqo Portal</h1>
 
             <p class="hero-text">
-              Are you gearing up for an important exam or assessment? Want to improve your chances of success and build confidence in your subject matter? Look no further than the Pasco Portal for your go-to solution for efficient and effective exam preparation.
+              We invite you to become an active part of the SRC by joining our committees. Your involvement can make a significant impact on our mission. To get started, please fill out our recruitment form, which will help us match you with the right committee based on your interests and skills.
             </p>
 <div style="display:flex;">
-  <a href="/level" class="btn btn-secondary has-after" style="margin-right:10px;">Get Passqo</a>
-  <a href="/addinfo" class="btn btn-secondary has-after" style="margin-right:10px;">Upload Passqo</a>
+            <a href="/questions" class="btn btn-secondary has-after" style="margin-right:10px;">Enter your department</a>
             </div>
           </div>
 
@@ -263,11 +384,11 @@
             <!--<img src="https://www.central.edu.gh/static/img/postgrade.jpg" width="338" height="138" alt="shape" class="shape shape-1">
 
             <img src="https://miro.medium.com/v2/resize:fit:900/1*mbc5bJsA3hpDXmHHnTgU6g.jpeg" width="237" height="80" alt="shape" class="shape shape-2">
--->
+
 </figure>
 
 </div>
-</section>
+</section>-->
 
 
 
@@ -709,21 +830,12 @@ style="background-image: url('static/assets/images/hero-bg.png')">
 
 
 
+      <p class="copyright" style="text-align:center;">
+        <a href="https://prestoghana.com/" class="copyright"> Copyright 2023. Powered by PrestoGhana</a>
+     </p>
 
 
 
-
-      <section class="section partnership" aria-label="partnership">
-        <div class="container">
-
-          
-        
-
-          <p class="copyright" style="text-align:center;">
-            <a href="https://prestoghana.com/" class="copyright"> Copyright 2023. Powered by PrestoGhana</a>
-         </p>
-        </div>
-      </section>
 
 
 
@@ -897,6 +1009,25 @@ style="background-image: url('static/assets/images/hero-bg.png')">
 
     </div>
   </footer>-->
+
+  <script>
+    $(document).ready(function() {
+        $('#schoolFilter, #yearFilter').on('change', function() {
+            var selectedSchool = $('#schoolFilter').val();
+            var selectedYear = $('#yearFilter').val();
+            $('.department-item').hide();
+            if (selectedSchool === 'all' && selectedYear === 'all') {
+                $('.department-item').show();
+            } else if (selectedSchool === 'all') {
+                $('.department-item[data-year="' + selectedYear + '"]').show();
+            } else if (selectedYear === 'all') {
+                $('.department-item[data-school="' + selectedSchool + '"]').show();
+            } else {
+                $('.department-item[data-school="' + selectedSchool + '"][data-year="' + selectedYear + '"]').show();
+            }
+        });
+    });
+</script>
 
 
 

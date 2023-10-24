@@ -565,6 +565,13 @@ def levels():
     return render_template('list_levels.html') 
 
 
+
+@app.route('/pascoadmin', methods=['GET', 'POST'])
+def pascoadmin():
+    courses = Course.query.all() 
+    return render_template('pascoadmin.html', courses=courses) 
+
+
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
     return render_template('blog.html')
@@ -615,15 +622,7 @@ def basee():
     return render_template('basee.html')
 
  
-# @app.route('/live_data')
-# def live_data():
-#     gender = request.args.get('gender')  
-#     users = User.query.filter_by(gender=gender).all()  
-#     data = [{
-#         'timestamp': user.id,  
-#         'value': random.randint(0, 100)
-#     } for user in users]
-#     return jsonify(data)
+
 
 
 
@@ -1034,63 +1033,38 @@ def members():
 #CRUD(update and delete routes)
 @app.route("/update/<int:id>", methods=['POST', 'GET'])
 def update(id):
-    form=Adduser()
-    user=User.query.get_or_404(id)
+    form=Addinfo()
+    user=Course.query.get_or_404(id)
     if request.method== 'GET':
-        form.fullname.data = user.fullname
-        form.indexnumber.data = user.indexnumber
-        form.gender.data = user.gender
-        form.school.data = user.school
-        form.department.data = user.department
-        form.completed.data = user.completed
-        form.admitted.data = user.admitted
-        form.email.data = user.email   
-        form.telephone.data = user.telephone  
-        form.hall.data = user.hall  
-        form.nationality.data = user.nationality   
-        form.address.data = user.address  
-        form.work.data = user.work 
-        form.guardian.data = user.guardian   
-        form.marital.data = user.marital   
-        form.extra.data = user.extra  
-        form.image_file.data = user.image_file 
+        form.name.data = user.name
+        form.year.data =user.year
+        form.schools.data =user.schools
+        form.level.data =user.level
+         
     if request.method== 'POST':
-        new=User(fullname=form.fullname.data,
-                 indexnumber=form.indexnumber.data,
-                   gender=form.gender.data, 
-                    school=form.school.data,
-                    department=form.department.data,
-                   completed=form.completed.data,
-                   admitted=form.admitted.data,
-                   email=form.email.data,  
-                   telephone=form.telephone.data,  
-                   hall=form.hall.data,  
-                   nationality=form.nationality.data,  
-                   address=form.address.data,  
-                   work=form.work.data,  
-                   guardian=form.guardian.data,  
-                  marital=form.marital.data,
-                  extra=form.extra.data,    
-               image_file=form.image_file.data
+        new=Course(name=form.name.data,
+            level=form.level.data,
+            schools=form.schools.data,
+            year=form.year.data
                   )
         try:    
             db.session.add(new)
             db.session.commit()
-            return redirect(url_for('list')) 
+            return redirect(url_for('pascoadmin')) 
         except:
-            return render_template("main.html")
-    return render_template("addAlumni.html", form=form)
+            return"errrrror"
+    return render_template("leadersadd.html", form=form)
     
     
     
 #delete route
 @app.route("/delete/<int:id>")
 def delete(id):
-    delete=User.query.get_or_404(id)
+    delete=Course.query.get_or_404(id)
     try:
             db.session.delete(delete)
             db.session.commit()
-            return redirect(url_for('list')) 
+            return redirect(url_for('pascoadmin')) 
     except: 
         return "errrrrorrr"
     
