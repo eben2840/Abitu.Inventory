@@ -91,16 +91,17 @@
        
    
       <div class="container" style="margin-top:20px;">
-        
-         <img src="https://img.freepik.com/free-vector/mobile-inbox-concept-illustration_114360-4408.jpg?size=338&ext=jpg&ga=GA1.1.1413502914.1696982400&semt=ais" style="width:100%; margin:auto;" ><br>
-         <hr>
-         <h4 style="font-size:18px;  padding:20px;text-align:center;"><b>
-         Congratulations, click below to download the {{profile.name}} past question.</b>
-         </h4>
-         
-        
-      
-         {% if profile.pdf_filename %}
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <img src="https://img.freepik.com/free-vector/mobile-inbox-concept-illustration_114360-4408.jpg?size=338&ext=jpg&ga=GA1.1.1413502914.1696982400&semt=ais" style="width:100%; margin:auto;" ><br>
+            
+          </div>
+          <div class="col-12 col-lg-6">
+            <hr>
+            <h4 style="font-size:18px;  padding:20px;text-align:center;"><b>
+              Congratulations, click below to download the {{profile.name}} past question.</b>
+              </h4>
+              {% if profile.pdf_filename %}
          <a href="{{ url_for('download_file', filename=profile.pdf_filename) }}" style="text-decoration: none; class="department-item"  color: #fff; border-radius:30px;"><h6  class="department-item" style="text-align:center; background-color:red;padding:15px;border-radius:30px; "> Download PDF</h6></a> 
 
          <a href="/level" style="text-decoration: none; class="department-item"  color: #fff; border-radius:30px;"><h6  style="text-align:center; border-radius:30px; color:#fff; background-color:#edccc3;padding:15px; ">Get more pasco</h6></a> 
@@ -112,9 +113,12 @@
           <h6 class="department-item" style="text-align:center; border-radius:30px; color:#fff; background-color:#edccc3;padding:15px; "><a href="/level" style="text-decoration: none;  color: #fff; border-radius:30px;">No PDF available</a> </h6>
              
               <h6 class="department-item" style="text-align:center; border-radius:30px; color:#fff; background-color:#edccc3;padding:15px; "><a href="/level" style="text-decoration: none;  color: #fff; border-radius:30px;">Get more pasco</a> </h6>
-          {% endif%}
          
+              {% endif%}
+          </div>
 
+        </div>
+        
          
       
       
