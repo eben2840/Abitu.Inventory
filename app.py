@@ -124,6 +124,19 @@ class User(db.Model,UserMixin):
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
+
+class Getfunds(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    fullname= db.Column(db.String()  )
+    ministry = db.Column(db.String())
+    program= db.Column(db.String()   )
+    email= db.Column(db.String()     )
+    telephone= db.Column(db.String()     )  
+    
+    campus= db.Column(db.String()     )
+    def __repr__(self):
+        return f"User('{self.id}', {self.fullname}, {self.email}'"
+    
     
     
     
@@ -326,7 +339,7 @@ def send_email():
     if request.method == 'POST':
         email_receiver = request.form['email']
 
-        subject = 'SRC - Recruitment Portal'
+        subject = 'CU - SRC Portal'
         
         # HTML content of the email
         html_content = """
@@ -354,47 +367,51 @@ def send_email():
             </style>
         </head>
         <body>
-            
-              
-                <div class="container">
+             <div class="container">
                     <div style="display:flex; padding:10px; justify-content:space-between;">
                         <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" style="width:100px;" loading="lazy" >
     
                           </div>
                           
-                <h3 style="text-align:center; font-size:30px;">Central University SRC
-                    <br><span style="font-size:10px;">SRC Recuitment Portal</span></h3>
+                <h3 style="text-align:center; font-size:20px;">Central University SRC
+                    
                 </h3>
+               <b> 🛑  Announcement: SRC Handover Ceremony 🛑</b>
                 
                 <div style="text-align:left;  font-size:13px; color:rgb(69 90 100);"><p>
                     Dear Student,
                     <br><br>
-                    I hope this message finds you well and refreshed after your well-deserved vacation. As your President, I want to extend a warm and hearty welcome to each one of you as we embark on a new academic season together.
+                    I hope this message finds you well and refreshed.
+                    
+                    
 <br><br>
-Vacations are a time to rejuvenate, recharge, and reflect on our goals and aspirations. I hope you had the opportunity to spend quality time with loved ones, explore new experiences, and return with a sense of enthusiasm and purpose.
+We are thrilled to invite you to our upcoming SRC Handover Ceremony, a momentous event that signifies the transition of leadership and the promise of a new chapter in our student body.
 <br><br>
-As we begin this new chapter, let's carry the positive energy and determination from our vacations into our academic journey. Remember that each day is an opportunity to learn, grow, and make a positive impact on our community.
+🗓️ Date: Thursday 26th October, 2023<br>
+🕒 Time: 10pm <br>
+🏛️ Venue: Senate room<br>
 <br><br>
-Our university is a place of learning, collaboration, and innovation. Together, we will face new challenges, discover new opportunities, and create lasting memories. I encourage you to engage in your studies, seek out new friendships, and participate in extracurricular activities that align with your interests and passions.
+Let's come together to applaud our outgoing SRC members for their outstanding service and extend a warm welcome to the new leaders who will carry the torch of our institution's progress.
 <br><br>
-Our faculty and staff are here to support you every step of the way, and your fellow students are your partners on this incredible journey. Let's work together to make this academic year the best one yet.
-<br><br>
-If you ever have questions, concerns, or ideas to share, please don't hesitate to reach out. Your voices matter, and we are committed to ensuring your success.<br><br>
-Wishing you a productive and fulfilling semester ahead!
-<br><br>
+We look forward to your presence at this important event. Together, we'll continue to build a brighter future for Central University. <br><br>
+
+See you there!
+<br>
 Warm regards,
 <br><br>
-President</p>
+-Signed-<br>
+CU-SRC</p>
 
                  
                 </div>
+               
 
-                <div style="background-color:#ca181e; ">
-                    <h2 style="padding:50px; color:#fff; ">
-                    Central University SRC Portal</h2>
+                
+                    <h3 style="text-align:center; ">
+                    Powered by PrestoGhana</h3>
     
-                    </div>
-                    <p style="text-align:center;">Powered by Prestoghana</p>
+                   
+                    
             </div>
             
             
@@ -657,6 +674,33 @@ def addalumni():
 
 
 
+@app.route('/getfunds', methods=['GET', 'POST'])
+def getfunds():
+    form=AddGetfunds()
+    if form.validate_on_submit():
+        
+            new=Getfunds(fullname=form.fullname.data, 
+                   email=form.email.data,  
+                   ministry=form.ministry.data,    
+                   program=form.program.data,  
+                   telephone=form.telephone.data,       
+                   campus=form.campus.data,
+                  )
+       
+            db.session.add(new)
+            db.session.commit()
+            send_email()
+           
+        
+            flash("Thank you for filling the Getfund form, Please check your email.", "success")
+            return redirect('/')
+            
+    print(form.errors)
+    return render_template("getfunds.html", form=form)
+
+
+
+
 @app.route('/ask', methods=['GET', 'POST'])
 def ask():
     form = AskForm()
@@ -726,6 +770,7 @@ def adminadd():
 @login_required
 def main():
     total_students = User.query.count()
+    total_getfundstudents = Getfunds.query.count()
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
@@ -742,7 +787,7 @@ def main():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions)
+    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents)
 
 
 
@@ -956,6 +1001,16 @@ def lists():
     print(users)
     print(current_user)
     return render_template("list.html", users=users, current_user=current_user, title="list")
+
+ 
+@app.route('/getlist', methods=['GET', 'POST'])
+@login_required
+def getlist():
+    print("Fetching all")
+    users=Getfunds.query.order_by(Getfunds.id.desc()).all()
+    print(users)
+    print(current_user)
+    return render_template("getlist.html", users=users, current_user=current_user, title="list")
  
  
  

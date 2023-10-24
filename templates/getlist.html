@@ -1,0 +1,59 @@
+{% extends 'try.html' %}
+{% block body %}
+
+
+<div class="container-fluid">
+  <!-- Card stats -->
+  
+  <div class="row g-4 mb-6">
+    {%for user in users%} 
+    <div class="col-xl-4 col-sm-6 col-12">
+        <a href="#" style="text-decoration: none; color: #992621;">
+          
+          <div class="card shadow border-0">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col">
+                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">Level:{{user.ministry}}</span>
+                          <span class="h3 font-bold mb-0">{{user.fullname}} </span>
+                      </div>
+                      <div class="col-auto">
+                          <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
+                              <i class="bi bi-people"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                      <span class="badge badge-pill bg-soft-success text-success me-2">
+                          <i class="fas-fa-call me-1">{{user.telephone}}</i>
+                      </span>
+                     <span class="text-nowrap text-xs text-muted"><b>{{user.program}}</b></span>
+                  </div>
+                  <div class="mt-2 mb-0 text-sm">
+                    <span class=" text-xs text-success me-7">
+                        {{user.campus}}
+                    </span>
+                   <span class="text-nowrap text-xs text-muted"><b>{{user.email}}</b></span>
+                </div>
+              </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}    
+    </div>
+  </div>
+
+
+
+
+
+
+
+{% endblock body %}
+
+
+
+
+
+
+
