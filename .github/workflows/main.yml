@@ -46,10 +46,19 @@ jobs:
       - name: Check service status
         run: sudo systemctl status uwsgi.service
 
+      - name: Debug
+        run: |
+          echo "SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}"
+
       - name: Deploy to CentOS Server
         run: |
-          # Use scp or any other method to copy your code to the CentOS server
-          scp -r ./* username@centos-server-ip:/path/to/app
+          # Create a temporary file to store the PEM key
+          echo -e "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key.pem
+          chmod 600 deploy_key.pem
+          echo "$(< deploy_key.pem )"
+
+          # Use scp with -i option to copy your code to the CentOS server
+          scp -i deploy_key.pem -r ./* kweku@45.222.128.55:/home/kweku/hello
 
       - name: Restart uWSGI on CentOS Server
         run: ssh username@centos-server-ip 'sudo systemctl restart uwsgi.service'
