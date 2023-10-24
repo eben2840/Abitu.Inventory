@@ -38,6 +38,7 @@ jobs:
                 chmod-socket = 660
                 vacuum = true
                 die-on-term = true" > uwsgi.ini
+                plugin = python
 
           # Start the uWSGI server
           uwsgi uwsgi.ini
