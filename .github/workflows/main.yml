@@ -33,14 +33,14 @@ jobs:
           echo "[uwsgi]
                 module = wsgi:application
                 master = true
-                processes = 5 # Adjust as needed
-                socket = ministry.sock  # Adjust the port
+                processes = 4 # Adjust as needed
+                socket = :3031  # Adjust the port
                 chmod-socket = 660
                 vacuum = true
                 die-on-term = true" > uwsgi.ini
 
           # Start the uWSGI server
-          uwsgi uwsgi.ini
+          # uwsgi uwsgi.ini
 
       - name: Check service status
         run: sudo systemctl status uwsgi.service
