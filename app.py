@@ -388,7 +388,7 @@ def send_email():
 We are thrilled to invite you to our upcoming SRC Handover Ceremony, a momentous event that signifies the transition of leadership and the promise of a new chapter in our student body.
 <br><br>
 🗓️ Date: Thursday 26th October, 2023<br>
-🕒 Time: 10pm <br>
+🕒 Time: 10am <br>
 🏛️ Venue: Senate room<br>
 <br><br>
 Let's come together to applaud our outgoing SRC members for their outstanding service and extend a warm welcome to the new leaders who will carry the torch of our institution's progress.
@@ -689,10 +689,10 @@ def getfunds():
        
             db.session.add(new)
             db.session.commit()
-            send_email()
+            # send_email()
            
         
-            flash("Thank you for filling the Getfund form, Please check your email.", "success")
+            flash("Thank you for filling the Getfund form.", "success")
             return redirect('/')
             
     print(form.errors)
