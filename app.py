@@ -71,6 +71,13 @@ def sendtelegram(params):
     return content
 
 
+def sendtelegram(params):
+    url = "https://api.telegram.org/bot5787281305:AAE1S8DSnMAyQuzAnXOHfxLq-iyvPwYJeAo/sendMessage?chat_id=-1001556929308&text=" + urllib.parse.quote(params)
+    content = urllib.request.urlopen(url).read()
+    print(content)
+    return content
+
+
 #person table
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -551,22 +558,26 @@ def add_course():
 
 @app.route('/level100', methods=['GET', 'POST'])
 def level100():
+    sendtelegram("New User on Pasco Portal level 100")
     hundred = Course.query.filter_by(level='100').all()
     return render_template('level100.html', hundred=hundred)
 
 
 @app.route('/level200', methods=['GET', 'POST'])
 def level200():
+    sendtelegram("New User on Pasco Portal level 200")
     two = Course.query.filter_by(level='200').all()
     return render_template('level200.html', two=two)
 
 @app.route('/level300', methods=['GET', 'POST'])
 def level300():
+    sendtelegram("New User on Pasco Portal level 300")
     two = Course.query.filter_by(level='300').all()
     return render_template('level300.html', two=two)
 
 @app.route('/level400', methods=['GET', 'POST'])
 def level400():
+    sendtelegram("New User on Pasco Portal level 400")
     two = Course.query.filter_by(level='400').all()
     return render_template('level400.html', two=two)
 
@@ -574,6 +585,7 @@ def level400():
 
 @app.route('/uploaded')
 def uploaded():
+    sendtelegram("Uploading a new Pasco")
     return render_template('uploaded.html')  
 
 
@@ -595,12 +607,17 @@ def blog():
 
 @app.route('/passqo', methods=['GET', 'POST'])
 def passqo():
+    sendtelegram("New User on Pasco Portal")
     return render_template('passqo.html')
 
 
 @app.route('/school', methods=['GET', 'POST'])
 def school():
     return render_template('school.html')
+
+@app.route('/closed', methods=['GET', 'POST'])
+def closed():
+    return render_template('closed.html')
 
 
 @app.route('/level', methods=['GET', 'POST'])
@@ -690,7 +707,7 @@ def getfunds():
             db.session.add(new)
             db.session.commit()
             # send_email()
-           
+            
         
             flash("Thank you for filling the Getfund form.", "success")
             return redirect('/')
@@ -857,16 +874,14 @@ def praise():
     praise = User.query.filter_by(ministry='Praise & Worship').all()
     return render_template('praise.html', praise=praise)
 
-@app.route('/mcc', methods=['GET', 'POST'])
-@login_required
-def mcc():
-    mcc = User.query.filter_by(ministry='MCC').all()
+@app.route('/ent', methods=['GET', 'POST'])
+def ent():
+    mcc = User.query.filter_by(ministry='ENTERTAINMENT COMMITTEE').all()
     return render_template('mcc.html', mcc=mcc)
 
 @app.route('/cjc', methods=['GET', 'POST'])
-@login_required
 def cjc():
-    cjc = User.query.filter_by(ministry='CJC').all()
+    cjc = User.query.filter_by(ministry='ORGANIZING COMMITTEE').all()
     return render_template('cjc.html', cjc=cjc)
 
 @app.route('/lg', methods=['GET', 'POST'])
@@ -1110,7 +1125,17 @@ def update(id):
             return"errrrror"
     return render_template("leadersadd.html", form=form)
     
-    
+#delete route
+@app.route("/delete/<int:id>")
+def deleteme(id):
+    delete=Getfunds.query.get_or_404(id)
+    try:
+            db.session.delete(delete)
+            db.session.commit()
+            return redirect(url_for('main')) 
+    except: 
+        return "errrrrorrr"
+        
     
 #delete route
 @app.route("/delete/<int:id>")
@@ -1119,6 +1144,7 @@ def delete(id):
     try:
             db.session.delete(delete)
             db.session.commit()
+            flash ('User deleted succesfully' , 'success')
             return redirect(url_for('pascoadmin')) 
     except: 
         return "errrrrorrr"
