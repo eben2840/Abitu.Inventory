@@ -562,7 +562,6 @@ def level100():
     hundred = Course.query.filter_by(level='100').all()
     return render_template('level100.html', hundred=hundred)
 
-
 @app.route('/level200', methods=['GET', 'POST'])
 def level200():
     sendtelegram("New User on Pasco Portal level 200")
@@ -680,10 +679,11 @@ def addalumni():
        
             db.session.add(new)
             db.session.commit()
-            send_email()
+            # send_email()
            
         
-            flash("Thank you for filling the form, Please check your email for a message from the President.", "success")
+            flash("Thank you for filling the form, Please check your email for a message from the President.",
+                  "success")
             return redirect('/')
             
     print(form.errors)
@@ -753,14 +753,39 @@ def leadersadd():
         print(new_course)
         db.session.add(new_course)
         db.session.commit()
-        flash("Thank you for adding passqo", "success")
+        flash("Thank you for adding a pasco", "success")
         return redirect('/uploaded')
     
 
     print(form.errors)
     return render_template("leadersadd.html", form=form)
 
+@app.route('/src', methods=['GET', 'POST'])
+def src():
+    return render_template("blogme.html")
+    
+    
+@app.route('/aboutsrc', methods=['GET', 'POST'])
+def aboutsrc():
+    return render_template("aboutme.html")
+    
+@app.route('/leadership', methods=['GET', 'POST'])
+def leadership():
+    return render_template("leadership.html")
+    
+       
+@app.route('/annoucement', methods=['GET', 'POST'])
+def annoucement():
+    return render_template("annoucement.html")
 
+       
+@app.route('/constitution', methods=['GET', 'POST'])
+def constitution():
+    return render_template("consti.html")
+    
+        
+
+ 
 @app.route('/adminadd', methods=['GET', 'POST'])
 def adminadd():
     form=Adduser()
@@ -865,7 +890,7 @@ def users_by_position():
 @app.route('/media', methods=['GET', 'POST'])
 @login_required
 def media():
-    media = User.query.filter_by(ministry='Media').all()
+    media = User.query.filter_by(ministry='CADET CORPS').all()
     return render_template('media.html', media=media)
 
 @app.route('/praise', methods=['GET', 'POST'])

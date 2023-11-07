@@ -1,57 +1,177 @@
-{% extends 'try.html' %}
-{% block body %}
+
+
+<!--https://mdbootstrap.com/docs/standard/navigation/footer/-->
 
 
 
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container-fluid">
-    <!-- Card stats -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title></title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+  <script src="static/css/index.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/plus-jakarta-display.min.css"> 
+    <!-- Local Styles -->
+
+<!-- FontAwesomeKit -->
+    <script src="https://kit.fontawesome.com/091f1122a7.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     
-    <div class="row g-4 mb-6">
-      {%for user in media%} 
-      <div class="col-xl-4 col-sm-6 col-12">
-          <a href="{{url_for("list", userid=user.id)}}" style="text-decoration: none; color: #992621;">
-            <div class="card shadow border-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{user.position}}</span>
-                            <span class="h3 font-bold mb-0">{{user.fullname}} </span>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
-                                <i class="bi bi-people"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                        <span class="badge badge-pill bg-soft-success text-success me-2">
-                            <i class="bi bi-arrow-up me-1">{{user.program}}</i>
-                        </span>
-                       <span class="text-nowrap text-xs text-muted">{{user.telephone}}</span>
-                    </div>
-                </div>
-            </div>
-          </a>
-        </div>
-        {% endfor %}    
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favico.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="static/assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+
+</head>
+
+
+<div class="loading-container" data-loading-container>
+  <div class="loading-circle"></div>
+</div>
+
+
+
+
+
+<!-- 
+  - #HEADER
+-->
+
+<header class="header" data-header>
+  <div class="container">
+
+    <a href="#" class="logo">
+
+     <a href="/main"> <button ><h6 style="background-color:#000; padding:10px; border-radius:20px; width:100px; color:#fff; font-size:20px;">Back</h6></button></a>
+    </a>
+
+    <nav class="navbar" data-navbar>
+      <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+      <a href="/post" style="color:#000;"><img src="static/img/app.png" style="width:25px; margin-left:20px;"></a>
+
+       
+              
+       <a href="votes" style="text-decoration:none; color:#000;"><img src="static/img/pp.png" style="width:25px; margin-right:25px;"></a> 
+         </button>
+
+
+     
+   </nav>
+
+    <div class="header-action" style="display:flex;">
+      <button class="print-button"  onclick="window.print()"><h6 style="background-color:#000; padding:10px; border-radius:20px; width:100px; color:#fff; font-size:20px;">Print</h6></button>
+ 
       </div>
-    </div>
+
+    <!--<button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+      <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+    </button>-->
+
+    <div class="overlay" data-overlay data-nav-toggler></div>
+
+  </div>
   
-  
-  
-  
+</header>
+<div class="containe" style="margin-top:120px; padding:30px;">
+
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>Name & Committe</th>
+      <th>Gender & Program</th>
+      <th>Email & Number</th>
+      <th>Proposed Committe</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    {%for users in media%} 
+    <tr>
+      <td>
+        <a href="{{url_for("list", userid=users.id)}}" style="text-decoration: none; color: #000;">
+        <div class="d-flex align-items-center">
+          <img
+              src={{users.image_file}}
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle"
+              />
+          <div class="ms-3">
+      <a href="{{url_for("list", userid=users.id)}}" style="text-decoration: none; color: #000;">
+
+            <p class="fw-bold mb-1">{{users.fullname}}</p>
+            <!--<p class="text-muted mb-0">{{users.campus}}</p>-->
+          
+          </div>
+        </div>
+      </td>
+   
+
+      <td>
+        <p class="fw-normal mb-1">{{users.gender}}</p>
+        <p class="text-muted mb-0">{{users.program}}</p>
+      </td>
+
+      <td><p class="fw-normal mb-1">{{users.email}}</p>
+        <p class="text-muted mb-0">{{users.telephone}}</p></td>
+      
+        <td><p class="fw-normal mb-1">{{users.ministry}}</p>
+          </td>
+
+        </a>
+       
+        </tr>
+          {%endfor%}
+    
+  </tbody>
+</table>
 
 
+  <!-- 
+    - custom js link
+  -->
+  <script src="static/assets/js/script.js"></script>
 
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+</body>
 
-
-{% endblock body %}
-
-
-
-
-
+</html>
 
 
