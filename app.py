@@ -634,7 +634,7 @@ def level():
 def viewlevel(userid):
     print("Fetching one")
     profile=Course.query.get_or_404(userid)
-    
+    sendtelegram(profile.name + "" + "New download")
     return render_template("levelid.html", profile=profile, title="list")
  
  

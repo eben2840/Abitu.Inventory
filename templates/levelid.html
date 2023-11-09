@@ -122,7 +122,7 @@
           <div class="col-12 col-lg-6">
 
             <div id="rating-info">
-              <p style="text-align:center;"><b>HOW DO YOU RATE THE LECTURER?</b></p>
+              <p STYLE="text-align:center;"><b>HOW DO YOU RATE The LECTURER?</b></p>
               <div class="rating">
                   <input type="radio" id="star5" name="rating" value="5" />
                   <label for="star5"></label>
@@ -135,9 +135,9 @@
                   <input type="radio" id="star1" name="rating" value="1" />
                   <label for="star1"></label>
               </div>
-              <p id="average-rating" style="margin-top:20px;">Average rating: 0 / 5</p>
-             <!-- <p id="vote-count">Vote count: 0</p>
-              <p id="thank-you-message">Thank you for rating this post!</p>-->
+              <p id="average-rating">Average rating: 0 / 5</p>
+              <p id="vote-count" style="color:#fff; font-size:1px;">Vote count: 0</p>
+              <p id="thank-you-message" style="color:#fff; font-size:1px;">Thank you for rating this post!</p>
           </div>
             <hr>
             <h4 style="font-size:18px;  padding:20px;text-align:left;"><b>
@@ -180,61 +180,48 @@
     const thankYouMessage = document.getElementById('thank-you-message');
     const averageRatingDisplay = document.getElementById('average-rating');
     const voteCountDisplay = document.getElementById('vote-count');
-    
+
     // Simulated server data
     let averageRating = 0;
     let voteCount = 0;
 
-    // Check if the user has already rated
-    const hasRated = localStorage.getItem('userRated') === 'true';
-
-    // Function to disable star ratings
-    function disableStarRatings() {
-        const starInputs = rating.querySelectorAll('input');
-        starInputs.forEach(input => {
-            input.disabled = true;
-        });
-    }
-
-    // Function to load the user's saved rating
-    function loadUserRating() {
-        const userRating = localStorage.getItem('userRating');
-        if (userRating) {
-            document.querySelector(`#star${userRating}`).checked = true;
-            updateAverageRatingAndVoteCount();
-            disableStarRatings();
-            thankYouMessage.textContent = 'Thank you for rating this post!';
-        }
-    }
+    // Retrieve the average rating from localStorage when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const storedAverageRating = +localStorage.getItem('averageRating');
+      const storedVoteCount = +localStorage.getItem('voteCount');
+      if (!isNaN(storedAverageRating) && !isNaN(storedVoteCount)) {
+        averageRating = storedAverageRating;
+        voteCount = storedVoteCount;
+        averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
+        voteCountDisplay.textContent = `Vote count: ${voteCount}`;
+      }
+    });
 
     // Update average rating and vote count
     function updateAverageRatingAndVoteCount() {
-        averageRating = (averageRating * voteCount + +localStorage.getItem('userRating')) / (voteCount + 1);
-        voteCount++;
-        averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
-        voteCountDisplay.textContent = `Vote count: ${voteCount}`;
-    }
-
-    if (hasRated) {
-        loadUserRating();
+      const selectedRating = +localStorage.getItem('userRating');
+      averageRating = (averageRating * voteCount + selectedRating) / (voteCount + 1);
+      voteCount++;
+      averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
+      voteCountDisplay.textContent = `Vote count: ${voteCount}`;
+      // Store the updated average rating and vote count in localStorage
+      localStorage.setItem('averageRating', averageRating);
+      localStorage.setItem('voteCount', voteCount);
     }
 
     rating.addEventListener('change', (e) => {
-        if (!hasRated) {
-            const selectedRating = e.target.value;
-            // Update the average rating and vote count
-            updateAverageRatingAndVoteCount();
-            // Send the selected rating to the server for processing (simulated here)
-            localStorage.setItem('userRating', selectedRating);
-            // Mark the user as having rated
-            localStorage.setItem('userRated', 'true');
-            // Disable the star ratings
-            disableStarRatings();
-            // Show the thank you message
-            thankYouMessage.textContent = 'Thank you for rating this post!';
-        }
+      const selectedRating = e.target.value;
+
+      // Update the average rating and vote count
+      updateAverageRatingAndVoteCount();
+
+      // Send the selected rating to the server for processing (simulated here)
+      localStorage.setItem('userRating', selectedRating);
+
+      // Update the thank you message
+      thankYouMessage.textContent = 'Thank you for rating this post!';
     });
-</script>
+  </script>
 
   <!-- 
     - custom js link
