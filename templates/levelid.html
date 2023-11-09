@@ -71,33 +71,32 @@
   -->
   <style>
     .rating {
-        font-size: 0;
-        margin:auto;
-    }
-    
-    .rating > input {
-        display: none;
-    }
-    
-    .rating > label {
-        margin:auto;
-        cursor: pointer;
-        color: #ccc;
-    }
-    
-    .rating > label:before {
-        content: "\2605";
-        font-size: 24px;
-    }
-    
-    .rating > input:checked ~ label {
-        color: #ffcc00;
-    }
+      font-size: 0;
+  }
+  
+  .rating > input {
+      display: none;
+  }
+  
+  .rating > label {
+      float: right;
+      cursor: pointer;
+      color: #ccc;
+  }
+  
+  .rating > label:before {
+      content: "\2605";
+      font-size: 24px;
+  }
+  
+  .rating > input:checked ~ label {
+      color: #ffcc00;
+  }
 
-    #rating-info {
-        font-size: 18px;
-       
-    }
+  #rating-info {
+      font-size: 18px;
+      margin-top: 20px;
+  }
 </style>
 </head>
 
@@ -112,12 +111,7 @@
   </div>
 
   <main>
-    
-       
-   
 
-
-       
    
       <div class="container" style="margin-top:20px;">
         <div class="row">
@@ -128,7 +122,7 @@
           <div class="col-12 col-lg-6">
 
             <div id="rating-info">
-              <p style="text-align:left;"><b>Rate The Course and Lecturer</b></p>
+              <p style="text-align:center;"><b>HOW DO YOU RATE THE LECTURER?</b></p>
               <div class="rating">
                   <input type="radio" id="star5" name="rating" value="5" />
                   <label for="star5"></label>
@@ -142,8 +136,8 @@
                   <label for="star1"></label>
               </div>
               <p id="average-rating" style="margin-top:20px;">Average rating: 0 / 5</p>
-              <p id="vote-count" style="text-align:left;"><b>Vote count: 0</b></p>
-              
+             <!-- <p id="vote-count">Vote count: 0</p>
+              <p id="thank-you-message">Thank you for rating this post!</p>-->
           </div>
             <hr>
             <h4 style="font-size:18px;  padding:20px;text-align:left;"><b>
@@ -190,7 +184,7 @@
     // Simulated server data
     let averageRating = 0;
     let voteCount = 0;
-    
+
     // Check if the user has already rated
     const hasRated = localStorage.getItem('userRated') === 'true';
 
@@ -202,6 +196,17 @@
         });
     }
 
+    // Function to load the user's saved rating
+    function loadUserRating() {
+        const userRating = localStorage.getItem('userRating');
+        if (userRating) {
+            document.querySelector(`#star${userRating}`).checked = true;
+            updateAverageRatingAndVoteCount();
+            disableStarRatings();
+            thankYouMessage.textContent = 'Thank you for rating this post!';
+        }
+    }
+
     // Update average rating and vote count
     function updateAverageRatingAndVoteCount() {
         averageRating = (averageRating * voteCount + +localStorage.getItem('userRating')) / (voteCount + 1);
@@ -211,12 +216,7 @@
     }
 
     if (hasRated) {
-        // If the user has already rated, disable the star ratings
-        disableStarRatings();
-        // Show the thank you message and the current rating data
-        thankYouMessage.textContent = 'Thank you for rating this post!';
-        averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
-        voteCountDisplay.textContent = `Vote count: ${voteCount}`;
+        loadUserRating();
     }
 
     rating.addEventListener('change', (e) => {
@@ -230,7 +230,7 @@
             localStorage.setItem('userRated', 'true');
             // Disable the star ratings
             disableStarRatings();
-            // Show the thank you message and the current rating data
+            // Show the thank you message
             thankYouMessage.textContent = 'Thank you for rating this post!';
         }
     });
