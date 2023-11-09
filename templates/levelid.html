@@ -69,7 +69,36 @@
   <!-- 
     - preload images
   -->
+  <style>
+    .rating {
+        font-size: 0;
+        margin:auto;
+    }
+    
+    .rating > input {
+        display: none;
+    }
+    
+    .rating > label {
+        margin:auto;
+        cursor: pointer;
+        color: #ccc;
+    }
+    
+    .rating > label:before {
+        content: "\2605";
+        font-size: 24px;
+    }
+    
+    .rating > input:checked ~ label {
+        color: #ffcc00;
+    }
 
+    #rating-info {
+        font-size: 18px;
+       
+    }
+</style>
 </head>
 
 <body>
@@ -97,8 +126,27 @@
             
           </div>
           <div class="col-12 col-lg-6">
+
+            <div id="rating-info">
+              <p style="text-align:left;"><b>Rate The Course and Lecturer</b></p>
+              <div class="rating">
+                  <input type="radio" id="star5" name="rating" value="5" />
+                  <label for="star5"></label>
+                  <input type="radio" id="star4" name="rating" value="4" />
+                  <label for="star4"></label>
+                  <input type="radio" id="star3" name="rating" value="3" />
+                  <label for="star3"></label>
+                  <input type="radio" id="star2" name="rating" value="2" />
+                  <label for="star2"></label>
+                  <input type="radio" id="star1" name="rating" value="1" />
+                  <label for="star1"></label>
+              </div>
+              <p id="average-rating" style="margin-top:20px;">Average rating: 0 / 5</p>
+              <p id="vote-count" style="text-align:left;"><b>Vote count: 0</b></p>
+              
+          </div>
             <hr>
-            <h4 style="font-size:18px;  padding:20px;text-align:center;"><b>
+            <h4 style="font-size:18px;  padding:20px;text-align:left;"><b>
               Congratulations, click below to download the {{profile.name}} past question.</b>
               </h4>
               {% if profile.pdf_filename %}
@@ -133,9 +181,60 @@
 
     </article>
   </main>
+  <script>
+    const rating = document.querySelector('.rating');
+    const thankYouMessage = document.getElementById('thank-you-message');
+    const averageRatingDisplay = document.getElementById('average-rating');
+    const voteCountDisplay = document.getElementById('vote-count');
+    
+    // Simulated server data
+    let averageRating = 0;
+    let voteCount = 0;
+    
+    // Check if the user has already rated
+    const hasRated = localStorage.getItem('userRated') === 'true';
 
+    // Function to disable star ratings
+    function disableStarRatings() {
+        const starInputs = rating.querySelectorAll('input');
+        starInputs.forEach(input => {
+            input.disabled = true;
+        });
+    }
 
+    // Update average rating and vote count
+    function updateAverageRatingAndVoteCount() {
+        averageRating = (averageRating * voteCount + +localStorage.getItem('userRating')) / (voteCount + 1);
+        voteCount++;
+        averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
+        voteCountDisplay.textContent = `Vote count: ${voteCount}`;
+    }
 
+    if (hasRated) {
+        // If the user has already rated, disable the star ratings
+        disableStarRatings();
+        // Show the thank you message and the current rating data
+        thankYouMessage.textContent = 'Thank you for rating this post!';
+        averageRatingDisplay.textContent = `Average rating: ${averageRating.toFixed(1)} / 5`;
+        voteCountDisplay.textContent = `Vote count: ${voteCount}`;
+    }
+
+    rating.addEventListener('change', (e) => {
+        if (!hasRated) {
+            const selectedRating = e.target.value;
+            // Update the average rating and vote count
+            updateAverageRatingAndVoteCount();
+            // Send the selected rating to the server for processing (simulated here)
+            localStorage.setItem('userRating', selectedRating);
+            // Mark the user as having rated
+            localStorage.setItem('userRated', 'true');
+            // Disable the star ratings
+            disableStarRatings();
+            // Show the thank you message and the current rating data
+            thankYouMessage.textContent = 'Thank you for rating this post!';
+        }
+    });
+</script>
 
   <!-- 
     - custom js link
