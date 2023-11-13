@@ -778,7 +778,7 @@ def leadersadd():
     print(form.errors)
     return render_template("leadersadd.html", form=form)
 
-@app.route('/src', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def src():
     users=Committee.query.order_by(Committee.id.desc()).all()
     return render_template("blogme.html", users=users)
@@ -1292,7 +1292,7 @@ def programs(departmentSlug):
     return render_template('userprograms.html', items=programs, header=department.name, smalltitle="2021", name="", numberofentries="16 entries")
 
 
-@app.route('/', methods=['POST','GET'])
+@app.route('/userbase', methods=['POST','GET'])
 def userbase():
     print("Fetching all")
     return render_template("userbase.html")
