@@ -33,3 +33,4 @@ Werkzeug==2.3.0
 WTForms==3.0.1
 zipp==3.17.0
 uwsgi
+flask_cors
