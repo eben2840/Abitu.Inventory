@@ -55,10 +55,12 @@
         <ul>
           <li><a href="/src"><b>Home</b></a></li>
           <li><a href="/aboutsrc"><b>About CU SRC</b></a></li>
-          <li><a href="single-post.html"><b>Leadership</b></a></li>
+         
           <li class="dropdown"><a href="category.html"><span><b>SRC Committees</b></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="search-result.html">ACADEMIC AND EDITORIAL COMMITTEE
+              {%for user in users%} 
+              <li><a href="/leadership">
+                {{user.name}}
     
   </a></li>
               <li><a href="#">WOMENS COMMISSION COMMITTEE</a></li>
@@ -81,6 +83,7 @@
                   <li><a href="#">CADET CORPS</a></li>
                 </ul>
               </li>
+              {% endfor %} 
             </ul>
           </li>
 
@@ -125,14 +128,16 @@
         <div class="container">
           <div class="row">
             <div class="col-md-9">
-              <h3 class="category-title">Annoucements & Events</h3>
+              <h3 class="category-title">SRC Leadership/Committees</h3>
   
               <div class="d-md-flex post-entry-2 small-img">
                 <div>
-
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
+                 
+                <div class="post-meta"><span class="date">SRC Committees</span> <span class="mx-1">&bullet;</span> </div>
+                  <h3><a href="single-post.html">
+                    
+                    {{profile.name}}</a></h3>
+                  <p>{{profile.description}}</p>
                   
                 </div>
                 <a href="single-post.html" class="me-4 thumbnail">
@@ -140,59 +145,10 @@
                 </a>
               </div>
   
-              <div class="d-md-flex post-entry-2 small-img">
-                <div>
-
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                  
-                </div>
-                <a href="single-post.html" class="me-4 thumbnail">
-                 
-                </a>
-              </div>
+            
+            
   
-              <div class="d-md-flex post-entry-2 small-img">
-                <div>
-
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                  
-                </div>
-                <a href="single-post.html" class="me-4 thumbnail">
-                 
-                </a>
-              </div>
-  
-              <div class="d-md-flex post-entry-2 small-img">
-                <div>
-
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                  
-                </div>
-                <a href="single-post.html" class="me-4 thumbnail">
-                 
-                </a>
-              </div>
-  
-              <div class="d-md-flex post-entry-2 small-img">
-                <div>
-
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                  
-                </div>
-                <a href="single-post.html" class="me-4 thumbnail">
-                 
-                </a>
               
-        
-              </div>
   
               <!-- Paging -->
               <div class="text-start py-4">

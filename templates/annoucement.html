@@ -55,36 +55,27 @@
         <ul>
           <li><a href="/src"><b>Home</b></a></li>
           <li><a href="/aboutsrc"><b>About CU SRC</b></a></li>
-          <li><a href="/leadership"><b>Leadership</b></a></li>
+         
           <li class="dropdown"><a href="category.html"><span><b>SRC Committees</b></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="/annoucement">ACADEMIC AND EDITORIAL COMMITTEE
-    
-  </a></li>
-              <li><a href="#">WOMENS COMMISSION COMMITTEE</a></li>
-              
-              <li><a href="#">BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE</a></li>
-              <li><a href="#">PUBLIC RELATIONS COMMITTEE</a></li>
-              <li><a href="#">ENTERTAINMENT COMMITTEE</a></li>
-              <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">FINANCE COMMITTEE</a></li>
-                  <li><a href="#">INTERNATIONAL STUDENTS COMMITTEE</a></li>
-                  <li><a href="#">LOCAL NUGS SECRETARIAT</a></li>
-                  <li><a href="#">LOCAL PUSAG SECRETARIAT</a></li>
-                  <li><a href="#">PROJECT AND PLANNING COMMITTEE</a></li>
-                  <li><a href="#">STUDENTS CHAPLAINCY COMMITTEE</a></li>
-                  <li><a href="#">SPORTS COMMITTEE</a></li>
-                  <li><a href="#">TRANSPORT COMMITTEE</a></li>
-                  <li><a href="#">PROCUREMENT COMMITTEE</a></li>
-                  <li><a href="#">ORGANIZING COMMITTEE</a></li>
-                  <li><a href="#">CADET CORPS</a></li>
-                </ul>
+              <li class="dropdown"><a href="#"><span>Committees</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
+                {%for user in users%} 
+                <a href="{{url_for("leadership", userid=user.id)}}" style="text-decoration: none; color: #992621;">
+  
+                  {{user.name}}
+      
+    </a></li>
+                
+            
+              </a>
+                
               </li>
+              {% endfor %} 
             </ul>
           </li>
 
           <li><a href="/annoucement"><b>Annoucements</b></a></li>
+          
           <li><a href="/constitution"><b>Constitution</b></a></li>
         </ul>
       </nav><!-- .navbar -->
@@ -123,7 +114,7 @@
             <div class="swiper sliderFeaturedPosts">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/r.jpg');">
+                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/ll.JPG');">
                     <div class="img-bg-inner">
                       <h2><b>The Best Homemade Masks for Face (keep the Pimples Away)</b></h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
@@ -197,15 +188,18 @@
         <div class="row g-5">
           <div class="col-lg-4">
             <div class="post-entry-1 lg">
-              <a href="single-post.html"><img src="static/asssets/img/post-landscape-1.jpg" alt="" class="img-fluid"></a>
+              <a href="single-post.html"><img src="static/asssets/img/ll.JPG" alt="" class="img-fluid"></a>
               <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-              <h2><a href="single-post.html">11 Work From Home Part-Time Jobs You Can Do Now</a></h2>
-              <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi atque eveniet, quo, praesentium dignissimos</p>
+              <h2><a href="single-post.html">GDIW'23</a></h2>
+              <p class="mb-4 d-block">In a digital age where innovation is the driving force of progress, Some selected students of Central University have seized the opportunity to be at the forefront of change.  The 3rd edition of the Ghana Digital Innovation Week, a three-day program dedicated to fostering creative and tech-driven ideas.The Ghana Digital Innovation Week serves as a unique platform where students can explore the multifaceted world of technology and innovation. It's a space where they can meet industry experts, visionary entrepreneurs, and like-minded peers, creating an environment ripe for idea exchange and growth.</p><p>
+                One of the most remarkable aspects of this event is the diverse mix of students in attendance. While some may have deep-rooted interests in technology, others are venturing into this field for the first time. The event has managed to bridge these gaps, encouraging collaboration, and allowing everyone to find their place in the world of digital innovation. These young minds have proven that they are ready to embrace innovation, shaping a brighter tomorrow for their country and the world at large.</p>
 
               <div class="d-flex align-items-center author">
-                <div class="photo"><img src="static/asssets/img/person-1.jpg" alt="" class="img-fluid"></div>
+                <div class="photo">
+                  <!--<img src="static/asssets/img/person-1.jpg" alt="" class="img-fluid">-->
+                </div>
                 <div class="name">
-                  <h3 class="m-0 p-0">Cameron Williamson</h3>
+                  <h3 class="m-0 p-0">Ohene-Mills</h3>
                 </div>
               </div>
             </div>
@@ -214,24 +208,18 @@
 
           <div class="col-lg-8">
             <div class="row g-5">
-              <div class="col-lg-4 border-start custom-border">
+              {%for user in user%} 
+              <div class="col-lg-8 border-start custom-border">
                 <div class="post-entry-1">
-                  <a href="single-post.html"><img src="static/asssets/img/post-landscape-2.jpg" alt="" class="img-fluid"></a>
+                  <a href="single-post.html"><img src={{user.image_file}} class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                  <h2><a href="single-post.html">Let’s Get Back to Work, New York</a></h2>
+                  <h2><a href="single-post.html">{{user.fullname}}</a></h2>
                 </div>
-                <div class="post-entry-1">
-                  <a href="single-post.html"><img src="static/asssets/img/post-landscape-5.jpg" alt="" class="img-fluid"></a>
-                  <div class="post-meta"><span class="date">Food</span> <span class="mx-1">&bullet;</span> <span>Jul 17th '22</span></div>
-                  <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                </div>
-                <div class="post-entry-1">
-                  <a href="single-post.html"><img src="static/asssets/img/post-landscape-7.jpg" alt="" class="img-fluid"></a>
-                  <div class="post-meta"><span class="date">Design</span> <span class="mx-1">&bullet;</span> <span>Mar 15th '22</span></div>
-                  <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
-                </div>
+               
               </div>
-              <div class="col-lg-4 border-start custom-border">
+              {%endfor%}
+              
+             <!-- <div class="col-lg-4 border-start custom-border">
                 <div class="post-entry-1">
                   <a href="single-post.html"><img src="static/asssets/img/post-landscape-3.jpg" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
@@ -247,7 +235,7 @@
                   <div class="post-meta"><span class="date">Travel</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
                   <h2><a href="single-post.html">5 Great Startup Tips for Female Founders</a></h2>
                 </div>
-              </div>
+              </div>-->
 
               <div class="col-lg-4">
 
@@ -623,15 +611,19 @@
         </div>
       </div>
     </div>
-<!--
-    <div class="footer-legal">
+
+
+    <div class="footer-legal" style="background-color:#212529;">
       <div class="container">
 
         <div class="row justify-content-between">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <div class="copyright">
-              © Copyright <strong><span></span></strong>. All Rights Reserved
+              © Copyright <strong><span></span></strong>. All Rights Reserved<br>
+              Designed by PrestoGhana<strong><span></span></strong>. 
+            
             </div>
+
 
             <div class="credits">
               <!-- All the links in the footer should remain intact.

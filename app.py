@@ -7,7 +7,6 @@ import smtplib
 import os
 import uuid
 from datetime import datetime
-import secrets
 import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
@@ -216,7 +215,11 @@ class Ask(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ask = db.Column(db.String())
     
-    
+
+class Committee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())    
+    description = db.Column(db.String())    
 
 
 
@@ -657,7 +660,22 @@ def basee():
  
 
 
-
+@app.route('/addcommittee', methods=['GET', 'POST'])
+def addcommittee():
+    form=CommitteeForm()
+    if form.validate_on_submit():
+        
+            new=Committee(name=form.name.data, 
+                   description=form.description.data,  
+                  )
+       
+            db.session.add(new)
+            db.session.commit()
+            # send_email()
+            return redirect('leadership')
+            
+    print(form.errors)
+    return render_template("addcommittee.html", form=form)
 
 @app.route('/addalumni', methods=['GET', 'POST'])
 def addalumni():
@@ -762,26 +780,43 @@ def leadersadd():
 
 @app.route('/src', methods=['GET', 'POST'])
 def src():
-    return render_template("blogme.html")
+    users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("blogme.html", users=users)
     
     
 @app.route('/aboutsrc', methods=['GET', 'POST'])
 def aboutsrc():
-    return render_template("aboutme.html")
-    
-@app.route('/leadership', methods=['GET', 'POST'])
-def leadership():
-    return render_template("leadership.html")
-    
+    users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("aboutme.html",users=users)
+ 
+
+@app.route('/committee', methods=['GET', 'POST'])
+def committee():
+    users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("committee.html",users=users)
+ 
+
+   
+@app.route('/leadership/<int:userid>', methods=['GET', 'POST'])
+def leadership(userid):
+    profile=Committee.query.get_or_404(userid)
+    return render_template("leadership.html", profile=profile,)
+
+
+ 
+ 
        
 @app.route('/annoucement', methods=['GET', 'POST'])
 def annoucement():
-    return render_template("annoucement.html")
+    users=Committee.query.order_by(Committee.id.desc()).all()
+    user=User.query.order_by(User.id.desc()).all()
+    return render_template("annoucement.html",users=users,user=user)
 
        
 @app.route('/constitution', methods=['GET', 'POST'])
 def constitution():
-    return render_template("consti.html")
+    users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("consti.html",users=users)
     
         
 
@@ -1041,6 +1076,8 @@ def lists():
     print(users)
     print(current_user)
     return render_template("list.html", users=users, current_user=current_user, title="list")
+
+
 
  
 @app.route('/getlist', methods=['GET', 'POST'])

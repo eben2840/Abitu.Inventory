@@ -150,6 +150,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
     
     
+class CommitteeForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    description = StringField('description', validators=[DataRequired()])
+    submit = SubmitField('submit')
+    
+    
 
     
 

@@ -55,32 +55,21 @@
         <ul>
           <li><a href="/src"><b>Home</b></a></li>
           <li><a href="/aboutsrc"><b>About CU SRC</b></a></li>
-          <li><a href="/leadership"><b>Leadership</b></a></li>
-          <li class="dropdown"><a href="category.html"><span><b>SRC Committees</b></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+        
+          <li class="dropdown"><a href="/committee"><span><b>SRC Committees</b></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="/annoucement">ACADEMIC AND EDITORIAL COMMITTEE
+              <li class="dropdown"><a href="#"><span>Committees</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
+              {%for user in users%} 
+              <a href="{{url_for("leadership", userid=user.id)}}" style="text-decoration: none; color: #992621;">
+
+                {{user.name}}
     
   </a></li>
-              <li><a href="#">WOMENS COMMISSION COMMITTEE</a></li>
               
-              <li><a href="#">BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE</a></li>
-              <li><a href="#">PUBLIC RELATIONS COMMITTEE</a></li>
-              <li><a href="#">ENTERTAINMENT COMMITTEE</a></li>
-              <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">FINANCE COMMITTEE</a></li>
-                  <li><a href="#">INTERNATIONAL STUDENTS COMMITTEE</a></li>
-                  <li><a href="#">LOCAL NUGS SECRETARIAT</a></li>
-                  <li><a href="#">LOCAL PUSAG SECRETARIAT</a></li>
-                  <li><a href="#">PROJECT AND PLANNING COMMITTEE</a></li>
-                  <li><a href="#">STUDENTS CHAPLAINCY COMMITTEE</a></li>
-                  <li><a href="#">SPORTS COMMITTEE</a></li>
-                  <li><a href="#">TRANSPORT COMMITTEE</a></li>
-                  <li><a href="#">PROCUREMENT COMMITTEE</a></li>
-                  <li><a href="#">ORGANIZING COMMITTEE</a></li>
-                  <li><a href="#">CADET CORPS</a></li>
-                </ul>
+             
+              </a>
               </li>
+              {% endfor %} 
             </ul>
           </li>
 
@@ -89,6 +78,7 @@
         </ul>
       </nav><!-- .navbar -->
     
+
 
       <div class="position-relative">
         <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
@@ -310,16 +300,17 @@
         </div>
       </div>
     </div>
-<!--
-    <div class="footer-legal">
+
+    <div class="footer-legal" style="background-color:#212529;">
       <div class="container">
 
         <div class="row justify-content-between">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <div class="copyright">
-              © Copyright <strong><span></span></strong>. All Rights Reserved
+              © Copyright <strong><span></span></strong>. All Rights Reserved<br>
+              Designed by PrestoGhana<strong><span></span></strong>. 
+            
             </div>
-
             <div class="credits">
               <!-- All the links in the footer should remain intact.
               <!-- You can delete the links only if you purchased the pro version. 
