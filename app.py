@@ -16,7 +16,6 @@ from flask_migrate import Migrate
 import json
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
 from flask_login import login_required,login_user,logout_user,current_user,UserMixin, LoginManager
-from flask_marshmallow import Marshmallow
 from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify, send_from_directory
 )
@@ -45,7 +44,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-ma = Marshmallow(app)
+
 
 
 login_manager = LoginManager(app)
