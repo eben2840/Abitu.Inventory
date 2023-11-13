@@ -16,7 +16,7 @@ python3 -m venv $venv_name
 source $venv_name/bin/activate
 
 # Install dependencies from requirements.txt
-pip install -r requirements.txt
+pip install -r buildrequirements.txt
 
 #Restart the ministy application
 sudo systemctl restart ministry.service
