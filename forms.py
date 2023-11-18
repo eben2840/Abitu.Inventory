@@ -101,7 +101,7 @@ class AddGetfunds(FlaskForm):
     
 ], default=None)
 
-    campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
+    campus= StringField('campus')
     program= SelectField('program',choices=[('Program','Program'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
                 ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
                 ('MARKETING', 'MARKETING'),

@@ -27,14 +27,13 @@ from werkzeug.utils import secure_filename
 
 app=Flask(__name__)
 CORS(app)
+# 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("CENTRAL_MINISTRY_DB_URL","sqlite:///test.db")
-
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("CENTRAL_MINISTRY_DB_URL","sqlite:///test.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
-
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads' 
 
@@ -129,6 +128,7 @@ class User(db.Model,UserMixin):
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.gender}'"
+    
 
 class Getfunds(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -656,6 +656,9 @@ def pages():
 def basee():
     return render_template('basee.html')
 
+
+
+
  
 
 
@@ -705,6 +708,30 @@ def addalumni():
             
     print(form.errors)
     return render_template("addAlumni.html", form=form, title='addalumni')
+
+
+
+@app.route'/feedback', methods=['GET', 'POST'])
+def feedback():
+    form=AddGetfunds()
+    if form.validate_on_submit():
+        
+            new=Getfunds(fullname=form.fullname.data, 
+                   email=form.email.data, 
+                   telephone=form.telephone.data,    
+                   program=form.program.data, 
+                  campus=form.campus.data, 
+                  ministry = form.ministry.data
+                  )    
+            db.session.add(new)
+            db.session.commit()
+            # send_email() 
+            flash("Thank you for filling the feedback form, Someone from our team will contact you shortly.",
+                  "success")
+            return redirect('/thank')
+            
+    print(form.errors)
+    return render_template("feedback.html", form=form, title='addalumni')
 
 
 
@@ -800,6 +827,10 @@ def committee():
 def leadership(userid):
     profile=Committee.query.get_or_404(userid)
     return render_template("leadership.html", profile=profile,)
+
+@app.route('/thank', methods=['GET', 'POST'])
+def thank():
+    return render_template("thank.html")
 
 
  
