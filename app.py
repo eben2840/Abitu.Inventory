@@ -711,7 +711,7 @@ def addalumni():
 
 
 
-@app.route'/feedback', methods=['GET', 'POST'])
+@app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     form=AddGetfunds()
     if form.validate_on_submit():
