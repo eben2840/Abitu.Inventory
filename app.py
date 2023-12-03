@@ -1495,7 +1495,7 @@ def rancardussd():
             hall=response["hallname"]
             response = {
                     "continueSession": False,
-                    "message": "Hello" + " " + message  + "\n " + "Your Hall is" + "\n " + hall + "\n\n Are you ready for some excitement?  \n Loads of activities starting from Wednesday, 6th to Saturday 9th \nDON’T BE LEFT OUT \n !!Hallapalooza" + "\n\nPowered by PrestoGhana" 
+                    "message": "Hello" + " " + message  + "\n " + "Your Hall is" + "\n " + hall + "\n\n Are you ready for some excitement?" +" " + " \n Loads of activities starting from Wednesday, 6th to Saturday 9th" + " " + " \n\n DON’T BE LEFT OUT \n !!Hallapalooza" + "\n\nPowered by PrestoGhana" 
                     #Gets and sets by id! 
                      
                 }
