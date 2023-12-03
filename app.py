@@ -1479,14 +1479,22 @@ def rancardussd():
         print("userid", userid)
         response= findbyid(userid)
         print("response", response)
-        print(response)
-        message = response["studentname"]
-        hall=response["hallname"]
-        response = {
-                "continueSession": False,
-                "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
-                #Gets and sets by id!  
-            }
+        if response is not None:
+            print(response)
+            message = response["studentname"]
+            hall=response["hallname"]
+            response = {
+                    "continueSession": False,
+                    "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
+                    #Gets and sets by id!  
+                }
+        else:
+            response = {
+                    "continueSession": False,
+                    "message": "No student found, Please check and try again"
+                    #Gets and sets by id!  
+                }
+            
     else:
         response = {
                 "continueSession": True,
