@@ -123,9 +123,10 @@ class Studenthalls(db.Model):
 class StudentData(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     studentName= db.Column(db.String() )
-    regno= db.Column(db.String() )
+    studentID= db.Column(db.String() )
+    studentnumber= db.Column(db.String() )
     def __repr__(self):
-        return f"Studenthalls('{self.id}', {self.studentName}', {self.regno})"
+        return f"Studentdata('{self.id}', {self.studentName}', {self.studentnumber})"
     
     
 class User(db.Model,UserMixin):
@@ -1486,16 +1487,27 @@ def rancardussd():
         print("userid", userid)
         response= findbyid(userid)
         print("response", response)
+        indexnumber = sessionRequest["message"]
         if response is not None:
             print(response)
             message = response["studentname"]
-            indexnumber = sessionRequest["message"]
+           
             hall=response["hallname"]
             response = {
                     "continueSession": False,
                     "message": "Hello" + " " + message  + "\n " + "Your Hall is" + " " + hall + "\n\nPowered by PrestoGhana" 
-                    #Gets and sets by id!  
+                    #Gets and sets by id! 
+                     
                 }
+            try:
+                
+                newstudent = StudentData( studentName= message,studentID=userid, studentnumber=sessionRequest["msisdn"]  )
+                db.session.add(newstudent)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                
+            
         else:
             response = {
                     "continueSession": True,
@@ -1576,6 +1588,7 @@ def findbyid(id=None):
         "email":student.email,
         "hallname":student.hallname
     }
+  
     return student
 
 @app.route('/updateregno', methods=['POST','GET'])
@@ -1591,9 +1604,11 @@ def method_name():
 
         db.session.commit()
         print(student.regno)
-   
-    
     return "Done"
+
+
+    
+    
     
 
 if __name__ == '__main__':
