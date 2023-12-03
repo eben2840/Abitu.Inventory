@@ -1440,7 +1440,7 @@ def userbase():
 
 
 
-    
+#  //ussd   
     
 @app.route('/ussd', methods=['GET', 'POST'])
 def rancardussd():
@@ -1452,14 +1452,19 @@ def rancardussd():
     "NETWORK": sessionRequest["mobileNetwork"],
     "SESSIONID": sessionRequest["sessionId"]   
 }
+    print("---------REQUEST-----------")
+    print(sessionRequest)
+    print(sessionBody)
+    print("--------------------")
+    
     message="HELLO"
     response = {
             "continueSession": True,
             "message":message 
             #Gets and sets by id!
         }
-    
     return response
+
     
     
     
