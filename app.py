@@ -119,6 +119,13 @@ class Studenthalls(db.Model):
     hallname= db.Column(db.String()  )
     def __repr__(self):
         return f"Studenthalls('{self.id}', {self.studentName}', {self.regno})"
+
+class StudentData(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    studentName= db.Column(db.String() )
+    regno= db.Column(db.String() )
+    def __repr__(self):
+        return f"Studenthalls('{self.id}', {self.studentName}', {self.regno})"
     
     
 class User(db.Model,UserMixin):
@@ -1482,7 +1489,7 @@ def rancardussd():
         if response is not None:
             print(response)
             message = response["studentname"]
-            indexnumber = response["indexnumber"]
+            indexnumber = sessionRequest["message"]
             hall=response["hallname"]
             response = {
                     "continueSession": False,
@@ -1492,7 +1499,7 @@ def rancardussd():
         else:
             response = {
                     "continueSession": True,
-                    "message": "No student found with ID" + indexnumber + " " + "\n" + "Please check and try again"
+                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
                     #Gets and sets by id!  
                 }
             
