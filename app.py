@@ -1482,6 +1482,7 @@ def rancardussd():
         if response is not None:
             print(response)
             message = response["studentname"]
+            indexnumber = response["indexnumber"]
             hall=response["hallname"]
             response = {
                     "continueSession": False,
@@ -1491,7 +1492,7 @@ def rancardussd():
         else:
             response = {
                     "continueSession": True,
-                    "message": "No student found, Please check and try again"
+                    "message": "No student found with ID" + indexnumber + " " + "\n" + "Please check and try again"
                     #Gets and sets by id!  
                 }
             
