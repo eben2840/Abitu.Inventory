@@ -1511,7 +1511,8 @@ def rancardussd():
         else:
             response = {
                     "continueSession": True,
-                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
+                    "message": "Hello" + indexnumber + " " + "You have been assigned to " + "\n" + "Justice Hall."
+                    # "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
                     #Gets and sets by id!  
                 }
             
