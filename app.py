@@ -1473,7 +1473,8 @@ def rancardussd():
     
     message="Hello, Please Enter Your Index Number.\n eg.int/20/01/3356."
     
-    if sessionRequest["message"] != "*844*138": #seconod try?
+    # if sessionRequest["message"] != '*844*138': #seconod try?
+    if sessionRequest["menu"] != 0: #seconod try?
         userid = sessionRequest["message"]
         print("userid", userid)
         response= findbyid(userid)
@@ -1481,13 +1482,18 @@ def rancardussd():
         print(response)
         message = response["studentname"]
         hall=response["hallname"]
+        response = {
+                "continueSession": False,
+                "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
+                #Gets and sets by id!  
+            }
+    else:
+        response = {
+                "continueSession": True,
+                "message": message
+                #Gets and sets by id!  
+            }
         
-    response = {
-            "continueSession": True,
-            "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
-            #Gets and sets by id!
-            
-        }
     return response
 
 
