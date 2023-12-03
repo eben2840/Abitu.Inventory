@@ -4,7 +4,9 @@ import os
 from email.message import EmailMessage
 import ssl
 import smtplib
+import csv
 import os
+
 from urllib import response
 import uuid
 from datetime import datetime
@@ -12,7 +14,7 @@ import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct 
-from flask import Flask, redirect, render_template, send_file, url_for,request,jsonify,get_flashed_messages, send_from_directory
+from flask import Flask, redirect, render_template, send_file, url_for,request,jsonify,get_flashed_messages, send_from_directory,make_response
 from flask_migrate import Migrate
 import json
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
@@ -105,7 +107,18 @@ class alumni(db.Model, UserMixin):
     telephone= db.Column(db.String()  )
     def __repr__(self):
         return f"alumni('{self.id}', {self.name}', {self.email})"
-  
+
+class Studenthalls(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    studentName= db.Column(db.String() )
+    regno= db.Column(db.String() )
+    gender= db.Column(db.String() )
+    program= db.Column(db.String() )
+    level= db.Column(db.String()  )
+    email= db.Column(db.String()  )
+    hallname= db.Column(db.String()  )
+    def __repr__(self):
+        return f"Studenthalls('{self.id}', {self.studentName}', {self.regno})"
     
     
 class User(db.Model,UserMixin):
@@ -1449,6 +1462,7 @@ def rancardussd():
     "MSISDN": sessionRequest["msisdn"],
     "USERDATA": sessionRequest["data"],
     # "MSGTYPE": true,
+    
     "NETWORK": sessionRequest["mobileNetwork"],
     "SESSIONID": sessionRequest["sessionId"]   
 }
@@ -1459,16 +1473,85 @@ def rancardussd():
     
     message="Hello, Please Enter Your Index Number.\n eg.int/20/01/3356."
     
+    if sessionRequest["message"] != "*844*138": #seconod try?
+        userid = sessionRequest["message"]
+        print("userid", userid)
+        response= findbyid(userid)
+        print("response", response)
+        print(response)
+        message = response["studentname"]
+        hall=response["hallname"]
+        
     response = {
             "continueSession": True,
-            "message":message 
+            "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
             #Gets and sets by id!
+            
         }
     return response
 
+
+   
+@app.route("/readcsv",)
+def readcsv():
+    with open('data.csv', 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        studentbody=[]
+        for line in csv_reader:
+            studentName=line["StudentName"]
+            regno=line["regno"]
+            gender=line["gender"]
+            program=line["program"]
+            level=line["LEVEL"]
+            email=line["email"]
+            hallname=line['hallname']
+            newStudent = Studenthalls(studentName=studentName, regno=regno, gender=gender,
+                                      program=program, level=level, email=email,hallname=hallname)
+            
+            try:
+                db.session.add(newStudent)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+            
+            print(newStudent.id)
+            print(newStudent.studentName)
+            
+            student={
+                "studentname":studentName,
+                "regno":regno,
+                "gender":gender,
+                "program":program,
+                "level":level,
+                "email":email,
+                "hallname":hallname
+            }
+            studentbody.append(student)
+            
+            # write to db
+            
+    return studentbody
     
+@app.route("/findbyid")
+def findbyid(id=None):
+    # print("input")
+    # input=request.args.get('id')
+    print(id)
+    student=Studenthalls.query.filter_by(regno=id).first()   
+    print(student) 
     
-    
+    if student == None:
+        return None
+    student={
+        "studentname":student.studentName,
+        "regno":student.regno,
+        "gender":student.gender,
+        "program":student.program,
+        "level":student.level,
+        "email":student.email,
+        "hallname":student.hallname
+    }
+    return student
     
 
 if __name__ == '__main__':
