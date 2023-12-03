@@ -90,7 +90,7 @@
                 {% if title == 'list' %}
                 <li class="nav-item">
                     <a class="nav-link" href="/list">
-                        <i class="bi bi-people"></i> Members
+                        <i class="bi bi-people"></i>Student Committee
                         <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
 
                     </a>
@@ -98,8 +98,57 @@
                 {% else %}
                 <li class="nav-item "  >
                   <a class="nav-link" href="/list">
-                      <i class="bi bi-people"></i> Members
+                      <i class="bi bi-people"></i> Student Committee
                       <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
+
+                  </a>
+              </li>
+              {% endif %}
+
+              {% if title == 'list' %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/addcommittee">
+                      <i class="bi bi-people"></i>Add Committees
+
+                  </a>
+              </li>
+              {% else %}
+              <li class="nav-item "  >
+                <a class="nav-link" href="/addcommittee">
+                    <i class="bi bi-people"></i> Add Committees
+
+                </a>
+            </li>
+            {% endif %}
+
+            {% if title == 'list' %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/addalumni">
+                      <i class="bi bi-people"></i>Add Events
+
+                  </a>
+              </li>
+              {% else %}
+              <li class="nav-item "  >
+                <a class="nav-link" href="/addalumni">
+                    <i class="bi bi-people"></i> Add Events
+
+                </a>
+            </li>
+            {% endif %}
+
+              {% if title == 'list' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/challenges">
+                        <i class="bi bi-people"></i> Challenges 
+                        <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto"></span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item "  >
+                  <a class="nav-link" href="/challenges">
+                      <i class="bi bi-people"></i> Challenges
+                      <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto"></span>
 
                   </a>
               </li>

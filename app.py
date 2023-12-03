@@ -5,6 +5,7 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import os
+from urllib import response
 import uuid
 from datetime import datetime
 import urllib.request, urllib.parse
@@ -79,21 +80,15 @@ def sendtelegram(params):
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
-    
     contact= db.Column(db.Integer())
     email= db.Column(db.String())
-    
     password= db.Column(db.String())
-    
     email= db.Column(db.String())
-   
     indexnumber=db.Column(db.String())
     password=db.Column(db.String)
     phone= db.Column(db.String()    )
-    
     telephone= db.Column(db.String()   )
     yearCompleted= db.Column(db.Integer()  )
-    
     form=db.Column(db.String())
     extra= db.Column(db.String()     )
     image_file = db.Column(db.String())
@@ -141,6 +136,24 @@ class Getfunds(db.Model,UserMixin):
     campus= db.Column(db.String()     )
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.email}'"
+    
+
+class Faq(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    caption= db.Column(db.String()  )
+    answers = db.Column(db.String())
+    campus= db.Column(db.String()     )
+    def __repr__(self):
+        return f"User('{self.id}', {self.caption}, {self.answers}'"
+    
+
+class Challenges(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String()  )
+    number = db.Column(db.String())
+    message= db.Column(db.String()     )
+    def __repr__(self):
+        return f"User('{self.id}', {self.name}, {self.number}'"
     
     
     
@@ -711,6 +724,32 @@ def addalumni():
 
 
 
+@app.route('/faq', methods=['GET', 'POST'])
+def faq():
+    form=FaqForm()
+    if form.validate_on_submit():
+        
+            new=Faq(
+                caption=form.caption.data, 
+                answers=form.answers.data, 
+                campus=form.campus.data, 
+                  )
+            db.session.add(new)
+            db.session.commit()
+            # send_email()
+           
+        
+            flash("Thank you for filling the form, Please check your email for a message from the President.",
+                  "success")
+            return redirect('/')
+            
+    print(form.errors)
+    return render_template("faq.html", form=form)
+
+            
+    print(form.errors)
+    return render_template("faq.html", form=form)
+
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     form=AddGetfunds()
@@ -806,8 +845,27 @@ def leadersadd():
 
 @app.route('/', methods=['GET', 'POST'])
 def src():
+    form=ChallengesForm()
+    if form.validate_on_submit():
+        
+            new=Challenges(
+                name=form.name.data, 
+                number=form.number.data, 
+                message=form.message.data, 
+                  )
+            db.session.add(new)
+            db.session.commit()
+            # send_email()
+           
+        
+            flash("Thank you for filling the form, We will response as soon as possible.",
+                  "success")
+            return redirect('/')
     users=Committee.query.order_by(Committee.id.desc()).all()
-    return render_template("blogme.html", users=users)
+    faq=Faq.query.order_by(Faq.id.desc()).all()
+    return render_template("blogme.html", users=users,faq=faq,form=form)
+
+
     
     
 @app.route('/aboutsrc', methods=['GET', 'POST'])
@@ -827,6 +885,8 @@ def committee():
 def leadership(userid):
     profile=Committee.query.get_or_404(userid)
     return render_template("leadership.html", profile=profile,)
+
+
 
 @app.route('/thank', methods=['GET', 'POST'])
 def thank():
@@ -886,6 +946,7 @@ def main():
     total_male = User.query.filter_by(gender='Male').count()
     total_female = User.query.filter_by(gender='Female').count() 
     users=User.query.order_by(User.id.desc()).all()
+    challenges=Challenges.query.order_by(Challenges.id.desc()).all()
     print(users)
     total_leaders = Leaders.query.count()
     print(total_leaders)
@@ -894,7 +955,7 @@ def main():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents)
+    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 
@@ -958,11 +1019,33 @@ def media():
     media = User.query.filter_by(ministry='CADET CORPS').all()
     return render_template('media.html', media=media)
 
+def load_data():
+    data = []
+    with open('data.csv', 'r') as file:
+        lines = file.readlines()
+        for line in lines[1:]:  # Skip header row
+            index, name, hall = line.strip().split(',')
+            data.append({'index': index, 'name': name, 'hall': hall})
+    return data
+
+
 @app.route('/praise', methods=['GET', 'POST'])
-@login_required
 def praise():
-    praise = User.query.filter_by(ministry='Praise & Worship').all()
-    return render_template('praise.html', praise=praise)
+    index = request.form['index']
+    data = load_data()
+    
+    # Find the user by index
+    user = next((item for item in data if item['index'] == index), None)
+
+    if user:
+        return render_template('results.html', user=user)
+    else:
+        return render_template('not_found.html')
+    
+
+
+    
+    
 
 @app.route('/ent', methods=['GET', 'POST'])
 def ent():
@@ -999,10 +1082,9 @@ def dis():
     return render_template('dis.html', dis=dis)
 
 @app.route('/mission', methods=['GET', 'POST'])
-@login_required
 def mission():
-    mission = User.query.filter_by(ministry='Misson').all()
-    return render_template('mission.html', mission=mission)
+   
+    return render_template('halls.html', mission=mission)
 
 @app.route('/counselling', methods=['GET', 'POST'])
 @login_required
@@ -1163,6 +1245,16 @@ def email():
     print(users)
     print(current_user)
     return render_template("email.html", users=users, current_user=current_user, title="report")
+
+
+@app.route('/challenges',methods=['GET','POST'])
+@login_required
+def challenges():
+    print("Fetching all")
+    users=Challenges.query.order_by(Challenges.id.desc()).all()
+    print(users)
+    print(current_user)
+    return render_template("challenges.html", users=users, current_user=current_user, title="report")
  
 
 
@@ -1327,6 +1419,51 @@ def userbase():
     print("Fetching all")
     return render_template("userbase.html")
  
+
+# app.route('/halls', methods=['GET', 'POST'])
+# def halls():
+#     return render_template('halls.html')
+
+
+# @app.route('/results', methods=['POST'])
+# def results():
+#     index = request.form['index']
+#     data = load_data()
+    
+#     # Find the user by index
+#     user = next((item for item in data if item['index'] == index), None)
+
+#     if user:
+#         return render_template('results.html', user=user)
+#     else:
+#         return render_template('not_found.html')
+
+
+
+    
+    
+@app.route('/ussd', methods=['GET', 'POST'])
+def rancardussd():
+    sessionRequest = request.json
+    sessionBody = {
+    "MSISDN": sessionRequest["msisdn"],
+    "USERDATA": sessionRequest["data"],
+    # "MSGTYPE": true,
+    "NETWORK": sessionRequest["mobileNetwork"],
+    "SESSIONID": sessionRequest["sessionId"]   
+}
+    message="HELLO"
+    response = {
+            "continueSession": True,
+            "message":message 
+            #Gets and sets by id!
+        }
+    
+    return response
+    
+    
+    
+    
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD

@@ -106,6 +106,16 @@
   <main id="main">
     
     <hr style="color:gray;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+    
+  {% endfor %}
+{% endif %}
+{% endwith %}
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
       <div class="container-md" data-aos="fade-in">
@@ -235,36 +245,18 @@
     <h6 style="font-size:30px;"><b>Frequently Asked Questions</b></h6>
     <h6 style="font-size:20px;">We invite you to become an active part of the SRC. </h6>
     <div class="accordion accordion-flush" id="accordionFlushExample">
+      {%for user in faq%}  
       <div class="accordion-item" class="btn btn-primary has-after" style=" background-color:#fff; color:#000; padding:10px;margin-top:10px; width:100%; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-            In a digital age where innovation is the driving force of progress,
+            {{user.caption}}
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+          <div class="accordion-body">{{user.answers}} </div>
         </div>
       </div>
-      <div class="accordion-item" class="btn btn-primary has-after" style=" background-color:#fff; color:#000; padding:10px;margin-top:10px; width:100%; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-            In a digital age where innovation is the driving force of progress,
-          </button>
-        </h2>
-        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
-        </div>
-      </div>
-      <div class="accordion-item" class="btn btn-primary has-after" style=" background-color:#fff; color:#000; padding:10px;margin-top:10px; width:100%; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-            In a digital age where innovation is the driving force of progress,
-          </button>
-        </h2>
-        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-        </div>
-      </div>
+      {% endfor %} 
     </div>
 
 
@@ -296,6 +288,8 @@
 
   <div class="col-12 col-lg-6">
  
+    <form action="" method="post"  >
+     {{form.hidden_tag()}}
 
     <h2 class="" id="">
      <b>Facing Challenges On Campus?</b>
@@ -303,18 +297,21 @@
    
   
     <div class="alert alert-primary" role="alert">
-      Plesae note that Your message will be treated with all privacy.
+      Please note that Your message will be treated with all privacy.
     </div>
 
-    <input name="name" style="width:100%; border:none; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);" id="floatingInput" placeholder="Enter Name" required>
-    <input name="email" style="width:100%; border:none; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);" id="floatingInput" placeholder="Enter Phone Number" required>
-    <label style="color:gray;">Type your Message here:</label>
-    <textarea name="qualities" type="qualities" style="width:100%; border:none;  padding:20px; border-radius:10px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);"  required="">       </textarea>
-    
+    {{form.name(class="input-field ", style="width:100%; border:none; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);", id="floatingInput",  placeholder="Enter name",id="floatingInput", required="required")}}
+    {{form.number(class="input-field ", style="width:100%; border:none; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);", id="floatingInput",  placeholder="Enter name",id="floatingInput", required="required")}}
    
 
-    <a href="/leadersadd" class="btn btn-primary has-after" style="margin-top:10px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">Send Message</a>
+    <label style="color:gray;">Type your Message here:</label>
+    <textarea name="message" type="message" style="width:100%; border:none;  padding:20px; border-radius:10px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);"  required="">       </textarea>
+    
+  <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the messagse</button>
+   
 
+
+  </form>
   </div>
 </div>
 

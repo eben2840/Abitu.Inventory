@@ -154,8 +154,21 @@ class CommitteeForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     description = StringField('description', validators=[DataRequired()])
     submit = SubmitField('submit')
+
+
+class FaqForm(FlaskForm):
+    caption = StringField('caption', validators=[DataRequired()])
+    answers = StringField('answer', validators=[DataRequired()])
+    campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
+    submit = SubmitField('submit')
     
-    
+   
+ 
+class ChallengesForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    number = StringField('number', validators=[DataRequired()])
+    message = StringField('message', validators=[DataRequired()])
+    submit = SubmitField('submit') 
 
     
 
