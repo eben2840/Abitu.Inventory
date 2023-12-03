@@ -1457,7 +1457,8 @@ def rancardussd():
     print(sessionBody)
     print("--------------------")
     
-    message="HELLO"
+    message="Hello, Please Enter Your Index Number.\n eg.int/20/01/3356."
+    
     response = {
             "continueSession": True,
             "message":message 
