@@ -1490,7 +1490,7 @@ def rancardussd():
                 }
         else:
             response = {
-                    "continueSession": False,
+                    "continueSession": True,
                     "message": "No student found, Please check and try again"
                     #Gets and sets by id!  
                 }
@@ -1550,10 +1550,13 @@ def readcsv():
 def findbyid(id=None):
     # print("input")
     # input=request.args.get('id')
-    print(id)
-    student=Studenthalls.query.filter_by(regno=id).first()   
-    print(student) 
+    # convert to CAPS
     
+    print(id)
+    id=id.replace('/', '')
+    id=id.replace(' ', '')
+    student=Studenthalls.query.filter_by(regno=id.upper()).first()   
+    print(student) 
     if student == None:
         return None
     student={
@@ -1566,6 +1569,23 @@ def findbyid(id=None):
         "hallname":student.hallname
     }
     return student
+
+@app.route('/updateregno', methods=['POST','GET'])
+def method_name():
+    # for student in Studenthalls.query.order_by(Studenthalls.id.asc()).limit(10).all():
+    for student in Studenthalls.query.order_by(Studenthalls.id.asc()).all():
+        print(student)
+        print(student.regno)
+        
+        # Replace '/' with an empty string and assign it back to the 'regno' attribute
+        student.regno = student.regno.replace('/', '')
+        print(student.regno)
+
+        db.session.commit()
+        print(student.regno)
+   
+    
+    return "Done"
     
 
 if __name__ == '__main__':
