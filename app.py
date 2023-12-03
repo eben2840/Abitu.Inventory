@@ -1485,7 +1485,7 @@ def rancardussd():
             hall=response["hallname"]
             response = {
                     "continueSession": False,
-                    "message": "Hello" + " " + message  + " " + "Your Hall is" + " " + hall
+                    "message": "Hello" + " " + message  + "\n " + "Your Hall is" + " " + hall + "\n\nPowered by PrestoGhana" 
                     #Gets and sets by id!  
                 }
         else:
