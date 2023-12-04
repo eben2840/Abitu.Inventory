@@ -877,7 +877,6 @@ def src():
             db.session.add(new)
             db.session.commit()
             # send_email()
-           
         
             flash("Thank you for filling the form, We will response as soon as possible.",
                   "success")
@@ -1511,11 +1510,10 @@ def rancardussd():
         else:
             response = {
                     "continueSession": True,
-                    "message": "Hello" + " " + indexnumber + "\n " + "You have been assigned to the following corresponding Hall: " + "\n" + "Chancellor Hall - Male." + "\n" +"Joy Otabil - Female"
-                    # "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
+                    # "message": "Hello" + " " + indexnumber + "\n " + "You have been assigned to the following corresponding Hall: " + "\n" + "Chancellor Hall - Male." + "\n" +"Joy Otabil - Female"
+                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
                     #Gets and sets by id!  
                 }
-            
     else:
         response = {
                 "continueSession": True,
@@ -1616,4 +1614,4 @@ if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
     app.run(host='0.0.0.0', port=4000, debug=True)
     
-    
+  
