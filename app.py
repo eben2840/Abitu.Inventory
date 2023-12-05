@@ -1494,7 +1494,7 @@ def rancardussd():
             hall=response["hallname"]
             response = {
                     "continueSession": False,
-                    "message": "Hello" + " " + message  + "\n " + "Your Hall is" + "\n " + hall + "\n\n Are you ready for some excitement?" +" " + " \n Loads of activities starting from Wednesday, 6th to Saturday 9th" + " " + " \n\n DON’T BE LEFT OUT \n !!Hallapalooza" + "\n\nPowered by PrestoGhana" 
+                    "message": "Hello" + " " + message  + "\n " + "Your Hall is" + "\n " + hall + "\n\nPowered by PrestoGhana"
                     #Gets and sets by id! 
                      
                 }
@@ -1511,7 +1511,7 @@ def rancardussd():
             response = {
                     "continueSession": True,
                     # "message": "Hello" + " " + indexnumber + "\n " + "You have been assigned to the following corresponding Hall: " + "\n" + "Chancellor Hall - Male." + "\n" +"Joy Otabil - Female"
-                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again"
+                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again" + "\n\nPowered by PrestoGhana"
                     #Gets and sets by id!  
                 }
     else:
