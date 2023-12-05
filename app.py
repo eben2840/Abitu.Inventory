@@ -1510,8 +1510,8 @@ def rancardussd():
         else:
             response = {
                     "continueSession": True,
-                    # "message": "Hello" + " " + indexnumber + "\n " + "You have been assigned to the following corresponding Hall: " + "\n" + "Chancellor Hall - Male." + "\n" +"Joy Otabil - Female"
-                    "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again" + "\n\nPowered by PrestoGhana"
+                    "message": "Hello" + " " + indexnumber + "\n " + "You have been assigned to the following corresponding Hall: " + "\n" + "Integrity - Male." + "\n" +"Faith Hall - Female"
+                    # "message": "No student found with ID: " + indexnumber + " " + "\n" + "Please check and try again" + "\n\nPowered by PrestoGhana"
                     #Gets and sets by id!  
                 }
     else:
