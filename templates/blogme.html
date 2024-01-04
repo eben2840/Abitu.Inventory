@@ -1,109 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block body %}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <link rel="shortcut icon" href="https://www.central.edu.gh/static/img/Central-Uni-logo.png" type="image/svg+xml">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='asssets/css/main.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='asssets/css/variables.css')}}">
-
-  <!-- Favicons -->
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="static/asssets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="static/asssets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="static/asssets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="static/asssets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="static/asssets/vendor/aos/aos.css" rel="stylesheet">
-
-  <!-- Template Main CSS Files -->
-  <link href="static/asssets/css/variables.css" rel="stylesheet">
-  <link href="static/asssets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: ZenBlog
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-  * Author: BootstrapMade.com
-  * License: https:///bootstrapmade.com/license/
-  ======================================================== -->
-</head>
-
-<body>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="static/img/new.jpeg" alt="" width="80" height="100"> 
-        
-      
-      </a>
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="/src"><b>Home</b></a></li>
-          <li><a href="/aboutsrc"><b>About CU SRC</b></a></li>
-        
-          <li class="dropdown"><a href="/committee"><span><b>SRC Committees</b></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li class="dropdown"><a href="#"><span>Committees</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
-              {%for user in users%} 
-              <a href="{{url_for("leadership", userid=user.id)}}" style="text-decoration: none; color: #992621;">
-
-                {{user.name}}
-    
-  </a></li>
-              
-             
-              </a>
-              </li>
-              {% endfor %} 
-            </ul>
-          </li>
-
-          <li><a href="/annoucement"><b>Annoucements</b></a></li>
-          <li><a href="/constitution"><b>Constitution</b></a></li>
-        </ul>
-      </nav><!-- .navbar -->
-    
-
-      <div class="position-relative">
-        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
-        <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-        <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
-
-        <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-
-        <!-- ======= Search Form ======= -->
-        <div class="search-form-wrap js-search-form-wrap">
-          <form action="search-result.html" class="search-form">
-            <span class="icon bi-search"></span>
-            <input type="text" placeholder="Search" class="form-control">
-            <button class="btn js-search-close"><span class="bi-x"></span></button>
-          </form>
-        </div><!-- End Search Form -->
-
-      </div>
-
-    </div>
-
-  </header><!-- End Header -->
-
-  <main id="main">
     
     <hr style="color:gray;">
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -124,7 +21,7 @@
             <div class="swiper sliderFeaturedPosts">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/r.jpg');">
+                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/r.jpg');" loading="lazy">
                     <div class="img-bg-inner">
                       <h2><b>try Best Homemade Masks for Face (keep the Pimples Away)</b></h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
@@ -133,7 +30,7 @@
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/w.jpg');">
+                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/w.jpg');" loading="lazy">
                     <div class="img-bg-inner">
                       <h2><b>17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</b></h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
@@ -142,7 +39,7 @@
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/p.jpg');">
+                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/p.jpg');" loading="lazy">
                     <div class="img-bg-inner">
                       <h2><b>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</b></h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
@@ -151,10 +48,10 @@
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/asssets/img/e.jpg');">
+                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('static/img/blue.png');" loading="lazy">
                     <div class="img-bg-inner">
-                      <h2><b>9 Half-up/half-down Hairstyles for Long and Medium Hair</b></h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                     <!-- <h2><b>9 Half-up/half-down Hairstyles for Long and Medium Hair</b></h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>-->
                     </div>
                   </a>
                 </div>
@@ -183,20 +80,20 @@
       <div class="row">
     
     
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6" data-reveal="left">
     
       <figure class="cta-banner" data-reveal="left">
        
         <img src="static/asssets/img/r.jpg"   style="border-radius:10px; width:100%; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);"  loading="lazy" alt="cta banner"
-          class="w-100">
+          class="w-100" loading="lazy" data-reveal="left">
       </figure>
     </div>
     
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-lg-6" data-reveal="left">
      
     
         <h2 class="" id="">
-         <b>The 3rd Parliamentary Council</b>
+         <b>The Student Representative Council</b>
         </h2>
        
       
@@ -208,18 +105,18 @@
     
      
     
-        <a href="/leadersadd" class="btn btn-primary has-after" style="margin-top:10px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">Send Message</a>
+        <a href="/aboutsrc" class="btn btn-primary has-after" style="margin-top:10px; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">Get More</a>
     
       </div>
     </div>
     
     </div>
 
-
+<!--
     <div class="container" style="padding:50px;">
       <a href="https://cusrc.prestoghana.com/passqo"><img src="static/img/blue.png" width="100%"  loading="lazy" alt="Illustration"
         class="w-100"></a>
-      </div>
+      </div>-->
 
 <section class=" bg-light py-5" style="box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);">
   <div class="container" data-aos="fade-up" >
@@ -233,7 +130,7 @@
       </div>
       <div class="col-lg-6">
         
-            <img src="static/asssets/img/ll.JPG" style="border-radius:10px;  " class="img-fluid mb-4">
+            <img src="static/asssets/img/ll.JPG" style="border-radius:10px;  " class="img-fluid mb-4" loading="lazy">
           
       </div>
     </div>
@@ -282,7 +179,7 @@
   <figure class="cta-banner" data-reveal="left">
    
     <img src="https://www.rocapply.com/assets/pictures/universities/Central-University-header.jpg"   style="border-radius:10px; width:100%; box-shadow: 2px 2px 10px 0px rgba(136, 136, 136, 0.3);"  loading="lazy" alt="cta banner"
-      class="w-100">
+      class="w-100" loading="lazy">
   </figure>
 </div>
 
@@ -329,148 +226,7 @@
             </div>
 </section>
 
-  </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
+  {% endblock body %}
 
-    <div class="footer-content">
-      <div class="container">
 
-        <div class="row g-5">
-          <div class="col-lg-4">
-            <h3 class="footer-heading">Central University - Student Representative Council</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis qui aliquid blanditiis omnis quae. Explicabo?</p>
-            <p><a href="about.html" class="footer-link-more">Learn More</a></p>
-          </div>
-          <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Navigation</h3>
-            <ul class="footer-links list-unstyled">
-              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
-              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Categories</a></li>
-              <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> Single Post</a></li>
-              <li><a href="about.html"><i class="bi bi-chevron-right"></i> About us</a></li>
-              <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Categories</h3>
-            <ul class="footer-links list-unstyled">
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Sport</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Food</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Politics</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Celebrity</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Startups</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Travel</a></li>
-
-            </ul>
-          </div>
-
-          <div class="col-lg-4">
-            <h3 class="footer-heading">Recent Posts</h3>
-
-            <ul class="footer-links footer-blog-entry list-unstyled">
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="static/asssets/img/post-sq-1.jpg" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>5 Great Startup Tips for Female Founders</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="static/asssets/img/post-sq-2.jpg" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="static/asssets/img/post-sq-3.jpg" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>Life Insurance And Pregnancy: A Working Mom’s Guide</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="static/asssets/img/post-sq-4.jpg" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>How to Avoid Distraction and Stay Focused During Video Calls?</span>
-                  </div>
-                </a>
-              </li>
-
-            </ul>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-legal" style="background-color:#212529;">
-      <div class="container">
-
-        <div class="row justify-content-between">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            <div class="copyright">
-              © Copyright <strong><span></span></strong>. All Rights Reserved<br>
-              Designed by PrestoGhana<strong><span></span></strong>. 
-            
-            </div>
-
-            <div class="credits">
-              <!-- All the links in the footer should remain intact.
-              <!-- You can delete the links only if you purchased the pro version. 
-              <!-- Licensing information: https://bootstrapmade.com/license/ 
-              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/herobiz-bootstrap-business-template/ 
-              Designed by <a href="https://bootstrapmade.com/">PrestoGhana</a>
-            </div>
-
-          </div>
-
-          <div class="col-md-6">
-            <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>-->
-
-  </footer>
-
-  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="static/asssets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="static/asssets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="static/asssets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="static/asssets/vendor/aos/aos.js"></script>
-  <script src="static/asssets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="static/asssets/js/main.js"></script>
-
-</body>
-
-</html>
