@@ -123,10 +123,10 @@
               <div class="newsletter-content" data-reveal="right">
                 
                 <h2 class="h4 section-title" style="text-align:center;">
-                  SRC Recuitment Portal
+                  Add Annoucements 
                  </h2>
                  <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
-                  We invite you to become an active part of the SRC by joining our committees.
+                  Add gallery or blog from the SRC
                  </p>
                  <form >
                   <input type="text"
@@ -151,31 +151,21 @@
                
                
                 <div class="input-wrapper">
-                  {{form.fullname(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Fullname",id="floatingInput", required="required")}}
-                  {{form.gender(class="form-check my-5 my-lg-5 mt-2 space",style="color:#000;",placeholder="Gender",id="floatingInput", required="required")}}
-                  {{form.program(class="form-check my-5 my-lg-5 mt-2 space",style="color:#000;",placeholder="program",id="floatingInput", required="required")}}
+                  {{form.qualities(class="form-check my-5 my-lg-5 mt-2 space", style="color:#000;", id="floatingInput",placeholder="Annoucements", required="required")}}
+                  {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Date eg,31/01/24",id="floatingInput", required="required")}}
+                  
                   {{form.campus(class="form-check my-5 my-lg-5 mt-2 space", style="color:#000;", id="floatingInput", required="required")}}
-                  {{form.telephone( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Phone Number",id="floatingInput", required="required")}}
-                  <input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space",placeholder="Index",id="floatingInput" placeholder="Email" required>
+                  <label for="textarea">Description Annoucements</b></label>
+                  <textarea name="position" type="position" class="input-field my-5 my-lg-5 mt-2 space" placeholder="" required="required">       </textarea>
                   
-                  
-                  {{form.ministry( class="input-field my-5 my-lg-5 mt-2 space",style="color:#000;",placeholder="Index",id="floatingInput", required="required")}}
-                  
-                  <label for="textarea">Why do you want to join this committee?</b></label>
-                  <textarea name="reason" type="reason" class="input-field my-5 my-lg-5 mt-2 space" placeholder="Why do you want to join this committee?" required="">       </textarea>
-                  
-                 <!-- {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Why do you want to join this committee?",id="floatingInput", required="required")}}
-                  {{form.qualities( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="What are the special qualities you will bring to this committee?",id="floatingInput", required="required")}}
+                 
+                  {{form.fullname(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Writer",id="floatingInput", required="required")}}
+                  <!--<input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space",placeholder="Index",id="floatingInput" placeholder="Email" required>
                   -->
-                  <label for="textarea">What are the special qualities you will bring to this committee?</b></label>
-                  <textarea name="qualities" type="qualities" class="input-field my-5 my-lg-5 mt-2 space"  required="">       </textarea>
                   
-                  <div class="alert alert-primary" role="alert">
-                    Leadership Experience, If any please state them.
-                  </div>
                   
-                  <label for="textarea">Please type your Position/s</label>
-                  <textarea name="position" type="position" class="input-field my-5 my-lg-5 mt-2 space" placeholder="Position" required="">       </textarea>
+                  
+               
                   
                   <!--{{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
                   -->

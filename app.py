@@ -132,11 +132,6 @@ class StudentData(db.Model):
 class User(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     fullname= db.Column(db.String()  )
-    ministry = db.Column(db.String())
-    gender= db.Column(db.String()    )
-    program= db.Column(db.String()   )
-    email= db.Column(db.String()     )
-    telephone= db.Column(db.String()     )  
     position= db.Column(db.String()     )
     qualities = db.Column(db.String()     )
     reason = db.Column(db.String()     )
@@ -719,11 +714,8 @@ def addalumni():
     if form.validate_on_submit():
         
             new=User(fullname=form.fullname.data, 
-                   email=form.email.data,  
-                   ministry=form.ministry.data,  
-                   gender=form.gender.data,  
-                   program=form.program.data,  
-                   telephone=form.telephone.data,      
+                    
+                         
                    position=form.position.data,
                    reason=form.reason.data,
                    campus=form.campus.data,
@@ -736,7 +728,7 @@ def addalumni():
             # send_email()
            
         
-            flash("Thank you for filling the form, Please check your email for a message from the President.",
+            flash("You just added a new announcement",
                   "success")
             return redirect('/')
             
@@ -958,6 +950,7 @@ def adminadd():
 def main():
     total_students = User.query.count()
     total_getfundstudents = Getfunds.query.count()
+    total_challenges = Challenges.query.count()
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
@@ -975,7 +968,7 @@ def main():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',message=message, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+    return render_template('current.html', title='dashboard',message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 
@@ -1337,6 +1330,17 @@ def deleteme(id):
             db.session.delete(delete)
             db.session.commit()
             return redirect(url_for('main')) 
+    except: 
+        return "errrrrorrr"
+
+
+@app.route("/deleteme/<int:id>")
+def deletelist(id):
+    delete=User.query.get_or_404(id)
+    try:
+            db.session.delete(delete)
+            db.session.commit()
+            return redirect(url_for('lists')) 
     except: 
         return "errrrrorrr"
         

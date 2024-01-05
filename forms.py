@@ -19,69 +19,14 @@ class RegistrationForm(FlaskForm):
 
 class Adduser(FlaskForm):
     fullname = StringField('fullname')
-    ministry = SelectField('ministry', choices=[
-    ('Committee', 'Committee'),
-    ('ACADEMIC AND EDITORIAL COMMITTEE', 'ACADEMIC AND EDITORIAL COMMITTEE'),
-    ('WOMENS COMMISSION COMMITTEE', 'WOMENS COMMISSION COMMITTEE'),
-    ('BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE', 'BUSINESS DEVELOPMENT AND SPONSORSHIP COMMITTEE'),
-    ('COMMUNICATIONS AND PUBLIC RELATIONS COMMITTEE', 'COMMUNICATIONS AND PUBLIC RELATIONS COMMITTEE'),
-    ('ENTERTAINMENT COMMITTEE', 'ENTERTAINMENT COMMITTEE'),
-    ('FINANCE COMMITTEE', 'FINANCE COMMITTEE'),
-    ('INTERNATIONAL STUDENTS COMMITTEE', 'INTERNATIONAL STUDENTS COMMITTEE'),
-    ('LOCAL NUGS SECRETARIAT', 'LOCAL NUGS SECRETARIAT'),
-    ('LOCAL PUSAG SECRETARIAT', 'LOCAL PUSAG SECRETARIAT'),
-    ('PROJECT AND PLANNING COMMITTEE', 'PROJECT AND PLANNING COMMITTEE'),
-    ('STUDENTS CHAPLAINCY COMMITTEE', 'STUDENTS CHAPLAINCY COMMITTEE'),
-    ('SPORTS COMMITTEE', 'SPORTS COMMITTEE'),
-    ('TRANSPORT COMMITTEE', 'TRANSPORT COMMITTEE'),
-    ('WELFARE AND PROTOCOL COMMITTEE', 'WELFARE AND PROTOCOL COMMITTEE'),
-    ('PROCUREMENT COMMITTEE', 'PROCUREMENT COMMITTEE'),
-    ('ORGANIZING COMMITTEE', 'ORGANIZING COMMITTEE'),
-    ('CADET CORPS', 'CADET CORPS')
-], default=None)
+#    
 
-    gender= SelectField('gender', choices=[('Gender','Gender'),('Male', 'Male'), ('Female','Female') ], default=None )
     campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
-    program= SelectField('program',choices=[('Program','Program'),('ECONOMICS', 'ECONOMICS'),('PUBLIC HEALTH', 'PUBLIC HEALTH'),
-                ('MANAGEMENT & PA', 'MANAGEMENT & PA'),
-                ('MARKETING', 'MARKETING'),
-                ('ACCOUNTING', 'ACCOUNTING'),
-                ('HUMAN RESOURCE', 'HUMAN RESOURCE'),
-                ('BANKING & FINANCE', 'BANKING & FINANCE'),
-                ('Civil Engineering', 'Civil Engineering'),
-                ('Information Technology', 'Information Technology'),
-                ('Computer Science', 'Computer Science'),
-                ('MKT', 'MKT'),
-                ('BKF', 'BKF'),
-                ('HRM', 'HRM'),
-                ('Nursing', 'Nursing'),
-                ('PA Dept.', 'PA Dept.'),
-                ('Faculty of Law', 'Faculty of Law'),
-                ('Sociology', 'Sociology'),
-                ('Vision and Life', 'Vision and Life'),
-                ('Social Work', 'Social Work'),
-                # ('Communications and Laguages Studies', 'Communications and Laguages Studies'),
-                ('Theology', 'Theology'),
-                ('Psychology', 'Psychology'),
-                ('Environment and Development Studies', 'Environment and Development Studies'),
-                ('Communications and Media Studies', 'Communications and Media Studies'),
-                ('Agribusiness', 'Agribusiness'),
-                ('Design (Interior, Graphic & Fashion)', 'Design (Interior, Graphic & Fashion)'),
-                ('Real Estate', 'Real Estate'),
-                ('Architecture', 'Architecture'),
-                ('Doctor of Pharmacy', 'Doctor of Pharmacy'),
-                # ('Pharmacy Practice', 'Pharmacy Practice'),
-                ('MGT & P.A.', 'MGT & P.A.'),
-             
-                
 
-                ], default=None )
-                
-    email= StringField('email')
    
     reason= StringField('reason')
     qualities= StringField('qualities')
-    telephone= StringField('telephone')
+   
     position= StringField('position')
     submit = SubmitField('Register')
     image_file = StringField('image_file', validators=[FileAllowed(['jpg', 'png'])])

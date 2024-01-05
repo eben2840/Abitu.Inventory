@@ -87,23 +87,7 @@
                 {% endif %}
 
 
-                {% if title == 'list' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/list">
-                        <i class="bi bi-people"></i>Student Committee
-                        <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
-
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item "  >
-                  <a class="nav-link" href="/list">
-                      <i class="bi bi-people"></i> Student Committee
-                      <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{ total_students }}</span>
-
-                  </a>
-              </li>
-              {% endif %}
+        
 
               {% if title == 'list' %}
               <li class="nav-item">
@@ -124,35 +108,20 @@
             {% if title == 'list' %}
               <li class="nav-item">
                   <a class="nav-link" href="/addalumni">
-                      <i class="bi bi-people"></i>Add Events
+                      <i class="bi bi-people"></i>Add Annoucements
 
                   </a>
               </li>
               {% else %}
               <li class="nav-item "  >
                 <a class="nav-link" href="/addalumni">
-                    <i class="bi bi-people"></i> Add Events
+                    <i class="bi bi-people"></i> Add Annoucements
 
                 </a>
             </li>
             {% endif %}
 
-              {% if title == 'list' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/challenges">
-                        <i class="bi bi-people"></i> Challenges 
-                        <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto"></span>
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item "  >
-                  <a class="nav-link" href="/challenges">
-                      <i class="bi bi-people"></i> Challenges
-                      <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto"></span>
-
-                  </a>
-              </li>
-              {% endif %}
+              
 
              
                <!-- {% if title == "Ministries" %}
@@ -188,7 +157,24 @@
                 </li>
                 {% endif %}-->
 
-                {% if title == "report" %}
+                
+
+                  {% if title == "report" %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="/getfunds">
+                          <i class="bi bi-bookmarks"></i> Add Leadership
+                      </a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/getfunds">
+                        <i class="bi bi-bookmarks"></i>Add Leadership 
+                       
+                    </a>
+                </li>
+                  {% endif %}
+
+                  {% if title == "report" %}
                   <li class="nav-item">
                       <a class="nav-link" href="/report">
                           <i class="bi bi-bookmarks"></i> Report
@@ -197,22 +183,7 @@
                   {% else %}
                   <li class="nav-item">
                     <a class="nav-link" href="/report">
-                        <i class="bi bi-bookmarks"></i> Report
-                       
-                    </a>
-                </li>
-                  {% endif %}
-
-                  {% if title == "report" %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="/email">
-                          <i class="bi bi-bookmarks"></i> Getfunds
-                      </a>
-                  </li>
-                  {% else %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="/email">
-                        <i class="bi bi-bookmarks"></i> Getfunds 
+                        <i class="bi bi-bookmarks"></i>Report
                        
                     </a>
                 </li>
