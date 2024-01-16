@@ -1,12 +1,9 @@
-
-
 import os
 from email.message import EmailMessage
 import ssl
 import smtplib
 import csv
 import os
-
 from urllib import response
 import uuid
 from datetime import datetime
@@ -971,7 +968,9 @@ def main():
     return render_template('current.html', title='dashboard',message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
-
+@app.route('/newpage', methods=['G', 'POST'])
+def newpage():
+    return render_template("newpage.html")
 
 @app.route('/newdash', methods=['GET', 'POST'])
 def newdash():   
