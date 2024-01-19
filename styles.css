@@ -1,0 +1,136 @@
+body{
+    margin: 0 auto;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: blue;
+    border-bottom: 4px gray solid;
+    /* position: fixed;
+    width: 100%; */
+}
+
+button{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: white;
+    color: black;
+    border: none;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+.landingpage{
+    text-align: center;
+    margin-top: 10px;
+}
+.landingpage h1{
+    font-size: 70px;
+}
+.landingpage p{
+    font-size: 30px;
+}
+.btn{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: blue;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    border-radius: 20px;
+    font-size: 20px;
+
+}
+#btn1{
+    display: flex;
+    justify-content: center
+}
+.Optimize h1{
+    font-size: 40px;
+}
+.Optimize p{
+    font-size: 20px;
+}
+.landing1{
+    display: flex;
+    gap: 10px;
+    margin: 40px;
+
+}
+.landing1 img{
+    margin: 40px;
+    width: 80%;
+}
+.divimage{
+    width: 90%;
+}
+.footer1{
+    background: rgb(86,73,233);
+    background: linear-gradient(90deg, rgba(86,73,233,1) 57%, rgba(239,249,249,1) 100%, rgba(236,235,246,1) 100%);
+    height: 90vh;
+    text-align: center;
+    color: white;
+    padding: 30px;
+}
+
+.btn1{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: white;
+    color: blue;
+    border: none;
+    margin-top: 20px;
+    border-radius: 20px;
+    font-size: 20px;
+}
+.boxes{
+    display: flex;
+    gap: 4rem;
+    margin-top: 60px;
+}
+.box{
+     background-color: white;
+     height: 50vh;
+     width: 20%;
+
+}
+.footer2 img{
+    width: 100%;
+}
+.footer2{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+    border-bottom: 2px gray solid;
+}
+#footer2{
+    width: 5%;
+}
+.footer3{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+   
+}
+.badge img{
+   width: 100px;
+}
+.badge{
+   display: flex;
+   gap: 10px; 
+   justify-content: center;
+   margin-top: 20px;
+}
+.footersection{
+    height: 30vh;
+}
