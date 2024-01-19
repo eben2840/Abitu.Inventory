@@ -135,7 +135,7 @@ class User(db.Model,UserMixin):
     campus= db.Column(db.String()     )
     image_file = db.Column(db.String(255))
     def __repr__(self):
-        return f"User('{self.id}', {self.fullname}, {self.gender}'"
+        return f"User('{self.id}', {self.fullname}, {self.campus}'"
     
 
 class Getfunds(db.Model,UserMixin):
@@ -683,6 +683,11 @@ def basee():
     return render_template('basee.html')
 
 
+@app.route('/', methods=['GET', 'POST'])
+def landingpage():
+    return render_template('landingpage.html')
+
+
 
 
  
@@ -853,7 +858,7 @@ def leadersadd():
     print(form.errors)
     return render_template("leadersadd.html", form=form)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/src', methods=['GET', 'POST'])
 def src():
     form=ChallengesForm()
     if form.validate_on_submit():
@@ -953,8 +958,8 @@ def main():
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
     message = Message.query.count()
     print(users_with_positions)
-    total_male = User.query.filter_by(gender='Male').count()
-    total_female = User.query.filter_by(gender='Female').count() 
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count() 
     users=User.query.order_by(User.id.desc()).all()
     challenges=Challenges.query.order_by(Challenges.id.desc()).all()
     print(users)
@@ -965,7 +970,7 @@ def main():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_female=total_female, total_male=total_male,total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+    return render_template('current.html', title='dashboard',message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 @app.route('/newpage', methods=['G', 'POST'])
@@ -1122,13 +1127,13 @@ def lords():
 
 @app.route('/female_users')
 def female_users():
-    female_users = User.query.filter_by(gender='Female').all()
+    # female_users = User.query.filter_by(gender='Female').all()
     return render_template('female.html', female_users=female_users)
 
 
 @app.route('/male_users')
 def male_users():
-    male_users = User.query.filter_by(gender='Male').all()
+    # male_users = User.query.filter_by(gender='Male').all()
     return render_template('male.html', male_users=male_users)
 
 @app.route('/newreport')
@@ -1422,6 +1427,7 @@ def departments(schoolSlug):
     sendtelegram(current_user.name + " selected Year: " + session['selectedYear'] + " Department " + school.name + ". Found: " + str(len(departments)) + " result(s) ")
     return render_template('userdepartment.html', items=departments, header=school.name, smalltitle="2021", name="", numberofentries="16 entries")
 
+
 @app.route('/programs/<string:departmentSlug>')
 @login_required
 def programs(departmentSlug):
@@ -1443,6 +1449,22 @@ def userbase():
     return render_template("userbase.html")
  
 
+@app.route('/logs', methods=['POST','GET'])
+def logs():
+    return render_template("logs.html")
+ 
+@app.route('/auth', methods=['POST','GET'])
+def auth():
+    return render_template("auth.html")
+
+@app.route('/authin', methods=['POST','GET'])
+def authin():
+    return render_template("authin.html")
+
+@app.route('/authreg', methods=['POST','GET'])
+def authreg():
+    return render_template("authreg.html")
+ 
 # app.route('/halls', methods=['GET', 'POST'])
 # def halls():
 #     return render_template('halls.html')

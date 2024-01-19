@@ -14,25 +14,24 @@
   <div class="login-wrapper">
     <form action=" " class="form" method="POST", "GET"> 
       {{form.hidden_tag()}}
-        <img src="https://www.shareicon.net/data/512x512/2016/05/24/770137_man_512x512.png">
-      <h2>Login</h2>
+      <h2>Add An Employee</h2>
       <div class="input-group">
         {{form.name(class="input-group")}}
-        <label for="loginUser">name</label>
+        <label for="loginUser">Name</label>
       </div>
       <div class="input-group">
         {{form.email(class="input-group")}}
-        <label for="loginUser">email</label>
+        <label for="loginUser">Email</label>
       </div>
    
       <div class="input-group">
         {{form.phone(class="input-group")}}
-        <label for="loginUser">phone</label>
+        <label for="loginUser">Phone</label>
       </div>
 
     
       {{form.submit(class="submit-btn")}}
-      <h6 class="">Are you new here? <a href="{{url_for('login')}}">login</a></h6>    </form>
+        </form>
 
            </form>
 
