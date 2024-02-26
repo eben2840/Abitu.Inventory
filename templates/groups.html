@@ -1,0 +1,44 @@
+
+{% extends 'landingpage.html' %}
+
+{% block body %}
+<div class="container">
+   
+    <div class="row">
+        <div class="col-lg-6">
+    <h2></h2>
+    <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add New Catalog</h6>
+        <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; margin-bottom:30px;">
+       
+        {{ form.hidden_tag() }}
+
+        <label for="name">Group Name:</label>
+        {{ form.name(class="input-field", style="width:100%;" , placeholder="Catalog Name") }}
+        <br>
+        {{ form.submit(class="btn btn-primary" , style="width:100%;" ) }}
+    </form>
+
+    {% if form.errors %}
+        <div style="color: red;">
+            <p>Errors:</p>
+            <ul>
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+<div class="col-lg-6">
+                                   
+</div>
+
+</div>
+</div>
+
+
+{%endblock body%}

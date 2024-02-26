@@ -1,0 +1,49 @@
+{% extends 'landingpage.html' %}
+
+{% block body %}
+<div class="container-fluid">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+    
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="row">
+  <div class="col-lg-6">
+
+<form action="" class="form" method="POST", "GET" style="background-color:#fff; padding:30px; border-radius:20px;"> 
+    <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add a New Task</h6>
+    <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:; margin-bottom:30px;">
+       
+    {{form.hidden_tag()}}
+   
+
+  
+   
+  <ul class="feature-list" >
+
+  
+    {{form.name( class="input-field", type="text", placeholder="Name Task",id="floatingInput", style="width:100%;", required="required")}}
+    {{form.tag( class="input-field", placeholder=" Add Tag",id="floatingInput", style="width:100%;", required="required")}}
+    {{form.task( class="input-field", type="text", placeholder=" Task",id="floatingInput", style="width:100%;", required="required")}}
+    {{form.description( class="input-field", type="text", placeholder="End Date..eg.23/01/24",id="floatingInput", style="width:100%;", required="required")}}
+      
+    
+    {{form.submit(class="btn btn-primary has-before has-after", style="width:100%;")}}
+  </form>
+        
+       
+
+
+  
+
+</div>
+
+</div>
+</div>
+{%endblock body%}

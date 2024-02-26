@@ -1,7 +1,7 @@
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, NumberRange
 # from app import Person
 
 
@@ -21,15 +21,27 @@ class Adduser(FlaskForm):
     fullname = StringField('fullname')
 #    
 
-    campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
+    campus= SelectField('campus', choices=[('Demand','Demand'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
 
    
     reason= StringField('reason')
     qualities= StringField('qualities')
    
     position= StringField('position')
-    submit = SubmitField('Register')
+    submit = SubmitField('Send')
     image_file = StringField('image_file', validators=[FileAllowed(['jpg', 'png'])])
+    
+class WaitForm(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+    
+    
+class ChallengesForm(FlaskForm):
+    name = StringField('name')
+    tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    task = StringField('task')
+    description = StringField('description')
+    submit = SubmitField('Send')
     
 
 
@@ -104,16 +116,10 @@ class CommitteeForm(FlaskForm):
 class FaqForm(FlaskForm):
     caption = StringField('caption', validators=[DataRequired()])
     answers = StringField('answer', validators=[DataRequired()])
-    campus= SelectField('campus', choices=[('Campus','Campus'),('Miotso', 'Miotso'), ('Kumasi','Kumasi'), ('Christ Temple','Christ Temple') ], default=None )
+    campus= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     submit = SubmitField('submit')
     
    
- 
-class ChallengesForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
-    number = StringField('number', validators=[DataRequired()])
-    message = StringField('message', validators=[DataRequired()])
-    submit = SubmitField('submit') 
 
     
 
@@ -161,13 +167,23 @@ class Addinfo(FlaskForm):
     submit = SubmitField('submit')
 
 
+class GroupForm(FlaskForm):
+    name = StringField('Group Name')
+    item_name = StringField('Item Name')
+    submit = SubmitField('Submit')
 
-
+class AddItemForm(FlaskForm):
+    group = SelectField('Select Group', coerce=int)
+    item_name = StringField('Item Name')
+    quantity = StringField('Quantity')
+    submit = SubmitField('Add Item')
+    
 class Registration(FlaskForm):
     indexnumber= StringField('indexNumber')
     email = StringField('Email', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()]) 
+    username = StringField('Username', validators=[DataRequired()]) 
     submit =SubmitField('submit')
     
 

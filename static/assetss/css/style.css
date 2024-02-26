@@ -20,11 +20,11 @@
    * colors
    */
 
-  --sky-blue-crayola: hsl(246, 91%, 18%);
-  --raisin-black_90: hsla(240, 8%, 12%, 0.9);
+  --sky-blue-crayola: hsl(246, 61%, 53%);
+  --raisin-black_90: hsl(246, 61%, 53%);
   --raisin-black-1: hsl(240, 8%, 17%);
   --raisin-black-2: hsl(240, 8%, 12%);
-  --majorelle-blue: hsl(356, 67%, 42%);
+  --majorelle-blue: hsl(246, 61%, 53%);
   --blue-ryb_80: hsl(356, 67%, 42%);
   --bittersweet: hsl(0, 100%, 69%);
   --eerie-black: hsl(0, 0%, 13%);
@@ -33,7 +33,7 @@
   --slate-gray: hsl(225, 8%, 48%);
   --cool-gray: hsl(225, 11%, 59%);
   --gainsboro: hsl(217, 16%, 90%);
-  --mustard: hsl(256, 85%, 23%);
+  --mustard: hsl(246, 61%, 53%);
   --white: hsl(0, 0%, 100%);
   --black: hsl(0, 0%, 0%);
   --onyx: hsl(240, 5%, 26%);
@@ -440,6 +440,11 @@ box-shadow: none;
   align-items: center;
 }
 
+.bot{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .logo {
   color: var(--raisin-black-1);
   font-size: 3.6rem;
@@ -1281,4 +1286,43 @@ box-shadow: none;
 
   .blog-card .card-title { --fs-4: 2.4rem; }
 
+}
+
+
+
+
+
+
+#progress-container {
+  width: 50%;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+/* #progress-bar {
+  height: 30px;
+  background-color: #4CAF50;
+  width: 0;
+} */
+
+#percent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+}
+
+.step {
+  display: none;
+}
+
+.active {
+  display: grid;
+ 
+}
+
+#myForm {
+  width: 100%;
 }

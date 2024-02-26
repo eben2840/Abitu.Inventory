@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+ 
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Inventory</title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="static/images/cl.jpg" style="border-radius:30px;" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="static/assets/css/kinda.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+
+</head>
+
+<body>
+
+
+
+<div class="container" >
+   <div class="" style="display:flex; margin-top:30px; justify-content: space-between;">
+    <h1 class="text-muted" style="font-size:15px; margin-top:10px;">Inventory</h1>
+    <div class="col-auto" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+            <i class="bi bi-bell-fill"></i>
+        </div>
+
+    </div>
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+     <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+</div>
+    <h1 class="h1 hero-title" style="margin-bottom:20px;">Dashboard</h1>
+    <div class="input-wrapper">
+
+          <form class="d-flex " role="search" method='POST' style="margin-top:20px;" >
+            <input class="input-field my-0 my-lg-0 " style="width:100%;" type="search" name='searched' placeholder="Search" aria-label="Search" style="">
+            <button class="btn" type="submit"  > <i class="bi bi-send"></i>  </button>
+          </form>
+      </div>
+
+      
+
+    <div class="row g-6 mb-6" style="margin-top:20px; ">
+        <h1 style="font-size:15px;" class="text-muted">Stats</h1>
+        <div class="col-xl-3 col-sm-6 col-6" >
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body" >
+                    <div class="row">
+                        <div class="col">
+                            
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Budget</span>
+                            
+                            <span class="h3 font-bold mb-0">$750</span>
+                        </div>
+                       
+                        <div class="col-auto">
+                            <i class="bi bi-credit-card"></i>
+                        
+                    </div>
+                      
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>13%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-6">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Products</span>
+                            <span class="h3 font-bold mb-0">215</span>
+                        </div>
+                        <div class="col-auto">
+                                <i class="bi bi-people"></i>
+                            
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>30%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-6">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Catalog</span>
+                            <span class="h3 font-bold mb-0">15</span>
+                        </div>
+                        <div class="col-auto">
+                                <i class="bi bi-clock-history"></i>
+                            
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-down me-1"></i>-5%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-6">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Workload</span>
+                            <span class="h3 font-bold mb-0">95%</span>
+                        </div>
+                        <div class="col-auto">
+                                <i class="bi bi-minecart-loaded"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>10%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--<div class="container-fluid" >
+ 
+    <div class="row g-4 mb-6">
+        <div class="col-xl-4 col-sm-6 col-6">
+            <a href="/list" style="text-decoration: none; color: #992621;">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Annoucements</span>
+                            <span class="h3 font-bold mb-0">{{ total_students }} </span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <i class="bi bi-people"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        
+                        <!--<span class="text-nowrap text-xs text-muted">Since last month</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+        
+        <div class="col-xl-4 col-sm-6 col-6">
+            <a href="/challenges" style="text-decoration: none; color: #992621;">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Challenges</span>
+                            <span class="h3 font-bold mb-0">{{ total_challenges }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                       
+                       
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-6">
+            <a href="/female_users" style="text-decoration: none; color: #992621;">
+            <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Our Team</span>
+                            <span class="h3 font-bold mb-0">{{ total_female }}10</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-0 text-sm">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+       -->
+        <div class="row g-6 mb-6" style="margin-top:20px;">
+        <h1 style="font-size:15px;" class="text-muted">Feedback</h1>
+
+            <div class="col-xl-3 col-sm-6">
+                <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Out Of Stock</span>
+                                <span class="h3 font-bold mb-0">75</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                    <i class="bi bi-bookmarks"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class="bi bi-arrow-up me-1"></i>13%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">In Stock</span>
+                                <span class="h3 font-bold mb-0">15</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                    <i class="bi bi-bookmarks"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class="bi bi-arrow-up me-1"></i>30%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-6">
+                <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Exported</span>
+                                <span class="h3 font-bold mb-0">14</span>
+                            </div>
+                            <div class="col-auto">
+                                    <i class="bi bi-clipboard"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-6">
+                <div class="card shadow border-0" style="  box-shadow:0 0 30px 4px hsla(0, 0%, 0%, 0.05);">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">History</span>
+                                <span class="h3 font-bold mb-0">95%</span>
+                            </div>
+                            <div class="col-auto">
+                                    <i class="bi bi-folder"></i>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                           
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+  
+    </div>
+</div>
+
+</div>
+
+<script async="" type="text/javascript" src="https://www.myhealth1st.com.au/mh1-widget/2021/popup.v3.js"></script>
+<!-- End of MyHealth1st Widget code -->
+
+<!-- 
+  - custom js link
+
+<!-- 
+  - ionicon link
+-->
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

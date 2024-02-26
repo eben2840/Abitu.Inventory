@@ -1,113 +1,5 @@
-{% extends 'home.html' %}
+{% extends 'landingpage.html' %}
 {% block body %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 
-    - primary meta tags
-  -->
-  <title></title>
-  <meta name="title" content="">
-  <meta name="description" content="This is a food html template made by codewithsadee">
-  <link rel="shortcut icon" href="static/img/no.png" type="image/svg+xml">
-
-  <!-- 
-    
-    - favicon
-  -->
-  <link rel="shortcut icon" href="https://www.central.edu.gh/static/img/Central-Uni-logo.png" type="image/svg+xml">
-
-  <!-- 
-    - custom css link
-  -->
-  <link rel="stylesheet" href="static/assets/css/style.css">
-  <link rel="shortcut icon" href="static/img/no.png" type="image/svg+xml">
-
-  <!-- 
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- 
-    - preload images
-  -->
-
-  <!-- 
-    - #PRELOADER
-  -->
-
-  <div class="loading-container" data-loading-container>
-    <div class="loading-circle"></div>
-  </div>
-
-
-
-
-
-  <!-- 
-    - #HEADER
-  -->
-
-  <header class="header" data-header>
-    <div class="container">
-      <a href="#" class="logo">
-
-       
-        <img src="static/img/new.jpeg" width="100" height="100" alt="">
-      </a>
-
-      <nav class="navbar" data-navbar>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
-
-       
-        <!--<ul class="navbar-list">
-
-          <li class="navbar-item">
-            <a href="#" class="btn btn-primary has-after">upload</a>
-          </li>
-
-          <li class="navbar-item">
-            
-            <a href="#" class="btn btn-primary has-after">Order Now</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="btn btn-primary has-after">Order Now</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link" data-nav-link>Contacts</a>
-          </li>
-
-        </ul>-->
-     </nav>
-
-     <div class="header-action">
-        
-
-      <a href="upload.html" class="btn btn-primary has-after" style="font-size:14px;">Contact Us!</a>
-    </div>
-
-    <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-      <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-    </button>
-
-    <div class="overlay" data-overlay data-nav-toggler></div>
-
-  </div>
-  </header>
-
-
 
 
 
@@ -115,53 +7,68 @@
     <article>
 
      
+      <form action="{{ url_for('addalumni') }}" method="post" enctype="multipart/form-data" >
+        {{form.hidden_tag()}}
      
           <section class="section newslettr" aria-label="newsletter">
-            <div class="container" >
-    
+            <div class="container" style="background-color:#fff; padding:30px;">
+
+              <h2 class="h4 section-title" style="text-align:left;">
+                Add Product
+               </h2>
+
+               <label for="image-picker" style="">
+                <div>
+                    {% if editCandidate %}
+                    <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src={{candidate.testField}} alt="your image" />
+                    {% else %}
+                    <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAABLS0v09PTc3Nx0dHT7+/t/f3/s7OySkpLi4uKCgoKYmJjm5uZUVFTLy8sbGxsLCwu/v7+goKCKioozMzPKysq5ubmwsLBdXV3R0dFBQUErKyshISFqamp5eXmdnZ04ODhjY2MUFBQ3Nzc/Pz+pqalISEjvIqkVAAAGL0lEQVR4nO2daUPiPBCAgUopCFXuUxd1Zf//P3zlxaOTJk2aTDOT3Xm+qk0e0+aYXL2eIAiCIAiCIAhC1xS70fFx3qdl/jRY7YpO9M5rYrcqx0uG7JfdUzvVGKM67t6ofTQ8LtD88j21jIFfSILFb2oTIyXKm1pwqmFU/uThgjnfErwyCDfk+g1+cR8quKM2sLIJE8youzB21mGf4og6/w4sQwQL6tw7EWJ4ps68E9sAw1pT+LwoMlpm21rtXvoLzpRHvUwC/lt4HNResn/PRmkqXrBHLL6o1YN/g6HUpDxK8MoCZsy/Nj3CbxAxi6GUIGdD7+c8gufgDcfCWSJVNbBD00lwxJMDyJl/9xurxsLnTgwdEUM6xNAVMaSD3nCyvd8PBuXreNPN/4Xa8PJe+bP9g3f6ZmgNa8Gr48E7ByYoDQvYKb6x8s6CAUJDmPRPHhBi0+ZkYhrCHnGFE26NQ2ZoKMEr7965sCcUzzBvmsQJDr9XoTJsnijGbDWIDCeNgv0X73zUITJ8bjbEDIPQGFqnAAIityo0hhebIWKkh8bQPpe6886JColhY1NxY+SdExUSQ3WSQ8PROycqJIaWtuLKk3dOVLgavnnnRIWr4aN3TlS4Gp68c6JCYljYV/ftvXOiQtMe/rEaTr1zokJjaF+Zgje6oDE0ju+/8c5IDaKxxZNFEDEeRWRo63rPvDNSg2qMD2fFVTDDGFSGD02CT5jRNrJY26rBEDXwTRcvfTUKXrxzoYMw5m0aBgctkaxDOW+hjyhir8UhnXta1JvFErGduEE7u5ZP4d+9dLCYinqGtLd5/moa1yv8ycMeA8MPZofN5uHgEj/MdqPhqOWGOw6Gzlw+V8+1qm1TMvzpJLSJNSZkWO0FtVgmmo4h7Oa5KyZjqPZjnTcUpmJY76i7KiZiqBuJOCqmYagfarkpJmFoGks6NRopGJoHyy6lmIBhUzTAQZG/4bhB0OVFZW/YVIJOitwNbYJ2ReaGza+okyJvQxdBW/yYtaGboKUUORvav0EXRcaGriVoUeRr2Eaw6VuMbJjtxqvzncsD3V/RG8ZSjGv4GR4d2B3bleAVUylGNfyZqbBtqW4vaFSMaVidimlW9BE0KUY0hNNpTfF7P0GDYjxDdb7QXIq+gnrFaIb1CVGTor+gdg1HLEPdjK9eMURQV4qRDPVr83WKYYIaxTiGps0HdcWp4TfdUV/UKIbm3RXqjGG4YE0xhuGwITtwhV7oK3oDrmuMYdi41rL6omKUYF+dtYlhOGjMz8+LiiTIzvBbEUuQn+Hnt4jzDfI0/L8U0UqQpeGHIqIgS8P+L0RBnoaoiKEYpm3ov/0WpsHJMANLPMd/oSHcoON/3CFMg5VhVvlRwDYHmAYrw8qX+OovyNqwN/uMEp0DBHkb9nqT5XS6DTv4hrkhAmIohmIohmIohmIohmIohmJoNcwfFgunpViJGua3JWTroLuCOBsW37Eo/zgUb8PK2WkBW/1hGqwMwaSP/7pQmAYnw/xU/Zn/cQYwDU6G8Ngt//OnYBqcDP+1eQsxFMMvxLBb4hvC2666J77hahgX2Krz3TODhRi6IoZ0iKErYkgHliG8/xD90LUAsAzh2XIh1+5ig2UI+554JzmHg2WobGrt5Gw5P7AMldu33vjcRIplWLt1hM11sliG9SFSuTzcdYKpKcon2l+HVx4fZ9pfcqn87RerYPE00jpOT/Y/NVPaa45sbn8MGvVppMJ+7YkF+zn3eHteHFDfqtx2BLoD1nA4RiLOqAtF257AoMVa/y/sz8ADrmbOUZ5pn3uz33iAB3ylGs8/d8bh1hDdnZQdAesFpNfHbpjZb+bAogvDud2wl0cL/sLRS8N1kS1w223SfK8hHsqa7eDW8IrjmG/zGyMxG2c1VYRnrt0EP1gipGahvm8Cob/RZjvNtuNKVXdHS+3y5Ja8txzvZZvlsBx0QjnW/7Oz5V77+3DQ86Z/6JDNYM8DeFFfwPiQLWgjYLaIYfqIYfqIYfqIYfqIYfqIYfqIYfqIYfqIYfqIYfrAWFs3+0uJAeHplOOiRqoXub9TZ6YbKhsQ+SzVwuVrrc+a06pQXIrxqT8vOa0JFQRBEARBEAThn+E/iJNoanbU+6oAAAAASUVORK5CYII=" alt="your image" />
+                    {% endif %}
+                </div>      
+                <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
+            </label>
+           
+              <div class="input-group mb-3">
+                <span class="input-group-text" >Name</span>
+                {{form.qualities(class="form-control", style="color:#000;", placeholder="Enter Name", required="required")}}
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text">Number</span>
+                {{form.reason( class="form-control", type="number", placeholder="",id="floatingInput", required="required")}}
+                
+                <span class="input-group-text"></span>
+              </div>
+
+              <div class="input-group mb-3">
+                {{form.campus( class="form-control", type="number", placeholder="",id="floatingInput", required="required")}}
+              </div>
+              
+              <div class="input-group mb-3">
+                {{form.fullname(class="form-control", type="number", id="floatingInput", required="required", placeholder="")}}
+                <span class="input-group-text" id="basic-addon2">Unit</span>
+              </div>
+              
+
+            
+              <div class="input-group">
+                <span class="input-group-text">Add Notes</span>
+                <textarea name="position" type="position" class="form-control" placeholder="" required="required">       </textarea>
+              
+              </div>
     
               <div class="newsletter-content" data-reveal="right">
                 
-                <h2 class="h4 section-title" style="text-align:center;">
-                  Add Annoucements 
-                 </h2>
-                 <p class="section-text" style="text-align:center; margin-bottom:20px;" data-reveal>
-                  Add gallery or blog from the SRC
-                 </p>
-                 <form >
-                  <input type="text"
-                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="" style="width:85%; border: none">
-                   
-              </form>
-                 <form action="{{ url_for('addalumni') }}" method="post" enctype="multipart/form-data" >
-                  {{form.hidden_tag()}}
-                  <div class="alert alert-primary" role="alert">
-                    Click on the Image to upload an image
-                   </div>
-                  <label for="image-picker" style="margin-left:100px;">
-                    <div>
-                        {% if editCandidate %}
-                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src={{candidate.testField}} alt="your image" />
-                        {% else %}
-                        <img id="image-preview" style="height: 20vh; margin:auto; object-fit:contain" src="https://www.pngkit.com/png/full/129-1298005_png-file-upload-image-icon-png.png" alt="your image" />
-                        {% endif %}
-                    </div>      
-                    <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
-                </label>
+                
+                
+                
+            
+                
+                
                
-               
-                <div class="input-wrapper">
-                  {{form.qualities(class="form-check my-5 my-lg-5 mt-2 space", style="color:#000;", id="floatingInput",placeholder="Annoucements", required="required")}}
-                  {{form.reason( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Date eg,31/01/24",id="floatingInput", required="required")}}
-                  
-                  {{form.campus(class="form-check my-5 my-lg-5 mt-2 space", style="color:#000;", id="floatingInput", required="required")}}
-                  <label for="textarea">Description Annoucements</b></label>
-                  <textarea name="position" type="position" class="input-field my-5 my-lg-5 mt-2 space" placeholder="" required="required">       </textarea>
-                  
+                
                  
-                  {{form.fullname(class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",  placeholder="Writer",id="floatingInput", required="required")}}
-                  <!--<input type="email" id="email" name="email" class="input-field my-5 my-lg-5 mt-2 space",placeholder="Index",id="floatingInput" placeholder="Email" required>
-                  -->
+               
                   
                   
                   
@@ -175,16 +82,10 @@
                 <input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
                 
 <div id="submitButton">
-  <div class="alert alert-primary" role="alert">
-    Make sure to add  your image before submit the form.
-  </div>
-  <button class="btn" style="color: #fff; background: #992621; border: none; margin:auto; font-size:12px; margin-top:10px;" type="submit" >Send the form</button>
+  {{form.submit( class="submit", class="btn btn-primary has-before has-after",style="margin-top:30px; width:100%;" )}}
+  
 </div>  
-<div class="container" style="margin-top:20px;">
-  <a href="https://cusrc.prestoghana.com/passqo"><img src="static/img/blue.png" width="100%"  loading="lazy" alt="Illustration"
-    class="w-100"></a>
-  </div>
-    
+
 
                    
                  
@@ -194,10 +95,7 @@
 
 
      
-      <p class="copyright" style="text-align:center; ">
-        <a href="https://prestoghana.com/" class="copyright"> Powered by PrestoGhana</a>
-      </p>
-      
+   
      
 
     </article>
@@ -211,7 +109,7 @@
               
 </form>
 
-<script>
+<!--<script>
   // JavaScript code to send the email after form submission
   const form = document.querySelector('form');
   form.addEventListener('submit', async (event) => {
@@ -237,7 +135,7 @@
           console.error('An error occurred:', error);
       }
   });
-</script>
+</script>-->
 
 
 

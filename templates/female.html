@@ -1,59 +1,93 @@
-{% extends 'try.html' %}
+{% extends 'landingpage.html' %}
+
 {% block body %}
 
-
-
-
-
-<div class="container-fluid">
-    <!-- Card stats -->
-    <div class="row g-4 mb-6">
-        {% for user in female_users %}
-        <div class="col-xl-4 col-sm-6 col-12">
-            <a href="{{ url_for('list', userid=user.id) }}" style="text-decoration: none; color: #992621;">
-            <div class="card shadow border-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">{{ user.position }}</span>
-                            <span class="h3 font-bold mb-0">{{ user.fullname }}</span><br>
-                           
-                        </div>
-                       
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                        <span class="badge badge-pill bg-soft-success text-success me-2">
-                            <i class="bi bi-arrow-up me-1"></i>{{ user.ministry}}
-                        </span>
-                        <span class="text-nowrap text-xs text-muted">{{ user.telephone }}</span>
-                    </div>
-                </div>
-            </div>
-        </a>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
         </div>
-        {% endfor %}
-      </div>
-    </div>
-  
-
-  
-  
-
-
-
-  
-  
-
-
-
-
-
-
-{% endblock body %}
-
-
-
-
-
-
-
+        
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+   
+    <link href="https://unpkg.com/@webpixels/css/dist/index.css" rel="stylesheet">
+    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
+        <!-- Header -->
+        <header class="px-3 px-lg-7 mt-7">
+          <!-- Container -->
+          <div class="container-xl max-w-screen-xl">
+            <div class="rounded shadow-sm bg-card">
+              <!-- Cover -->
+              <div class="h-64 rounded-top overflow-hidden bg-cover" style="background-image: url(https://images.unsplash.com/photo-1602161571105-1655a1c114a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&h=400q=80); background-position: center center;"></div>
+              <!-- Info -->
+              <div class="px-6 pb-6">
+                <div class="row g-0 align-items-end">
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-2xl border border-body border-4 mt-n10">
+                      <img alt="..." src="https://images.unsplash.com/photo-1579463148228-138296ac3b98?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="rounded">
+                    </div>
+                  </div>
+                  <div class="col ps-4 pt-4">
+                    <!-- Pretitle -->
+                    <h6 class="text-xs text-uppercase text-muted mb-1">
+                      Overview
+                    </h6>
+                    <!-- Title -->
+                    <h1 class="h2">
+                      Dashboard
+                    </h1>
+                  </div>
+                  <div class="col-12 col-md-auto mt-2 mt-md-0 mb-md-3">
+                    <!-- Button -->
+                    <a href="#" class="btn btn-sm btn-primary d-block d-md-inline-block">
+                      Follow
+                    </a>
+                  </div>
+                </div>
+                <!-- Nav -->
+                <ul class="nav nav-pills overflow-x ms-1 mt-5">
+                  <li class="nav-item">
+                    <a href="#!" class="nav-link active font-bold">
+                      Overview
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#!" class="nav-link">
+                      Projects
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#!" class="nav-link">
+                      Members
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#!" class="nav-link">
+                      Settings
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- Main content -->
+        <main class="px-3 px-lg-7 my-7">
+          <!-- Container -->
+          <div class="container-xl max-w-screen-xl">
+            <div class="bg-card rounded shadow-sm">
+              <div class="p-5">
+                <div class="border border-4 border-dashed rounded d-flex flex-column justify-content-center align-items-center" style="min-height: 400px;">
+                  <div class="h4 font-semibold text-muted opacity-8">
+                    Your content goes here ...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+{%endblock body%}

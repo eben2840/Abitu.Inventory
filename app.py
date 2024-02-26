@@ -4,9 +4,10 @@ import ssl
 import smtplib
 import csv
 import os
+import datetime 
 from urllib import response
 import uuid
-from datetime import datetime
+# from datetime import datetime
 import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
@@ -23,14 +24,14 @@ from flask_cors import CORS
 import json
 import time
 from werkzeug.utils import secure_filename
-
+#chin of messgae
 
 app=Flask(__name__)
 CORS(app)
 # 'postgresql://postgres:new_password@45.222.128.55:5432/src'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("CENTRAL_MINISTRY_DB_URL","sqlite:///test.db")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 app.config['SECRET_KEY'] ="thisismysecretkey"
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
@@ -81,6 +82,7 @@ class Person(db.Model, UserMixin):
     name= db.Column(db.String())
     contact= db.Column(db.Integer())
     email= db.Column(db.String())
+    username= db.Column(db.String())
     password= db.Column(db.String())
     email= db.Column(db.String())
     indexnumber=db.Column(db.String())
@@ -136,6 +138,16 @@ class User(db.Model,UserMixin):
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.campus}'"
+    
+class Challenge(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String()  )
+    task= db.Column(db.String()     )
+    tag = db.Column(db.String()     )
+    description = db.Column(db.String())
+   
+    def __repr__(self):
+        return f"Challenge('{self.id}', {self.name}, {self.tag}'"
     
 
 class Getfunds(db.Model,UserMixin):
@@ -222,8 +234,6 @@ class Leaders(db.Model,UserMixin):
     timestamp = db.Column(db.Float, default=time.time)
     def __repr__(self):
         return f"School('{self.id}', {self.others}')"
-    
-    
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -233,29 +243,39 @@ class Course(db.Model):
     course = db.Column(db.String())
     year = db.Column(db.String())
     pdf_filename = db.Column(db.String()) 
-    
-    
-    
+       
 class Ask(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ask = db.Column(db.String())
     
-
 class Committee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())    
     description = db.Column(db.String())    
 
-
-
 class PDFFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-    filename = db.Column(db.String(100), unique=True, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    filename = db.Column(db.String(100), unique=True)
     course = db.relationship('Course', backref=db.backref('pdf_files', lazy=True))
     year = db.Column(db.Integer)
-    
-    
+
+class Waitlist(db.Model,UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String)
+
+class Groups(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer())
+    name = db.Column(db.String())
+    items = db.relationship('Item', backref='group', lazy=True)
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    quantity = db.Column(db.String())
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
+
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -362,19 +382,85 @@ if not os.path.exists(UPLOAD_FOLDER):
 #             smtp.login(email_sender, mailpassword)
 #             smtp.sendmail(email_sender, email_receiver, em.as_string())
     
-#         return redirect(url_for('userbase'))
+# #         return redirect(url_for('userbase'))
+# new=Committee(name=form.name.data, 
+#                   description=form.description.data,
+#                   )
+
+@app.route('/group', methods=['GET', 'POST'])
+def group():
+    form = GroupForm()
+
+    if form.validate_on_submit():
+        group = Groups(
+            userId=current_user.id,
+            name=form.name.data
+        )
+        db.session.add(group)
+        db.session.commit()
+
+        flash("You just added a new catalog")
+        return redirect(url_for('main'))
+
+    print(form.errors)
+    return render_template('groups.html', form=form)
+
+
+
+
+
+
+
+@app.route('/add_item', methods=['GET', 'POST'])
+def add_item():
+    form = AddItemForm()
+    form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
+
+    if form.validate_on_submit():
+        item = Item(
+            name=form.item_name.data,
+            group_id=form.group.data,
+            quantity=form.quantity.data
+        )
+        db.session.add(item)
+        db.session.commit()
+        
+        # if item.quantity and item.quantity.isdigit():
+        #     quantity_value = int(item.quantity)
+        #     if quantity_value < 5:
+        #         flash(f"Less then 5 units, kindly re-stock {item.name}!")
+        #     elif quantity_value < 10:
+        #         flash(f"Less then 10 units, kindly re-stock {item.name}")
+        # else:
+
+        #     flash("Item added to the group successfully")
+        if item.quantity and item.quantity.isdigit():
+            quantity_value = int(item.quantity)
+            if quantity_value < 5:
+                session['low_quantity_flash'] = f"Low quantity (less than 5) of {item.name}!"
+            elif quantity_value < 10:
+                session['low_quantity_flash'] = f"Low quantity (less than 10) of {item.name}!"
+        else:
+            session['low_quantity_flash'] = f"Invalid quantity format for {item.name}. Please enter a valid number."
+
+            
+        flash("Item added to the group successfully")
+        return redirect(url_for('main'))
+
+    print(form.errors)
+    return render_template('add_item.html', form=form)
 
     
 radio = 'yboateng057@gmail.com'
 email_password = 'hsgtqiervnkabcma'
-radio_display_name = ' Central University SRC'
+radio_display_name = ' Abitu Industries'
 
 @app.route('/send_email', methods=['POST'])
 def send_email():
     if request.method == 'POST':
         email_receiver = request.form['email']
 
-        subject = 'CU - SRC Portal'
+        subject = 'AbiTrack Inventory'
         
         # HTML content of the email
         html_content = """
@@ -393,60 +479,44 @@ def send_email():
             body {
                 font-family: 'Plus Jakarta', sans-serif;
             }
-
-           
-           
-
-
-
             </style>
         </head>
         <body>
-             <div class="container">
+                <div class="container">
                     <div style="display:flex; padding:10px; justify-content:space-between;">
-                        <img src="https://www.central.edu.gh/static/img/Central-Uni-logo.png" style="width:100px;" loading="lazy" >
-    
+                        AbiTrack  🚀
                           </div>
                           
-                <h3 style="text-align:center; font-size:20px;">Central University SRC
-                    
+                <h3 style="text-align:center; font-size:30px;">Welcome to AbiTrack
+                    <br><span style="font-size:10px;">Warehouse Navigational/Inventory System</span></h3>
                 </h3>
-               <b> 🛑  Announcement: SRC Handover Ceremony 🛑</b>
                 
                 <div style="text-align:left;  font-size:13px; color:rgb(69 90 100);"><p>
-                    Dear Student,
-                    <br><br>
-                    I hope this message finds you well and refreshed.
-                    
-                    
-<br><br>
-We are thrilled to invite you to our upcoming SRC Handover Ceremony, a momentous event that signifies the transition of leadership and the promise of a new chapter in our student body.
-<br><br>
-🗓️ Date: Thursday 26th October, 2023<br>
-🕒 Time: 10am <br>
-🏛️ Venue: Senate room<br>
-<br><br>
-Let's come together to applaud our outgoing SRC members for their outstanding service and extend a warm welcome to the new leaders who will carry the torch of our institution's progress.
-<br><br>
-We look forward to your presence at this important event. Together, we'll continue to build a brighter future for Central University. <br><br>
-
-See you there!
-<br>
-Warm regards,
-<br><br>
--Signed-<br>
-CU-SRC</p>
-
-                 
-                </div>
-               
-
-                
-                    <h3 style="text-align:center; ">
-                    Powered by PrestoGhana</h3>
-    
+                    Hello there! <br>
                    
-                    
+<b>Kindly Click on the link to Accept Invitation</b><br>
+
+<a class="playstore-button" href="http://10.0.36.206:4000/userview" style="width:300px;">
+                <span class="texts">
+                  <span class="text-1">Click here.</span>
+                  
+               
+            
+                </span>
+              </a><br>
+<br>
+                  Kindly give us your feedback on https://abitrack/feedback 
+                  
+                  <br>
+                 
+                  
+              
+                </div>
+
+                <div class="bg-primary">
+                    <h2 style="padding:50px; color:#fff; ">AbiTrack Inventory</h2>
+    
+                    </div>
             </div>
             
             
@@ -464,17 +534,35 @@ CU-SRC</p>
         em['Subject'] = subject
         em.set_content('')
         em.add_alternative(html_content, subtype='html')
-
-        
         context = ssl.create_default_context()
 
        
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
             smtp.login(radio, email_password)
             smtp.sendmail(radio, email_receiver, em.as_string())
-        return redirect(url_for('userbase')) 
+
+        return redirect(url_for('main')) 
 
 
+
+@app.route('/invite', methods=['GET', 'POST'])
+def invite():
+    # print("this is super dope")
+    
+    form=WaitForm()
+    if form.validate_on_submit():
+        wait=Waitlist(
+            email=form.email.data
+            )
+        db.session.add(wait)
+        db.session.commit()
+        send_email()
+        print(form.email.data)
+        
+        flash("Thanks for Joining Our Waiting List")
+        return redirect('/main')
+    print(form.errors)
+    return render_template('preview.html', form=form)
 
 
 
@@ -647,6 +735,17 @@ def closed():
     return render_template('closed.html')
 
 
+@app.route('/message', methods=['GET', 'POST'])
+def messages():
+    users =Committee.query.order_by(Committee.id.desc()).all()
+    return render_template('messages.html',users=users)
+
+
+@app.route('/analytics', methods=['GET', 'POST'])
+def analytics():
+    return render_template('analytics.html')
+
+
 @app.route('/level', methods=['GET', 'POST'])
 def level():
     courses = Course.query.all() 
@@ -674,6 +773,11 @@ def mainquestion():
     return render_template('mainquestion.html')
 
 
+@app.route('/', methods=['GET', 'POST'])
+def landing():
+    return render_template('landing.html')
+
+
 @app.route('/pages', methods=['GET', 'POST'])
 def pages():
     return render_template('pages.html')
@@ -682,31 +786,87 @@ def pages():
 def basee():
     return render_template('basee.html')
 
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/landingpage', methods=['GET', 'POST'])
 def landingpage():
-    return render_template('landingpage.html')
+    
+    current_hour = datetime.datetime.now().hour
+    greeting = ""
+    
+    if current_hour < 12:
+        greeting = "Good morning,"
+    elif current_hour < 17:
+        greeting = "Good afternoon,"
+    else:
+        greeting = "Good evening,"
+        
+    total_message = Committee.query.count()
+    form=WaitForm()
+    if form.validate_on_submit():
+        wait=Waitlist(
+            email=form.email.data
+            )
+        db.session.add(wait)
+        db.session.commit()
+        send_email()
+        print(form.email.data)
+        flash("Invitation Sent to" + users.email)
+        return redirect('homelook')
+    
+    
+     # all_product= User.query.count()
+    low_quantity_flash = session.pop('low_quantity_flash', None)
+    total_students = User.query.count()
+    total_getfundstudents = Getfunds.query.count()
+    total_Faq = Faq.query.count()
+    total_challenges = Challenge.query.count()
+    total_message = Committee.query.count()
+    users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
+    total_people_with_positions = db.session.query(User).filter(User.position != '').count()
+    # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+    message = Message.query.count()
+    print(users_with_positions)
+    user =Committee.query.order_by(Committee.id.desc()).all()
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    challenges=Challenges.query.order_by(Challenges.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    online =Person.query.order_by(Person.id.desc()).all()
+    print(current_user)
+    
+    print(form.errors)
+    users =Person.query.order_by(Person.id.desc()).all()
+    
+    print("-------------")
+    print(users)
+    print("-------------")
+    
+    return render_template('landingpage.html',total_message=total_message, greeting=greeting, users=users, form=form,
+          
+                        low_quantity_flash=low_quantity_flash, total_challenges=total_challenges,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges                 
+                           )
 
 
+# @app.route('/inventory', methods=['GET', 'POST'])
+# def landingpage():
+#     return render_template('landingpage.html')
 
 
- 
 
 
 @app.route('/addcommittee', methods=['GET', 'POST'])
 def addcommittee():
     form=CommitteeForm()
     if form.validate_on_submit():
-        
             new=Committee(name=form.name.data, 
                    description=form.description.data,  
                   )
-       
             db.session.add(new)
             db.session.commit()
             # send_email()
             return redirect('leadership')
-            
     print(form.errors)
     return render_template("addcommittee.html", form=form)
 
@@ -714,33 +874,61 @@ def addcommittee():
 def addalumni():
     form=Adduser()
     if form.validate_on_submit():
-        
-            new=User(fullname=form.fullname.data, 
-                    
-                         
+            new=User(fullname=form.fullname.data,        
                    position=form.position.data,
                    reason=form.reason.data,
                    campus=form.campus.data,
                    qualities=form.qualities.data,
                image_file=form.image_file.data
                   )
-       
             db.session.add(new)
             db.session.commit()
             # send_email()
-           
-        
-            flash("You just added a new announcement",
+            flash("You just added a new product",
                   "success")
-            return redirect('/')
-            
+            return redirect('main')
     print(form.errors)
     return render_template("addAlumni.html", form=form, title='addalumni')
 
 
+@app.route('/authmessage', methods=['GET', 'POST'])
+def authmessage():
+    form=CommitteeForm()
+    if form.validate_on_submit():
+            new=Committee(name=form.name.data, 
+                  description=form.description.data,
+                  )
+            db.session.add(new)
+            db.session.commit()
+            flash("You just sent a BoardCast",
+                  "success")
+            return redirect('main')
+    print(form.errors)
+    return render_template("authmessage.html",title='authmessage',form=form)
 
-@app.route('/faq', methods=['GET', 'POST'])
-def faq():
+
+@app.route('/authtask', methods=['GET', 'POST'])
+def authtask():
+    form=ChallengesForm()
+    if form.validate_on_submit():
+            new=Challenge(name=form.name.data, 
+                   tag=form.tag.data,
+                   task=form.task.data,
+                   description=form.description.data,
+                  )
+            db.session.add(new)
+            db.session.commit()
+            flash("You just added a New Task",
+                  "success")
+            return redirect('main')
+    print(form.errors)
+    return render_template("authtask.html", form=form)
+
+
+
+
+@app.route('/authchallenge', methods=['GET', 'POST'])
+def authchallenge():
     form=FaqForm()
     if form.validate_on_submit():
         
@@ -754,16 +942,13 @@ def faq():
             # send_email()
            
         
-            flash("Thank you for filling the form, Please check your email for a message from the President.",
+            flash("You just added a New Challenge.",
                   "success")
-            return redirect('/')
+            return redirect('main')
             
     print(form.errors)
-    return render_template("faq.html", form=form)
+    return render_template("authchallenge.html", form=form)
 
-            
-    print(form.errors)
-    return render_template("faq.html", form=form)
 
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
@@ -907,7 +1092,28 @@ def thank():
     return render_template("thank.html")
 
 
- 
+@app.route('/stock', methods=['GET', 'POST'])
+def stock():
+    return render_template("stock.html")
+
+
+
+
+@app.route('/showchallenge', methods=['GET', 'POST'])
+def showchallenge():
+    users=Faq.query.order_by(Faq.id.desc()).all()
+    return render_template("showchallenge.html",users=users)
+
+
+@app.route('/task', methods=['GET', 'POST'])
+def task():
+    users=Challenge.query.order_by(Challenge.id.desc()).all()
+    return render_template("task.html",users=users)
+
+@app.route('/auth', methods=['POST','GET'])
+def auth():
+    users=User.query.order_by(User.id.desc()).all()
+    return render_template("auth.html",users=users)
  
        
 @app.route('/annoucement', methods=['GET', 'POST'])
@@ -921,6 +1127,20 @@ def annoucement():
 def constitution():
     users=Committee.query.order_by(Committee.id.desc()).all()
     return render_template("consti.html",users=users)
+    
+        
+
+       
+@app.route('/person', methods=['GET', 'POST'])
+def person():
+    # users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("person.html")
+
+       
+@app.route('/personid', methods=['GET', 'POST'])
+def personid():
+    # users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("personid.html")
     
         
 
@@ -950,8 +1170,143 @@ def adminadd():
 @app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
+    current_hour = datetime.datetime.now().hour
+    greeting = ""
+    
+    if current_hour < 12:
+        greeting = "Good morning,"
+    elif current_hour < 17:
+        greeting = "Good afternoon,"
+    else:
+        greeting = "Good evening,"
+        
+    form=WaitForm()
+    if form.validate_on_submit():
+        wait=Waitlist(
+            email=form.email.data
+            )
+        db.session.add(wait)
+        db.session.commit()
+        send_email()
+        print(form.email.data)
+       
+        flash("Invitation Sent to" + ' ' + wait.email)
+        return redirect('main')
+    print(form.errors)
+   
+   
+    # all_product= User.query.count()
+    # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
+    outstock = db.session.query(Item).filter(Item.quantity < 5).count()
+    
+   
+
+    # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
+    total_students = User.query.count()
+    instock = Item.query.count()
+    total_getfundstudents = Getfunds.query.count()
+    total_Faq = Faq.query.count()
+    total_challenges = Challenge.query.count()
+    total_message = Committee.query.count()
+    total_stock = Item.query.count()
+    total_cat = Groups.query.filter_by(userId=current_user.id).count()
+    users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
+    total_people_with_positions = db.session.query(User).filter(User.position != '').count()
+   
+   
+    # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+    message = Message.query.count()
+    print(users_with_positions)
+    user =Committee.query.order_by(Committee.id.desc()).all()
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    challenges=Challenges.query.order_by(Challenges.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    online =Person.query.order_by(Person.id.desc()).all()
+    print(current_user)
+    # flash(f"There was a problem", 'success')
+    if current_user == None:
+        flash("Welcome to the Dashboard" + current_user.email, "Success")
+        flash(f"There was a problem")
+    return render_template('current.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
+                       total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+
+
+@app.route('/homelook', methods=['GET', 'POST'])
+@login_required
+def homelook():
+    form=WaitForm()
+    if form.validate_on_submit():
+        wait=Waitlist(
+            email=form.email.data
+            )
+        db.session.add(wait)
+        db.session.commit()
+        send_email()
+        print(form.email.data)
+       
+        flash("Invitation Sent to" + ' ' + wait.email)
+        return redirect('homelook')
+    
+    print(form.errors)
+    
+    current_hour = datetime.datetime.now().hour
+    greeting = ""
+    
+    if current_hour < 12:
+        greeting = "Good morning,"
+    elif current_hour < 17:
+        greeting = "Good afternoon,"
+    else:
+        greeting = "Good evening,"
+    
+    # all_product= User.query.count()
+    
+    low_quantity_flash = session.pop('low_quantity_flash', None)
+    instock = Item.query.count()
     total_students = User.query.count()
     total_getfundstudents = Getfunds.query.count()
+    total_Faq = Faq.query.count()
+    total_challenges = Challenge.query.count()
+    total_message = Committee.query.count()
+    users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
+    total_people_with_positions = db.session.query(User).filter(User.position != '').count()
+    # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+    message = Message.query.count()
+    print(users_with_positions)
+    user =Committee.query.order_by(Committee.id.desc()).all()
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    challenges=Challenges.query.order_by(Challenges.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    online =Person.query.order_by(Person.id.desc()).all()
+    print(current_user)
+    # flash(f"There was a problem", 'success')
+    if current_user == None:
+        flash("Welcome to the Dashboard" + current_user.email, "Success")
+        flash(f"There was a problem")
+    return render_template('homelook.html',instock = instock, title='dashboard',user=user, 
+                        low_quantity_flash=low_quantity_flash, greeting=greeting, 
+                         form=form, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+
+
+
+def get_initials(name):
+    # Get the initials of each word in the name
+    return ''.join([word[0].upper() for word in name.split()])
+
+
+@app.route('/app', methods=['GET', 'POST'])
+def approute():
+    total_students = User.query.count()
+    total_getfundstudents = Getfunds.query.count()
+    total_message = Committee.query.count()
     total_challenges = Challenges.query.count()
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
@@ -965,21 +1320,33 @@ def main():
     print(users)
     total_leaders = Leaders.query.count()
     print(total_leaders)
+    online =Person.query.order_by(Person.id.desc()).all()
     print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('current.html', title='dashboard',message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+    return render_template('app.html', title='dashboard',online=online,total_message=total_message,message=message,total_challenges=total_challenges, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
-@app.route('/newpage', methods=['G', 'POST'])
+@app.route('/newpage', methods=['GET', 'POST'])
 def newpage():
     return render_template("newpage.html")
+
+@app.route('/userview', methods=['GET', 'POST'])
+def userview():   
+    return render_template("userview.html")
+
 
 @app.route('/newdash', methods=['GET', 'POST'])
 def newdash():   
     return render_template("newdash.html")
+
+@app.route('/instock', methods=['GET', 'POST'])
+def instock():  
+    users=Item.query.order_by(Item.id.desc()).all()
+    instock = Item.query.count()
+    return render_template("instock.html",users=users,instock = instock)
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():   
@@ -1382,8 +1749,10 @@ def login():
             # if user == None:
             #     flash(f"There was a problem")   
                 login_user(user)
-                flash (f' ' 'Welcome,' + user.name + '' )
-                return redirect(url_for('main'))
+                flash (f' ' 'Good day,' + ' '+ 'Welcome to your dashboard,' + ' ' + user.name + '' )
+                session['logged_in'] = True
+                
+                return redirect(url_for('homelook'))
             # next = request.args.get('next')
             else:
                 flash (f'Wrong Password ', 'success')
@@ -1392,20 +1761,32 @@ def login():
     return render_template('login.html', form=form)
  
 
-#signup route
-@app.route('/signup', methods=['POST','GET'])
+@app.context_processor
+def inject_status():
+    status = 'green' if current_user.is_authenticated else 'red'
+    return dict(status=status)
 
+
+
+@app.route('/mot', methods=['POST','GET'])
+def mot():
+    return render_template('signup_step1.html')
+ 
+
+@app.route('/signup', methods=['POST','GET'])
 def signup():
     form = Registration()
+    print(form.username.data)
     print(form.phone.data)
     print(form.email.data)
     print(form.name.data)
     if request.method == "POST": 
         if form.validate_on_submit():
             print('Success')
-            user =Person(password="central@123", email=form.email.data, phone=form.phone.data, name=form.name.data)
+            user =Person(password="central@123", email=form.email.data,username=form.username.data, phone=form.phone.data, name=form.name.data)
             db.session.add(user)
             db.session.commit()
+            
             login_user(user, remember=True)
             print(current_user)
          
@@ -1414,6 +1795,8 @@ def signup():
             print(form.errors)
             
     return render_template('signup.html', form=form)
+
+
 
 
 @app.route('/departments/<string:schoolSlug>')
@@ -1452,14 +1835,39 @@ def userbase():
 @app.route('/logs', methods=['POST','GET'])
 def logs():
     return render_template("logs.html")
+
+
+
+
+@app.route('/category', methods=['POST','GET'])
+def category():
+    return render_template("category.html")
  
-@app.route('/auth', methods=['POST','GET'])
-def auth():
-    return render_template("auth.html")
+
+
 
 @app.route('/authin', methods=['POST','GET'])
 def authin():
-    return render_template("authin.html")
+    form = Registration()
+    print(form.phone.data)
+    print(form.email.data)
+    print(form.name.data)
+    if request.method == "POST": 
+        if form.validate_on_submit():
+            print('Success')
+            user =Person(password="central@123", email=form.email.data, phone=form.phone.data, name=form.name.data)
+            db.session.add(user)
+            db.session.commit()
+            
+            login_user(user, remember=True)
+            print(current_user)
+            flash("New User added", "success")
+            return redirect(url_for('main'))
+        else:
+            print(form.errors)
+            
+    return render_template('authin.html', form=form)
+  
 
 @app.route('/authreg', methods=['POST','GET'])
 def authreg():

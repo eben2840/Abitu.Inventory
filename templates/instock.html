@@ -1,0 +1,104 @@
+{% extends 'landingpage.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+        
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row g-6 mb-6">
+      
+        
+
+      <div class="card shadow border-0 mb-7">
+        <div class="card-header">
+            <h5 class="mb-0">In-Stock</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-nowrap">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Category</th>  
+                        <th scope="col">Condition</th>
+                        <th>Unit</th>
+                        <th>QR Code</th>
+                        <th>Generate Report</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for users in users%} 
+                    <tr>
+                        <td>
+                            <a class="text-heading font-semibold" href="#">
+                                {{users.name}}
+                            </a>
+                        </td>
+                        <td>
+                           QWdasd231
+                        </td>
+                        <td>
+                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
+                           -->
+                            <a class="text-heading font-semibold" href="#">
+                                {{users.group.name}}
+                            </a>
+                        </td>
+                       
+                        <td>
+                            <span class="badge badge-lg badge-dot">
+                                <i class="bg-success"></i>In-Stock
+                            </span>
+                        </td>
+                        <td>
+                            {{users.quantity}}
+                        </td>
+                        
+                       
+
+                        <td>
+                            <img alt="..." src="https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg" class="avatar avatar-xs square-circle me-2">
+                          
+                        </td>
+
+                        <td>
+                            <a href="#" class="btn btn-sm btn-neutral">Report</a>
+
+                        </td>
+
+
+                        <td class="text-end">
+                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                <i class="bi bi-trash"></i>
+                               
+                            </button>
+                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                            
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </td>
+                        
+                    </tr>
+
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer border-0 py-5">
+            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+        </div>
+    </div>
+  
+ 
+</div>
+
+
+{%endblock body%}

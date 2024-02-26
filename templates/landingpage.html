@@ -7,10 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+ 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
   <!-- 
     - primary meta tags
   -->
-  <title>Inventory</title>
+  <title>AbiTrack</title>
   <meta name="title" content="">
   <meta name="description" content="">
 
@@ -38,15 +49,22 @@
 
 </head>
 
-<body>
+<body onload="openModal()">
 
-
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
 
 
 <!-- Banner -->
-<a href="https://webpixels.io/components?ref=codepen" class="btn w-full btn-primary text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
-    <strong>Inventory System</strong>. Trial Version →
+<!--<a href="https://webpixels.io/components?ref=codepen" class="btn w-full btn-primary text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
+    <strong>AbiTrack System</strong>. Trial Version →
+</a>-->
+
+<a href="#" class="btn w-full btn-primary text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
+    <strong>AbiTrack System</strong>. Inventory Commercial Version →
 </a>
+
 
 <!-- Dashboard -->
 <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -58,8 +76,19 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Brand -->
-            <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                <img src="https://preview.webpixels.io/web/img/logos/clever-primary.sv" alt="...">Inventory
+            
+            <a class= href="#">
+               
+               <a href="#" class="avatar bg-primary rounded-circle ms-4 text-white">
+                
+                {{ current_user.name[0] if current_user.name else '' }}
+                
+
+            </a>
+            <hr>
+
+             
+
             </a>
             <!-- User menu (mobile) -->
             <div class="navbar-user d-lg-none">
@@ -69,7 +98,9 @@
                     <a href="#" id="sidebarAvatar" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-parent-child">
                             <img alt="Image Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar- rounded-circle">
-                            <span class="avatar-child avatar-badge bg-success"></span>
+                            <span class="avatar-child avatar-badge bg-success">
+                                
+                            </span>
                         </div>
                     </a>
                     <!-- Menu -->
@@ -85,33 +116,60 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidebarCollapse">
                 <!-- Navigation -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-house"></i> Dashboard
+                
+                <ul class="navbar-nav active">
+                    <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                        Admin
+                        <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                    -->
+                            </div>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/homelook">
+                            <i class="bi bi-house"></i> Home
                         </a>
                     </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">
+                            <i class="bi bi-calendar-check"></i> My Workspaces
+                        </a>
+                    </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/analytics">
                             <i class="bi bi-bar-chart"></i> Analitycs
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-chat"></i> Messages
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
+                   <li class="nav-item">
+                        <a class="nav-link" href="/authmessage">
+                            <i class="bi bi-send"></i> Send Notification
+                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{total_message}}</span>
                         </a>
                     </li>
+
+                   
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-bookmarks"></i> Collections
+                        <a class="nav-link" href="/stock">
+                            <i class="bi bi-bell"></i> Out-of Stock
+                            <span class="badge bg-soft-danger text-danger rounded-pill d-inline-flex align-items-center ms-auto">{{outstock}}</span>
                         </a>
                     </li>
+                    
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-people"></i> Users
+                        <a class="nav-link" href="/instock">
+                            <i class="bi bi-bell"></i> In Stock
+                            <span class="badge bg-soft-success text-success rounded-pill d-inline-flex align-items-center ms-auto">{{instock}}</span>
                         </a>
                     </li>
+                    
+                    <li class="nav-item-active">
+                        <a class="nav-link" href="/person">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    
+                   
                 </ul>
                 <!-- Divider -->
                 <hr class="navbar-divider my-5 opacity-20">
@@ -119,92 +177,193 @@
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
-                            Contacts
-                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">13</span>
-                        </div>
+                          Shortcut
+                          <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                      -->
+                              </div>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-                                <div class="position-relative d-inline-block text-white">
-                                    <img alt="Image Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar rounded-circle">
-                                    <span class="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Marie Claire
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    Paris, FR
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authin">
+                            <i class="bi bi-plus"></i> Add Employee
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-                                <div class="position-relative d-inline-block text-white">
-                                    <span class="avatar bg-soft-warning text-warning rounded-circle">JW</span>
-                                    <span class="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Michael Jordan
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    Bucharest, RO
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
+
+                 <li class="nav-item">
+                        <a class="nav-link" href="/add_item">
+                            <i class="bi bi-plus"></i> Add Items
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link d-flex align-items-center">
-                            <div class="me-4">
-                                <div class="position-relative d-inline-block text-white">
-                                    <img alt="..." src="https://images.unsplash.com/photo-1610899922902-c471ae684eff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar rounded-circle">
-                                    <span class="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-danger rounded-circle"></span>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="d-block text-sm font-semibold">
-                                    Heather Wright
-                                </span>
-                                <span class="d-block text-xs text-muted font-regular">
-                                    London, UK
-                                </span>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-chat"></i>
-                            </div>
+
+                  
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/group">
+                            <i class="bi bi-plus"></i> Add Catalog
                         </a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addalumni">
+                            <i class="bi bi-plus"></i> Add Document
+                        </a>
+                    </li>
+                   
+                  <!--  <li class="nav-item">
+                        <a class="nav-link" href="/authin">
+                            <i class="bi bi-plus"></i> Add Budget
+                        </a>
+                    </li>-->
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authchallenge">
+                            <i class="bi bi-plus"></i> Add Challenges
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authtask">
+                            <i class="bi bi-plus"></i> Add Task Flow
+                        </a>
+                    </li>
+                
+                  
+                
+                    
+                   
                 </ul>
                 <!-- Push content down -->
                 <div class="mt-auto"></div>
                 <!-- User (md) -->
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-person-square"></i> Account
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-box-arrow-left"></i> Logout
-                        </a>
-                    </li>
+                 
+
                 </ul>
             </div>
         </div>
     </nav>
+    
+  
+ 
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width:700px;">
+      <div class="offcanvas-header">
+        <h2 class="offcanvas-title" id="offcanvasRightLabel">Notification</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <div class="offcanvas-body">
+        <div class="row g-6 mb-6">
+      
+        
+
+            <div class="card shadow border-0 mb-7">
+              <div class="card-header">
+                  <h5 class="mb-0">Indox</h5>
+              </div>
+              <div class="table-responsive">
+                  <table class="table table-hover table-nowrap">
+                      <thead class="thead-light">
+                          <tr>
+                              <th scope="col">Subject</th>
+                              <th scope="col">Message</th>
+                              
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+      
+                          {%for user in user%} 
+      
+      
+                          <tr>
+                              <td>
+                                  <a class="text-heading font-semibold" href="#">
+                                      {{user.name}}
+                                  </a>
+                              </td>
+                              <td>
+                                  {{user.description}}
+                              </td>
+                             
+                              <td class="text-end">
+                                  <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                      <i class="bi bi-trash"></i>
+                                  </button>
+                              </td>
+                          </tr>
+                          {% endfor %} 
+                      </tbody>
+                  </table>
+              </div>
+              <div class="card-footer border-0 py-5">
+                  <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+              </div>
+          </div>
+        
+       
+      </div>
+      
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Invite to work management </h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="" class="form" method="POST", "GET"> 
+                    {{form.hidden_tag()}}
+                <label>
+                  
+                    <input type="email" id="email" name="email" class="form-control"class="input-field my-5 my-lg-5 mt-2 space", id="floatingInput", placeholder="invite@gmail.com">
+                    
+                 
+                   
+                </label>
+        
+              
+                   
+
+            
+            
+            </div>
+            <div class="modal-footer">
+             {{form.submit(class="btn btn-primary has-after", style="font-size:15px;", )}}
+                
+            </form>
+           <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-primary position-relative"
+                >
+                  <i class="bi bi-send">Submit</i>
+                </button>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+     
+      
+      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h2 class="offcanvas-title" id="staticBackdropLabel">Support & Learn</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+           
+          </div>
+        </div>
+      </div>
+
+
+
     <!-- Main content -->
     <div class="h-screen flex-grow-1 overflow-y-lg-auto">
         <!-- Header -->
@@ -214,478 +373,160 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                             <!-- Title -->
-                            <h1 class="h2 mb-0 ls-tight">Application</h1>
+                            <h1 class="h2 mb-0 ls-tight"><span class="text-primary"><b>{{greeting}} {{current_user.name}} 
+                            
+                        </b><br></span>
+                            </h1>
+                            
+                            <h6 class="h6 mb-0 ls-tight"><span >Quickly access your recent boards, Inbox and workspaces
+
+                            </span>
+                            </h6>
+                            
                         </div>
+                      
                         <!-- Actions -->
                         <div class="col-sm-6 col-12 text-sm-end">
                             <div class="mx-n1">
-                                <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
-                                    <span class=" pe-2">
-                                        <i class="bi bi-pencil"></i>
-                                    </span>
-                                    <span>Edit</span>
+                                
+                                    <button type="button" class="btn btn-primary" id="liveToastBtn"
+                                     >Stock Master
+                                      <i class="bi bi-bell"></i>
+                                    </button>
+
+                                   
+                                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                      <div id="liveToast"  class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header">
+                                          <img src="..." class="rounded me-2" alt="...">
+                                          <strong class="me-auto"> Stock Master</strong>
+                                          <small>1 mins ago</small>
+                                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body" style="text-align:center;">
+                                         {% if low_quantity_flash %}
+                                {{ low_quantity_flash }}
+                                {% else %}
+                              
+                               <br>
+                               <span style="font-size:10px;"> Powered by Your Stock Masters</span>
+
+                                {% endif %}
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <a href="#">
+                                        <button type="button" class="btn btn-primary position-relative"
+                                       data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >
+                                            <i class="bi bi-person-plus"></i>
+                                          </button>
+                                        </a>
+                                        
+                                   
+                                    
+                                    <a href="#">
+                                        <button type="button" class="btn btn-primary position-relative"
+                                          >
+                                            <i class="bi bi-bookmark-plus"></i>
+                                          </button>
+                                        </a>
+
+                                        
+
+          
+                                <a href="#">
+                                <button type="button" type="button" class="btn btn-primary position-relative"
+                                  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
+                                   
+                                    <i class="bi bi-bell"></i>
+  
+
+                                    
+                                  
+                                    <span class="badge bg-danger badge-count badge-md border-2 border-current rounded-circle position-absolute top-0 end-0 transform translate-y-n1/2 translate-x-1/2">{{total_message}}</span>
+                                  </button>
                                 </a>
-                                <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                                    <span class=" pe-2">
-                                        <i class="bi bi-plus"></i>
-                                    </span>
-                                    <span>Create</span>
-                                </a>
+
+                               
+                                
+                               
                             </div>
                         </div>
                     </div>
+
+                    <hr>
                     <!-- Nav -->
                     <ul class="nav nav-tabs mt-4 overflow-x border-0">
-                        <li class="nav-item ">
+                       <!-- <li class="nav-item ">
                             <a href="#" class="nav-link active">All files</a>
+                        </li>-->
+                        <li class="nav-item ">
+                            <a href="/auth" class="nav-link">
+                                <i class="bi bi-house"></i> All Product</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link font-regular">Shared</a>
+                        <!--<li class="nav-item">
+                            <a href="/category" class="nav-link font-regular">All Category</a>
+                        </li>-->
+                        <li class="nav-item ">
+                            <a href="/showchallenge" class="nav-link">
+                                <i class="bi bi-pin"></i> Challenges</a>
                         </li>
-                        <li class="nav-item">
+                        
+                        <li class="nav-item ">
+                            <a href="/task" class="nav-link">
+                                <i class="bi bi-stack"></i> Task Flow</a>
+                        </li>
+
+                        <!-- Button trigger modal -->
+
+  
+
+
+                        <li class="nav-item ">
+                            <a href="/showchallenge"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-link">
+                                <i class="bi bi-plus-circle"></i> Add Budget</a>
+                        </li>
+                       <!-- <li class="nav-item">
                             <a href="#" class="nav-link font-regular">File requests</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
         </header>
-        <!-- Main -->
+
         <main class="py-6 bg-surface-secondary">
-            <div class="container-fluid">
-                <!-- Card stats -->
-                <div class="row g-6 mb-6">
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="card shadow border-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Budget</span>
-                                        <span class="h3 font-bold mb-0">$750.90</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                                            <i class="bi bi-credit-card"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-soft-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>13%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="card shadow border-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
-                                        <span class="h3 font-bold mb-0">215</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-soft-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>30%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="card shadow border-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total hours</span>
-                                        <span class="h3 font-bold mb-0">1.400</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
-                                            <i class="bi bi-clock-history"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-soft-danger text-danger me-2">
-                                        <i class="bi bi-arrow-down me-1"></i>-5%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="card shadow border-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Work load</span>
-                                        <span class="h3 font-bold mb-0">95%</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
-                                            <i class="bi bi-minecart-loaded"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-soft-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>10%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow border-0 mb-7">
-                    <div class="card-header">
-                        <h5 class="mb-0">Applications</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-nowrap">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Company</th>
-                                    <th scope="col">Offer</th>
-                                    <th scope="col">Meeting</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Robert Fox
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Feb 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-1.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Dribbble
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $3.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-success"></i>Scheduled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1610271340738-726e199f0258?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Darlene Robertson
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Apr 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-2.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Netguru
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $2.750
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-warning"></i>Postponed
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Theresa Webb
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Mar 20, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-3.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Figma
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $4.200
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-success"></i>Scheduled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1612422656768-d5e4ec31fac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Kristin Watson
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Feb 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-4.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Mailchimp
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $3.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-dark"></i>Not discussed
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1608976328267-e673d3ec06ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Cody Fisher
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Apr 10, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-5.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Webpixels
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $1.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-danger"></i>Canceled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Robert Fox
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Feb 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-1.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Dribbble
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $3.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-success"></i>Scheduled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1610271340738-726e199f0258?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Darlene Robertson
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Apr 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-2.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Netguru
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $2.750
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-warning"></i>Postponed
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Theresa Webb
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Mar 20, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-3.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Figma
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $4.200
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-success"></i>Scheduled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1612422656768-d5e4ec31fac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Kristin Watson
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Feb 15, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-4.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Mailchimp
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $3.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-dark"></i>Not discussed
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img alt="..." src="https://images.unsplash.com/photo-1608976328267-e673d3ec06ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Cody Fisher
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Apr 10, 2021
-                                    </td>
-                                    <td>
-                                        <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-5.png" class="avatar avatar-xs rounded-circle me-2">
-                                        <a class="text-heading font-semibold" href="#">
-                                            Webpixels
-                                        </a>
-                                    </td>
-                                    <td>
-                                        $1.500
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-lg badge-dot">
-                                            <i class="bg-danger"></i>Canceled
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-neutral">View</a>
-                                        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer border-0 py-5">
-                        <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
-                    </div>
+         
+            {% block body %}
+            <div>
+                <div class="container">
+                   
+
+                    
                 </div>
             </div>
-        </main>
+            {% endblock%}
+    
+           
+          </main>
+
+
     </div>
 </div>
-  
+ <!-- Bootstrap JavaScript and Popper.js (Order is important) -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+ <!-- Triggering the Toast -->
+<!-- Your existing HTML code -->
+
+<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript code -->
+
+
+<!-- Your existing HTML code -->
 
 
   <script async="" type="text/javascript" src="https://www.myhealth1st.com.au/mh1-widget/2021/popup.v3.js"></script>
@@ -700,6 +541,91 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+  
+  <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Simulate delay for demonstration purposes
+        setTimeout(function () {
+            // Hide loading screen and display content
+            document.getElementById("loadingScreen").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+        }, 2000); // Adjust the delay time as needed
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Triggering the Toast -->
+  <script>
+    var toastElement = new bootstrap.Toast(document.querySelector('.toast'));
+    toastElement.show();
+  </script>
+  
+  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+  
+  <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
+  
+<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript code -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var liveToastBtn = document.getElementById('liveToastBtn');
+        var liveToast = new bootstrap.Toast(document.getElementById('liveToast'));
+
+        liveToastBtn.addEventListener('click', function () {
+            liveToast.show();
+        });
+    });
+</script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBPHDVrXV4nn_4agQgWFItDlS8z9cvq5zw",
+      authDomain: "centralalumni.firebaseapp.com",
+      projectId: "centralalumni",
+      storageBucket: "centralalumni.appspot.com",
+      messagingSenderId: "270504690849",
+      appId: "1:270504690849:web:b03ee12ab92e157196dce0",
+      measurementId: "G-9T21K58F10"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <script src="static/assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
 
 </body>
 
