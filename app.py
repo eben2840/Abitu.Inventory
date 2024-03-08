@@ -773,7 +773,7 @@ def mainquestion():
     return render_template('mainquestion.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/landing', methods=['GET', 'POST'])
 def landing():
     return render_template('landing.html')
 
@@ -1084,6 +1084,12 @@ def committee():
 def leadership(userid):
     profile=Committee.query.get_or_404(userid)
     return render_template("leadership.html", profile=profile,)
+
+
+   
+@app.route('/', methods=['GET', 'POST'])
+def homme():
+    return render_template("homme.html")
 
 
 
