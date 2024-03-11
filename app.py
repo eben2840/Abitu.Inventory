@@ -24,6 +24,8 @@ from flask_cors import CORS
 import json
 import time
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+
 #chin of messgae
 
 app=Flask(__name__)
@@ -80,19 +82,16 @@ def sendtelegram(params):
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
-    contact= db.Column(db.Integer())
     email= db.Column(db.String())
+    company_email= db.Column(db.String())
+    company_name= db.Column(db.String())
+    category= db.Column(db.String())
     username= db.Column(db.String())
-    password= db.Column(db.String())
-    email= db.Column(db.String())
-    indexnumber=db.Column(db.String())
-    password=db.Column(db.String)
     phone= db.Column(db.String()    )
-    telephone= db.Column(db.String()   )
-    yearCompleted= db.Column(db.Integer()  )
-    form=db.Column(db.String())
-    extra= db.Column(db.String()     )
     image_file = db.Column(db.String())
+    password = db.Column(db.String(128))
+    confirm_password = db.Column(db.String(128))
+    
     def __repr__(self):
         return f"Person('{self.id}', {self.name}')"
 
@@ -1358,6 +1357,11 @@ def instock():
 def sms():   
     return render_template("sms.html")
 
+
+@app.route('/choose', methods=['GET', 'POST'])
+def choose():   
+    return render_template("choose.html")
+
 @app.route('/message', methods=['GET', 'POST'])
 def message():
     form=MessageForm()
@@ -1735,36 +1739,36 @@ def delete(id):
         return "errrrrorrr"
     
 
-@app.route('/login', methods=['POST','GET'])
-def login():
-    form = LoginForm()
-    print ('try')
-    print(form.email.data)
-    print(form.password.data)
+# @app.route('/login', methods=['POST','GET'])
+# def login():
+#     form = LoginForm()
+#     print ('New User')
+#     print(form.email.data)
+#     print(form.password.data)
     
-    if form.validate_on_submit():
-        print("form Validated successfully")
-        user = Person.query.filter_by(email = form.email.data).first()
-        if user:
-            print("user:" + user.email + "found")
+#     if form.validate_on_submit():
+#         print("form Validated successfully")
+#         user = Person.query.filter_by(email = form.email.data).first()
+#         if user:
+#             print("user:" + user.email + "found")
         
-        if user:
-            print(user.password)
-            if user and form.password.data == user.password:
-                print(user.email + "validored successfully")
-            # if user == None:
-            #     flash(f"There was a problem")   
-                login_user(user)
-                flash (f' ' 'Good day,' + ' '+ 'Welcome to your dashboard,' + ' ' + user.name + '' )
-                session['logged_in'] = True
+#         if user:
+#             print(user.password)
+#             if user and form.password.data == user.password:
+#                 print(user.email + "validored successfully")
+#             # if user == None:
+#             #     flash(f"There was a problem")   
+#                 login_user(user)
+#                 flash (f' ' 'Good day,' + ' '+ 'Welcome to your dashboard,' + ' ' + user.name + '' )
+#                 session['logged_in'] = True
                 
-                return redirect(url_for('homelook'))
-            # next = request.args.get('next')
-            else:
-                flash (f'Wrong Password ', 'success')
-        else:
-            flash("User not found", 'danger') 
-    return render_template('login.html', form=form)
+#                 return redirect(url_for('homelook'))
+#             # next = request.args.get('next')
+#             else:
+#                 flash (f'Wrong Password ', 'success')
+#         else:
+#             flash("User not found", 'danger') 
+#     return render_template('login.html', form=form)
  
 
 @app.context_processor
@@ -1777,28 +1781,83 @@ def inject_status():
 @app.route('/mot', methods=['POST','GET'])
 def mot():
     return render_template('signup_step1.html')
- 
+
+    
+    
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+         # Login and validate the user.
+        # user should be an instance of your `User` class
+        user = Person.query.filter_by(email=form.email.data).first()
+        if user and user.password==form.password.data:
+            login_user(user)
+            print ("Logged in:" + user.username + " " + user.email)
+            print(form.password.data)
+            return redirect(url_for('main'))
+        else:
+            flash(f'Incorrect details, please try again', 'danger') 
+    return render_template('login.html', form=form)  
+
+
 
 @app.route('/signup', methods=['POST','GET'])
 def signup():
     form = Registration()
-    print(form.username.data)
-    print(form.phone.data)
-    print(form.email.data)
-    print(form.name.data)
-    if request.method == "POST": 
-        if form.validate_on_submit():
-            print('Success')
-            user =Person(password="central@123", email=form.email.data,username=form.username.data, phone=form.phone.data, name=form.name.data)
+    if form.validate_on_submit():
+        checkUser = Person.query.filter_by(email = form.email.data).first()
+        checkUser = Person.query.filter_by(company_email = form.company_email.data).first()
+        if checkUser:
+            flash(f'This Email has already been used','danger')
+            return redirect (url_for ('signup'))
+        else:
+            user = Person(password=form.password.data,
+                        confirm_password=form.confirm_password.data,
+                        company_name=form.company_name.data, 
+                        company_email=form.company_email.data, 
+                        category=form.category.data,
+                        email=form.email.data,
+                        username=form.username.data, 
+                        phone=form.phone.data,
+                        sname=form.name.data)
             db.session.add(user)
             db.session.commit()
-            
+            # params = "New Account Created for " + new_user.username
+            # sendtelegram(params)
+            flash (f'Account for ' + form.username.data + ' has been created.', 'success') 
+            # user = Person.query.filter_by(email = form.email.data).first()
             login_user(user, remember=True)
-            print(current_user)
+            return redirect (url_for('login'))
+    else:
+        print(form.errors)
+    # flash (f'There was a problem', 'danger')
+    # form = Registration()
+    # print(form.username.data)
+    # print(form.phone.data)
+    # print(form.email.data)
+    # print(form.name.data)
+    # print(form.company_name.data)
+    # print(form.password.data)
+    # if request.method == "POST": 
+    #     if form.validate_on_submit():
+    #         print('Success')
+    #         user =Person(password=form.password.data,
+    #                      company_name=form.company_name.data, 
+    #                      company_email=form.company_email.data, 
+    #                      category=form.category.data,
+    #                     #  password=form.password.data,
+    #                      email=form.email.data,username=form.username.data, phone=form.phone.data, name=form.name.data)
+    #         db.session.add(user)
+    #         db.session.commit()
+            
+    #         login_user(user, remember=True)
+    #         print(current_user)
+    #         flash ('Created Successfully','success')
          
-            return redirect(url_for('login'))
-        else:
-            print(form.errors)
+    #         return redirect(url_for('login'))
+    #     else:
+    #         print(form.errors)
             
     return render_template('signup.html', form=form)
 
