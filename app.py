@@ -486,36 +486,27 @@ def send_email():
                         AbiTrack  🚀
                           </div>
                           
-                <h3 style="text-align:center; font-size:30px;">Welcome to AbiTrack
-                    <br><span style="font-size:10px;">Warehouse Navigational/Inventory System</span></h3>
+                <h3 style="text-align:center; font-size:30px;">Welcome to AbiTrack Management System
+                   
                 </h3>
                 
-                <div style="text-align:left;  font-size:13px; color:rgb(69 90 100);"><p>
+                
+                
+                <div style="text-align:left; text-align:center; font-size:13px; color:rgb(69 90 100);"><p>
                     Hello there! <br>
                    
-<b>Kindly Click on the link to Accept Invitation</b><br>
+<b>You just created an account</b><br>
 
-<a class="playstore-button" href="http://10.0.36.206:4000/userview" style="width:300px;">
-                <span class="texts">
-                  <span class="text-1">Click here.</span>
-                  
-               
-            
-                </span>
-              </a><br>
+<br>
 <br>
                   Kindly give us your feedback on https://abitrack/feedback 
                   
-                  <br>
-                 
+                
                   
               
                 </div>
 
-                <div class="bg-primary">
-                    <h2 style="padding:50px; color:#fff; ">AbiTrack Inventory</h2>
-    
-                    </div>
+               
             </div>
             
             
@@ -555,7 +546,7 @@ def invite():
             )
         db.session.add(wait)
         db.session.commit()
-        send_email()
+        # send_email()
         print(form.email.data)
         
         flash("Thanks for Joining Our Waiting List")
@@ -1798,6 +1789,7 @@ def login():
             return redirect(url_for('main'))
         else:
             flash(f'Incorrect details, please try again', 'danger') 
+             flash (f'Your unique code is ' + form.username.data, 'success') 
     return render_template('login.html', form=form)  
 
 
@@ -1805,6 +1797,13 @@ def login():
 @app.route('/signup', methods=['POST','GET'])
 def signup():
     form = Registration()
+    print(form.username.data)
+    print(form.phone.data)
+    print(form.email.data)
+    print(form.name.data)
+    print(form.company_name.data)
+    print(form.password.data)
+    # print(form.category.data)
     if form.validate_on_submit():
         checkUser = Person.query.filter_by(email = form.email.data).first()
         checkUser = Person.query.filter_by(company_email = form.company_email.data).first()
@@ -1816,16 +1815,18 @@ def signup():
                         confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data, 
                         company_email=form.company_email.data, 
-                        category=form.category.data,
+                        # category=form.category.data,
                         email=form.email.data,
                         username=form.username.data, 
                         phone=form.phone.data,
-                        sname=form.name.data)
+                        name=form.name.data)
             db.session.add(user)
             db.session.commit()
+            send_email()
             # params = "New Account Created for " + new_user.username
             # sendtelegram(params)
-            flash (f'Account for ' + form.username.data + ' has been created.', 'success') 
+            flash("We sent you a confirmation Email, kindly confirm your email.")
+           
             # user = Person.query.filter_by(email = form.email.data).first()
             login_user(user, remember=True)
             return redirect (url_for('login'))

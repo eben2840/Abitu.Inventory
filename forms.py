@@ -188,7 +188,7 @@ class Registration(FlaskForm):
     username = StringField('Username', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
     company_email = StringField('company_email', validators=[DataRequired()]) 
-    category= SelectField('Categories', choices=[('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ], default=None )
+    # category = SelectField('Categories', choices=[('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])
     submit =SubmitField('submit')
     
 
