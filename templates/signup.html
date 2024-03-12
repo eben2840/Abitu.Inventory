@@ -150,11 +150,18 @@
     <h5 class="text-muted" style="margin-bottom:10px;">
       Verification Information 
      </h5>
-    <input type="number" name="username" placeholder="Unique Code" required class="input-field my-3", style="padding:15px;  border-radius:15px; width:100%;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
-    <input type="password" name="password" placeholder="Enter Password"  class="input-field my-3", style="padding:15px;  border-radius:15px; width:100%;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
-    <input type="password" name="confirm_password" placeholder="Confirm  Password"  class="input-field my-3", style="padding:15px;  border-radius:15px; width:100%;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
-    <!--<input type="password" name="confirm_password" placeholder="Confirm Password"  class="input-field my-3", style="padding:15px;  border-radius:15px; width:100%;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
--->
+     <input type="number" name="username" placeholder="Unique Code" required class="input-field my-3" style="padding:15px; border-radius:15px; width:100%; box-shadow: var(--shadow-1);" id="floatingInput" required="required" pattern="[0-9]{4}" maxlength="4">
+
+     <input type="password" name="password" placeholder="Enter Password" class="input-field my-3" style="padding:15px; border-radius:15px; width:100%; box-shadow: var(--shadow-1);" id="floatingInput" required="required">
+     
+     <input type="password" name="confirm_password" placeholder="Confirm Password" class="input-field my-3" style="padding:15px; border-radius:15px; width:100%; box-shadow: var(--shadow-1);" id="floatingInput" required="required">
+     
+
+     <div style="align-items: center; justify-content: flex-start; ">
+      <h5 style="margin-top:10px;" >Show Password</h5>  <input type="checkbox" onclick="togglePasswordVisibility()" style=" justify-content: flex-start; ">
+  </div>
+ 
+
 <div class="bot d-flex" style="display:fex; justify-content: space-between;">
     <button type="button" class="btn btn-primary has-before has-after" onclick="prevStep()">Previous</button>
   {{form.submit(class="btn btn-primary has-before has-after")}}
@@ -266,165 +273,21 @@
 
 
 
+  <script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementsByName("password")[0];
+        var confirmPasswordField = document.getElementsByName("confirm_password")[0];
 
-  <!-- 
-    - #FOOTER
-  -->
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+        }
+    }
+</script>
 
-  <!--<footer class="footer">
-    <div class="container">
-
-      <div class="footer-top section">
-
-        <div class="footer-brand">
-
-          <p class="footer-list-title">About Pixology</p>
-
-          <p class="footer-text" style="color:#fff;">
-            A new way to make the payments easy, reliable and 100% secure. claritatem itamconse quat. Exerci tationulla
-          </p>
-
-          <ul class="social-list">
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-youtube"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-skype"></ion-icon>
-              </a>
-            </li>
-
-          </ul>
-
-        </div>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Usefull Links</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Contact us</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">How it Works</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Create</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Explore</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Terms & Services</a>
-          </li>
-
-        </ul>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Community</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Help Center</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Partners</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Suggestions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Blog</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Newsletters</a>
-          </li>
-
-        </ul>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Community</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Help Center</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Partners</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Suggestions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Blog</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Newsletters</a>
-          </li>
-
-
-      </div>
-
-      <div class="footer-bottom">
-
-        <p class="copyright">
-          &copy; copyright 2023. Designed by PrestoGhana
-        </p>
-
-        <ul class="footer-bottom-list">
-
-          <li>
-            <a href="#" class="footer-bottom-link">Terms and conditions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Privacy policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Login / Signup</a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </div>
-  </footer>-->
 
 
 <script>

@@ -1,5 +1,6 @@
 import os
 from email.message import EmailMessage
+import re
 import ssl
 import smtplib
 import csv
@@ -25,7 +26,7 @@ import json
 import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from validate_email_address import validate_email
 #chin of messgae
 
 app=Flask(__name__)
@@ -486,25 +487,13 @@ def send_email():
                         AbiTrack  🚀
                           </div>
                           
-                <h3 style="text-align:center; font-size:30px;">Welcome to AbiTrack Management System
+                <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
                    
                 </h3>
                 
                 
                 
-                <div style="text-align:left; text-align:center; font-size:13px; color:rgb(69 90 100);"><p>
-                    Hello there! <br>
-                   
-<b>You just created an account</b><br>
-
-<br>
-<br>
-                  Kindly give us your feedback on https://abitrack/feedback 
-                  
-                
-                  
               
-                </div>
 
                
             </div>
@@ -783,11 +772,11 @@ def landingpage():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning,"
+        greeting = "Good morning."
     elif current_hour < 17:
-        greeting = "Good afternoon,"
+        greeting = "Good afternoon."
     else:
-        greeting = "Good evening,"
+        greeting = "Good evening."
         
     total_message = Committee.query.count()
     form=WaitForm()
@@ -1810,6 +1799,21 @@ def signup():
         if checkUser:
             flash(f'This Email has already been used','danger')
             return redirect (url_for ('signup'))
+        
+        # Check if the email is a Gmail address
+        if not is_gmail_address(form.email.data):
+            flash('Please provide a valid Gmail email address.', 'danger')
+            return redirect(url_for('signup'))
+        
+            # Check email validity using the validate_email_address library
+        # is_valid_email = validate_email(form.email.data, verify=True)
+        # if not is_valid_email:
+        #     flash('Please provide a valid email address.', 'danger')
+        #     return redirect(url_for('signup'))
+        password = form.password.data
+        if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
+            flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
+            return redirect(url_for('signup'))
         else:
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
@@ -1825,7 +1829,7 @@ def signup():
             send_email()
             # params = "New Account Created for " + new_user.username
             # sendtelegram(params)
-            flash("We sent you a confirmation Email, kindly confirm your email.")
+            flash("We sent you a confirmation Email, kindly confirm your email.", 'success')
            
             # user = Person.query.filter_by(email = form.email.data).first()
             login_user(user, remember=True)
@@ -1862,6 +1866,17 @@ def signup():
             
     return render_template('signup.html', form=form)
 
+# @app.route('/test_email_validation/<test_email>')
+# def test_email_validation(test_email):
+#     is_valid_email = validate_email(test_email, verify=True)
+#     return f'The email address {test_email} is {"valid" if is_valid_email else "invalid"}.'
+
+
+
+def is_gmail_address(email):
+    # Regular expression for a basic check of Gmail email address
+    gmail_pattern = r'^[a-zA-Z0-9_.+-]+@gmail\.com$'
+    return re.match(gmail_pattern, email)
 
 
 
