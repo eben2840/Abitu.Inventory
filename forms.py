@@ -186,6 +186,10 @@ class Registration(FlaskForm):
     password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     username = StringField('Username', validators=[DataRequired()]) 
+    # username = StringField('Username', validators=[
+    #     validators.DataRequired(),
+    #     validators.Length(min=4, max=4, message='Unique Code must be exactly 4 digits.')
+    # ])
     company_name = StringField('company_name', validators=[DataRequired()]) 
     company_email = StringField('company_email', validators=[DataRequired()]) 
     # category = SelectField('Categories', choices=[('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])

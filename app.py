@@ -1805,11 +1805,10 @@ def signup():
             flash('Please provide a valid Gmail email address.', 'danger')
             return redirect(url_for('signup'))
         
-            # Check email validity using the validate_email_address library
-        # is_valid_email = validate_email(form.email.data, verify=True)
-        # if not is_valid_email:
-        #     flash('Please provide a valid email address.', 'danger')
-        #     return redirect(url_for('signup'))
+        if len(str(form.username.data)) != 4:
+            flash('Unique Code must be exactly 4 digits.', 'danger')
+            return redirect(url_for('signup'))
+
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
