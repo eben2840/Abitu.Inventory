@@ -486,12 +486,12 @@ def send_email():
                     <div style="display:flex; padding:10px; justify-content:space-between;">
                         AbiTrack  🚀
                           </div>
-                          
+                     <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
+                   
+                </h3>      
                     <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
                           
-                <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
-                   
-                </h3>
+               
                 
                 
                 
