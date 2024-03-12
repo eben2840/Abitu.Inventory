@@ -115,10 +115,22 @@
   {{form.hidden_tag()}}
               <ul class="feature-list">
   
-                <input type="email" name="email" placeholder="Enter Company Email" required class="input-field", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
+                <input type="email" name="email" placeholder="Enter Company Email" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
                
-                <input type="password" name="password" placeholder="Enter Password" required class="input-field", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
-                {{form.submit(class="btn btn-primary has-before has-after")}}
+                <input type="password" name="password" placeholder="Enter Password" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
+                
+                
+                
+                <div class="feature-card">
+                  
+                  <div class="card-icon" style="--color: 343, 98%, 60%;">
+                    <input type="checkbox" onclick="togglePasswordVisibility()" style="  ">
+                  </div>
+               
+                  {{form.submit(class="btn btn-primary has-before has-after")}}
+                </div>
+
+              
     
               </form>
               <span> <a href="/choose" style="color: blue;">I dont have an account yet, Create Account?</a></span> 
@@ -216,170 +228,6 @@
 
 
 
-
-  <!-- 
-    - #FOOTER
-  -->
-
-  <!--<footer class="footer">
-    <div class="container">
-
-      <div class="footer-top section">
-
-        <div class="footer-brand">
-
-          <p class="footer-list-title">About Pixology</p>
-
-          <p class="footer-text" style="color:#fff;">
-            A new way to make the payments easy, reliable and 100% secure. claritatem itamconse quat. Exerci tationulla
-          </p>
-
-          <ul class="social-list">
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-youtube"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-skype"></ion-icon>
-              </a>
-            </li>
-
-          </ul>
-
-        </div>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Usefull Links</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Contact us</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">How it Works</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Create</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Explore</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Terms & Services</a>
-          </li>
-
-        </ul>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Community</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Help Center</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Partners</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Suggestions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Blog</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Newsletters</a>
-          </li>
-
-        </ul>
-
-        <ul class="footer-list" style="color:#fff;">
-
-          <li>
-            <p class="footer-list-title">Community</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Help Center</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Partners</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Suggestions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Blog</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Newsletters</a>
-          </li>
-
-
-      </div>
-
-      <div class="footer-bottom">
-
-        <p class="copyright">
-          &copy; copyright 2023. Designed by PrestoGhana
-        </p>
-
-        <ul class="footer-bottom-list">
-
-          <li>
-            <a href="#" class="footer-bottom-link">Terms and conditions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Privacy policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Login / Signup</a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </div>
-  </footer>-->
-
-
-
-
-
   <!-- 
     - #BACK TO TOP
   -->
@@ -390,7 +238,20 @@
 
 
 
+  <script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementsByName("password")[0];
+        var confirmPasswordField = document.getElementsByName("confirm_password")[0];
 
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+        }
+    }
+</script>
 
   <!-- 
     - custom js link

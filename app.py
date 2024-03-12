@@ -487,6 +487,8 @@ def send_email():
                         AbiTrack  🚀
                           </div>
                           
+                    <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
+                          
                 <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
                    
                 </h3>
@@ -1159,11 +1161,11 @@ def main():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning,"
+        greeting = "Good morning."
     elif current_hour < 17:
-        greeting = "Good afternoon,"
+        greeting = "Good afternoon."
     else:
-        greeting = "Good evening,"
+        greeting = "Good evening."
         
     form=WaitForm()
     if form.validate_on_submit():
@@ -1242,11 +1244,11 @@ def homelook():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning,"
+        greeting = "Good morning."
     elif current_hour < 17:
-        greeting = "Good afternoon,"
+        greeting = "Good afternoon"
     else:
-        greeting = "Good evening,"
+        greeting = "Good evening."
     
     # all_product= User.query.count()
     
