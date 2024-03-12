@@ -1785,8 +1785,7 @@ def login():
         if user and user.password==form.password.data:
             login_user(user)
             print ("Logged in:" + user.username + " " + user.email)
-            print(form.password.data)
-            flash (f'Your unique code is ' + form.username.data, 'success') 
+            print(form.password.data) 
             return redirect(url_for('main'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
