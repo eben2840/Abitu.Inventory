@@ -26,7 +26,7 @@ import json
 import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from validate_email_address import validate_email
+
 #chin of messgae
 
 app=Flask(__name__)
