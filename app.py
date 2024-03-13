@@ -1068,6 +1068,25 @@ def leadership(userid):
 
 
    
+@app.route('/residential', methods=['GET', 'POST'])
+def residential():
+    return render_template("residential.html")
+
+
+@app.route('/commercial', methods=['GET', 'POST'])
+def commercial():
+    return render_template("commercial.html")
+
+
+@app.route('/support', methods=['GET', 'POST'])
+def support():
+    return render_template("support.html")
+
+@app.route('/features', methods=['GET', 'POST'])
+def features():
+    return render_template("features.html")
+
+
 @app.route('/', methods=['GET', 'POST'])
 def homme():
     return render_template("homme.html")
