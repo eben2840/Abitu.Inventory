@@ -51,7 +51,7 @@
       <nav class="navbar" data-navbar>
 
         <div class="wrapper">
-          <b style="font-size:20px;" class="text-danger">🚀 AbiTrack</b>
+          <a href="/main" >  <b style="font-size:20px;" class="text-light bg-danger p-2">Go to Dashboard 👋</b></a>
 
           <a href="#" class="logo"></a>
 
@@ -113,17 +113,25 @@
 
 <form action=" " class="form" method="POST"> 
   {{form.hidden_tag()}}
-              <ul class="feature-list">
-  
+              
+              
+                  <h5 class="text-muted" >
+       
+      Enter Email Here
+     </h5> 
                 <input type="email" name="email" placeholder="Enter email" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
                
+                <h5 class="text-muted" style="margin-top:20px;" >
+       
+                  Enter Password Here
+                 </h5> 
                 <input type="password" name="password" placeholder="Enter password" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
                 
                 
                 
                 <div class="feature-card">
                   
-                  <div class="card-icon" style="--color: 343, 98%, 60%;">
+                  <div class="card-icon" >
                     <input type="checkbox" onclick="togglePasswordVisibility()" style="  ">
                   </div>
                

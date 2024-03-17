@@ -5,9 +5,8 @@ import ssl
 import smtplib
 import csv
 import os
-import datetime 
+import datetime
 from urllib import response
-import uuid
 # from datetime import datetime
 import urllib.request, urllib.parse
 from sqlalchemy import func 
@@ -27,7 +26,6 @@ import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
-#chin of messgae
 
 app=Flask(__name__)
 CORS(app)
@@ -130,20 +128,20 @@ class StudentData(db.Model):
     
 class User(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    fullname= db.Column(db.String()  )
-    position= db.Column(db.String()     )
-    qualities = db.Column(db.String()     )
-    reason = db.Column(db.String()     )
-    campus= db.Column(db.String()     )
+    fullname= db.Column(db.String())
+    position= db.Column(db.String())
+    qualities = db.Column(db.String())
+    reason = db.Column(db.String())
+    campus= db.Column(db.String())
     image_file = db.Column(db.String(255))
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.campus}'"
     
-class Challenge(db.Model,UserMixin):
+class   Challenge(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    name= db.Column(db.String()  )
-    task= db.Column(db.String()     )
-    tag = db.Column(db.String()     )
+    name= db.Column(db.String())
+    task= db.Column(db.String())
+    tag = db.Column(db.String())
     description = db.Column(db.String())
    
     def __repr__(self):
@@ -970,9 +968,6 @@ def getfunds():
        
             db.session.add(new)
             db.session.commit()
-            # send_email()
-            
-        
             flash("Thank you for filling the Getfund form.", "success")
             return redirect('/')
             
@@ -1089,9 +1084,10 @@ def features():
 
 @app.route('/', methods=['GET', 'POST'])
 def homme():
-    return render_template("homme.html")
-
-
+    if current_user.is_authenticated:
+        return redirect(url_for('homelook'))
+    else:
+        return render_template("homme.html")
 
 @app.route('/thank', methods=['GET', 'POST'])
 def thank():
@@ -1784,24 +1780,24 @@ def mot():
     return render_template('signup_step1.html')
 
     
-    
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         # Login and validate the user.
         # user should be an instance of your `User` class
+       
+            
         user = Person.query.filter_by(email=form.email.data).first()
         if user and user.password==form.password.data:
             login_user(user)
             print ("Logged in:" + user.username + " " + user.email)
             print(form.password.data) 
-            return redirect(url_for('main'))
+            return redirect(url_for('homelook'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
            
     return render_template('login.html', form=form)  
-
 
 
 @app.route('/signup', methods=['POST','GET'])

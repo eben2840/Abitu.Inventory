@@ -261,16 +261,16 @@
 
             <div class="card shadow border-0 mb-7">
               <div class="card-header">
-                  <h5 class="mb-0">Indox</h5>
+                  <h5 class="mb-0">Primary</h5>
               </div>
               <div class="table-responsive">
                   <table class="table table-hover table-nowrap">
                       <thead class="thead-light">
                           <tr>
-                              <th scope="col">Subject</th>
-                              <th scope="col">Message</th>
+                              <th scope="col">Indox</th>
+                             
                               
-                              <th></th>
+                            
                           </tr>
                       </thead>
                       <tbody>
@@ -280,19 +280,27 @@
       
                           <tr>
                               <td>
-                                  <a class="text-heading font-semibold" href="#">
-                                      {{user.name}}
-                                  </a>
+                            <div style="display:flex; justify-content:space-between;">
+                                      
+                                <div style="display:grid;">
+                                    <a  href="#"> 
+                                      <p style="font-size:15px;" class="text-heading font-semibold">{{user.name}}</p>
+                                      <p> {{user.description}}</p>
+                                    </a>
+                                </div>
+
+                                <p class="text-muted">{{user.name}}</p>
+
+                            </div>
                               </td>
-                              <td>
-                                  {{user.description}}
-                              </td>
+
                              
-                              <td class="text-end">
+                             
+                             <!-- <td class="text-end">
                                   <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                       <i class="bi bi-trash"></i>
                                   </button>
-                              </td>
+                              </td>-->
                           </tr>
                           {% endfor %} 
                       </tbody>
