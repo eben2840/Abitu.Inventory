@@ -43,7 +43,8 @@
                             </a>
                         </td>
                         <td>
-                           QWdasd231
+                            {{ current_code }}
+                          
                         </td>
                         <td>
                             <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
@@ -70,12 +71,13 @@
                         </td>
 
                         <td>
-                            <a href="#" class="btn btn-sm btn-neutral">Report</a>
-
+                            {{users.start_date}}
                         </td>
 
 
                         <td class="text-end">
+                            <a href="#" class="btn btn-sm btn-neutral">Report</a>
+
                             <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                 <i class="bi bi-trash"></i>
                                
@@ -100,5 +102,23 @@
  
 </div>
 
+<script>
+    function generateRandomCode() {
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var codeLength = 6;
+        var code = '';
+        for (var i = 0; i < codeLength; i++) {
+            var randomIndex = Math.floor(Math.random() * characters.length);
+            code += characters.charAt(randomIndex);
+        }
+        return code;
+    }
 
+    // Generate and display the unique code when the form is submitted
+    document.getElementById('faqForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        var uniqueCode = generateRandomCode();
+        document.getElementById('uniqueCode').innerText = 'Unique Code: ' + uniqueCode;
+    });
+</script>
 {%endblock body%}

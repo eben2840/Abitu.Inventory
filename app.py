@@ -4,6 +4,8 @@ import re
 import ssl
 import smtplib
 import csv
+import random
+import string
 import os
 import datetime
 from urllib import response
@@ -25,7 +27,7 @@ import json
 import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from datetime import datetime
 
 app=Flask(__name__)
 CORS(app)
@@ -137,12 +139,14 @@ class User(db.Model,UserMixin):
     def __repr__(self):
         return f"User('{self.id}', {self.fullname}, {self.campus}'"
     
-class   Challenge(db.Model,UserMixin):
+class Challenge(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
     task= db.Column(db.String())
     tag = db.Column(db.String())
     description = db.Column(db.String())
+    start_date = db.Column(db.Date)  # Add start_date field
+    end_date = db.Column(db.Date) 
    
     def __repr__(self):
         return f"Challenge('{self.id}', {self.name}, {self.tag}'"
@@ -166,6 +170,8 @@ class Faq(db.Model,UserMixin):
     caption= db.Column(db.String()  )
     answers = db.Column(db.String())
     campus= db.Column(db.String()     )
+    start_date = db.Column(db.Date)  # Add start_date field
+    end_date = db.Column(db.Date) 
     def __repr__(self):
         return f"User('{self.id}', {self.caption}, {self.answers}'"
     
@@ -249,7 +255,9 @@ class Ask(db.Model):
 class Committee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())    
-    description = db.Column(db.String())    
+    description = db.Column(db.String())
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    # timestamp = db.Column(db.DateTime, default=datetime.now)     
 
 class PDFFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -266,12 +274,14 @@ class Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer())
     name = db.Column(db.String())
+    start_date = db.Column(db.Date)
     items = db.relationship('Item', backref='group', lazy=True)
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     quantity = db.Column(db.String())
+    start_date = db.Column(db.Date)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
 
 
@@ -392,7 +402,8 @@ def group():
     if form.validate_on_submit():
         group = Groups(
             userId=current_user.id,
-            name=form.name.data
+            name=form.name.data,
+            start_date=form.start_date.data 
         )
         db.session.add(group)
         db.session.commit()
@@ -405,23 +416,33 @@ def group():
 
 
 
+def generate_unique_code():
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(characters) for _ in range(6))
 
+
+# code = generate_unique_code()
+# print("new code" + code)
 
 
 
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     form = AddItemForm()
+    current_code = None 
     form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
 
     if form.validate_on_submit():
         item = Item(
             name=form.item_name.data,
             group_id=form.group.data,
-            quantity=form.quantity.data
+            quantity=form.quantity.data,
+            start_date=form.start_date.data 
         )
+        new_entry = generate_unique_code()
         db.session.add(item)
         db.session.commit()
+        current_code = new_entry
         
         # if item.quantity and item.quantity.isdigit():
         #     quantity_value = int(item.quantity)
@@ -429,7 +450,7 @@ def add_item():
         #         flash(f"Less then 5 units, kindly re-stock {item.name}!")
         #     elif quantity_value < 10:
         #         flash(f"Less then 10 units, kindly re-stock {item.name}")
-        # else:
+        # else: 
 
         #     flash("Item added to the group successfully")
         if item.quantity and item.quantity.isdigit():
@@ -446,7 +467,7 @@ def add_item():
         return redirect(url_for('main'))
 
     print(form.errors)
-    return render_template('add_item.html', form=form)
+    return render_template('add_item.html', form=form,  current_code=current_code)
 
     
 radio = 'yboateng057@gmail.com'
@@ -869,6 +890,7 @@ def addalumni():
     print(form.errors)
     return render_template("addAlumni.html", form=form, title='addalumni')
 
+static_timestamp = datetime.now() 
 
 @app.route('/authmessage', methods=['GET', 'POST'])
 def authmessage():
@@ -876,6 +898,7 @@ def authmessage():
     if form.validate_on_submit():
             new=Committee(name=form.name.data, 
                   description=form.description.data,
+                  timestamp=static_timestamp
                   )
             db.session.add(new)
             db.session.commit()
@@ -883,7 +906,7 @@ def authmessage():
                   "success")
             return redirect('main')
     print(form.errors)
-    return render_template("authmessage.html",title='authmessage',form=form)
+    return render_template("authmessage.html",title='authmessage',form=form, current_time=static_timestamp)
 
 
 @app.route('/authtask', methods=['GET', 'POST'])
@@ -894,6 +917,8 @@ def authtask():
                    tag=form.tag.data,
                    task=form.task.data,
                    description=form.description.data,
+                   start_date=form.start_date.data,  
+                    end_date=form.end_date.data
                   )
             db.session.add(new)
             db.session.commit()
@@ -915,6 +940,8 @@ def authchallenge():
                 caption=form.caption.data, 
                 answers=form.answers.data, 
                 campus=form.campus.data, 
+                start_date=form.start_date.data,  
+            end_date=form.end_date.data
                   )
             db.session.add(new)
             db.session.commit()
@@ -926,7 +953,9 @@ def authchallenge():
             return redirect('main')
             
     print(form.errors)
+    # current_time = datetime.now()
     return render_template("authchallenge.html", form=form)
+    # return render_template("authchallenge.html", form=form, current_time=current_time)
 
 
 @app.route('/feedback', methods=['GET', 'POST'])
@@ -1172,7 +1201,7 @@ def adminadd():
 @app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
-    current_hour = datetime.datetime.now().hour
+    current_hour = datetime.now().hour
     greeting = ""
     
     if current_hour < 12:
@@ -1196,7 +1225,7 @@ def main():
         return redirect('main')
     print(form.errors)
    
-   
+    current_time = datetime.now()
     # all_product= User.query.count()
     # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
     outstock = db.session.query(Item).filter(Item.quantity < 5).count()
@@ -1234,7 +1263,7 @@ def main():
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('current.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
-                       total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+                      current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 @app.route('/homelook', methods=['GET', 'POST'])
@@ -1255,7 +1284,7 @@ def homelook():
     
     print(form.errors)
     
-    current_hour = datetime.datetime.now().hour
+    current_hour = datetime.now().hour
     greeting = ""
     
     if current_hour < 12:
@@ -1266,7 +1295,7 @@ def homelook():
         greeting = "Good evening."
     
     # all_product= User.query.count()
-    
+    current_time = datetime.now()
     low_quantity_flash = session.pop('low_quantity_flash', None)
     instock = Item.query.count()
     total_students = User.query.count()
@@ -1294,7 +1323,7 @@ def homelook():
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('homelook.html',instock = instock, title='dashboard',user=user, 
-                        low_quantity_flash=low_quantity_flash, greeting=greeting, 
+                     current_time=current_time,   low_quantity_flash=low_quantity_flash, greeting=greeting, 
                          form=form, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
@@ -1343,6 +1372,9 @@ def userview():
 @app.route('/newdash', methods=['GET', 'POST'])
 def newdash():   
     return render_template("newdash.html")
+
+
+
 
 @app.route('/instock', methods=['GET', 'POST'])
 def instock():  

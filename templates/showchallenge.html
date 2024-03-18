@@ -28,8 +28,8 @@
                         <th scope="col">Tag</th>
                         <th scope="col">Condition</th>
                         <th scope="col">Challenge</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,13 +43,13 @@
                         </td>
                         <td>
                             <span class="badge badge-lg badge-dot">
-                                <i class="bg-danger"></i>{{users.campus}}
+                               {{users.campus}}
                             </span>
                         </td>
 
                         <td>
                             <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>In-progress
+                               In-progress
                             </span>
                         </td>
 
@@ -60,14 +60,19 @@
 
                             <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
                            -->
-                            <a class="text-heading font-semibold" href="#">
-                               
-                            </a>
+                           <!-- <a class="text-heading font-semibold" href="#">
+                                {{users.caption}}
+                            </a>-->
+                            <span class="badge badge-lg badge-dot">
+                                <i class="bg-success"></i>{{users.start_date}}
+                            </span>
 
                         </td>
 
                         <td>
-                          
+                            <span class="badge badge-lg badge-dot">
+                                <i class="bg-danger"></i>{{users.end_date}}
+                            </span>
                         </td>
                        
 

@@ -1,4 +1,4 @@
-from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
+from wtforms import DateField, Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, NumberRange
@@ -41,6 +41,9 @@ class ChallengesForm(FlaskForm):
     tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     task = StringField('task')
     description = StringField('description')
+    start_date = DateField('Start Date', validators=[DataRequired()])
+    end_date = DateField('End Date', validators=[DataRequired()])
+   
     submit = SubmitField('Send')
     
 
@@ -117,6 +120,9 @@ class FaqForm(FlaskForm):
     caption = StringField('caption', validators=[DataRequired()])
     answers = StringField('answer', validators=[DataRequired()])
     campus= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    start_date = DateField('Start Date', validators=[DataRequired()])
+    end_date = DateField('End Date', validators=[DataRequired()])
+   
     submit = SubmitField('submit')
     
    
@@ -170,12 +176,14 @@ class Addinfo(FlaskForm):
 class GroupForm(FlaskForm):
     name = StringField('Group Name')
     item_name = StringField('Item Name')
+    start_date = DateField('Start Date', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class AddItemForm(FlaskForm):
     group = SelectField('Select Group', coerce=int)
     item_name = StringField('Item Name')
     quantity = StringField('Quantity')
+    start_date = DateField('Start Date', validators=[DataRequired()])
     submit = SubmitField('Add Item')
     
 class Registration(FlaskForm):

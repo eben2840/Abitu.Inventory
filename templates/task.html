@@ -24,12 +24,14 @@
             <table class="table table-hover table-nowrap">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Name</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Tag</th>
                         <th scope="col">Condition</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Task</th>
-                        <th scope="col"></th>
+                        <th scope="col">Unique Number</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                       
                         <th></th>
                     </tr>
                 </thead>
@@ -43,13 +45,13 @@
                         </td>
                         <td>
                             <span class="badge badge-lg badge-dot">
-                                <i class="bg-danger"></i>{{users.tag}}
+                                {{users.tag}}
                             </span>
                         </td>
 
                         <td>
                             <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>In-progress
+                                In-progress
                             </span>
                         </td>
                         <td>
@@ -64,7 +66,25 @@
                             </a>
                         </td>
 
-                      
+                        <td>
+
+                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
+                           -->
+                           <!-- <a class="text-heading font-semibold" href="#">
+                                {{users.caption}}
+                            </a>-->
+                            <span class="badge badge-lg badge-dot">
+                                <i class="bg-success"></i>{{users.start_date}}
+                            </span>
+
+                        </td>
+
+                        <td>
+                            <span class="badge badge-lg badge-dot">
+                                <i class="bg-danger"></i>{{users.end_date}}
+                            </span>
+                        </td>
+                       
                         
                        
 

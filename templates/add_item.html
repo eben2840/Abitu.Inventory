@@ -4,11 +4,31 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
+            <form action="" class="form" method="POST", "GET" style="margin-bottom:20px; border-radius:20px;"> 
+                
+              <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; ">
+                
+              <div class="alert alert-success" style="margin-top:30px;" role="alert">
+             <h6 >
+             
             
-            <form method="POST" action="{{ url_for('add_item') }}" style="background-color:#fff; padding:30px; border-radius:20px;">
+                
+                <b>Description:</b> Provide a brief overview of the challenge, outlining its objectives, rules, and any specific requirements or constraints participants should be aware.
+                <br>
+              <b>Description:</b> Kindly add a group or category before you add a products.
+             
+             </h6>  
+            </div>
+              
+               </form>
+
+            
+            </div>
+        <div class="col-lg-6" style="background-color:#fff; padding:30px; border-radius:20px;">
+            
+            <form method="POST" action="{{ url_for('add_item') }}" id="faqForm">
         <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Item to Group</h6>
         {{ form.hidden_tag() }}
-        <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; margin-bottom:30px;">
        
         {{ form.group(class="input-field", style="width:100%; ") }}
         <br>
@@ -18,6 +38,8 @@
        
         {{ form.quantity(class="input-field", style="width:100%;", placeholder="Item Quantity") }}
         <br>
+        <p>{{ form.start_date.label }} {{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
+        
         {{ form.submit(class="btn btn-primary", style="width:100%;") }}
     </form>
 

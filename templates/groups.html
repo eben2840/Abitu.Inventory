@@ -6,16 +6,38 @@
    
     <div class="row">
         <div class="col-lg-6">
-    <h2></h2>
+            <form action="" class="form" method="POST", "GET" style="margin-bottom:20px; border-radius:20px;"> 
+                
+              <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; ">
+                
+              <div class="alert alert-success" style="margin-top:30px;" role="alert">
+             <h6 >
+             
+            
+                
+             
+              <b>Description:</b> Kindly add a group or category before you add a products.
+             
+             </h6>  
+            </div>
+              
+               </form>
+                    
+                   
+            
+            
+            </div>
+        <div class="col-lg-6">
+  
     <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add New Catalog</h6>
-        <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; margin-bottom:30px;">
        
         {{ form.hidden_tag() }}
 
         <label for="name">Group Name:</label>
         {{ form.name(class="input-field", style="width:100%;" , placeholder="Catalog Name") }}
         <br>
+        <p>{{ form.start_date.label }} {{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
+       <br>
         {{ form.submit(class="btn btn-primary" , style="width:100%;" ) }}
     </form>
 
