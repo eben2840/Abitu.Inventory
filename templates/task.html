@@ -18,7 +18,7 @@
 
       <div class="card shadow border-0 mb-7">
         <div class="card-header">
-            <h5 class="mb-0">All Task </h5>
+            <h5 class="mb-0">Task </h5>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
@@ -28,7 +28,7 @@
                         <th scope="col">Tag</th>
                         <th scope="col">Condition</th>
                         <th scope="col">Unique Number</th>
-                        <th scope="col">Description</th>
+                        <!--<th scope="col">Description</th>-->
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                        
@@ -39,14 +39,33 @@
                     {%for users in users%} 
                     <tr>
                         <td>
+                            
                             <a class="text-heading font-semibold" href="#">
                                 {{users.name}}
                             </a>
                         </td>
                         <td>
-                            <span class="badge badge-lg badge-dot">
+                            {% if users.tag == 'High' %}
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-up me-1"></i>{{ users.tag }}
+                        </span>
+                        {% elif users.tag == 'Medium' %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>{{ users.tag }}
+                        </span>
+                        {% elif users.tag == 'Low' %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-down me-1"></i>{{ users.tag }}
+                        </span>
+
+                        {% else %}
+                        <span class="badge badge-pill  text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>{{ users.tag }}
+                        </span>
+                        {% endif %}
+                            <!--<span class="badge badge-lg badge-dot">
                                 {{users.tag}}
-                            </span>
+                            </span>-->
                         </td>
 
                         <td>
@@ -56,7 +75,10 @@
                         </td>
                         <td>
                             {{users.description}}
+                        
+
                         <td>
+                            <!--<td>
                        
 
                           
@@ -64,9 +86,7 @@
                             <a class="text-heading font-semibold" href="#">
                                 {{users.task}} 
                             </a>
-                        </td>
-
-                        <td>
+                        </td>-->
 
                             <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
                            -->

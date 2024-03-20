@@ -274,6 +274,14 @@
                           </tr>
                       </thead>
                       <tbody>
+
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="alert alert-{{ messages[0][1] }}" role="alert">
+                                {{ messages[0][0] }}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
       
                           {%for user in user%} 
       

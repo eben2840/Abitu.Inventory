@@ -27,7 +27,7 @@ import json
 import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app=Flask(__name__)
 CORS(app)
@@ -282,8 +282,40 @@ class Item(db.Model):
     name = db.Column(db.String())
     quantity = db.Column(db.String())
     start_date = db.Column(db.Date)
+    price = db.Column(db.Date)
+    tag = db.Column(db.Date)
+    
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
 
+
+class Work(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    task_name = db.Column(db.String(255), nullable=False)
+    hours_worked = db.Column(db.Float, nullable=False)
+    date_completed = db.Column(db.Date, nullable=False)
+    
+    
+def calculate_weekly_work():
+    today = datetime.now().date()
+    week_start = today - timedelta(days=today.weekday())  # Get the start of the current week
+    week_end = week_start + timedelta(days=6)  # Get the end of the current week
+
+    # Query the database to get items created within the current week
+    items_created = Item.query.filter(Item.start_date >= week_start, Item.start_date <= week_end).all()
+
+    total_work = sum(int(item.quantity) for item in items_created)
+    return total_work
+
+def calculate_workload_percentage(total_work, workload_limit):
+    if workload_limit <= 0:
+        return 0
+    else:
+        return min(100, (total_work / workload_limit) * 100)
+    
+# @app.route('/weekly-work', methods=['GET'])
+# def get_weekly_work():
+#     weekly_work = calculate_weekly_work()
+#     return jsonify({'weekly_work_hours': weekly_work})
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -429,30 +461,23 @@ def generate_unique_code():
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     form = AddItemForm()
-    current_code = None 
     form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
 
     if form.validate_on_submit():
         item = Item(
             name=form.item_name.data,
             group_id=form.group.data,
+            tag=form.tag.data,
+            price=form.price.data,
             quantity=form.quantity.data,
             start_date=form.start_date.data 
         )
-        new_entry = generate_unique_code()
+        
         db.session.add(item)
         db.session.commit()
-        current_code = new_entry
         
-        # if item.quantity and item.quantity.isdigit():
-        #     quantity_value = int(item.quantity)
-        #     if quantity_value < 5:
-        #         flash(f"Less then 5 units, kindly re-stock {item.name}!")
-        #     elif quantity_value < 10:
-        #         flash(f"Less then 10 units, kindly re-stock {item.name}")
-        # else: 
-
-        #     flash("Item added to the group successfully")
+        
+        
         if item.quantity and item.quantity.isdigit():
             quantity_value = int(item.quantity)
             if quantity_value < 5:
@@ -467,7 +492,7 @@ def add_item():
         return redirect(url_for('main'))
 
     print(form.errors)
-    return render_template('add_item.html', form=form,  current_code=current_code)
+    return render_template('add_item.html', form=form)
 
     
 radio = 'yboateng057@gmail.com'
@@ -789,6 +814,12 @@ def basee():
 @app.route('/landingpage', methods=['GET', 'POST'])
 def landingpage():
     
+    if 'message' in session and 'category' in session:
+        message = session.pop('message')
+        category = session.pop('category')
+        flash(message, category)
+        
+        
     current_hour = datetime.datetime.now().hour
     greeting = ""
     
@@ -854,6 +885,20 @@ def landingpage():
 #     return render_template('landingpage.html')
 
 
+@app.route('/supportunit', methods=['GET', 'POST'])
+def supportunit():
+    # form=CommitteeForm()
+    # if form.validate_on_submit():
+    #         new=Committee(name=form.name.data, 
+    #                description=form.description.data,  
+    #               )
+    #         db.session.add(new)
+    #         db.session.commit()
+    #         # send_email()
+    #         return redirect('leadership')
+    # print(form.errors)
+    return render_template("support.html")
+
 
 
 @app.route('/addcommittee', methods=['GET', 'POST'])
@@ -869,6 +914,8 @@ def addcommittee():
             return redirect('leadership')
     print(form.errors)
     return render_template("addcommittee.html", form=form)
+
+
 
 @app.route('/addalumni', methods=['GET', 'POST'])
 def addalumni():
@@ -947,6 +994,8 @@ def authchallenge():
             db.session.commit()
             # send_email()
            
+            session['message'] = "You just added a New Challenge."
+            session['category'] = "success"
         
             flash("You just added a New Challenge.",
                   "success")
@@ -1231,7 +1280,9 @@ def main():
     outstock = db.session.query(Item).filter(Item.quantity < 5).count()
     
    
-
+    weekly_work = calculate_weekly_work()
+    workload_limit = 1000  # Assuming a predefined workload limit of 1000 units
+    workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
     # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
     total_students = User.query.count()
     instock = Item.query.count()
@@ -1263,7 +1314,7 @@ def main():
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('current.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
-                      current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+             workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 @app.route('/homelook', methods=['GET', 'POST'])

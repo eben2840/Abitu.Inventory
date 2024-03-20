@@ -184,6 +184,8 @@ class AddItemForm(FlaskForm):
     item_name = StringField('Item Name')
     quantity = StringField('Quantity')
     start_date = DateField('Start Date', validators=[DataRequired()])
+    tag= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    price = StringField('Price', validators=[DataRequired()])
     submit = SubmitField('Add Item')
     
 class Registration(FlaskForm):

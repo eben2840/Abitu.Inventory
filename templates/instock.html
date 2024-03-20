@@ -28,9 +28,9 @@
                         <th scope="col">Product ID</th>
                         <th scope="col">Category</th>  
                         <th scope="col">Condition</th>
-                        <th>Unit</th>
-                        <th>QR Code</th>
-                        <th>Generate Report</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,7 +43,7 @@
                             </a>
                         </td>
                         <td>
-                            {{ current_code }}
+                            {{ current_code }}Qa1143
                           
                         </td>
                         <td>
@@ -55,9 +55,23 @@
                         </td>
                        
                         <td>
-                            <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>In-Stock
+                            {% if users.quantity | int >= 20 %}
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class="bi bi-arrow-up me-1"></i>In-stock
                             </span>
+                        {% elif users.quantity | int >= 10 and users.quantity | int <= 20 %}
+                            <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                                <i class="bi bi-dash me-1"></i>Low Stock
+                            </span>
+                        {% elif users.quantity | int < 10 %}
+                            <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                <i class="bi bi-arrow-down me-1"></i>Out of Stock
+                            </span>
+                        {% endif %}
+                        
+                           <!-- <span class="badge badge-lg badge-dot">
+                                <i class="bg-success"></i>In-Stock
+                            </span>-->
                         </td>
                         <td>
                             {{users.quantity}}
