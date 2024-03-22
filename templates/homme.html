@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AbiTrack</title>
+    <title>AbiTrack | Inventory Management</title>
     <link rel="stylesheet" href="static/asets/libs/OwlCarousel-2/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="static/dist/css/iconfont/tabler-icons.css">
-    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="static/dist/css/style.css">
-  
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/style.css')}}">
-
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-9f8ec6e3-cf6f-4359-8023-d1d1eb75f47d" data-elfsight-app-lazy></div>
+  
 </head>
 <body>
+    <script>
+        AOS.init();
+      </script>
     <!------------------------------>
     <!-- Header Start -->
     <!------------------------------>
@@ -32,7 +37,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">                                             
                             <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link text-capitalize" aria-current="page" href="/">Home</a>
+                                    <a class="nav-link text-capitalize" aria-current="page" href="/">Product</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-capitalize" href="/commercial">Commercial</a>
@@ -52,6 +57,13 @@
                                 </li>-->
 
                             </ul>
+                            <div class="d-flex align-items-center">
+                                <!--<div class="input-group  search">
+                                    <button class="btn border-0 p-0" type="button" id="button-addon1"><i class="ti ti-search text-white"></i></button>
+                                    <input type="text" class="form-control border-0 bg-transparent ps-2" placeholder="search" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                </div>-->
+                                <a class="btn btn btn-hover-secondery text-capitalize " href="/main">Get Started</a>
+                            </div>
                             <div class="d-flex align-items-center">
                                 <!--<div class="input-group  search">
                                     <button class="btn border-0 p-0" type="button" id="button-addon1"><i class="ti ti-search text-white"></i></button>
@@ -90,7 +102,8 @@
  <section class="hero-banner position-relative overflow-hidden">
         <div class="container">
             <div class="row d-flex flex-wrap align-items-center">
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" div data-aos="fade-up"
+                data-aos-duration="3000">
                     <div class="position-relative left-hero-color">
                         <h1 class="mb-0 fw-bold">
                             AbiTrack🚀 <span class="bg-warning text-bg-light" style="color:#fff;">Inventory </span>Management 
@@ -100,7 +113,8 @@
                         <a href="/choose" class="btn btn-warning btn-hover-secondery"><span class="d-inline-block me-2"></span> Register Now 👋</a>
                     </div>
                 </div>
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" div data-aos="fade-right"
+                data-aos-duration="3000">
                     <div class="position-relative right-hero-color">
                         <img src="static/asets/images/portfolio/Portfolio.jpg" class="img-fluid"> 
                     </div>          
@@ -236,18 +250,26 @@
     <!-- Portfolio section Start---->
     <!------------------------------>
     
+
+
+
+
+
+    <!--new-->
     <section class="portfolio position-relative bg-primary">
         <div class="container position-relative">
             
             <div class="row">
                 <div class="col-12"><small class="fs-7 d-block text-warning">Product Docs</small></div>
                 <div class="col-12 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-block d-block align-items-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-sm-center ">
-                    <h2 class="fs-3 text-white mb-0">Our all access <br>Inventory system.</h2>
-                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Open Portfolio</a>
+                    <h2 class="fs-3 text-white mb-0" div data-aos="fade-up"
+                    data-aos-duration="3000">Our all access <br>Inventory system.</h2>
+                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Our Products</a>
                 </div>
             </div>
             <div class="row d-flex flex-wrap justify-content-center step-row">
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-up"
+                data-aos-duration="3000">
                     <div class="card bg-transparent">
                         <div class="card-body">
                             <div class="icon mx-auto rounded-circle d-flex justify-content-center align-items-center"><i class="ti ti-brand-github text-white"></i></div>
@@ -256,7 +278,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-up"
+                data-aos-duration="3000">
                     <div class="card bg-transparent">
                         <div class="card-body">
                             <div class="icon  mx-auto rounded-circle d-flex justify-content-center align-items-center"><i class="ti ti-crown text-white"></i></div>
@@ -265,7 +288,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-up"
+                data-aos-duration="3000">
                     <div class="card bg-transparent">
                         <div class="card-body">
                             <div class="icon mx-auto rounded-circle d-flex justify-content-center align-items-center"><i class="ti ti-message-circle-2 text-white"></i></div>
@@ -277,7 +301,8 @@
             </div>
         </div>
         <div class="container position-relative" >
-            <div class="portfolio-wrap">
+            <div class="portfolio-wrap" div data-aos="fade-left"
+            data-aos-duration="3000">
                 <div class="owl-carousel owl-theme portfolio-slider">
                         <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
                         <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
@@ -295,25 +320,81 @@
     <!------------------------------>
     <!-- Pricing section Start------>
     <!------------------------------>
+    <section class="service position-relative overflow-hidden">
+        <div class="container position-relative">
+         <img src="static/asets/images/service/dot-shape.png" class="shape position-absolute">
+            <div class="row">
+                <div class="col-12"><small class="fs-7 d-block">Working Process</small></div>
+                <div class="col-12 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-block d-block align-items-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-sm-center " <div data-aos="fade-up"
+                data-aos-duration="3000">
+                    <h2 class="fs-2 text-black mb-0"><b>The Residential Inventory<br> that We Provide🔔</b></h2>
+                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Sign Up 👋</a>
+                </div>
+            </div>
+            <div class="row d-flex flex-wrap justify-content-center step-row">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-down"data-aos-easing="linear"
+                data-aos-duration="3000">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <div class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
+                                <i class="ti ti-download text-primary position-relative"></i>
+                            </div>
+                            <h5 class="mb-0 fw-500">Step 1</h5>
+                            <h3 class="fs-4">Download our App</h3>
+                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-down"data-aos-easing="linear"
+                data-aos-duration="3000">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <div class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
+                                <i class="ti ti-user text-primary position-relative"></i>
+                            </div>
+                            <h5 class="mb-0 fw-500">Step 2</h5>
+                            <h3 class="fs-4">Create a free Account</h3>
+                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center" div data-aos="fade-down"data-aos-easing="linear"
+                data-aos-duration="3000">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <div class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
+                                <i class="ti ti-gift text-primary position-relative"></i>
+                            </div>
+                            <h5 class="mb-0 fw-500">Step 3</h5>
+                            <h3 class="fs-4">Now Start your Journey</h3>
+                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="pricing position-relative overflow-hidden">
         <div class="container position-relative">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" div data-aos="fade-up"data-aos-easing="linear"
+            data-aos-duration="3000">
                 <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
                     <small class="fs-7 d-block">Pricing Plan</small>
-                    <h2 class="fs-3 pricing-head text-black mb-0 position-relative">What’s About Our Pricing Subscription</h2>
+                    <h2 class="fs-3 pricing-head text-black mb-0 position-relative">More About Our Subscription</h2>
                 </div>
             </div>
             <div class="row plans">
                 <div class="col-12 text-center">
                     <div class="form-check form-switch d-flex justify-content-center ps-0 align-items-center">
-                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Monthly</label>
+                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Commercial</label>
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Yearly</label>
+                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Residential</label>
                     </div>
                     <div class="save d-inline-block position-relative text-warning fw-500 fs-9 text-center">Save Up To 58%</div>
                 </div>
             </div>
-            <div class="row justify-content-center price-plan">
+            <div class="row justify-content-center price-plan"div data-aos="fade-down"data-aos-easing="linear"
+            data-aos-duration="3000">
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card position-relative shadow border-0 h-100">
                         <div class="card-body pb-4">
@@ -381,6 +462,141 @@
             </div>
         </div>
     </section>
+
+
+
+
+    <section class="contact bg-primary position-relative overflow-hidden">
+        <div class="container position-relative">
+            <div class="dots-shape-left position-absolute"><img src="static/asets/images/icons/dot-shape.png"></div>
+            <div class="dots-shape-right position-absolute"><img src="static/asets/images/icons/dot-shape.png"></div>
+            <div class="row">
+                <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12" div data-aos="fade-right"data-aos-easing="linear"
+                data-aos-duration="3000">
+                    <small class="fs-7 d-block text-warning">Join us Now</small>
+                    <h2 class="fs-3 text-white mb-0">People Love our Product!</h2>
+                    <div class="owl-carousel owl-theme testimonial">
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                </div>
+                <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12" div data-aos="fade-left"data-aos-easing="linear"
+                data-aos-duration="3000">
+                    <small class="fs-7 d-block text-warning">Join us Now</small>
+                    
+                    <div class="owl-carousel owl-theme testimonial">
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item mt-5" >
+                            <div class="details position-relative" style="background-color:#fff; padding:20px; border-radius:10px;" >
+                                <p class="fs-5 fw-light  mb-4">
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece”
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar-img rounded-circle overflow-hidden"><img src="static/asets/images/contact/testimonial-image.png" class="img-fluid"></div>
+                                    <div class="name ps-3">
+                                        <h6 class="text-blue">Merky Lester</h6>
+                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                                           
+                </div>
+                
+            </div>
+            
+        </div>
+    </section> 
+<!--<section class="portfolio position-relative bg-primary">
+        
+        <div class="container position-relative" >
+            <div class="row mb-5" >
+                <div class="col-12"><small class="fs-7 d-block text-warning">Our Users</small></div>
+                <div class="col-12 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-block d-block align-items-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-sm-center ">
+                    <h2 class="fs-3 text-white mb-0">People Love <br>AbiTrack Inventory.</h2>
+                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Our Impact</a>
+                </div>
+            </div>
+            <div class="portfolio-wrap">
+                <div class="owl-carousel owl-theme portfolio-slider">
+                        <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
+                        <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
+                        <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
+                        <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
+                        <div class="item"><a href="#"><img src="static/asets/images/portfolio/Portfolio.jpg" class="w-100"></a></div>
+                </div>
+            </div>    
+        </div>    
+    </section>-->
     <!------------------------------>
     <!-- Pricing section End-------->
     <!------------------------------>
@@ -390,7 +606,8 @@
     <!------------------------------>
     <section class="faq position-relative overflow-hidden">
         <div class="container position-relative">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" div data-aos="fade-down"data-aos-easing="linear"
+            data-aos-duration="3000">
                 <div class="col-12 text-center">
                     <small class="fs-7 d-block">Frequently Asked Questions</small>
                     <h2 class="fs-3 text-black mb-0">Want to ask something from us?</h2>
@@ -411,7 +628,8 @@
                                   </div>
                                 </div>
                             </div>-->
-                            <div class="accordion-item mb-3">
+                            <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                            data-aos-duration="3000">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                   <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                                     Letraset sheets containing sum passages ?
@@ -423,7 +641,8 @@
                                   </div>
                                 </div>
                             </div>
-                            <div class="accordion-item mb-3">
+                            <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                            data-aos-duration="3000">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                   <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                                       There are many variations ?
@@ -435,7 +654,8 @@
                                   </div>
                                 </div>
                             </div>
-                            <div class="accordion-item mb-3">
+                            <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                            data-aos-duration="3000">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                                   <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                                       Lorem Ipsum generators on the Internet tend ?
@@ -449,7 +669,8 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item mb-3">
+                        <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                        data-aos-duration="3000">
                             <h2 class="accordion-header" id="panelsStayOpen-headingfive">
                               <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsefive" aria-expanded="false" aria-controls="panelsStayOpen-collapsefive">
                                 Finibus bonorum et malorum ?
@@ -462,7 +683,8 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item mb-3">
+                        <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                        data-aos-duration="3000">
                             <h2 class="accordion-header" id="panelsStayOpen-headingsix">
                               <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsesix" aria-expanded="false" aria-controls="panelsStayOpen-collapsesix">
                                 Many desktop publishing packages ?
@@ -475,7 +697,8 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item mb-3">
+                        <div class="accordion-item mb-3" div data-aos="fade-down"data-aos-easing="linear"
+                        data-aos-duration="3000">
                             <h2 class="accordion-header" id="panelsStayOpen-headingfour">
                               <button class="accordion-button collapsed text-black fs-7" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsefour" aria-expanded="false" aria-controls="panelsStayOpen-collapsefour">
                                 Various versions have evolved over the ?
@@ -572,7 +795,8 @@
                 </div>
             </div>
             <div class="trusted-companies">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" div data-aos="fade-down"data-aos-easing="linear"
+                data-aos-duration="3000">
                     <div class="col-xx-8 col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                         <h3 class="fs-7 mb-0 text-white text-center">Trusted by content creators across the world</h3>
                         <ul class="d-flex flex-wrap align-items-center list-unstyled mb-0 pl-0 owl-carousel owl-theme trusted-logos">
