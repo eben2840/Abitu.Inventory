@@ -106,7 +106,20 @@ class alumni(db.Model, UserMixin):
     telephone= db.Column(db.String()  )
     def __repr__(self):
         return f"alumni('{self.id}', {self.name}', {self.email})"
+    
+    
+    
+class Budget(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    budget = db.Column(db.String())
+    start_date = db.Column(db.Date)  # Add start_date field
+    end_date = db.Column(db.Date) 
+    def __repr__(self):
+        return f"Studenthalls('{self.id}', {self.budget}', {self.start_date})"
 
+    
+    
+    
 class Studenthalls(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     studentName= db.Column(db.String() )
@@ -1177,8 +1190,6 @@ def stock():
     return render_template("stock.html")
 
 
-
-
 @app.route('/showchallenge', methods=['GET', 'POST'])
 def showchallenge():
     users=Faq.query.order_by(Faq.id.desc()).all()
@@ -1223,6 +1234,27 @@ def personid():
     return render_template("personid.html")
     
         
+
+ 
+@app.route('/budget', methods=['GET', 'POST'])
+def budget():
+    users=Budget.query.order_by(Budget.id.desc()).all()
+    
+    form=Budgetform()
+    if form.validate_on_submit():
+            new=Budget(budget=form.budget.data,
+                    start_date=form.start_date.data,
+                    end_date=form.end_date.data
+                
+                  )
+            db.session.add(new)
+            db.session.commit()
+            flash("New Budget Added", "success")
+            return redirect('budget')
+    
+    print(form.errors)
+    return render_template("budget.html", form=form, title='addalumni',users=users)
+
 
  
 @app.route('/adminadd', methods=['GET', 'POST'])
@@ -1279,7 +1311,9 @@ def main():
     # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
     outstock = db.session.query(Item).filter(Item.quantity < 5).count()
     
-   
+    users = Budget.query.order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in users)  # Convert budget to int before summation
+    
     weekly_work = calculate_weekly_work()
     workload_limit = 1000  # Assuming a predefined workload limit of 1000 units
     workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
@@ -1314,7 +1348,7 @@ def main():
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
     return render_template('current.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
-             workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+          total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
 @app.route('/homelook', methods=['GET', 'POST'])

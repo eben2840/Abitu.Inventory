@@ -175,8 +175,15 @@ class Addinfo(FlaskForm):
 
 class GroupForm(FlaskForm):
     name = StringField('Group Name')
-    item_name = StringField('Item Name')
+    end_date = StringField('End Start')
     start_date = DateField('Start Date', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+    
+class Budgetform(FlaskForm):
+    budget = StringField('Budget')
+    # item_name = StringField('Item Name')
+    start_date = DateField('Start Date', validators=[DataRequired()])
+    end_date = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class AddItemForm(FlaskForm):
