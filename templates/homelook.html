@@ -23,6 +23,9 @@
 
 <div class="container-fluid">
     <div class="row g-4 mb-6">
+        <span><b>🏡 Customize your Home!</b></span>
+           
+         
     <!--<div class="col-xl-4 col-sm-4 col-12" style="margin-bottom:20px;  ">
                 
         <a href="#" style="text-decoration: none; color: #992621;">
@@ -96,19 +99,26 @@
 </div>
     <!--<img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; height:300px; object-fit:cover; border-radius:20px; margin-bottom:20px;">
     -->                                  
-    <div class="col-xl-8 col-sm-4 col-12" style="margin-bottom:20px;  ">
+    <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:20px;  ">
                 
-        <a href="/analytics" style="text-decoration: none; color: #992621;">
+        <a href="/authtask" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
             <div class="card-body"> 
                 <div class="row">
                     <div class="col">
                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                             Your overall analysis</span>
-                       
-                     <span class="h3 font-bold mb-5" ><b>Hello {{current_user.company_name}}</b>, access your analysis and boards.</span>
-                     <div id="chartContainer" style="height: 300px; width: 100%;">
-                    </div>
+                            Your overall analysis</span>
+                            <hr>
+                            <div class="card-body"> 
+                               <div class="row"> 
+                                   <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:74px;"> 🗓 </span>
+                                   <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
+                                      
+                                  <button type="button" style="margin-top:20px; width:230px; margin:auto; "class="btn btn-primary position-relative">
+                                        <i class="bi bi-plus"></i>   Add task or reminder
+                                       </button>   
+                               </div>            
+                           </div>
                     </div>
                     
                 </div>     
@@ -117,22 +127,23 @@
      </a>
     </div>
 
-    <div class="col-xl-4 col-sm-4 col-12" style="margin-bottom:20px;  ">        
-        <a href="/analytics" style="text-decoration: none; color: #992621;">
+    <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:20px;  ">        
+        <a href="/authchallenge" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
             <div class="card-body"> 
                 <div class="row">
                     <div class="col">
                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">
                              Your overall analysis</span>
+                             <hr>
                              <div class="card-body"> 
                                 <div class="row"> 
-                                    <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png">
-                                   <span  style="margin-top:10px; font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
-                                        <button type="button" style="margin-top:10px; "class="btn btn-primary position-relative">
-                                            Explore More Templates
-                                        </button>   
-                                </div>            
+                                    <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:74px;"> 🏆</span>
+                                    <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
+                                     <button type="button" style="margin-top:20px; width:230px; margin:auto; "class="btn btn-primary position-relative">
+                                          <i class="bi bi-plus"></i>   Set a goal
+                                         </button>   
+                                 </div>             
                             </div>
                    
                     </div>
@@ -143,6 +154,7 @@
         </div>
      </a>
     </div>
+
 </div>
 
 
@@ -161,134 +173,14 @@
 {% endif %}-->
 
 
-
-<div class="container-fluid" >
-
-   
-
-        <div class="row g-4 mb-6">
-            <div class="col-xl-8 col-sm-8 col-12">
-                <a href="#" style="text-decoration: none; color: #992621;">
-                <div class="card shadow border-0">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task Flow</span>
-                               <span> <b>Daily Reminders</b> </span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-primary text-white text-lg square-circle">
-                                    <i class="bi bi-bell"></i>
-                                </div>
-                            </div>
-                        </div>
-
-<hr>
-
-
-
-                        <div class="mt-2 mb-0 text-sm">
-                            <div class="accordion accordion-flush" id="accordionFlushExample">
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                        Recent Feed </h2>
-                                  <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png">
-                                      
-                                        
-
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                      Accordion Item #2
-                                    </button>
-                                  </h2>
-                                  <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
-                                  </div>
-                                </div>
-
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                      Accordion Item #3
-                                    </button>
-                                  </h2>
-                                  <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                                  </div>
-                                </div>
-
-                              </div>
-                            <!--<span class="text-nowrap text-xs text-muted">Since last month</span>-->
-                        </div>
-                    </div>
-                </div>
-            </a>
-            </div>
+        
 
             
 
-            <div class="col-xl-4 col-sm-8 col-12">
-        <div class="row g-4 mb-6"> 
-          
-            <div class="col-xl-12 col-sm-4 col-12">
-                
-                <a href="#" style="text-decoration: none; color: #992621;">
-                <div class="card shadow border-1">
-                    <div class="card-body"> 
-                        <div class="row"> 
-                            <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png">
-                           <span  style="margin-top:10px; font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
-                                <button type="button" style="margin-top:10px; "class="btn btn-primary position-relative">
-                                    Explore More Templates
-                                </button>   
-                        </div>            
-                    </div>
-                </div>
-             </a>
-            </div>
-            <span><b>Learn & get inspired</b></span>
-           
-         
             
 
-            <div class="col-xl-12 col-sm-4 col-12">
-                <a href="#" style="text-decoration: none; color: #992621;">
-                <div class="card shadow border-1">
-                    <div class="card-body">
-                        <div class="row">
-                            
-                            <div class="col d-flex me-2">
-                                <div class="col">
-                                        
-                                       
-                                    <span class="h3 font-bold m-2">Follow our Socials</span>
-                                    <span class="h6 font-semibold text-muted text-sm d-block m-2">
-                                       Rate your overall experience with this system?</span>
-                                   </div>
-                                <div class="icon icon-shape bg-danger text-white text-lg square-circle">
-                                    <i class="bi bi-instagram"></i>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </a>
-            </div>
-
             
-        </div>
-    
-    </div>
-  
+     
    
   
     </div>

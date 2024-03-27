@@ -17,20 +17,21 @@
         
 
       <div class="card shadow border-0 mb-7">
-        <div class="card-header">
-            <h5 class="mb-0">All Products</h5>
+        <div class="card-header d-flex" style="justify-content:space-between;">
+            <h5 class="mb-0">Docs</h5>
+          <a href="/addalumni">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-plus"></i>Add New</h5></a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Tag</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Catalog</th>
-                        <th scope="col">Product ID</th>
-                        <th scope="col">Notes</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Tags</th>
+                       
+                        <th scope="col">Comment</th>
+                        
                         <th></th>
                     </tr>
                 </thead>
@@ -43,25 +44,41 @@
                                 {{users.qualities}}
                             </a>
                         </td>
+
                         <td>
-                           GHC {{users.reason}}
-                        </td>
-                        <td>
-                            <span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i> {{users.campus}}
-                            </span>
+                           {{users.reason}}
                         </td>
 
                         <td>
-                            
-                                {{users.fullname}}
+                            {% if users.campus == 'High' %}
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
+                        </span>
+                        {% elif users.campus == 'Medium' %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>{{ users.campus }}
+                        </span>
+                        {% elif users.campus == 'Low' %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-down me-1"></i>{{ users.campus }}
+                        </span>
+
+                        {% else %}
+                        <span class="badge badge-pill  text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
+                        </span>
+                        {% endif %}
                         </td>
+
                         <td>
-                            Catalog
+                            <span class="badge badge-pill bg-soft-warning text-black me-2">
+                                <i class="bg-success"></i> {{users.fullname}}
+                            </span>
                         </td>
-                        <td>
-                            IAD2323431
-                        </td>
+
+                       
+                       
+                       
                         <td>
                             {{users. position}} 
                         </td>

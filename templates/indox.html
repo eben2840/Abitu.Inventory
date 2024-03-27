@@ -1,6 +1,10 @@
 {% extends 'landingpage.html' %}
 
 {% block body %}
+
+
+
+
 <div class="container-fluid">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -33,18 +37,19 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    {%for users in users%} 
-sss
+                    
+                    {%for user in user%} 
 
                     <tr>
+                        
                         <td>
                             <a class="text-heading font-semibold" href="#">
-                                {{users.name}}
+                              <b>  {{user.name}}</b>
                             </a>
                         </td>
+
                         <td>
-                            {{users.description}}
+                            {{user.description}}
                         </td>
                         <td>
                             
@@ -52,10 +57,10 @@ sss
                         <td>
                         </td>
                         <td>
-                          
+                            <p style="font-size:10px; margin-top:10px;" class="text-muted">{{ current_time.strftime("%d-%m-%Y") }}</p>
                         </td>
-                        <td class="text-end">
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                        <td class="text-end"> 
+                               <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>

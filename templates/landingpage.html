@@ -130,14 +130,28 @@
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" href="/main">
-                            <i class="bi bi-calendar-check"></i> My Workspaces
+                        <a class="nav-link" href="/indox">
+                            <i class="bi bi-envelope-check"></i> Indox
                         </a>
                     </li>
 
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">
+                            <i class="bi bi-calendar-check"></i> Dashboard
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/auth">
+                            <i class="bi bi-filetype-doc"></i> Docs
+                        </a>
+                    </li>
+
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="/analytics">
-                            <i class="bi bi-bar-chart"></i> Analitycs
+                            <i class="bi bi-bar-chart"></i> Analytics
                         </a>
                     </li>
                    <!--<li class="nav-item">
@@ -149,19 +163,7 @@
 
                    
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/stock">
-                            <i class="bi bi-bell"></i> Out-of Stock
-                            <span class="badge bg-soft-danger text-danger rounded-pill d-inline-flex align-items-center ms-auto">{{outstock}}</span>
-                        </a>
-                    </li>
                     
-                    <li class="nav-item">
-                        <a class="nav-link" href="/instock">
-                            <i class="bi bi-bell"></i> In Stock
-                            <span class="badge bg-soft-success text-success rounded-pill d-inline-flex align-items-center ms-auto">{{instock}}</span>
-                        </a>
-                    </li>
                     
                     <li class="nav-item-active">
                         <a class="nav-link" href="/person">
@@ -191,13 +193,13 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/group">
-                            <i class="bi bi-plus"></i> Add a catagory
+                            <i class="bi bi-bookmark-plus"></i> Add a category
                         </a>
                     </li>
 
                  <li class="nav-item">
                         <a class="nav-link" href="/add_item">
-                            <i class="bi bi-plus"></i> Add a products
+                            <i class="bi bi-ui-checks"></i> Add a products
                         </a>
                     </li>
 
@@ -219,13 +221,13 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/authchallenge">
-                            <i class="bi bi-plus"></i> Add my challenges
+                            <i class="bi bi-trophy"></i> Set goals
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="/authtask">
-                            <i class="bi bi-plus"></i>Set a task 
+                            <i class="bi bi-check2-circle"></i>Set a task 
                         </a>
                     </li>
                 
@@ -439,12 +441,95 @@
                                       </div>
                                     </div>
 
-                                    <a href="#">
+                                        <a href="#">
                                         <button type="button" class="btn btn-primary position-relative"
                                        data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >
-                                            <i class="bi bi-plus"></i>
+                                       <i class="bi bi-person"></i>
                                           </button>
                                         </a>
+
+                                        <div class="dropdown" >
+                                            <button type="button" class="btn btn-primary position-relative"
+                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                            <i class="bi bi-columns-gap"></i>
+                                               </button>
+
+                                          <!--  <a class="btn  btn btn-primary position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-plus"></i>
+                                            </a>
+                                          -->
+                                         
+                                            <ul class="dropdown-menu"style="padding:20px;" >
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                        <!-- Title -->
+                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
+                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                            <i class="bi bi-clipboard-check"></i>
+                                               </button>
+                                                        
+                                                       
+                                                        
+                                                    </div>
+                                                  
+                                                    <!-- Actions -->
+                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
+                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                         <i class="bi bi-trophy"></i>
+                                                            </button>
+                                                            
+                                    
+                                                            
+                                                        </div>
+                                                
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-check2-circle"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-check2-circle"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-filetype-doc"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-calendar-check"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                <!--<li><a class="dropdown-item" href="#">Action</a></li>
+                                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                                              <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                                            </ul>
+                                   
+                                          </div>
                                         
                                    
                                     
@@ -459,6 +544,7 @@
 
           
                                 <a href="#">
+
                                 <button type="button" type="button" class="btn btn-primary position-relative"
                                   data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
                                    
@@ -486,9 +572,22 @@
                         </li>-->
                         <li class="nav-item ">
                             <a href="/instock" class="nav-link">
-                                <i class="bi bi-house"></i> All Products</a>
+                                <i class="bi bi-folder"></i> All Products</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stock">
+                                <i class="bi bi-bell"></i> Out-of Stock
+                                <span class="badge bg-soft-danger text-danger rounded-pill d-inline-flex align-items-center ms-auto">{{outstock}}0</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/instock">
+                                <i class="bi bi-bell"></i> In Stock
+                                <span class="badge bg-soft-success text-success rounded-pill d-inline-flex align-items-center ms-auto">{{instock}}</span>
+                            </a>
+                        </li>
                        <!-- <li class="nav-item ">
                             <a href="/auth" class="nav-link">
                                 <i class="bi bi-house"></i> All Documents</a>
@@ -498,17 +597,23 @@
                         </li>-->
                         <li class="nav-item ">
                             <a href="/showchallenge" class="nav-link">
-                                <i class="bi bi-pin"></i>My Challenges</a>
+                                <i class="bi bi-trophy"></i> Goals</a>
                         </li>
                         
                         <li class="nav-item ">
                             <a href="/task" class="nav-link">
-                                <i class="bi bi-stack"></i> My Task </a>
+                                <i class="bi bi-clipboard-check"></i> Task </a>
                         </li>
 
                         <li class="nav-item ">
                             <a href="/budget" class="nav-link">
-                                <i class="bi bi-cash"></i> Budget </a>
+                                <i class="bi bi-credit-card"></i> Budget </a>
+                        </li>
+                        
+
+                        <li class="nav-item ">
+                            <a href="#" class="nav-link">
+                                <i class="bi bi-columns-gap"></i> More </a>
                         </li>
 
                         <!-- Button trigger modal -->

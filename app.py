@@ -914,6 +914,8 @@ def supportunit():
 
 
 
+
+
 @app.route('/addcommittee', methods=['GET', 'POST'])
 def addcommittee():
     form=CommitteeForm()
@@ -946,11 +948,17 @@ def addalumni():
             # send_email()
             flash("You just added a new product",
                   "success")
-            return redirect('main')
+            return redirect('auth')
     print(form.errors)
     return render_template("addAlumni.html", form=form, title='addalumni')
 
 static_timestamp = datetime.now() 
+
+@app.route('/indox', methods=['GET', 'POST'])
+def indox():
+    current_time = datetime.now()
+    user=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("indox.html", user=user,current_time=current_time)
 
 @app.route('/authmessage', methods=['GET', 'POST'])
 def authmessage():
