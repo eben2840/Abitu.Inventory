@@ -1918,6 +1918,7 @@ def login():
             login_user(user)
             print ("Logged in:" + user.username + " " + user.email)
             print(form.password.data) 
+            flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             return redirect(url_for('homelook'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
