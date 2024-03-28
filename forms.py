@@ -28,8 +28,8 @@ class Adduser(FlaskForm):
     qualities= StringField('qualities')
    
     position= StringField('position')
-    submit = SubmitField('Send')
     image_file = StringField('image_file', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Send')
     
 class WaitForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
@@ -44,6 +44,36 @@ class ChallengesForm(FlaskForm):
     start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
    
+    submit = SubmitField('Send')
+    
+    
+class CislForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    date = DateField('Date of Incident', validators=[DataRequired()])
+
+    time = StringField('task', validators=[DataRequired()])
+    incident = SelectField('tag', choices=[
+    ('Incident', 'Incident'),
+    ('Employee Accident', 'Employee Accident'),
+    ('Fire', 'Fire'),
+    ('Burglary or Robbery', 'Burglary or Robbery'),  # Added a comma here
+    ('Motor Accident', 'Motor Accident'),
+    ('Employee Theft or Embezzlement', 'Employee Theft or Embezzlement'),
+    ('Explosion', 'Explosion'),
+], default=None)
+    description = StringField('description', validators=[DataRequired()])
+    casualties = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    employees = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    reason = StringField('reason', validators=[DataRequired()])
+    
+    police = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    fire_force = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    cost = SelectField('tag', choices=[('Cost','Cost'),('Below 1,000', 'Below 1,000'), ('1,000 - 10,000','1,000 - 10,000'), ('10,000 - 50,000','10,000 - 50,000'), ('50,000 - 100,000','50,000 - 100,000'), ('Above 100,000','Above 100,000')], default=None )
+    
+    claim = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    name_of_contact = StringField('name_of_contact', validators=[DataRequired()])
+    contact_number = StringField('name_of_contact', validators=[DataRequired()])
+    
     submit = SubmitField('Send')
     
 

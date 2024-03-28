@@ -213,20 +213,23 @@
                     </div>
 
 					<div class="col-lg-12 col-md-12 col-12">
-						<form class="form" action="#">
+						<form action="{{ url_for('cisl') }}" method="post" >
+							{{form.hidden_tag()}}
+						 
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Name of Client</label>
                                             
-										<input name="name" type="text" placeholder="Name of the client or the company">
+										<input name="name" type="text" class="form-control"style="padding:8px;" placeholder="Name of the client or the company">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Date of Incident
                                             </label>
-										<input name="email" type="email" placeholder="Date the the incident occurred" id="datepicker">
+											<p> {{ form.date ( class="input-field", id="floatingInput", style="width:100%;", required="required")  }}</p> 
+  
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
@@ -234,7 +237,7 @@
                                         <label>Time of Incident
                                             
                                         </label>
-										<input name="phone" type="text" placeholder="Time the incident occurred">
+										<input name="time" class="form-control"style="padding:8px;" type="text" placeholder="Time the incident occurred">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
@@ -242,34 +245,25 @@
                                         <label>Type of Incident
                                             
                                         </label>
-										<div class="nice-select form-control wide" tabindex="0"><span class="current">Department</span>
-											<ul class="list">
-												<li data-value="1" class="option selected ">Employee Accident</li>
-												<li data-value="2" class="option">Fire</li>
-												<li data-value="3" class="option">Burglary or Robbery</li>
-												<li data-value="4" class="option">Motor Accident</li>
-												<li data-value="5" class="option">Employee Theft or Embezzlement</li>
-												<li data-value="5" class="option">Employee Theft or Embezzlement</li>
-												<li data-value="5" class="option">Explosion</li>
-											</ul>
-										</div>
+										{{form.incident(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+										
 									</div>
 								</div>
                                 
-                                <div class="col-lg-12 col-md-6 col-12">
+                                <!--<div class="col-lg-12 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Other type of incidents(if any)
                                         </label>
 										<input type="text" placeholder="Other type of incidents" >
 									</div>
-								</div>
+								</div>-->
                                 <div class="col-lg-12 col-md-12 col-12">
 									<div class="form-group">
                                         <label>Description of Incident
                                             
                                         </label>
                                         
-										<textarea name="message" placeholder="Write Your Message Here....."></textarea>
+										<textarea name="description" class="form-control"style="padding:8px;" placeholder="Write Your Message Here....."></textarea>
 									</div>
 								</div>
 
@@ -291,22 +285,25 @@
 
                                             
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										{{form.casualties(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
 									</div>
 								</div>
+
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>If employees are involved, have you reported to the Labour Office?
                                             
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										{{form.employees(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
 									</div>
 								</div>
 								 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Indicate the reason for reporting or not reporting to the Labour Office.
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										<input name="reason" class="form-control"style="padding:8px;" type="text" placeholder="Other type of incidents" >
 									</div>
 								</div>
 
@@ -314,14 +311,16 @@
 									<div class="form-group">
                                         <label>Have you reported the incident to the Police?
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										{{form.police(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
 									</div>
 								</div>
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Have you reported the incident to the Fire Force?
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										{{form.fire_force(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
 									</div>
 								</div>
 
@@ -329,7 +328,17 @@
 									<div class="form-group">
                                         <label>What is the estimated cost of the damage
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										{{form.cost(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
+									</div>
+								</div>
+
+								<div class="col-lg-12 col-md-12 col-12">
+									<div class="form-group">
+                                        <label>Do  want to make a claim?
+                                        </label>
+										{{form.claim(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
+
 									</div>
 								</div>
 
@@ -338,7 +347,7 @@
                                         <label>Name of contact person
 
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										<input name="name_of_contact" class="form-control"style="padding:8px;" type="text" placeholder="Other type of incidents" >
 									</div>
 								</div>
 
@@ -347,7 +356,7 @@
                                         <label>Contact number
 
                                         </label>
-										<input type="text" placeholder="Other type of incidents" >
+										<input name="contact_number" class="form-control"style="padding:8px;" type="text" placeholder="Other type of incidents" >
 									</div>
 								</div>
 								
