@@ -975,7 +975,7 @@ def cisl():
         db.session.add(cisl)
         db.session.commit()
         flash("You just sent your claims", "success")
-        return redirect('https://coreinsurancelimited.com/')
+        return redirect('https://coreinsurancelimited.com/thank.html')
     print(form.errors)      
     return render_template('cisl.html', form=form)
 
