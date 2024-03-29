@@ -65,20 +65,27 @@ def load_user(user_id):
     return Person.query.get(int(user_id))
 
 
+# def sendtelegram(params):
+#     url = "" + urllib.parse.quote(params)
+#     content = urllib.request.urlopen(url).read()
+#     print(content)
+#     return content
+
+
+
+
 def sendtelegram(params):
-    url = "" + urllib.parse.quote(params)
+    url = "https://api.telegram.org/bot6907747238:AAHKEVXj-WCoTfqKPgdsce4XIvork6Kf3uA/sendMessage?chat_id=-4121291480&text=" + urllib.parse.quote(params)
     content = urllib.request.urlopen(url).read()
     print(content)
     return content
 
 
-def sendtelegram(params):
-    url = "https://api.telegram.org/bot5787281305:AAE1S8DSnMAyQuzAnXOHfxLq-iyvPwYJeAo/sendMessage?chat_id=-1001556929308&text=" + urllib.parse.quote(params)
-    content = urllib.request.urlopen(url).read()
-    print(content)
+# def sendtelegram(params):
+#     url = "https://api.telegram.org/bot5738222395:AAEM5NwDAN1Zc052xI_i9-YlrVnvmSkN9p4/sendMessage?chat_id=-633441737&text=" + urllib.parse.quote(params)
+#     content = urllib.request.urlopen(url).read()
+#     print(content)
     return content
-
-
 #person table
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
@@ -950,6 +957,9 @@ def addcommittee():
     print(form.errors)
     return render_template("addcommittee.html", form=form)
 
+
+
+
 @app.route('/cisl', methods=['POST','GET'])
 def cisl():
     
@@ -962,7 +972,7 @@ def cisl():
                    incident=form.incident.data,
                    description=form.description.data,
                casualties=form.casualties.data,
-               employees=form.employees.data,
+               employees=form.employees.data, 
                reason=form.reason.data,
                police=form.police.data,
                fire_force=form.fire_force.data,
@@ -974,9 +984,30 @@ def cisl():
         print(cisl)
         db.session.add(cisl)
         db.session.commit()
-        flash("You just sent your claims", "success")
+        
+        # sendtelegram("New User Claim:"
+        # )
+        sendtelegram("New Claim Notification" + '\n' + 
+                     "" + '\n' +
+                      "Name = " + cisl.name  + '\n' + 
+                    #   "Date = " + cisl.date  + '\n' + 
+                      "Time = " + cisl.time  + '\n' + 
+                      "Incident = " + cisl.incident  + '\n' + 
+                      "Description = " + cisl.description  + '\n' + 
+                    "Casualties = " + cisl.casualties  + '\n' + 
+                    "Employees = " + cisl.employees + '\n' + 
+                    "Reason = " + cisl.reason + '\n' + 
+                    "Police = " + cisl.police + '\n' + 
+                    "Fire_Force = " + cisl.fire_force + '\n' + 
+                    "Cost = " + cisl.cost + '\n' + 
+                    "Claim = " + cisl.claim + '\n' + 
+                    "Name_Of_Contact = " + cisl.name_of_contact + '\n' + 
+                    "Contact_Number = " + cisl.contact_number 
+                    )  
+        # flash("You just sent your claims", "success")
         return redirect('https://coreinsurancelimited.com/thank.html')
-    print(form.errors)      
+    print(form.errors) 
+    
     return render_template('cisl.html', form=form)
 
 
