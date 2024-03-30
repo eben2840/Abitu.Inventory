@@ -70,7 +70,7 @@ class CislForm(FlaskForm):
     fire_force = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
     cost = SelectField('tag', choices=[('Cost','Cost'),('Below 1,000', 'Below 1,000'), ('1,000 - 10,000','1,000 - 10,000'), ('10,000 - 50,000','10,000 - 50,000'), ('50,000 - 100,000','50,000 - 100,000'), ('Above 100,000','Above 100,000')], default=None )
     
-    claim = SelectField('tag', choices=[('Choose','Choose'),('Yes', 'Yes'), ('No','No')], default=None )
+    claim = SelectField('tag', choices=[('Agree','Agree'),('Yes', 'Yes')], default=None )
     name_of_contact = StringField('name_of_contact', validators=[DataRequired()])
     contact_number = StringField('name_of_contact', validators=[DataRequired()])
     

@@ -995,8 +995,8 @@ def cisl():
                       "Incident = " + cisl.incident  + '\n' + 
                       "Description = " + cisl.description  + '\n' + 
                     "Casualties = " + cisl.casualties  + '\n' + 
-                    "Employees = " + cisl.employees + '\n' + 
-                    "Reason = " + cisl.reason + '\n' + 
+                    "Labour Office = " + cisl.employees + '\n' + 
+                    "Indicate Reason = " + cisl.reason + '\n' + 
                     "Police = " + cisl.police + '\n' + 
                     "Fire_Force = " + cisl.fire_force + '\n' + 
                     "Cost = " + cisl.cost + '\n' + 

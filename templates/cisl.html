@@ -219,7 +219,7 @@
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-                                        <label>Name of Client</label>
+                                        <label>Name of Client  <span class="text-danger">*</span></label>
                                             
 										<input name="name" type="text" class="form-control"style="padding:8px;" placeholder="Name of the client or the company">
 									</div>
@@ -227,7 +227,7 @@
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Date of Incident
-                                            </label>
+                                            </label> <span class="text-danger">*</span></label>
 											<p> {{ form.date ( class="input-field", id="floatingInput", style="width:100%;", required="required")  }}</p> 
   
 									</div>
@@ -236,7 +236,7 @@
 									<div class="form-group">
                                         <label>Time of Incident
                                             
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										<input name="time" class="form-control"style="padding:8px;" type="text" placeholder="eg. 2:30">
 									</div>
 								</div>
@@ -244,7 +244,7 @@
 									<div class="form-group">
                                         <label>Type of Incident
                                             
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										{{form.incident(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 										
 									</div>
@@ -261,7 +261,7 @@
 									<div class="form-group">
                                         <label>Description of Incident
                                             
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
                                         
 										<textarea name="description" class="form-control"style="padding:8px;" placeholder="Write Your description Here....."></textarea>
 									</div>
@@ -284,7 +284,7 @@
                                         <label>Are there any casualties?
 
                                             
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										{{form.casualties(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 
 									</div>
@@ -294,7 +294,7 @@
 									<div class="form-group">
                                         <label>If employees are involved, have you reported to the Labour Office?
                                             
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										{{form.employees(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 
 									</div>
@@ -310,7 +310,7 @@
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Have you reported the incident to the Police?
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										{{form.police(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 
 									</div>
@@ -318,7 +318,7 @@
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Have you reported the incident to the Fire Force?
-                                        </label>
+                                        </label><span class="text-danger">*</span></label>
 										{{form.fire_force(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 
 									</div>
@@ -327,26 +327,19 @@
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>What is the estimated cost of the damage
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										{{form.cost(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
 
 									</div>
 								</div>
 
-								<div class="col-lg-12 col-md-12 col-12">
-									<div class="form-group">
-                                        <label>Do  want to make a claim?
-                                        </label>
-										{{form.claim(class="form-control",  placeholder="Make a claim", id="floatingInput", required="required")}}
-
-									</div>
-								</div>
+						
 
                                 <div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
                                         <label>Name of contact person
 
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										<input name="name_of_contact" class="form-control"style="padding:8px;" type="text" placeholder="Name of contact person" >
 									</div>
 								</div>
@@ -355,22 +348,39 @@
 									<div class="form-group">
                                         <label>Contact number
 
-                                        </label>
+                                        </label> <span class="text-danger">*</span></label>
 										<input name="contact_number" class="form-control"style="padding:8px;" type="number" placeholder="Contact number" >
 									</div>
 								</div>
 								
 							</div>
 							<div class="row">
-								<div class="col-lg-5 col-md-4 col-12">
-									<div class="form-group">
-										<div class="button">
-											<button type="submit" class="btn">Send Claim</button>
+								<div class="col-lg-12 col-md-12 col-12">
+									<div class="form-group"><br>
+                                        <label>* Disclaimer *<br>
+
+											I/We, the undersigned person(s), hereby kindly request the support of Core Insurance Solutions Limited (CISL) in pursuing our insurance claim. We affirm that we have not been induced, coerced, threatened, or promised any form of inducement by CISL, its employees, agents, assigns director(s), or any other persons to contact CISL for assistance with our claim.
+											<br><br>
+											I/We understand and agree to comply with the terms and conditions of CISL's claim support services.
+											
+                                        </label>
+										<!--										{{form.claim(class="form-control",  placeholder="Make a claim", id="floatingInput", required="required")}}-->
+									</div>
+									{{form.claim(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}  <span class="text-danger ml-2" >  *</span>
+
+									<!--<input type="checkbox" class="form-check-input" name="claim" id="" value="" > I agree <span class="text-danger">*</span></label>
+								-->
+								</div>
+
+							
+								<div class="col-lg-12 col-md-8 col-12">
+									<div class="col-lg-5 col-md-4 col-12">
+										<div class="form-group">
+											<div class="button"><br>
+												<button type="submit" class="btn">Send Claim</button>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-7 col-md-8 col-12">
-									
 								</div>
 							</div>
 						</form>
