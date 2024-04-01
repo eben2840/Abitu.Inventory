@@ -560,36 +560,36 @@ def send_email():
         subject = 'AbiTrack Inventory'
         
         
-        users = Logger.query.order_by(Logger.id.desc()).all()
+        # users = Logger.query.order_by(Logger.id.desc()).all()
         # HTML content of the email
-        html_content = render_template('printout.html',users=users)
-        # """
-        # <!DOCTYPE html>
-        # <html>
-        # <head>
-        #     <style>
-        #     @font-face {
-        #         font-family: 'Plus Jakarta';
-        #         src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
-        #              url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
-        #         font-weight: 100 900; /* Adjust font weights based on available weights */
-        #         font-style: normal;
-        #     }
+        # html_content = render_template('printout.html',users=users)
+        html_content = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+            @font-face {
+                font-family: 'Plus Jakarta';
+                src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+                     url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+                font-weight: 100 900; /* Adjust font weights based on available weights */
+                font-style: normal;
+            }
 
-        #     body {
-        #         font-family: 'Plus Jakarta', sans-serif;
-        #     }
-        #     </style>
-        # </head>
-        # <body>
-        #         <div class="container">
-        #             <div style="display:flex; padding:10px; justify-content:space-between;">
-        #                 AbiTrack  🚀
-        #                   </div>
-        #              <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
+            body {
+                font-family: 'Plus Jakarta', sans-serif;
+            }
+            </style>
+        </head>
+        <body>
+                <div class="container">
+                    <div style="display:flex; padding:10px; justify-content:space-between;">
+                        AbiTrack  🚀
+                          </div>
+                     <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
                    
-        #         </h3>      
-        #             <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
+                </h3>      
+                    <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
                           
                
                 
@@ -598,12 +598,12 @@ def send_email():
               
 
                
-        #     </div>
+            </div>
             
             
-        # </body>
-        # </html>
-        # """
+        </body>
+        </html>
+        """
 
     
         em = EmailMessage()
