@@ -75,18 +75,13 @@ def load_user(user_id):
 
 
 def sendtelegram(params):
-    url = "https://api.telegram.org/bot6907747238:AAHKEVXj-WCoTfqKPgdsce4XIvork6Kf3uA/sendMessage?chat_id=-4121291480&text=" + urllib.parse.quote(params)
+    url = "https://api.telegram.org/bot7174034710:AAGMITwp6BvnS6JPO-j2ulYiP3VOgK43LzE/sendMessage?chat_id=-4165806132&text=" + urllib.parse.quote(params)
     content = urllib.request.urlopen(url).read()
     print(content)
     return content
 
 
-# def sendtelegram(params):
-#     url = "https://api.telegram.org/bot5738222395:AAEM5NwDAN1Zc052xI_i9-YlrVnvmSkN9p4/sendMessage?chat_id=-633441737&text=" + urllib.parse.quote(params)
-#     content = urllib.request.urlopen(url).read()
-#     print(content)
-    return content
-#person table
+
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
@@ -123,6 +118,20 @@ class Budget(db.Model):
     end_date = db.Column(db.Date) 
     def __repr__(self):
         return f"Studenthalls('{self.id}', {self.budget}', {self.start_date})"
+
+
+class Logger(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)  # Add start_date field
+    activity = db.Column(db.String())
+    tag = db.Column(db.String())
+    future = db.Column(db.String())
+    email = db.Column(db.String())
+    implementation = db.Column(db.String())
+    challenges = db.Column(db.String())
+
+    def __repr__(self):
+        return f"Logger('{self.id}', {self.activity}', {self.date})"
 
     
     
@@ -539,6 +548,10 @@ radio = 'yboateng057@gmail.com'
 email_password = 'hsgtqiervnkabcma'
 radio_display_name = ' Abitu Industries'
 
+# users_data = [
+#     {'email': 'user1@example.com', 'date': '2022-01-01', 'activity': 'Activity 1', 'implementation': 'Implementation 1', 'tag': 'Tag 1', 'challenges': 'Challenges 1', 'future': 'Future 1'},
+# ]
+
 @app.route('/send_email', methods=['POST'])
 def send_email():
     if request.method == 'POST':
@@ -546,34 +559,37 @@ def send_email():
 
         subject = 'AbiTrack Inventory'
         
+        
+        users = Logger.query.order_by(Logger.id.desc()).all()
         # HTML content of the email
-        html_content = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-            @font-face {
-                font-family: 'Plus Jakarta';
-                src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
-                     url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
-                font-weight: 100 900; /* Adjust font weights based on available weights */
-                font-style: normal;
-            }
+        html_content = render_template('printout.html',users=users)
+        # """
+        # <!DOCTYPE html>
+        # <html>
+        # <head>
+        #     <style>
+        #     @font-face {
+        #         font-family: 'Plus Jakarta';
+        #         src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
+        #              url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
+        #         font-weight: 100 900; /* Adjust font weights based on available weights */
+        #         font-style: normal;
+        #     }
 
-            body {
-                font-family: 'Plus Jakarta', sans-serif;
-            }
-            </style>
-        </head>
-        <body>
-                <div class="container">
-                    <div style="display:flex; padding:10px; justify-content:space-between;">
-                        AbiTrack  🚀
-                          </div>
-                     <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
+        #     body {
+        #         font-family: 'Plus Jakarta', sans-serif;
+        #     }
+        #     </style>
+        # </head>
+        # <body>
+        #         <div class="container">
+        #             <div style="display:flex; padding:10px; justify-content:space-between;">
+        #                 AbiTrack  🚀
+        #                   </div>
+        #              <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
                    
-                </h3>      
-                    <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
+        #         </h3>      
+        #             <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
                           
                
                 
@@ -582,12 +598,12 @@ def send_email():
               
 
                
-            </div>
+        #     </div>
             
             
-        </body>
-        </html>
-        """
+        # </body>
+        # </html>
+        # """
 
     
         em = EmailMessage()
@@ -1075,6 +1091,48 @@ def authtask():
     print(form.errors)
     return render_template("authtask.html", form=form)
 
+@app.route('/logger', methods=['GET', 'POST'])
+def logger():
+    form = LogForm()
+    print("-----------")
+    # print(tag)
+    users=Logger.query.order_by(Logger.id.desc()).all()
+    if form.validate_on_submit():
+        new=Logger(
+            activity=form.activity.data,
+            date=form.date.data,
+            future=form.future.data,
+            challenges=form.challenges.data,
+            implementation=form.implementation.data,
+            tag=form.tag.data,
+            email=form.email.data
+        )
+        db.session.add(new)
+        db.session.commit()
+        send_email()
+        
+        sendtelegram("New Log Added" + '\n' + 
+                   
+                      "Name = " + new.activity  + '\n' + 
+                    #   "Date = " + new.date  + '\n' + 
+                      "Time = " + new.challenges  + '\n' + 
+                      "Incident = " + new.implementation  + '\n' + 
+                      "Description = " + new.tag
+                    )  
+        print(new.tag)
+        # print(tag)
+        print(new)
+        
+        flash("You just added a new Log", 'success')
+        return redirect("logger")
+    print(form.errors)
+    return render_template('logger.html',form=form,users=users)
+
+
+@app.route('/printout', methods=['GET', 'POST'])
+def printout():
+    users=Logger.query.order_by(Logger.id.desc()).all()
+    return render_template('/printout.html',users=users)
 
 
 
@@ -1255,9 +1313,18 @@ def commercial():
 def support():
     return render_template("support.html")
 
+
+@app.route('/stockmaster', methods=['GET', 'POST'])
+def stockmaster():
+    return render_template("stockmaster.html")
+
 @app.route('/features', methods=['GET', 'POST'])
 def features():
     return render_template("features.html")
+
+@app.route('/integration', methods=['GET', 'POST'])
+def integration():
+    return render_template("integration.html")
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -1577,6 +1644,9 @@ def message():
 
 
 
+
+
+
 @app.route('/album', methods=['GET', 'POST'])
 def album():   
     form=Adduser()
@@ -1698,6 +1768,11 @@ def prayer():
 def lords():
     lords = User.query.filter_by(ministry='Lords Band').all()
     return render_template('lords.html', lords=lords)
+
+
+#this is a logger for abitrack
+
+
 
 
 
