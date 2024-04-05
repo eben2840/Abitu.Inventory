@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+       <!-- <div class="col-lg-6">
             <form action="" class="form" method="POST", "GET" style="margin-bottom:20px; border-radius:20px;"> 
                 
               <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; ">
@@ -23,11 +23,11 @@
                </form>
 
             
-            </div>
-        <div class="col-lg-6" style="background-color:#fff; padding:30px; border-radius:20px;">
+            </div>-->
+        <div class="col-lg-12" style="background-color:#fff; padding:30px; border-radius:20px;">
             
             <form method="POST" action="{{ url_for('add_item') }}" id="faqForm">
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Item to Group</h6>
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Item to Category</h6>
         {{ form.hidden_tag() }}
        
         {{ form.group(class="input-field", style="width:100%; ") }}

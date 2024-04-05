@@ -525,7 +525,7 @@ def add_item():
         db.session.add(item)
         db.session.commit()
         
-        
+        print(item)
         
         if item.quantity and item.quantity.isdigit():
             quantity_value = int(item.quantity)
