@@ -333,7 +333,6 @@ class Item(db.Model):
     start_date = db.Column(db.Date)
     price = db.Column(db.Date)
     tag = db.Column(db.Date)
-    
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
 
 
@@ -489,7 +488,7 @@ def group():
         db.session.add(group)
         db.session.commit()
 
-        flash("You just added a new catalog")
+        flash("You just added a new Category")
         return redirect(url_for('main'))
 
     print(form.errors)
@@ -510,6 +509,7 @@ def generate_unique_code():
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     form = AddItemForm()
+   
     form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
 
     if form.validate_on_submit():
@@ -525,7 +525,8 @@ def add_item():
         db.session.add(item)
         db.session.commit()
         
-        print(item)
+        print(form.name.data)
+        print(form.group_id.data)
         
         if item.quantity and item.quantity.isdigit():
             quantity_value = int(item.quantity)

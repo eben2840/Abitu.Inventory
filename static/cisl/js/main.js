@@ -329,3 +329,15 @@ Version:	1.1
 	
 	
 })(jQuery);
+
+
+function toggleQuestions() {
+	var selectValue = document.getElementById('yesNo').value;
+	var additionalQuestions = document.getElementById('additionalQuestions');
+
+	if (selectValue === 'yes') {
+		additionalQuestions.classList.remove('hidden');
+	} else {
+		additionalQuestions.classList.add('hidden');
+	}
+}
