@@ -1,6 +1,7 @@
 import os
 from email.message import EmailMessage
 import re
+import secrets
 import ssl
 import smtplib
 import csv
@@ -85,6 +86,7 @@ def sendtelegram(params):
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
+    # role= db.Column(db.String())
     email= db.Column(db.String())
     company_email= db.Column(db.String())
     company_name= db.Column(db.String())
@@ -114,6 +116,7 @@ class alumni(db.Model, UserMixin):
 class Budget(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     budget = db.Column(db.String())
+    budgetId = db.Column(db.Integer())
     start_date = db.Column(db.Date)  # Add start_date field
     end_date = db.Column(db.Date) 
     def __repr__(self):
@@ -170,6 +173,7 @@ class User(db.Model,UserMixin):
     
 class Challenge(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
+    taskId= db.Column(db.Integer())
     name= db.Column(db.String())
     task= db.Column(db.String())
     tag = db.Column(db.String())
@@ -196,6 +200,7 @@ class Getfunds(db.Model,UserMixin):
 
 class Faq(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
+    faqid= db.Column(db.Integer() )
     caption= db.Column(db.String()  )
     answers = db.Column(db.String())
     campus= db.Column(db.String()     )
@@ -328,11 +333,15 @@ class Groups(db.Model):
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    clientid = db.Column(db.Integer())
+    unique_code = db.Column(db.String(12))
     name = db.Column(db.String())
+    des=db.Column(db.String())
     quantity = db.Column(db.String())
     start_date = db.Column(db.Date)
-    price = db.Column(db.Date)
-    tag = db.Column(db.Date)
+    price = db.Column(db.String)
+    serial = db.Column(db.String)
+    tag = db.Column(db.String)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
 
 
@@ -359,11 +368,7 @@ def calculate_workload_percentage(total_work, workload_limit):
         return 0
     else:
         return min(100, (total_work / workload_limit) * 100)
-    
-# @app.route('/weekly-work', methods=['GET'])
-# def get_weekly_work():
-#     weekly_work = calculate_weekly_work()
-#     return jsonify({'weekly_work_hours': weekly_work})
+
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -509,24 +514,38 @@ def generate_unique_code():
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     form = AddItemForm()
-   
+    print("FORM DATA: ", form.data)
     form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
-
+    print("GROUP CHOICES: ", form.group.choices)
     if form.validate_on_submit():
+        unique_code = secrets.token_hex(6)
         item = Item(
+            unique_code = unique_code,
+            clientid=current_user.id,
             name=form.item_name.data,
             group_id=form.group.data,
             tag=form.tag.data,
+            des=form.des.data,
             price=form.price.data,
             quantity=form.quantity.data,
+            serial=form.serial.data,
             start_date=form.start_date.data 
         )
+        try:
+                
+            # print('------ p{0}'.format(request.form))
+            db.session.add(item) 
+            db.session.commit()
+            print("ITEM: ", item)
+            print("ITEM ADDED TO DB")
+        except Exception as e:
+            print(e)
         
-        db.session.add(item)
-        db.session.commit()
         
-        print(form.name.data)
-        print(form.group_id.data)
+        print('Item.query.all()')
+        print(Item.query.all())
+        # print(form.name.data)
+        # print(form.group_id.data)
         
         if item.quantity and item.quantity.isdigit():
             quantity_value = int(item.quantity)
@@ -537,11 +556,10 @@ def add_item():
         else:
             session['low_quantity_flash'] = f"Invalid quantity format for {item.name}. Please enter a valid number."
 
-            
         flash("Item added to the group successfully")
         return redirect(url_for('main'))
 
-    print(form.errors)
+    print("FORM ERRORS: ", form.errors)
     return render_template('add_item.html', form=form)
 
     
@@ -828,6 +846,23 @@ def analytics():
     return render_template('analytics.html')
 
 
+
+
+
+# @app.route('/allusers', methods=['GET', 'POST'])
+# @login_required
+# def allusers():
+#     if current_user.role == 'admin':
+#         users = Person.query.filter_by(role="client").order_by(Person.id.desc()).all()
+#         # staff = User.query.order_by(User.id.desc()).all()
+#         print(users)
+#     else:
+#         # flash("youre not allowed to see this")
+#         return redirect (url_for("main"))
+#     return render_template('allclient.html',users=users)
+
+
+
 @app.route('/level', methods=['GET', 'POST'])
 def level():
     courses = Course.query.all() 
@@ -1078,6 +1113,7 @@ def authtask():
     form=ChallengesForm()
     if form.validate_on_submit():
             new=Challenge(name=form.name.data, 
+                          taskId=current_user.id,
                    tag=form.tag.data,
                    task=form.task.data,
                    description=form.description.data,
@@ -1143,6 +1179,7 @@ def authchallenge():
     if form.validate_on_submit():
         
             new=Faq(
+                faqid=current_user.id,
                 caption=form.caption.data, 
                 answers=form.answers.data, 
                 campus=form.campus.data, 
@@ -1347,13 +1384,14 @@ def stock():
 
 @app.route('/showchallenge', methods=['GET', 'POST'])
 def showchallenge():
-    users=Faq.query.order_by(Faq.id.desc()).all()
+    users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
     return render_template("showchallenge.html",users=users)
 
 
 @app.route('/task', methods=['GET', 'POST'])
 def task():
-    users=Challenge.query.order_by(Challenge.id.desc()).all()
+    users=Challenge.query.filter_by(id=str(current_user.id)).order_by(Challenge.id.desc()).all()
+    # users=Challenge.query.order_by(Challenge.id.desc()).all()
     return render_template("task.html",users=users)
 
 @app.route('/auth', methods=['POST','GET'])
@@ -1393,11 +1431,12 @@ def personid():
  
 @app.route('/budget', methods=['GET', 'POST'])
 def budget():
-    users=Budget.query.order_by(Budget.id.desc()).all()
+    users=Budget.query.filter_by(budgetId=str(current_user.id)).order_by(Budget.id.desc()).all()
     
     form=Budgetform()
     if form.validate_on_submit():
             new=Budget(budget=form.budget.data,
+                       budgetId=current_user.id,
                     start_date=form.start_date.data,
                     end_date=form.end_date.data
                 
@@ -1466,37 +1505,37 @@ def main():
     # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
     outstock = db.session.query(Item).filter(Item.quantity < 5).count()
     
-    users = Budget.query.order_by(Budget.id.desc()).all()
-    total_budget = sum(int(user.budget) for user in users)  # Convert budget to int before summation
+    users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in users) 
     
     weekly_work = calculate_weekly_work()
-    workload_limit = 1000  # Assuming a predefined workload limit of 1000 units
+    workload_limit = 1000  
     workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
     # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
-    total_students = User.query.count()
-    instock = Item.query.count()
-    total_getfundstudents = Getfunds.query.count()
-    total_Faq = Faq.query.count()
-    total_challenges = Challenge.query.count()
-    total_message = Committee.query.count()
-    total_stock = Item.query.count()
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    instock = Item.query.filter_by(clientid=current_user.id).count()
+    total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
+    total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+    total_challenges = Challenge.query.filter_by(id=current_user.id).count()
+    total_message = Committee.query.filter_by(id=current_user.id).count()
+    total_stock = Item.query.filter_by(clientid=current_user.id).count()
     total_cat = Groups.query.filter_by(userId=current_user.id).count()
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
    
    
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
-    message = Message.query.count()
+    message = Message.query.filter_by(id=current_user.id).count()
     print(users_with_positions)
-    user =Committee.query.order_by(Committee.id.desc()).all()
+    user =Committee.query.filter_by(id=current_user.id).order_by(Committee.id.desc()).all()
     # total_male = User.query.filter_by(gender='Male').count()
     # total_female = User.query.filter_by(gender='Female').count() 
     users=User.query.order_by(User.id.desc()).all()
-    challenges=Challenges.query.order_by(Challenges.id.desc()).all()
+    challenges=Challenges.query.filter_by(id=current_user.id).order_by(Challenges.id.desc()).all()
     print(users)
     total_leaders = Leaders.query.count()
     print(total_leaders)
-    online =Person.query.order_by(Person.id.desc()).all()
+    online =Person.query.filter_by(id=current_user.id).order_by(Person.id.desc()).all()
     print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
@@ -1537,18 +1576,18 @@ def homelook():
     # all_product= User.query.count()
     current_time = datetime.now()
     low_quantity_flash = session.pop('low_quantity_flash', None)
-    instock = Item.query.count()
-    total_students = User.query.count()
-    total_getfundstudents = Getfunds.query.count()
-    total_Faq = Faq.query.count()
-    total_challenges = Challenge.query.count()
-    total_message = Committee.query.count()
+    instock = Item.query.filter_by(id=current_user.id).count()
+    total_students = User.query.filter_by(id=current_user.id).count()
+    total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
+    total_Faq = Faq.query.filter_by(id=current_user.id).count()
+    total_challenges = Challenge.query.filter_by(id=current_user.id).count()
+    total_message = Committee.query.filter_by(id=current_user.id).count()
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
-    message = Message.query.count()
+    message = Message.query.filter_by(id=current_user.id).count()
     print(users_with_positions)
-    user =Committee.query.order_by(Committee.id.desc()).all()
+    user =Committee.query.filter_by(id=current_user.id).order_by(Committee.id.desc()).all()
     # total_male = User.query.filter_by(gender='Male').count()
     # total_female = User.query.filter_by(gender='Female').count() 
     users=User.query.order_by(User.id.desc()).all()
@@ -1556,7 +1595,7 @@ def homelook():
     print(users)
     total_leaders = Leaders.query.count()
     print(total_leaders)
-    online =Person.query.order_by(Person.id.desc()).all()
+    online =Person.query.filter_by(id=current_user.id).order_by(Person.id.desc()).all()
     print(current_user)
     # flash(f"There was a problem", 'success')
     if current_user == None:
@@ -1616,11 +1655,9 @@ def newdash():
 
 
 
-@app.route('/instock', methods=['GET', 'POST'])
-def instock():  
-    users=Item.query.order_by(Item.id.desc()).all()
-    instock = Item.query.count()
-    return render_template("instock.html",users=users,instock = instock)
+
+
+
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():   
@@ -1850,6 +1887,26 @@ def list(userid):
     return render_template("profileid.html",current_user=current_user, profile=profile, title="list")
  
  
+ 
+@app.route('/instocklist/<int:userid>', methods=['GET', 'POST'])
+def instocklist(userid):  
+    profile=Item.query.get_or_404(userid)
+    return render_template("instocklist.html", profile=profile)
+
+
+
+# total_cat = Groups.query.filter_by(userId=current_user.id).count()
+
+@app.route('/instock', methods=['GET', 'POST'])
+def instock():  
+    # users=Item.query.filter_by(clientid=str(current_user.id)).order_by(Item.id.desc()).all()
+    users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    print('users')
+    print(users)
+    instock = Item.query.filter_by(clientid=current_user.id).count()
+    return render_template("instock.html",users=users,instock = instock)
+
+
  
 @app.route('/list', methods=['GET', 'POST'])
 @login_required

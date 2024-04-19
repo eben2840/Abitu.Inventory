@@ -24,24 +24,51 @@
 
             
             </div>-->
+
+    <!--<form method="POST" action="/add_item" enctype="multipart/form-data">
+        
+        <input type="text" name="item_name" required>
+        
+        <label for="level">Level:</label>
+        <input type="text" name="group" required>
+    
+        <label for="year">Year:</label>
+        <input type="number" name="quantity" required>
+    
+       
+        <input name="price" required>
+        <input name="tag" required>
+        <input name="date" required>
+    
+        <input type="submit" value="Add Course and PDF">
+    </form>-->
+    
+    
+
+
         <div class="col-lg-12" style="background-color:#fff; padding:30px; border-radius:20px;">
             
-            <form method="POST" action="{{ url_for('add_item') }}" id="faqForm">
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Item to Category</h6>
+            <form method="POST" action="/add_item"  enctype="multipart/form-data">
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Products to Category</h6>
         {{ form.hidden_tag() }}
        
         {{ form.group(class="input-field", style="width:100%; ") }}
         <br>
         
-        {{ form.item_name(class="input-field", style="width:100%;" , placeholder="Item Name") }}
+        {{ form.item_name(class="input-field",  style="width:100%;" , placeholder="Item Name") }}
         <br>
-       
-        {{ form.quantity(class="input-field", style="width:100%;", placeholder="Item Quantity") }}
+
+        {{ form.serial(class="input-field", style="width:100%;", placeholder="Serial Number") }}
+        <br>
+        {{ form.quantity(class="input-field", type="number", style="width:100%;", placeholder="Item Quantity") }}
         <br> 
-        {{ form.price(class="input-field", style="width:100%;", placeholder="Price") }}
+        {{ form.price(class="input-field", style="width:100%;",type="number", placeholder="Price") }}
        
         <br>
         {{ form.tag(class="input-field", style="width:100%;", placeholder="Item Quantity") }}
+       
+<br>
+        {{ form.des(class="input-field", style="width:100%;", placeholder="Description...") }}
        
         <br>
         <p>{{ form.start_date.label }} {{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
@@ -49,18 +76,7 @@
         {{ form.submit(class="btn btn-primary", style="width:100%;") }}
     </form>
 
-    {% if form.errors %}
-        <div style="color: red;">
-            <p>Errors:</p>
-            <ul>
-                {% for field, errors in form.errors.items() %}
-                    {% for error in errors %}
-                        <li>{{ field }}: {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+  
 </div>
 
 
