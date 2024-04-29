@@ -23,7 +23,7 @@ from flask_login import login_required,login_user,logout_user,current_user,UserM
 from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify, send_from_directory
 )
-import openai
+
 from flask_cors import CORS
 import json
 import time
