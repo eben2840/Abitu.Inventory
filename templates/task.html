@@ -32,7 +32,9 @@
                         <!--<th scope="col">Description</th>-->
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
+                        <th scope="col">Status</th>
                        
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -106,14 +108,31 @@
                             </span>
                         </td>
                        
-                        
+                        <td>
+                            {% if users.status == 'pending'%}
+                            <span class="badge badge-pill bg-soft-warning text-dark me-2">
+                                {% elif users.status == 'in-progress'%}
+                                <span class="badge badge-pill bg-soft-primary text-dark me-2">
+                                {% elif users.status == 'completed'%}
+                                <span class="badge badge-pill bg-soft-success text-dark me-2">
+                                  
+                                {%endif%}
+                                    {{users.status}}
+                        <td>
                        
 
-                        <td class="text-end">
-                            <a href="#" class="btn btn-sm btn-neutral">Update</a>
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                <i class="bi bi-box-arrow-right"></i>
-                            </button>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a  class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='pending')}}">Pending</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='in-progress')}}">In-progress</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='completed')}}">Completed</a></li>
+                                </ul>
+                              </div>
                         </td>
                     </tr>
 

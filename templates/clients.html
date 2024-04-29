@@ -1,0 +1,154 @@
+{% extends 'landingpage.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+        
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row g-6 mb-6">
+      
+        
+
+      <div class="card shadow border-0 mb-7">
+        <div class="card-header">
+            <h5 class="mb-0">All Clients</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-nowrap">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Client Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Numbers</th>
+                        <th scope="col">Category</th>  
+                        <th>Business Name</th>
+                        <th>Business Email</th>
+                        
+                     <!--   <th>QR</th>-->
+                       
+<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Report</h1>
+        <div class="d-flex;">
+        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+            <i class="bi bi-trash"></i>
+           
+        </button>
+        <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+        
+            <i class="bi bi-plus"></i>
+        </button>
+    </div>
+      </div>
+      <div class="modal-body">
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for users in users%} 
+                    <tr>
+                        
+                        <td>
+                            <a class="text-heading font-semibold" href="#">
+                                {{users.name}}
+                            </a>
+                        </td>
+                       
+                        <td>
+                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
+                           -->
+                            <a class="text-heading font-semibold" href="#">
+                                {{users.email}}
+                            </a>
+                        </td>
+                       
+                      
+                        <td>
+                            {{users.phone}}
+                        </td>
+
+                        <td>
+                           {{users.category}}
+                        </td>
+                        
+                       
+
+
+                        <td>
+                            {{users.company_name}}
+                        </td>
+
+                        <td>
+                            {{users.company_email}}
+                        </td>
+
+
+                     
+
+                        <td class="text-end">
+                          <!--  <a href="#" class="btn  btn-sm btn-neutral">Report</a>
+
+                         -->  
+                            <!--a href="" style="text-decoration: none; color: #992621;">
+         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"  class="btn btn-sm btn-square btn-neutral text-danger-hover" >
+                          
+                            </button></a>
+-->
+
+
+                        
+                    </tr>
+
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer border-0 py-5">
+            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+        </div>
+    </div>
+  
+ 
+</div>
+
+<script>
+    function generateRandomCode() {
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var codeLength = 6;
+        var code = '';
+        for (var i = 0; i < codeLength; i++) {
+            var randomIndex = Math.floor(Math.random() * characters.length);
+            code += characters.charAt(randomIndex);
+        }
+        return code;
+    }
+
+    // Generate and display the unique code when the form is submitted
+    document.getElementById('faqForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        var uniqueCode = generateRandomCode();
+        document.getElementById('uniqueCode').innerText = 'Unique Code: ' + uniqueCode;
+    });
+</script>
+{%endblock body%}

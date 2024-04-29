@@ -23,6 +23,7 @@ from flask_login import login_required,login_user,logout_user,current_user,UserM
 from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify, send_from_directory
 )
+import openai
 from flask_cors import CORS
 import json
 import time
@@ -88,6 +89,7 @@ class Person(db.Model, UserMixin):
     name= db.Column(db.String())
     # role= db.Column(db.String())
     email= db.Column(db.String())
+    role= db.Column(db.String())
     company_email= db.Column(db.String())
     company_name= db.Column(db.String())
     category= db.Column(db.String())
@@ -175,6 +177,7 @@ class Challenge(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     taskId= db.Column(db.Integer())
     name= db.Column(db.String())
+    status= db.Column(db.String())
     task= db.Column(db.String())
     tag = db.Column(db.String())
     description = db.Column(db.String())
@@ -202,6 +205,7 @@ class Faq(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     faqid= db.Column(db.Integer() )
     caption= db.Column(db.String()  )
+    status= db.Column(db.String())
     answers = db.Column(db.String())
     campus= db.Column(db.String()     )
     start_date = db.Column(db.Date)  # Add start_date field
@@ -520,8 +524,8 @@ def add_item():
     if form.validate_on_submit():
         unique_code = secrets.token_hex(6)
         item = Item(
-            unique_code = unique_code,
             clientid=current_user.id,
+            unique_code = unique_code,
             name=form.item_name.data,
             group_id=form.group.data,
             tag=form.tag.data,
@@ -835,7 +839,7 @@ def closed():
     return render_template('closed.html')
 
 
-@app.route('/message', methods=['GET', 'POST'])
+@app.route('/messages', methods=['GET', 'POST'])
 def messages():
     users =Committee.query.order_by(Committee.id.desc()).all()
     return render_template('messages.html',users=users)
@@ -1172,6 +1176,41 @@ def printout():
     return render_template('/printout.html',users=users)
 
 
+@app.route('/update_goals_status/<int:id>/<string:status>', methods=['POST', 'GET'])
+def update_goals_status(id,status):
+    # print("Update_claim_status")
+    print("id:",id)
+    print("status:",status)
+    try:
+        goals= Faq.query.get_or_404(id)
+        print("goals:",goals)
+        goals.status=status
+        db.session.commit()
+        print("goals.status:",goals.status)
+    except Exception as e:
+        print(e)
+        print("status:",goals.status)
+        flash ("Status Successfully Changed")
+    return redirect (url_for('showchallenge'))
+
+@app.route('/update_task_status/<int:id>/<string:status>', methods=['POST', 'GET'])
+def update_task_status(id,status):
+    # print("Update_claim_status")
+    print("id:",id)
+    print("status:",status)
+    try:
+        task= Faq.query.get_or_404(id)
+        print("task:",task)
+        task.status=status
+        db.session.commit()
+        print("task.status:",task.status)
+    except Exception as e:
+        print(e)
+        print("status:",task.status)
+        flash ("Status Successfully Changed")
+    return redirect (url_for('task'))
+
+
 
 @app.route('/authchallenge', methods=['GET', 'POST'])
 def authchallenge():
@@ -1180,6 +1219,7 @@ def authchallenge():
         
             new=Faq(
                 faqid=current_user.id,
+                status=form.status.data, 
                 caption=form.caption.data, 
                 answers=form.answers.data, 
                 campus=form.campus.data, 
@@ -1352,6 +1392,31 @@ def support():
     return render_template("support.html")
 
 
+# @app.route('/askchat', methods=['GET', 'POST'])
+# def askchat():
+#     return render_template("askchat.html")
+
+# openai.api_key = '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'
+
+# @app.route('/ask_chatgpt', methods=['POST'])
+# def ask_chatgpt():
+#     # Get user input from the request
+#     user_input = request.json['input']
+    
+#     # Call OpenAI API to get ChatGPT response
+#     response = openai.Completion.create(
+#         engine="curie",
+#         prompt=user_input,
+#         max_tokens=50
+#     )
+    
+#     # Extract the response text from the API response
+#     chat_response = response.choices[0].text.strip()
+    
+#     # Return the response to the client
+#     return jsonify({'response': chat_response})
+
+
 @app.route('/stockmaster', methods=['GET', 'POST'])
 def stockmaster():
     return render_template("stockmaster.html")
@@ -1384,13 +1449,19 @@ def stock():
 
 @app.route('/showchallenge', methods=['GET', 'POST'])
 def showchallenge():
-    users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+    if current_user.role =='admin':
+        users=Faq.query.order_by(Faq.id.desc()).all()
+    else:
+        users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
     return render_template("showchallenge.html",users=users)
 
 
 @app.route('/task', methods=['GET', 'POST'])
 def task():
-    users=Challenge.query.filter_by(id=str(current_user.id)).order_by(Challenge.id.desc()).all()
+    if current_user.role == 'admin':
+        users=Challenge.query.order_by(Challenge.id.desc()).all()
+    else:
+        users=Challenge.query.filter_by(id=str(current_user.id)).order_by(Challenge.id.desc()).all()
     # users=Challenge.query.order_by(Challenge.id.desc()).all()
     return render_template("task.html",users=users)
 
@@ -1431,7 +1502,11 @@ def personid():
  
 @app.route('/budget', methods=['GET', 'POST'])
 def budget():
-    users=Budget.query.filter_by(budgetId=str(current_user.id)).order_by(Budget.id.desc()).all()
+    if current_user.role =='admin':
+        users=Budget.query.order_by(Budget.id.desc()).all()
+    else:
+        users=Budget.query.filter_by(budgetId=str(current_user.id)).order_by(Budget.id.desc()).all()
+        
     
     form=Budgetform()
     if form.validate_on_submit():
@@ -1512,14 +1587,25 @@ def main():
     workload_limit = 1000  
     workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
     # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
-    total_students = Item.query.filter_by(clientid=current_user.id).count()
-    instock = Item.query.filter_by(clientid=current_user.id).count()
-    total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
-    total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
-    total_challenges = Challenge.query.filter_by(id=current_user.id).count()
-    total_message = Committee.query.filter_by(id=current_user.id).count()
-    total_stock = Item.query.filter_by(clientid=current_user.id).count()
-    total_cat = Groups.query.filter_by(userId=current_user.id).count()
+    if current_user.role =="admin":
+        total_students = Item.query.count()
+        instock = Item.query.count()
+        total_getfundstudents = Getfunds.query.count()
+        total_Faq = Faq.query.count()
+        total_challenges = Challenge.query.count()
+        total_message = Committee.query.count()
+        total_stock = Item.query.count()
+        total_cat = Groups.query.count() 
+    else:
+        total_students = Item.query.filter_by(clientid=current_user.id).count()
+        instock = Item.query.filter_by(clientid=current_user.id).count()
+        total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
+        total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+        total_challenges = Challenge.query.filter_by(id=current_user.id).count()
+        total_message = Committee.query.filter_by(id=current_user.id).count()
+        total_stock = Item.query.filter_by(clientid=current_user.id).count()
+        total_cat = Groups.query.filter_by(userId=current_user.id).count()
+    
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
    
@@ -1890,21 +1976,42 @@ def list(userid):
  
 @app.route('/instocklist/<int:userid>', methods=['GET', 'POST'])
 def instocklist(userid):  
+    
     profile=Item.query.get_or_404(userid)
     return render_template("instocklist.html", profile=profile)
+
+
 
 
 
 # total_cat = Groups.query.filter_by(userId=current_user.id).count()
 
 @app.route('/instock', methods=['GET', 'POST'])
-def instock():  
-    # users=Item.query.filter_by(clientid=str(current_user.id)).order_by(Item.id.desc()).all()
-    users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+def instock():
+    if current_user.role =='admin':  
+        users=Item.query.order_by(Item.id.desc()).all()
+    else:
+        users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+        
     print('users')
     print(users)
-    instock = Item.query.filter_by(clientid=current_user.id).count()
+    if current_user.role =='admin':  
+        instock = Item.query.filter_by(clientid=current_user.id).count()
+    else:
+        instock = Item.query.count()
+        
     return render_template("instock.html",users=users,instock = instock)
+
+
+@app.route('/client', methods=['GET', 'POST'])
+def client():  
+    if current_user.role == "admin":
+        users=Person.query.order_by(Person.id.desc()).all()
+    else:
+        return redirect(url_for('main'))
+    print('users')
+    print(users)
+    return render_template("clients.html",users=users)
 
 
  
@@ -2173,6 +2280,7 @@ def signup():
                         confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data, 
                         company_email=form.company_email.data, 
+                        role=form.role.data, 
                         # category=form.category.data,
                         email=form.email.data,
                         username=form.username.data, 

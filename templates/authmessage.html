@@ -13,7 +13,7 @@
 {% endif %}
 {% endwith %}
 
-  <span class="h3 font-bold mb-0">Send A Message To Your Team</span>
+  <span class="h3 font-bold mb-0">Send Upgrade Messages</span>
               
   <form action=" " class="form" style="display:grid;" method="POST", "GET"> 
     {{form.hidden_tag()}}
@@ -23,7 +23,7 @@
    <!-- <input type="email" name="email" placeholder="Company Email" required class="input-field", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
    -->
    
-    <input type="description" name="description" placeholder="Company Message" required class="input-field", style="padding:15px;margin-top:30px;   border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
+    <input type="description" name="description" placeholder="Message" required class="input-field", style="padding:15px;margin-top:30px;   border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
     <!--<input type="password" name="password" placeholder="Enter Password"  class="input-field", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
 -->  
     {{form.submit(class="btn btn-primary has-before has-after",style="margin-top:30px;" )}}

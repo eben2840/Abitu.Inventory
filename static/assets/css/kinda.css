@@ -17,6 +17,39 @@
     text-align: center;
 }
 
+
+
+.chat-container {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+}
+.messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.input-field {
+  flex-grow: 1;
+  padding: 10px;
+  width: calc(100% - 100px);
+  margin-right: 10px; 
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.send-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  
+  cursor: pointer;
+}
 .bar {
     background-color: #3498db;
     height: 20px;

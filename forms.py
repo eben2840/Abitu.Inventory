@@ -243,7 +243,9 @@ class Registration(FlaskForm):
     indexnumber= StringField('indexNumber')
     email = StringField('Email', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
+    role= SelectField('tag', choices=[('Tag','Tag'),('admin', 'admin'), ('client','client')], default=None )
     name = StringField('Name', validators=[DataRequired()]) 
+    
     password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     username = StringField('Username', validators=[DataRequired()]) 
