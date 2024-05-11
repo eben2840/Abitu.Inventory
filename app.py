@@ -23,14 +23,12 @@ from flask_login import login_required,login_user,logout_user,current_user,UserM
 from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify, send_from_directory
 )
-
 from flask_cors import CORS
 import json
 import time
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
-
 app=Flask(__name__)
 CORS(app)
 # 'postgresql://postgres:new_password@45.222.128.55:5432/src'
@@ -328,10 +326,12 @@ class Waitlist(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
 
+
 class Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer())
     name = db.Column(db.String())
+    manufacturing = db.Column(db.String())
     start_date = db.Column(db.Date)
     items = db.relationship('Item', backref='group', lazy=True)
 
@@ -491,6 +491,8 @@ def group():
     if form.validate_on_submit():
         group = Groups(
             userId=current_user.id,
+            manufacturing=form.manufacturing.data,
+            
             name=form.name.data,
             start_date=form.start_date.data 
         )
@@ -519,7 +521,8 @@ def generate_unique_code():
 def add_item():
     form = AddItemForm()
     print("FORM DATA: ", form.data)
-    form.group.choices = [(group.id, group.name) for group in Groups.query.all()]
+    form.group.choices = [(group.id, group.name) for group in Groups.query.filter_by(id=current_user.id).all()]
+    # filter_by(budgetId=current_user.id).order_by(Budget.id.desc())
     print("GROUP CHOICES: ", form.group.choices)
     if form.validate_on_submit():
         unique_code = secrets.token_hex(6)
@@ -847,7 +850,15 @@ def messages():
 
 @app.route('/analytics', methods=['GET', 'POST'])
 def analytics():
-    return render_template('analytics.html')
+    # total_warehouse = db.session.query.count
+    total_category =  db.session.query(Groups).filter(Groups.name.isnot(None)).count()
+    total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse').count()
+    total_hareware =  Groups.query.filter_by(manufacturing='Hardwares').count()
+    total_software =  Groups.query.filter_by(manufacturing='Softwares').count()
+    total_accessories =  Groups.query.filter_by(manufacturing='Accessories').count()
+    # total_warehouse = db.session.query(func.count(Groups.id)).filter(Groups.manufacturing == 'Warehouse').scalar()
+    return render_template('analytics.html',total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
+
 
 
 
@@ -939,6 +950,7 @@ def landingpage():
         flash("Invitation Sent to" + users.email)
         return redirect('homelook')
     
+    instock = Item.query.filter_by(clientid=current_user.id).count()
     
      # all_product= User.query.count()
     low_quantity_flash = session.pop('low_quantity_flash', None)
@@ -970,7 +982,7 @@ def landingpage():
     print(users)
     print("-------------")
     
-    return render_template('landingpage.html',total_message=total_message, greeting=greeting, users=users, form=form,
+    return render_template('landingpage.html',instock=instock, total_message=total_message, greeting=greeting, users=users, form=form,
           
                         low_quantity_flash=low_quantity_flash, total_challenges=total_challenges,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges                 
                            )
@@ -1578,7 +1590,7 @@ def main():
     current_time = datetime.now()
     # all_product= User.query.count()
     # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
-    outstock = db.session.query(Item).filter(Item.quantity < 5).count()
+    outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).count()
     
     users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
     total_budget = sum(int(user.budget) for user in users) 
@@ -1992,15 +2004,17 @@ def instock():
         users=Item.query.order_by(Item.id.desc()).all()
     else:
         users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
-        
     print('users')
     print(users)
+    
+    
     if current_user.role =='admin':  
-        instock = Item.query.filter_by(clientid=current_user.id).count()
-    else:
         instock = Item.query.count()
+    else:
+        instock = Item.query.filter_by(clientid=current_user.id).count()
+       
         
-    return render_template("instock.html",users=users,instock = instock)
+    return render_template("instock.html",users=users,instock=instock)
 
 
 @app.route('/client', methods=['GET', 'POST'])
@@ -2238,7 +2252,13 @@ def login():
             print ("Logged in:" + user.username + " " + user.email)
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
-            return redirect(url_for('homelook'))
+            if current_user.category == 'Manufacturing':
+                return redirect(url_for('analytics'))
+            
+            elif current_user.category == "Cooperate":
+                return redirect(url_for('homelook'))
+            else:
+                return redirect(url_for('main'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
            
@@ -2281,7 +2301,7 @@ def signup():
                         company_name=form.company_name.data, 
                         company_email=form.company_email.data, 
                         role=form.role.data, 
-                        # category=form.category.data,
+                        category=form.category.data,
                         email=form.email.data,
                         username=form.username.data, 
                         phone=form.phone.data,

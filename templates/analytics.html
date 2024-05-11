@@ -43,11 +43,11 @@
                       <div class="row">
                           <div class="col">
                               <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                                   Your overall Task</span>
+                                Warehouse Categories</span>
                              
-                           <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >0</span>
+                           <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_warehouse}}</span>
                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                            Overall Task</span>
+                            Total Warehouse Items</span>
                           </div>
                           
                       </div>     
@@ -63,10 +63,10 @@
                     <div class="row">
                         <div class="col">
                           <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                            Task</span>
-                          <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >0</span>
+                          Hardware Categories</span>
+                          <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_hardware}}</span>
                           <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                           In Progress</span>
+                           Total Hardware</span>
                         </div>
                         
                     </div>     
@@ -82,10 +82,10 @@
                   <div class="row">
                       <div class="col">
                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                          Task</span>
-                        <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >0</span>
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                         Completed</span>
+                          Category Dashboard </span>
+                        <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" ></span>
+                        <span class="h2 fs-2 font-semibold text-muted  d-block mb-2">
+                          🏡</span>
                       </div>
                       </div>
                       
@@ -99,19 +99,21 @@
       <div class="row my-2">
           
         <div class="col-xl-8 col-sm-3 col-12" style="margin-bottom:20px;  ">
-            
+          <div class="row my-2">
+        <div class="col-xl-12 col-sm-3 col-12" style="margin-bottom:20px;  ">
+
           <a href="/analytics" style="text-decoration: none; color: #992621;">
           <div class="card shadow border-1" style="">
               <div class="card-body"> 
                   <div class="row">
                       <div class="col">
-                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                               Your overall Task</span>
+                          <span class="h3 font-semibold text-muted  d-block mb-2">
+                               Over-All Categories</span>
                          
-                       <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >0</span>
+                       <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_category}}</span>
                        
                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                        Overall Task</span>
+                        Total Number of Catalog</span>
                       </div>
                       
                   </div>     
@@ -119,6 +121,53 @@
           </div>
        </a>
       </div>
+      <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
+
+        <a href="/analytics" style="text-decoration: none; color: #992621;">
+        <div class="card shadow border-1" style="">
+            <div class="card-body"> 
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                             Software Categories</span>
+                       
+                     <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_software}}</span>
+                     
+                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                      Total Software</span>
+                    </div>
+                    
+                </div>     
+            </div>
+        </div>
+     </a>
+    </div>
+      <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
+
+        <a href="/analytics" style="text-decoration: none; color: #992621;">
+        <div class="card shadow border-1" style="">
+            <div class="card-body"> 
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                          Accessories Categories  </span>
+                       
+                     <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_accessories}}</span>
+                     
+                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                      Total Accessories</span>
+                    </div>
+                    
+                </div>     
+            </div>
+        </div>
+     </a>
+    </div>
+      </div>
+      </div>
+
+
+
       <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
             
         <a href="/analytics" style="text-decoration: none; color: #992621;">

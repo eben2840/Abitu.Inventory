@@ -216,6 +216,7 @@ class Addinfo(FlaskForm):
 
 
 class GroupForm(FlaskForm):
+    manufacturing = SelectField('tag', choices=[('categories','categories'),('Warehouse', 'Warehouse'), ('Hardwares','Hardwares'), ('Softwares','Softwares'), ('Accessories','Accessories'), ('Others','Others') ], default=None )
     name = StringField('Group Name')
     end_date = StringField('End Start')
     start_date = DateField('Start Date', validators=[DataRequired()])
@@ -251,7 +252,7 @@ class Registration(FlaskForm):
     username = StringField('Username', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
     company_email = StringField('company_email', validators=[DataRequired()]) 
-    category = SelectField('categories', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])
+    category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])
     submit =SubmitField('submit')
     
 

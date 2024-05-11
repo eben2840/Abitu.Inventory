@@ -5,38 +5,30 @@
 <div class="container">
    
     <div class="row">
-        <!--<div class="col-lg-6">
-            <form action="" class="form" method="POST", "GET" style="margin-bottom:20px; border-radius:20px;"> 
-                
-              <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; ">
-                
-              <div class="alert alert-success" style="margin-top:30px;" role="alert">
-             <h6 >
-             
-            
-                
-             
-              <b>Description:</b> Kindly add a group or category before you add a products.
-             
-             </h6>  
-            </div>
-              
-               </form>
-                    
-                   
-            
-            
-            </div>-->
+        
         <div class="col-lg-12">
   
     <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
-       
+        <div class="alert alert-success" style="margin-top:30px;" role="alert">
+            <h6>
+            Choose any of the option categories.
+            </h6>  
+           </div>
         {{ form.hidden_tag() }}
+
+
+
+
+        <label for="#">{{current_user.category}} Category:</label>
+        {{ form.manufacturing(class="input-field", style="width:100%;" , placeholder="Category Name") }}
+        
+        <br>
+
 
         <label for="name">Create a Category:</label>
         {{ form.name(class="input-field", style="width:100%;" , placeholder="Category Name") }}
         <br>
-        <p>{{ form.start_date.label }} {{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
+        <p><label for="name">Date of entry:</label>{{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
        <br>
         {{ form.submit(class="btn btn-primary" , style="width:100%;" ) }}
     </form>
