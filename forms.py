@@ -249,9 +249,7 @@ class Registration(FlaskForm):
     
     password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
-    username = StringField('Username', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
-    company_email = StringField('company_email', validators=[DataRequired()]) 
     category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])
     submit =SubmitField('submit')
     

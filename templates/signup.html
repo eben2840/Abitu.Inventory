@@ -97,7 +97,7 @@
             
            
 
-{% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages() %}
               {% if messages %}
                   {% for message in messages %}
                   <div class="alert alert-danger mb-3" role="alert">
@@ -109,175 +109,100 @@
               {% endif %}
             {% endwith %}
 
-<form id="myForm" action=""  method="POST", "GET" action="your_processing_script.php" method="post" >
+            <form id="myForm" action="" method="POST">
+              {{form.hidden_tag()}}
+          
+              <!-- Step 1: File Upload -->
+              <div class="step active" id="step1">
+                  <h2 class="h2 section-title">
+                      Create Your <span class="has-before">Business Profile</span>
+                  </h2>
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What is the business called? </b>
+                  </h3>
+                  <h5 class="text-muted">
+                      If you have not settled on a name for the business you can add a temporary name and update it later.
+                  </h5>
+                  {{form.company_name(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", id="company_name", placeholder="eg. AbiTrack")}}
+          
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What is your email address? </b>
+                  </h3>
+                  <h5 class="text-muted">
+                      Your email address will be used as your username. We will not use your email address for marketing.
+                  </h5>
+                  {{form.email(class="input-field my-3 my-lg-3 mt-2 space", type="email", id="email", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter email", id="email")}}
+          
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What category is your business?</b>
+                  </h3>
+                  <h5 class="text-muted">
+                      Select which category your business falls under.
+                  </h5>
+                  {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", style="padding:20px; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", id="category", required='required') }}
 
-    {{form.hidden_tag()}}
-   
-
-  
-  
-
-  <!-- Step 1: File Upload -->
-  <div class="step active" id="step1">
-     
-    <h2 class="h2 section-title">
-     Create Your   <span class="has-before">Business Profile</span>
-    </h2>
-    <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is the business called? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      If you have not settled on a name for the business you can add a temporary name and update it later.
-     </h5> 
-     {{form.company_name( class="input-field my-3 my-lg-3 mt-2 space",style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,id="floatingInput",placeholder="eg. AbiTrack")}}
-
- 
-     <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is the business email? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      We will use your email address for marketing and for Inventory.
-     </h5> 
-     {{form.company_email( class="input-field my-3 my-lg-3 mt-2 space",style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,id="floatingInput",placeholder="eg. abitrack@gmail.com")}}
-
-
-
-
-       
-             
-
-    <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What category is your business?</b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      Select which category your business fall under.
-     </h5> 
-   
-    {{form.category( class="input-field my-3 my-lg-3 mt-2 space",style="padding:20px;  border-radius:15px; width:300%px; box-shadow: var(--shadow-1);"  ,id="floatingInput")}}
-
-
-    <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is your 4 unique code?</b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      Enter 4 unique code for your business. This code will use be when resetting your account.
-     </h5> 
-   
-     {{form.username( class="input-field my-3 my-lg-3 mt-2 space",style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Enter 4 Unique Code", id="floatingInput",pattern="[0-9]{4}", maxlength="4")}}
-
-   
-                  
-                <!--<input  name="category"  class="input-field my-3", style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);",id="floatingInput", required="required">
-            -->
-   
-    <button type="button" class="btn btn-primary has-before has-after my-3" onclick="nextStep()">Continue ></button>
-    <a href="/integration" class=" has-before has-after" style="background-color:#fff; color:blue;">Need help Signing Up? Click Here</a>
-     
-          </div>
-
-  <!-- Step 2: User Information -->
-  <div class="step" id="step2">
-    <h2 class="h2 section-title">
-      Create Your <span class="has-before">User Profile</span>
-     </h2>
-
-     <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is your name? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      This is used in relation to the user account.
-     </h5> 
-     {{form.name( class="input-field my-3 my-lg-3 mt-2 space",style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Enter Full Name", id="floatingInput")}}
-
-   
-
-
-    <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is your email address? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      Your email address will be used as your username. We will not use your email address for marketing.
-     </h5> 
-
-     {{form.email( class="input-field my-3 my-lg-3 mt-2 space", type="email", id="email",style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Enter email", id="floatingInput")}}
-
-   
-  
-
-
-     <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What is your phone number? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-       We will not use your phone number for marketing.
-     </h5> 
-         
-    
-     {{form.phone( class="input-field my-3 my-lg-3 mt-2 space",type="number", style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Phone number", id="floatingInput")}}
-
-   
-
-
-     <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>What would you like to set as your account password? </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      The password must contain at least 1 digit (0-9). The password must also contain at least 1 symbol and be at least 6 characters long.
-     </h5> 
-            
-     {{form.password( class="input-field my-3 my-lg-3 mt-2 space",type="password", style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Enter password", id="floatingInput")}}
-
-   
-     <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
-      <b>Please re-type your password:
-      </b>
-     </h3>  
-     <h5 class="text-muted" >
-       
-      Please type your password again to ensure that it was entered correctly above.
-
-
-     </h5> 
-            
-     {{form.confirm_password( class="input-field my-3 my-lg-3 mt-2 space",type="password", style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Confirm password", id="floatingInput")}}
-     
-     {{form.role( class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px;  border-radius:15px; width:300%px;box-shadow: var(--shadow-1);"  ,placeholder="Confirm password", id="floatingInput")}}
-    
-   
-     
-
-     <div class="feature-card" style="margin-bottom:10px;">
-  
-      
-
-      
-
-      <div class="card-icon" >
-        <input type="checkbox" onclick="togglePasswordVisibility()" style=" justify-content: flex-start; ">
-     
-      </div>
-    </div> 
- 
-
-<div class="bot d-flex" style="display:fex; justify-content: space-between;">
-    <button type="button" class="btn btn-primary has-before has-after" onclick="prevStep()">Previous</button>
-  {{form.submit(class="btn btn-primary has-before has-after")}}
-</div>
-<a href="/integration" class=" has-before has-after mt-5" style="background-color:#fff; color:blue;">Need help Signing Up? Click Here</a>
-<a href="/login" class=" has-before has-after mt-5" style="background-color:#fff; color:blue;">I already have an account Click Here</a>
-   
-   <!-- <button type="button" onclick="uploadFile()">Submit</button>-->
-  </div>
-
-</form>
+                  <button type="button" class="btn btn-primary has-before has-after my-3" onclick="validateAndNextStep()">Continue ></button>
+          
+                  <a href="/integration" class="has-before has-after" style="background-color:#fff; color:blue;">Need help Signing Up? Click Here</a>
+              </div>
+          
+              <!-- Step 2: User Information -->
+              <div class="step" id="step2">
+                  <h2 class="h2 section-title">
+                      Create Your <span class="has-before">User Profile</span>
+                  </h2>
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What is your name? </b>
+                  </h3>
+                  <h5 class="text-muted">
+                      This is used in relation to the user account.
+                  </h5>
+                  {{form.name(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300px;box-shadow: var(--shadow-1);", placeholder="Enter Full Name", id="name")}}
+          
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What is your phone number? </b>
+                  </h5>
+                  <h5 class="text-muted">
+                      We will not use your phone number for marketing.
+                  </h5>
+                  {{form.phone(class="input-field my-3 my-lg-3 mt-2 space", type="number", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Phone number", id="phone")}}
+          
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>What would you like to set as your account password? </b>
+                  </h3>
+                  <h5 class="text-muted">
+                      The password must contain at least 1 digit (0-9). The password must also contain at least 1 symbol and be at least 6 characters long.
+                  </h5>
+                  {{form.password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter password", id="password")}}
+          
+                  <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
+                      <b>Please re-type your password:</b>
+                  </h3>
+                  <h5 class="text-muted">
+                      Please type your password again to ensure that it was entered correctly above.
+                  </h5>
+                  {{form.confirm_password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var (--shadow-1);", placeholder="Confirm password", id="confirm_password")}}
+          
+                  {{form.role(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var (--shadow-1);", placeholder="Role", id="role")}}
+          
+                  <div class="feature-card" style="margin-bottom:10px;">
+                      <div class="card-icon">
+                          <input type="checkbox" onclick="togglePasswordVisibility()" style="justify-content: flex-start;">
+                      </div>
+                  </div>
+          
+                  <div class="bot d-flex" style="display:flex; justify-content: space-between;">
+                      <button type="button" class="btn btn-primary has-before has-after" onclick="prevStep()">Previous</button>
+                      {{form.submit(class="btn btn-primary has-before has-after")}}
+                  </div>
+                  <a href="/integration" class="has-before has-after mt-5" style="background-color:#fff; color:blue;">Need help Signing Up? Click Here</a>
+                  <a href="/login" class="has-before has-after mt-5" style="background-color:#fff; color:blue;">I already have an account Click Here</a>
+              </div>
+          </form>
+          
+          
+          
+          
   
 
 
@@ -395,37 +320,35 @@
     }
 </script>
 
-
-
 <script>
-  var currentStep = 1;
-
-  function nextStep() {
-    document.getElementById('step' + currentStep).classList.remove('active');
-    currentStep++;
-    document.getElementById('step' + currentStep).classList.add('active');
-    updateProgressBar();
+  function validateAndNextStep() {
+      const category = document.getElementById("category").value;
+      if (!category) {
+          alert("Please select a category for your business.");
+          return;
+      }
+      // If category is selected, proceed to the next step
+      document.getElementById("step1").classList.remove("active");
+      document.getElementById("step2").classList.add("active");
   }
-
+  
   function prevStep() {
-    document.getElementById('step' + currentStep).classList.remove('active');
-    currentStep--;
-    document.getElementById('step' + currentStep).classList.add('active');
-    updateProgressBar();
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step1").classList.add("active");
   }
-
-  function updateProgressBar() {
-    var progressPercent = (currentStep - 1) * 50;
-    document.getElementById('progress-bar').style.width = progressPercent + '%';
-    document.getElementById('percent').innerHTML = progressPercent + '%';
+  
+  function togglePasswordVisibility() {
+      var passwordField = document.getElementById("password");
+      var confirmPasswordField = document.getElementById("confirm_password");
+      if (passwordField.type === "password") {
+          passwordField.type = "text";
+          confirmPasswordField.type = "text";
+      } else {
+          passwordField.type = "password";
+          confirmPasswordField.type = "password";
+      }
   }
-
-  function uploadFile() {
-    // Perform file upload logic here
-    alert('Form submitted successfully!');
-  }
-
-</script>
+  </script>
 
 
   <!-- 

@@ -88,10 +88,10 @@ class Person(db.Model, UserMixin):
     # role= db.Column(db.String())
     email= db.Column(db.String())
     role= db.Column(db.String())
-    company_email= db.Column(db.String())
+    
     company_name= db.Column(db.String())
     category= db.Column(db.String())
-    username= db.Column(db.String())
+
     phone= db.Column(db.String()    )
     image_file = db.Column(db.String())
     password = db.Column(db.String(128))
@@ -2268,7 +2268,6 @@ def login():
 @app.route('/signup', methods=['POST','GET'])
 def signup():
     form = Registration()
-    print(form.username.data)
     print(form.phone.data)
     print(form.email.data)
     print(form.name.data)
@@ -2277,7 +2276,6 @@ def signup():
     # print(form.category.data)
     if form.validate_on_submit():
         checkUser = Person.query.filter_by(email = form.email.data).first()
-        checkUser = Person.query.filter_by(company_email = form.company_email.data).first()
         if checkUser:
             flash(f'This Email has already been used','danger')
             return redirect (url_for ('signup'))
@@ -2287,9 +2285,9 @@ def signup():
             flash('Please provide a valid Gmail email address.', 'danger')
             return redirect(url_for('signup'))
         
-        if len(str(form.username.data)) != 4:
-            flash('Unique Code must be exactly 4 digits.', 'danger')
-            return redirect(url_for('signup'))
+        # if len(str(form.username.data)) != 4:
+        #     flash('Unique Code must be exactly 4 digits.', 'danger')
+        #     return redirect(url_for('signup'))
 
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
@@ -2299,11 +2297,11 @@ def signup():
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data, 
-                        company_email=form.company_email.data, 
+                      
                         role=form.role.data, 
                         category=form.category.data,
                         email=form.email.data,
-                        username=form.username.data, 
+                        
                         phone=form.phone.data,
                         name=form.name.data)
             db.session.add(user)
