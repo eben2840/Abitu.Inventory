@@ -123,7 +123,7 @@
                   <h5 class="text-muted">
                       If you have not settled on a name for the business you can add a temporary name and update it later.
                   </h5>
-                  {{form.company_name(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", id="company_name", placeholder="eg. AbiTrack")}}
+                  {{form.company_name(class="input-field my-3 my-lg-3 mt-2 space", style="border:1px solid #2E2D7F;  padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", id="company_name", placeholder="eg. AbiTrack")}}
           
                   <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
                       <b>What is your email address? </b>
@@ -131,7 +131,7 @@
                   <h5 class="text-muted">
                       Your email address will be used as your username. We will not use your email address for marketing.
                   </h5>
-                  {{form.email(class="input-field my-3 my-lg-3 mt-2 space", type="email", id="email", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter email", id="email")}}
+                  {{form.email(class="input-field my-3 my-lg-3 mt-2 space", type="email", id="email", style="border:1px solid #2E2D7F; padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter email", id="email")}}
           
                   <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
                       <b>What category is your business?</b>
@@ -139,7 +139,7 @@
                   <h5 class="text-muted">
                       Select which category your business falls under.
                   </h5>
-                  {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", style="padding:20px; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", id="category", required='required') }}
+                  {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", style="padding:20px; border:1px solid #2E2D7F; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", id="category", required='required') }}
 
                   <button type="button" class="btn btn-primary has-before has-after my-3" onclick="validateAndNextStep()">Continue ></button>
           
@@ -157,7 +157,7 @@
                   <h5 class="text-muted">
                       This is used in relation to the user account.
                   </h5>
-                  {{form.name(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300px;box-shadow: var(--shadow-1);", placeholder="Enter Full Name", id="name")}}
+                  {{form.name(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border:1px solid #2E2D7F; border-radius:15px; width:100%;box-shadow: var(--shadow-1);", placeholder="Enter Full Name", id="name")}}
           
                   <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
                       <b>What is your phone number? </b>
@@ -165,7 +165,7 @@
                   <h5 class="text-muted">
                       We will not use your phone number for marketing.
                   </h5>
-                  {{form.phone(class="input-field my-3 my-lg-3 mt-2 space", type="number", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Phone number", id="phone")}}
+                  {{form.phone(class="input-field my-3 my-lg-3 mt-2 space", type="number", style="padding:15px; border-radius:15px; border:1px solid #2E2D7F; width:100%; box-shadow: var(--shadow-1);", placeholder="Phone number", id="phone")}}
           
                   <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
                       <b>What would you like to set as your account password? </b>
@@ -173,7 +173,7 @@
                   <h5 class="text-muted">
                       The password must contain at least 1 digit (0-9). The password must also contain at least 1 symbol and be at least 6 characters long.
                   </h5>
-                  {{form.password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter password", id="password")}}
+                  {{form.password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border:1px solid #2E2D7F; border-radius:15px; width:300%px;box-shadow: var(--shadow-1);", placeholder="Enter password", id="password")}}
           
                   <h3 class="" style="margin-bottom:10px; margin-top:20px; color:#000;">
                       <b>Please re-type your password:</b>
@@ -181,9 +181,9 @@
                   <h5 class="text-muted">
                       Please type your password again to ensure that it was entered correctly above.
                   </h5>
-                  {{form.confirm_password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var (--shadow-1);", placeholder="Confirm password", id="confirm_password")}}
+                  {{form.confirm_password(class="input-field my-3 my-lg-3 mt-2 space", type="password", style="padding:15px; border:1px solid #2E2D7F; border-radius:15px; width:300%px;box-shadow: var (--shadow-1);", placeholder="Confirm password", id="confirm_password")}}
           
-                  {{form.role(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; width:300%px;box-shadow: var (--shadow-1);", placeholder="Role", id="role")}}
+                  {{form.role(class="input-field my-3 my-lg-3 mt-2 space", style="padding:15px; border-radius:15px; border:1px solid #2E2D7F; width:300%px;box-shadow: var (--shadow-1);", placeholder="Role", id="role")}}
           
                   <div class="feature-card" style="margin-bottom:10px;">
                       <div class="card-icon">
