@@ -1404,31 +1404,6 @@ def support():
     return render_template("support.html")
 
 
-# @app.route('/askchat', methods=['GET', 'POST'])
-# def askchat():
-#     return render_template("askchat.html")
-
-# openai.api_key = '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'
-
-# @app.route('/ask_chatgpt', methods=['POST'])
-# def ask_chatgpt():
-#     # Get user input from the request
-#     user_input = request.json['input']
-    
-#     # Call OpenAI API to get ChatGPT response
-#     response = openai.Completion.create(
-#         engine="curie",
-#         prompt=user_input,
-#         max_tokens=50
-#     )
-    
-#     # Extract the response text from the API response
-#     chat_response = response.choices[0].text.strip()
-    
-#     # Return the response to the client
-#     return jsonify({'response': chat_response})
-
-
 @app.route('/stockmaster', methods=['GET', 'POST'])
 def stockmaster():
     return render_template("stockmaster.html")
@@ -2249,7 +2224,7 @@ def login():
         user = Person.query.filter_by(email=form.email.data).first()
         if user and user.password==form.password.data:
             login_user(user)
-            print ("Logged in:" + user.username + " " + user.email)
+            
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             if current_user.category == 'Manufacturing':
