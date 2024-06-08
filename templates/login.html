@@ -114,26 +114,31 @@
 <form action=" " class="form" method="POST"> 
   {{form.hidden_tag()}}
               
-              
+                  <h3 class="" style=" margin-top:20px; color:#000;">
+                    <b>Enter Your Email</b>
+                </h3>
                   <h5 class="text-muted" >
-       
-      Enter Email Here
-     </h5> 
-                <input type="email" name="email" placeholder="Enter email" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
+                     Your Email to enter into your account
+                  </h5> 
+                <input type="email" name="email" placeholder="Enter email" required class="input-field", style="padding:15px; border:1px solid #2E2D7F; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
                
-                <h5 class="text-muted" style="margin-top:20px;" >
+
+                <h3 class="" style=" margin-top:20px; color:#000;">
+                  <b>Enter Your Password</b>
+              </h3>
+                <h5 class="text-muted" >
        
-                  Enter Password Here
+                  More than 6 password entered here
                  </h5> 
-                <input type="password" name="password" placeholder="Enter password" required class="input-field", style="padding:15px; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
+                <input type="password" name="password" placeholder="Enter password" required class="input-field mb-3", style="padding:15px; border:1px solid #2E2D7F; border-radius:15px; width:300%px; box-shadow: var(--shadow-1);",  placeholder="Fullname",id="floatingInput", required="required">
                 
                 
                 
                 <div class="feature-card">
                   
-                  <div class="card-icon" >
+                 <!-- <div class="card-icon" >
                     <input type="checkbox" onclick="togglePasswordVisibility()" style="  ">
-                  </div>
+                  </div>-->
                
                   {{form.submit(class="btn btn-primary has-before has-after")}}
                 </div>
@@ -141,7 +146,7 @@
               
     
               </form>
-              <span> <a href="/choose" style="color: blue;">I dont have an account yet, Create Account?</a></span> 
+              <span> <a href="/choose" style="color: blue; margin-bottom:20px; margin-top:20px;">I dont have an account yet, Create Account?</a></span> 
                 <!-- <li>
                   <div class="feature-card">
   
