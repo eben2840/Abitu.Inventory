@@ -535,10 +535,10 @@ box-shadow: none;
   #HERO
 \*-----------------------------------*/
 
-.hero { padding-block-start: calc(var(--section-padding) + 60px); }
+/* .hero { padding-block-start: calc(var(--section-padding) + 60px); } */
 
 .hero .container {
-  display: grid;
+  display: flex;
   gap: 70px;
 }
 
@@ -1049,6 +1049,8 @@ box-shadow: none;
     transition: var(--transition-1);
   }
 
+
+  
   .navbar-link:is(:hover, :focus)::before { width: 100%; }
 
   .header .btn { display: inline-flex; }

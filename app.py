@@ -2242,83 +2242,48 @@ def login():
 
 @app.route('/signup', methods=['POST','GET'])
 def signup():
+    print("Starting signup...")
     form = Registration()
-    print(form.phone.data)
-    print(form.email.data)
-    print(form.name.data)
-    print(form.company_name.data)
-    print(form.password.data)
-    # print(form.category.data)
+    print(f"Form data: {form.data}")
+    
     if form.validate_on_submit():
-        checkUser = Person.query.filter_by(email = form.email.data).first()
+        print("Form validated successfully")
+        checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
             flash(f'This Email has already been used','danger')
-            return redirect (url_for ('signup'))
-        
-        # Check if the email is a Gmail address
-        if not is_gmail_address(form.email.data):
-            flash('Please provide a valid Gmail email address.', 'danger')
+            print("Email already in use")
             return redirect(url_for('signup'))
         
-        # if len(str(form.username.data)) != 4:
-        #     flash('Unique Code must be exactly 4 digits.', 'danger')
-        #     return redirect(url_for('signup'))
+        if not is_gmail_address(form.email.data):
+            flash('Please provide a valid Gmail email address.', 'danger')
+            print("Invalid email address")
+            return redirect(url_for('signup'))
 
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
+            print("Invalid password")
             return redirect(url_for('signup'))
         else:
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data, 
-                      
-                        role=form.role.data, 
+                        # role=form.role.data, 
                         category=form.category.data,
                         email=form.email.data,
-                        
                         phone=form.phone.data,
                         name=form.name.data)
             db.session.add(user)
             db.session.commit()
-            send_email()
-            # params = "New Account Created for " + new_user.username
-            # sendtelegram(params)
-            flash("We sent you a confirmation Email, kindly confirm your email.", 'success')
-           
-            # user = Person.query.filter_by(email = form.email.data).first()
+            # send_email()
+            # flash("We sent you a confirmation Email, kindly confirm your email.", 'success')
             login_user(user, remember=True)
+            print("User created and logged in successfully")
             return redirect (url_for('login'))
     else:
         print(form.errors)
-    # flash (f'There was a problem', 'danger')
-    # form = Registration()
-    # print(form.username.data)
-    # print(form.phone.data)
-    # print(form.email.data)
-    # print(form.name.data)
-    # print(form.company_name.data)
-    # print(form.password.data)
-    # if request.method == "POST": 
-    #     if form.validate_on_submit():
-    #         print('Success')
-    #         user =Person(password=form.password.data,
-    #                      company_name=form.company_name.data, 
-    #                      company_email=form.company_email.data, 
-    #                      category=form.category.data,
-    #                     #  password=form.password.data,
-    #                      email=form.email.data,username=form.username.data, phone=form.phone.data, name=form.name.data)
-    #         db.session.add(user)
-    #         db.session.commit()
-            
-    #         login_user(user, remember=True)
-    #         print(current_user)
-    #         flash ('Created Successfully','success')
-         
-    #         return redirect(url_for('login'))
-    #     else:
-    #         print(form.errors)
-            
+        print("Form validation failed")
+       
     return render_template('signup.html', form=form)
 
 # @app.route('/test_email_validation/<test_email>')
