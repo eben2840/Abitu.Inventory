@@ -1429,9 +1429,6 @@ def thank():
     return render_template("thank.html")
 
 
-@app.route('/stock', methods=['GET', 'POST'])
-def stock():
-    return render_template("stock.html")
 
 
 @app.route('/showchallenge', methods=['GET', 'POST'])
@@ -1968,6 +1965,11 @@ def instocklist(userid):
     return render_template("instocklist.html", profile=profile)
 
 
+@app.route('/stock', methods=['GET', 'POST'])
+def stock():
+    # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+    return render_template("stock.html",users=users)
 
 
 
@@ -2134,13 +2136,13 @@ def update(id):
     return render_template("leadersadd.html", form=form)
     
 #delete route
-@app.route("/delete/<int:id>")
-def deleteme(id):
-    delete=Getfunds.query.get_or_404(id)
+@app.route("/deleteproduct/<int:id>")
+def deleteproduct(id):
+    delete=Item.query.get_or_404(id)
     try:
             db.session.delete(delete)
             db.session.commit()
-            return redirect(url_for('main')) 
+            return redirect(url_for('instock')) 
     except: 
         return "errrrrorrr"
 

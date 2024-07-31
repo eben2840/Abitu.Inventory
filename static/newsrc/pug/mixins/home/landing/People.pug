@@ -1,0 +1,10 @@
+mixin People
+  section.bg-100.pb-0
+    .container
+        .row.flex-center
+          .col-xl-5.text-center.mb-5.z-index-1
+            h1.display-3.fw-bold.fs-4.fs-md-6 Supported by real people
+            p Our team of Happiness Engineers works remotely from 58 countries providing customer support across multiple time zones.
+    .position-relative.text-center
+      +Background({ attrs: { style: { "background": `url(${CWD}assets/img/gallery/people-bg-shape.png) no-repeat center bottom, url(${CWD}assets/img/gallery/people-bg-dot.png) no-repeat center bottom`} }, className: '' }) 
+      img.img-fluid.position-relative.z-index-1(src=`${CWD}assets/img/gallery/people.png` alt=''  )       

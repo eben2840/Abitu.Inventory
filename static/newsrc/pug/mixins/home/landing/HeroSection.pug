@@ -1,0 +1,19 @@
+mixin HeroSection
+  section.py-0.bg-light-gradient
+    +Background({ image: `${CWD}assets/img/illustrations/hero-bg.png`, attrs: { style: { 'background-position': 'top right', 'background-size': 'contain'} }, className: '' })
+    .container
+      .row.align-items-center
+        .col-lg-6.col-md-5.order-md-1.pt-8
+          img.img-fluid(src=`${CWD}assets/img/gallery/hero.png`  alt='')  
+
+        .col-md-7.col-lg-6.text-center.text-md-start.pt-5.pt-md-9
+          h1.display-2.fw-bold.fs-4.fs-md-5.fs-xl-6 Building exactly the 
+            br
+            |eCommerce website you want.
+          
+          p.mt-3.mb-4 WooCommerce is a customizable, open-source eCommerce platform built on WordPress.Get started quickly and make your way.
+          a.btn.btn-lg.btn-info.rounded-pill.me-2(href='#' role='button')
+            | Start a New Store 
+          span  or  
+          a.btn.btn-link.ps-1.ps-md-4.ps-lg-1(href='#' role='button')  Customize &amp; Extend ›
+

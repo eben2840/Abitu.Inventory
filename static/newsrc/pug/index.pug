@@ -1,0 +1,24 @@
+extends layouts/LayoutTheme
+include mixins/home/landing/HeroSection
+include mixins/home/landing/Features
+include mixins/home/landing/About
+include mixins/home/landing/Testimonial
+include mixins/home/landing/People
+include mixins/home/landing/Cta
+include mixins/home/landing/Footer
+
+
+append variables
+  - var currentPage = 'index'
+
+prepend scripts
+  
+
+append content
+  +HeroSection
+  +Features
+  +About
+  +Testimonial
+  +People
+  +Cta
+  +Footer

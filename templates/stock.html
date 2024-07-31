@@ -4,86 +4,117 @@
 <div class="container-fluid">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-success" role="alert">
-          {{ message }}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
         </div>
-        
-      {% endfor %}
+        {% endfor %}
     {% endif %}
     {% endwith %}
+    
     <div class="row g-6 mb-6">
-      
-        
-
-      <div class="card shadow border-0 mb-7">
-        <div class="card-header">
-            <h5 class="mb-0">Out-of Stock</h5>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-nowrap">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Product ID</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Condition</th>
-                       
-                        <th>Unit</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar-sm rounded-circle me-2">
-                            <a class="text-heading font-semibold" href="#">
-                                Robert Fox
-                            </a>
-                        </td>
-                        <td>
-                            ASD11324253
-                        </td>
-                        <td>
-                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
-                           -->
-                            <a class="text-heading font-semibold" href="#">
-                                Dribbble
-                            </a>
-                        </td>
-                        <td>
-                            GHC 3.500
-                        </td>
-                        <td>
-                            <span class="badge badge-lg badge-dot">
-                                <i class="bg-danger"></i>Out-of Stock
-                            </span>
-                        </td>
-                        <td>
-                            21
-                        </td>
-
-                        <td class="text-end">
-                            <a href="#" class="btn btn-sm btn-neutral">View</a>
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                        
-                    </tr>
-
-                   
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+        <div class="card shadow border-0 mb-7">
+            <div class="card-header">
+                <h5 class="mb-0">Out-of-Stock</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-nowrap">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Product ID</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Category</th>  
+                            <th scope="col">Condition</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %} 
+                        <tr>
+                            <td>{{ user.unique_code }}</td>
+                            <td><a class="text-heading font-semibold" href="#">{{ user.name }}</a></td>
+                            <td><a class="text-heading font-semibold" href="#">{{ user.group.name }}</a></td>
+                            <td>
+                                {% if user.quantity >= 20 %}
+                                <span class="badge badge-pill bg-soft-success text-success me-2">
+                                    <i class="bi bi-arrow-up me-1"></i>In-stock
+                                </span>
+                                {% elif user.quantity >= 10 %}
+                                <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                                    <i class="bi bi-dash me-1"></i>Low Stock
+                                </span>
+                                {% else %}
+                                <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                    <i class="bi bi-arrow-down me-1"></i>Out of Stock
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ user.quantity }}</td>
+                            <td>$ {{ user.price }}.00</td>
+                            <td>{{ user.start_date }}</td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-square btn-neutral dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/deleteproduct/{{ user.id }}"><i class="bi bi-trash"></i> Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer border-0 py-5">
+                <span class="text-muted text-sm">Showing all stock</span>
+            </div>
         </div>
     </div>
-  
- 
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Report</h1>
+                <div class="d-flex;">
+                    <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-{%endblock body%}
+<script>
+    function generateRandomCode() {
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var codeLength = 6;
+        var code = '';
+        for (var i = 0; i < codeLength; i++) {
+            var randomIndex = Math.floor(Math.random() * characters.length);
+            code += characters.charAt(randomIndex);
+        }
+        return code;
+    }
+
+    document.getElementById('faqForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var uniqueCode = generateRandomCode();
+        document.getElementById('uniqueCode').innerText = 'Unique Code: ' + uniqueCode;
+    });
+</script>
+{% endblock %}

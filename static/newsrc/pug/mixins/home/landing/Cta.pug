@@ -1,0 +1,15 @@
+mixin Cta
+  section.py-0
+    +Background({ image: `${CWD}assets/img/illustrations/cta-bg.png`, attrs: { style: { 'background-position': 'bottom right', 'background-size': '61px 60px','margin-top':'15px','margin-right':'15px','margin-left':'-58px'} }, className: 'z-index-2' })
+    .container-fluid.px-0
+      .card.py-4.border-0.rounded-0.bg-primary
+        .card-body
+          .row.flex-center
+            .col-xl-9.d-flex.justify-content-center.mb-3.mb-xl-0
+              h2.text-light.fw-bold WooCommerce - the most customizable eCommerce
+                br
+                |platform for building your online business.
+
+            .col-xl-3.text-center
+              a.btn.btn-lg.btn-outline-light.rounded-pill(href='#')
+                | GET STARTED

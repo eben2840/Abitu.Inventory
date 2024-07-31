@@ -143,9 +143,10 @@
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{{url_for("instocklist", userid=users.id)}}">  <i class="bi bi-clipboard2-data"></i> Report</a></li>
-      <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Update</a></li>
-      <li><a class="dropdown-item" href="#">  <i class="bi bi-trash"></i> Delete</a></li>
+        <!-- <li><a class="dropdown-item" href="{{url_for("instocklist", userid=users.id)}}">  <i class="bi bi-clipboard2-data"></i> Report</a></li>
+   
+       <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Update</a></li> -->
+      <li><a class="dropdown-item" href="/deleteproduct/{{users.id}}">  <i class="bi bi-trash"></i> Delete</a></li>
       <!--<li><hr class="dropdown-divider"></li>-->
     </ul>
   </div>
@@ -160,7 +161,7 @@
             </table>
         </div>
         <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+            <span class="text-muted text-sm">Showing all stock</span>
         </div>
     </div>
   

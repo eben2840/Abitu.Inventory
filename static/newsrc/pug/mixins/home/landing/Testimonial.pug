@@ -1,0 +1,43 @@
+mixin Testimonial
+  section.py-7.bg-light-gradient
+    +Background({ image: `${CWD}assets/img/gallery/testimonial-bg.png`, attrs: { style: { 'background-position': 'center center', 'background-size': 'contain',} }, className: '' }) 
+    .container
+      .row.flex-center.mb-5
+        .col-auto.text-center
+          h1.display-3.fw-bold.fs-4.fs-md-6 Trusted by Agencies
+            br
+            span &amp; Store Owners
+      .row.flex-center         
+        .col-12.col-md-9.col-lg-8.col-xl-7.col-xxl-6
+          #carouselExampleControls.carousel.slide.carousel-fade(data-bs-ride='carousel')
+            .carousel-inner.overflow-visible
+              .card.py-sm-6.px-sm-5.testimonial-card-shadow.shadow-sm(style="transform: translateY(52px) scale(.9)")
+              .card.py-sm-6.px-sm-5.testimonial-card-shadow.shadow-sm(style="transform: translateY(32px) scale(.934)")
+              .card.py-sm-6.px-sm-5.testimonial-card-shadow.shadow-sm
+              .carousel-item.z-index-1.active
+                .card.py-4.px-3.py-sm-6.px-sm-5.px-xl-7
+                  +Background({ image: `${CWD}assets/img/gallery/q.png`, attrs: { style: { 'background-position': 'center top', 'background-size': '150px',} }, className: 'mt-4' }) 
+                  .card-body.z-index-1
+                    p.card-text.fs-2.text-center No other eCommerce platform allows people to start for free and grow their store as their business grows. More importantly, WooCommerce doesn't charge you a portion of your profits as your business grows!
+                
+              .carousel-item.z-index-1
+                .card.py-4.px-3.py-sm-6.px-sm-5.px-xl-7
+                  +Background({ image: `${CWD}assets/img/gallery/q.png`, attrs: { style: { 'background-position': 'center top', 'background-size': '150px', 'height': '168px',} }, className: 'mt-4' }) 
+                  .card-body.z-index-1
+                    p.card-text.fs-2.text-center WooCommerce doesn't charge you a portion of your profits as your business grows! No other eCommerce platform allows people to start for free and grow their store as their business grows. More importantly
+              .carousel-item.z-index-1
+                .card.py-4.px-3.py-sm-6.px-sm-5.px-xl-7
+                  +Background({ image: `${CWD}assets/img/gallery/q.png`, attrs: { style: { 'background-position': 'center top', 'background-size': '150px', 'height': '168px',} }, className: 'mt-4' }) 
+                  .card-body.z-index-1
+                    p.card-text.fs-2.text-center More importantly, WooCommerce doesn't charge you a portion of your profits as your business grows! No other eCommerce platform allows people to start for free and grow their store as their business grows
+              
+            .row.mt-7.pe-6
+              .col-12.position-relative.text-end
+                a.carousel-control-prev(href='#carouselExampleControls' role='button' data-bs-slide='prev')
+                  span.carousel-control-prev-icon(aria-hidden='true')
+                  span.visually-hidden Previous
+                a.carousel-control-next(href='#carouselExampleControls' role='button' data-bs-slide='next')
+                  span.carousel-control-next-icon(aria-hidden='true')
+                  span.visually-hidden Next
+          
+  

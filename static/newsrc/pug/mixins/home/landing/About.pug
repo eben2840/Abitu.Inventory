@@ -1,0 +1,39 @@
+mixin ShapeUp
+  .shapeup
+    svg(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 319')
+      path(fill='#7854F7' fill-opacity='1' d='M0,64L120,69.3C240,75,480,85,720,85.3C960,85,1200,75,1320,69.3L1440,64L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z')
+
+mixin ShapeDown
+  .shapedown
+    svg(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 319')
+      path(fill='#7854F7' fill-opacity='1' d='M0,256L120,250.7C240,245,480,235,720,234.7C960,235,1200,245,1320,250.7L1440,256L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z')
+
+mixin About
+  +ShapeUp
+  section.pt-4.pt-md-5.bg-info
+    +Background({ image: `${CWD}assets/img/illustrations/about-bg.png`, attrs: { style: { 'background-position': 'center center', 'background-size': 'contain'} }, className: '' })
+    .container
+      .row.mb-5.text-center
+        .col-12.col-md-4.mb-4
+          img.img-fluid.rounded-3.shadow-lg.image-up(src=`${CWD}assets/img/gallery/about-2.png` alt='' )
+        .col-12.col-md-8.text-md-start(style='max-width: 460px;')
+          h3.fw-medium.text-light  Develop 
+            br
+            |Without Limits
+
+          p.text-light WooCommerce is developer friendly, too. Built with a REST API, WooCommerce is scalable and can integrate with virtually any service. Design a complex store from scratch, extend a store for a client, or simply add a single product to a WordPress site—your store, your way.
+          a.btn.btn-lg.btn-success.rounded-pill(href='#')
+            | Read the  Documentation
+
+      .row.flex-center
+        .col-12.col-md-4.order-0.order-md-1
+          img.img-fluid.rounded-3.shadow-lg.image-down(src=`${CWD}assets/img/gallery/about-1.png`  alt='' ) 
+        .col-12.col-md-8.text-center.text-md-start.order-1.order-md-0(style='max-width: 460px;')
+          h3.fw-medium.text-light Know our
+            br
+            |Global Community
+
+          p.text-light WooCommerce is one of the fastest-growing eCommerce communities. We’re proud that the helpfulness of the community and a wealth of online resources are frequently cited as reasons our users love it. There are 80+ meetups worldwide!
+          a.btn.btn-lg.btn-success.rounded-pill(href='#')
+            | Read the  Documentation
+  +ShapeDown          

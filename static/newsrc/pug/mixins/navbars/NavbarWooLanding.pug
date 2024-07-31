@@ -1,0 +1,29 @@
+mixin NavbarWooLanding
+  nav.navbar.navbar-expand-lg.navbar-light.fixed-top.py-3(data-navbar-on-scroll)
+    .container-fluid
+      a.navbar-brand(href='#')
+        img(src=`${CWD}assets/img/icons/logo.png` alt='' width='169' )
+      button.navbar-toggler.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.me-auto.ms-lg-4.ms-xl-7.border-bottom.border-lg-bottom-0.pt-2.pt-lg-0
+          li.nav-item
+            a.nav-link.fw-medium(aria-current='page', href='#' class= currentPage === 'index' ? 'active' : false ) Sell
+          li.nav-item
+            a.nav-link.fw-medium(href='#') Marketplace
+          li.nav-item
+            a.nav-link.fw-medium(href='#') Community 
+          li.nav-item
+            a.nav-link.fw-medium(href='#') Develop
+          li.nav-item
+            a.nav-link.fw-medium(href='#') Resources  
+        form.d-flex.py-3.py-lg-0
+          a.btn.btn-link.text-1000.fw-medium.order-1.order-lg-0.me-lg-2(href='#'  role='button') Log In
+          a.btn.btn-info.order-0.me-1(href='#'  role='button') Get Started
+          .d-flex.align-items-center.ps-lg-3.order-3
+            svg.bi.bi-search(xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#272D4E' viewBox='0 0 16 16')
+              path(d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z')
+           
+
+
