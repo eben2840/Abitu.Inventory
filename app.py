@@ -1422,7 +1422,7 @@ def homme():
     if current_user.is_authenticated:
         return redirect(url_for('homelook'))
     else:
-        return render_template("homme.html")
+        return render_template("newhome.html")
 
 @app.route('/thank', methods=['GET', 'POST'])
 def thank():
