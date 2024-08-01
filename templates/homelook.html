@@ -49,48 +49,72 @@
      </a>
     </div>-->
 
-    <div class="col-xl-8 col-sm-4 col-12" style="margin-bottom:20px;  ">
+    <div class="col-xl-9 col-sm-4 col-12" style="margin-bottom:20px;  ">
                 
         <a href="#" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
             <div class="card-body"> 
                 <div class="row">
                     <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                        <span class="h6 mb-3 font-semibold text-muted text-sm d-block mb-2">
                            Welcome to Abitu Industries</span>
                        
                      <span class="h3 font-bold mb-0">Welcome to your dashboard {{current_user.company_name}}</span>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-primary text-white text-lg square-circle">
-                            <i class="bi bi-ui-checks"></i>
+                            <i class="bi bi-ui-checks"></i> 
                         </div>
                     </div>
-                </div>     
+                   
+                </div> 
+                <hr>
+                <div class="row">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                              Accordion Item #1
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                              Accordion Item #2
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                          </div>
+                        </div>
+                        
+                      </div>
+            </div>
+               
+       
             </div>
         </div>
      </a>
     </div>
-    <div class="col-xl-4 col-sm-4 col-12">
+    <div class="col-xl-3 col-sm-4 col-12">
         <a href="#" style="text-decoration: none; color: #992621;">
             <div class="card shadow border-1">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-12 d-grid">
                             
                             
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                                Welcome to Abitu Industries</span>
-                             <span class="h font-bold m-0">Rate This Inventory System</span>
+                            <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
+                                Great Week {{current_user.name}}</span>
+                                <span class="h4 font-bold m-0 text-center mb-3">Your Workload is Amazing 🥳</span>
+                                <img src="static/assetss/images/1.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
                            
                         </div>
-                            <div class="col-lg-3">
-                                
-                            <div class="icon icon-shape bg-warning text-white text-lg square-circle mt-2">
-                                <i class="bi bi-star"></i>
-                            </div>
-                           
-                        </div>
+                            
                     
                 </div>
             </div>

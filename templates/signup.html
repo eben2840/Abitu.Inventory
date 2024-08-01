@@ -29,21 +29,24 @@
 
         <div class="form-part part-1">
           <h4><b>Tell us about your business</b></h4><br>
+         
           <span class="error-message" id="businessCategoryError" style="color:red;"></span>
           <label>What category is your business?</label>
           {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", id="businessCategory", style="padding:20px; border:1px solid #2E2D7F; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", required='required') }}
 
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-             Checkout Our <a href="">Terms, Privacy Policy</a>
-            </label>
-          </div>
+          
           <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(1)">Continue</button>
           <hr>
+          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+            <label class="form-check-label">
+              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+            </label>
+          </div>
+         
         </div>
 
         <div class="form-part part-2" style="display:none;">
-          <h4>Let's get started.</h4><br>
+          <h4><b>Let's get started.</b></h4><br>
 
           <span class="error-message" id="businessNameError" style="color:red;"></span>
           <label>What is your business name?</label>
@@ -57,14 +60,14 @@
           <label>What is your Phone Number?</label>
           <input type="text" name="phone" id="phoneNumber" style="width:100%; " placeholder="What is your phone number?" required />
 
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-             Checkout Our <a href="">Terms, Privacy Policy</a>
-            </label>
-          </div>
+         
           <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(2)">Continue</button>
           <hr>
-          <a href="/login"><button type="button" class="create-account" style="width:100%;">Already Have An Account</button></a>
+          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+            <label class="form-check-label">
+              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+            </label>
+          </div>
         </div>
 
         <div class="form-part part-3" style="display:none;">
@@ -82,15 +85,15 @@
           <label>Please re-type your password:</label>
           <input type="password" name="confirm_password" id="confirmPassword" style="width:100%;" placeholder="Confirm your password" required />
 
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-             Checkout Our <a href="">Terms, Privacy Policy</a>
-            </label>
-          </div>
+         
 
           <button type="button" class="login mb-4" style="width:100%;" onclick="validateAndShowNextPart(3)">Submit</button>
           <hr>
-          <a href="/login"><button type="button" class="create-account" style="width:100%;">Already Have An Account</button></a>
+          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+            <label class="form-check-label">
+              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+            </label>
+          </div>
         </div>
       </form>
     </div>

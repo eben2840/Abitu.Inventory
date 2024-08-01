@@ -36,6 +36,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("CENTRAL_MINISTRY_DB_URL","sqlite:///test.db")
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 app.config['SECRET_KEY'] ="thisismysecretkey"
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
 UPLOAD_FOLDER = 'uploads'
@@ -48,6 +49,10 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    session.modified = True 
 
 
 login_manager = LoginManager(app)
@@ -1474,18 +1479,26 @@ def constitution():
     return render_template("consti.html",users=users)
     
         
-
-       
 @app.route('/person', methods=['GET', 'POST'])
 def person():
     # users=Committee.query.order_by(Committee.id.desc()).all()
     return render_template("person.html")
+       
+@app.route('/history', methods=['GET', 'POST'])
+def history():
+    user = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).order_by(Item.id.desc()).all()
+    goal=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+    task=Challenge.query.filter_by(taskId=str(current_user.id)).order_by(Challenge.id.desc()).all()
+    
+    # users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    return render_template("history.html",task=task,goal=goal,user=user,users=users)
 
        
 @app.route('/personid', methods=['GET', 'POST'])
 def personid():
     # users=Committee.query.order_by(Committee.id.desc()).all()
-    return render_template("person  id.html")
+    return render_template("personid.html")
     
         
 
@@ -1569,6 +1582,7 @@ def main():
    
     current_time = datetime.now()
     # all_product= User.query.count()
+    
     # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
     outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).count()
     
@@ -1586,16 +1600,18 @@ def main():
         total_Faq = Faq.query.count()
         total_challenges = Challenge.query.count()
         total_message = Committee.query.count()
-        total_stock = Item.query.count()
+        # total_stock = Item.query.count()
+        
         total_cat = Groups.query.count() 
     else:
+        outstock = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).count()
         total_students = Item.query.filter_by(clientid=current_user.id).count()
         instock = Item.query.filter_by(clientid=current_user.id).count()
         total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
         total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
         total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
         total_message = Committee.query.filter_by(id=current_user.id).count()
-        total_stock = Item.query.filter_by(clientid=current_user.id).count()
+        total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
         total_cat = Groups.query.filter_by(userId=current_user.id).count()
     
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
@@ -2146,7 +2162,13 @@ def leader():
     print(current_user)
     return render_template("leader.html", users=users, current_user=current_user)
  
-
+@app.route('/log_inactivity', methods=['POST'])
+def log_inactivity():
+    data = request.get_json()
+    message = data.get('message', '')
+    if message:
+        app.logger.info(message)
+    return jsonify({"status": "success"})
 
 @app.route('/logout')
 @login_required
@@ -2333,7 +2355,7 @@ def login():
         user = Person.query.filter_by(email=form.email.data).first()
         if user and user.password==form.password.data:
             login_user(user)
-            
+             
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             if current_user.category == 'Manufacturing':
