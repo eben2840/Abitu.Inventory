@@ -12,6 +12,63 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
+    <div class="row g-6 mb-6" style="">
+        <div class="col-xl-6 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Estimated Amount</span>
+                         
+                            <tr>
+                                
+                                <td>
+                                    <a class="text-heading fs-1 font-semibold" href="#">
+                                       ${{ total_amount | int }} 
+                                    </a>
+                                </td>
+                          
+                            <span class="h3 font-bold mb-0">{{task_com}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+       
+            <div class="col-xl-6 col-sm-6 col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Estimated Product</span>
+                             
+                                <tr>
+                                    
+                                    <td>
+                                        <a class="text-heading fs-1 font-semibold" href="#">
+                                           $ {{total_sum}}
+                                        </a>
+                                    </td>
+                              
+                                <span class="h3 font-bold mb-0">{{task_com}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                    <i class="bi bi-folder"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
     <div class="row g-6 mb-6">
       
         
@@ -26,10 +83,11 @@
                     <tr>
                         <th scope="col">Product ID</th>
                         <th scope="col">Product</th>
-                        <th scope="col">Category</th>  
+                        <th scope="col">Warehouse</th>  
                         <th scope="col">Condition</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Total Price</th>
                         <th>Date</th>
                      <!--   <th>QR</th>-->
                        
@@ -113,7 +171,7 @@
                            $ {{users.price}}.00
                         </td>
                         
-                       
+                        <td>$ {{ users.quantity|float * users.price|float }}</td>
 
 
                         <td>

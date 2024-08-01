@@ -37,20 +37,27 @@
                             <td>{{ users.unique_code }}</td>
                             <td><a class="text-heading font-semibold" href="#">{{ users.name }}</a></td>
                             <td><a class="text-heading font-semibold" href="#">{{ users.group.name }}</a></td>
-                            <td>
-                                {% if users.quantity >= 20 %}
-                                <span class="badge badge-pill bg-soft-success text-success me-2">
-                                    <i class="bi bi-arrow-up me-1"></i>In-stock
-                                </span>
-                                {% elif users.quantity >= 10 %}
-                                <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                                    <i class="bi bi-dash me-1"></i>Low Stock
-                                </span>
-                                {% else %}
-                                <span class="badge badge-pill bg-soft-danger text-danger me-2">
-                                    <i class="bi bi-arrow-down me-1"></i>Out of Stock
-                                </span>
-                                {% endif %}
+                     
+                               
+                            
+                               <!-- Adjust the field according to your model -->
+                                    <td>
+                                        {% if users.quantity == 20 %}
+                                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                                            <i class="bi bi-arrow-up me-1"></i>In-stock
+                                        </span>
+                                        {% elif users.quantity == 10 %}
+                                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                                            <i class="bi bi-dash me-1"></i>Low Stock
+                                        </span>
+                                        {% else %}
+                                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                            <i class="bi bi-arrow-down me-1"></i>Out of Stock
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                             
+                               
                             </td>
                             <td>{{ users.quantity }}</td>
                             <td>$ {{ users.price }}.00</td>

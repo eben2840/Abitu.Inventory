@@ -166,7 +166,7 @@ class FaqForm(FlaskForm):
    
     submit = SubmitField('submit')
     
-   
+
 
     
 

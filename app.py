@@ -341,13 +341,22 @@ class Item(db.Model):
     unique_code = db.Column(db.String(12))
     name = db.Column(db.String())
     des=db.Column(db.String())
-    quantity = db.Column(db.String())
+    quantity = db.Column(db.Integer)  # Ensure this is Integer
     start_date = db.Column(db.Date)
-    price = db.Column(db.String)
+    price = db.Column(db.Float)
     serial = db.Column(db.String)
     tag = db.Column(db.String)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
 
+
+class QuantityChangeLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
+    deducted_quantity = db.Column(db.Integer, nullable=False)
+    change_date = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product = db.relationship('Item', backref=db.backref('logs', lazy=True))
+    user = db.relationship('User', backref=db.backref('logs', lazy=True))
 
 class Work(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -516,58 +525,48 @@ def generate_unique_code():
 # print("new code" + code)
 
 
-
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     form = AddItemForm()
     print("FORM DATA: ", form.data)
     form.group.choices = [(group.id, group.name) for group in Groups.query.filter_by(id=current_user.id).all()]
-    # filter_by(budgetId=current_user.id).order_by(Budget.id.desc())
     print("GROUP CHOICES: ", form.group.choices)
+    
     if form.validate_on_submit():
         unique_code = secrets.token_hex(6)
         item = Item(
             clientid=current_user.id,
-            unique_code = unique_code,
+            unique_code=unique_code,
             name=form.item_name.data,
             group_id=form.group.data,
             tag=form.tag.data,
             des=form.des.data,
             price=form.price.data,
-            quantity=form.quantity.data,
+            quantity=int(form.quantity.data),  # Convert to integer here
             serial=form.serial.data,
-            start_date=form.start_date.data 
+            start_date=form.start_date.data
         )
         try:
-                
-            # print('------ p{0}'.format(request.form))
-            db.session.add(item) 
+            db.session.add(item)
             db.session.commit()
             print("ITEM: ", item)
             print("ITEM ADDED TO DB")
         except Exception as e:
             print(e)
         
+        # Check the quantity directly as an integer
+        quantity_value = item.quantity
+        if quantity_value < 5:
+            flash(f"Low quantity (less than 5) of {item.name}!")
+        elif quantity_value < 10:
+            flash(f"Low quantity (less than 10) of {item.name}!")
         
-        print('Item.query.all()')
-        print(Item.query.all())
-        # print(form.name.data)
-        # print(form.group_id.data)
-        
-        if item.quantity and item.quantity.isdigit():
-            quantity_value = int(item.quantity)
-            if quantity_value < 5:
-                session['low_quantity_flash'] = f"Low quantity (less than 5) of {item.name}!"
-            elif quantity_value < 10:
-                session['low_quantity_flash'] = f"Low quantity (less than 10) of {item.name}!"
-        else:
-            session['low_quantity_flash'] = f"Invalid quantity format for {item.name}. Please enter a valid number."
-
         flash("Item added to the group successfully")
         return redirect(url_for('main'))
 
     print("FORM ERRORS: ", form.errors)
     return render_template('add_item.html', form=form)
+
 
     
 radio = 'yboateng057@gmail.com'
@@ -1451,10 +1450,13 @@ def task():
     # users=Challenge.query.order_by(Challenge.id.desc()).all()
     return render_template("task.html",users=users,task_com=task_com,task_In=task_In,task_pend=task_pend)
 
-@app.route('/auth', methods=['POST','GET'])
-def auth():
-    users=User.query.order_by(User.id.desc()).all()
-    return render_template("auth.html",users=users)
+# @app.route('/auth', methods=['POST','GET'])
+# def auth():
+#     users=User.query.order_by(User.id.desc()).all()
+#     return render_template("auth.html",users=users)
+
+# routes.py
+
  
        
 @app.route('/annoucement', methods=['GET', 'POST'])
@@ -1481,7 +1483,7 @@ def person():
 @app.route('/personid', methods=['GET', 'POST'])
 def personid():
     # users=Committee.query.order_by(Committee.id.desc()).all()
-    return render_template("personid.html")
+    return render_template("person  id.html")
     
         
 
@@ -1971,7 +1973,8 @@ def instocklist(userid):
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
-    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).order_by(Item.id.desc()).all()
+    # outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).order_by(Item.id.desc()).all()
+    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
     # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
     return render_template("stock.html",users=users)
 
@@ -1981,12 +1984,120 @@ def stock():
 
 @app.route('/instock', methods=['GET', 'POST'])
 def instock():
-    users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
-    print('users')
-    print(users)
-    instock = Item.query.filter_by(clientid=current_user.id).count() 
-    return render_template("instock.html",users=users,instock=instock)
+    users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    
+    total_amount = 0
+    total_sum = 0
+    
+    for user in users:
+        try:
+            # Convert price to float and quantity to int
+            price = float(user.price)
+            quantity = int(user.quantity)
+            total_amount += price
+            total_sum += price * quantity
+        except ValueError:
+            # Handle invalid data
+            flash('Invalid price or quantity found', 'warning')
+            continue
+    
+    instock = Item.query.filter_by(clientid=current_user.id).count()
+  
+    return render_template("instock.html",users=users,total_sum=total_sum,instock=instock,total_amount=total_amount)
 
+@app.route('/auth', methods=['GET', 'POST'])
+def auth():
+    users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    
+    total_amount = 0
+    total_sum = 0
+    
+    for user in users:
+        try:
+            # Convert price to float and quantity to int
+            price = float(user.price)
+            quantity = int(user.quantity)
+            total_amount += price
+            total_sum += price * quantity
+        except ValueError:
+            # Handle invalid data
+            flash('Invalid price or quantity found', 'warning')
+            continue
+    
+    instock = Item.query.filter_by(clientid=current_user.id).count()
+    return render_template("auth.html", users=users, total_sum=total_sum, instock=instock, total_amount=total_amount)
+
+# @app.route('/auth', methods=['GET', 'POST'])
+# def auth():
+#     users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+#     total_amount = sum(int(user.price) for user in users) 
+#     total_sum = sum(float(user.price) * int(user.quantity) for user in users if user.price.isdigit() and user.quantity.isdigit())
+#     print('users')
+#     print(users)
+#     instock = Item.query.filter_by(clientid=current_user.id).count() 
+#     # users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+#     return render_template("auth.html",users=users,total_sum=total_sum,instock=instock,total_amount=total_amount)
+
+@app.route('/product/<int:product_id>', methods=['GET', 'POST'])
+@login_required
+def product_details(product_id):
+    product = Item.query.get_or_404(product_id)
+    
+    if request.method == 'POST':
+        try:
+            deducted_quantity = int(request.form['quantity'])
+            
+        except ValueError:
+            flash('Invalid quantity', 'danger')
+            return redirect(url_for('product_details', product_id=product_id))
+        
+        if deducted_quantity > product.quantity:
+            flash('Deducted quantity cannot be greater than current quantity', 'danger')
+            return redirect(url_for('product_details', product_id=product_id))
+        
+        product.quantity -= deducted_quantity
+        db.session.commit()
+
+        # Log the change
+        log_entry = QuantityChangeLog(
+            product_id=product.id,
+            deducted_quantity=deducted_quantity,
+            user_id=current_user.id
+        )
+        db.session.add(log_entry)
+        db.session.commit()
+
+        flash('Quantity updated successfully', 'success')
+        return redirect(url_for('auth', product_id=product_id))
+    
+    return render_template('product_details.html', product=product)
+
+
+@app.route('/logme/<int:item_id>')
+@login_required
+def logme(item_id):
+    change_logs = QuantityChangeLog.query.filter_by(product_id=item_id).order_by(QuantityChangeLog.change_date.desc()).all()
+    item = Item.query.get(item_id)  # Fetch the item details
+    if not item:
+        flash('Item not found', 'danger')
+        return redirect(url_for('main'))  # Redirect to a default page or error page
+    return render_template('logs_page.html', change_logs=change_logs, item=item)
+
+
+# @app.route('/product/<int:product_id>', methods=['GET', 'POST'])
+# def product_details(product_id):
+#     product = Item.query.get_or_404(product_id)
+
+#     if request.method == 'POST':
+#         new_quantity = int(request.form.get('quantity'))
+#         product_quantity = int(product.quantity)
+#         product.quantity = product_quantity - new_quantity
+#         # product.price = calculate_new_price(product.quantity)  # Implement this function to update the price
+#         db.session.commit()
+#         flash('Product updated successfully!', 'success')
+#         return redirect(url_for('auth', product_id=product.id))
+
+#     return render_template('product_details.html', product=product)
 
 @app.route('/client', methods=['GET', 'POST'])
 def client():  

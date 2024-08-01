@@ -1,0 +1,41 @@
+{% extends 'landingpage2.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row g-6 mb-6">
+        <div class="col-12">
+            <div class="card shadow border-0 mb-7">
+                <div class="card-header">
+                    <h5 class="mb-0">Quantity Deduction Log for {{ item.name }}</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-nowrap">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Product ID</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Deducted Quantity</th>
+                                <th scope="col">Change Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in change_logs %}
+                            <tr>
+                                <td>{{ log.product.unique_code }}</td>
+                                <td>{{ log.product.name }}</td>
+                                <td>{{ log.deducted_quantity }}</td>
+                                <td>{{ log.change_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                               <!-- <td>{{ log.user.username }}</td>-->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer border-0 py-5">
+                    <span class="text-muted text-sm">Showing all quantity deductions for {{ item.name }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
