@@ -380,7 +380,9 @@ def calculate_workload_percentage(total_work, workload_limit):
     if workload_limit <= 0:
         return 0
     else:
-        return min(100, (total_work / workload_limit) * 100)
+        # return min(100, (total_work / workload_limit) * 100)
+        percentage = (total_work / workload_limit) * 100
+        return round(min(100, percentage), 2)
 
 
 if not os.path.exists(UPLOAD_FOLDER):
