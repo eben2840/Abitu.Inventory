@@ -1130,9 +1130,9 @@ def authtask():
     if form.validate_on_submit():
             new=Challenge(name=form.name.data, 
                           taskId=current_user.id,
+                          status=form.status.data,
                    tag=form.tag.data,
                    task=form.task.data,
-                   description=form.description.data,
                    start_date=form.start_date.data,  
                     end_date=form.end_date.data
                   )
@@ -1141,6 +1141,7 @@ def authtask():
             flash("You just added a New Task",
                   "success")
             return redirect('main')
+
     print(form.errors)
     return render_template("authtask.html", form=form)
 
@@ -1205,20 +1206,15 @@ def update_goals_status(id,status):
         flash ("Status Successfully Changed")
     return redirect (url_for('showchallenge'))
 
+
 @app.route('/update_task_status/<int:id>/<string:status>', methods=['POST', 'GET'])
 def update_task_status(id,status):
-    # print("Update_claim_status")
-    print("id:",id)
-    print("status:",status)
     try:
-        task= Faq.query.get_or_404(id)
-        print("task:",task)
+        task=Challenge.query.get_or_404(id)
         task.status=status
         db.session.commit()
-        print("task.status:",task.status)
     except Exception as e:
         print(e)
-        print("status:",task.status)
         flash ("Status Successfully Changed")
     return redirect (url_for('task'))
 
@@ -1231,7 +1227,6 @@ def authchallenge():
         
             new=Faq(
                 faqid=current_user.id,
-                status=form.status.data, 
                 caption=form.caption.data, 
                 answers=form.answers.data, 
                 campus=form.campus.data, 
@@ -1433,21 +1428,28 @@ def thank():
 
 @app.route('/showchallenge', methods=['GET', 'POST'])
 def showchallenge():
+    task_com = Faq.query.filter_by(faqid=current_user.id, status='completed').count()
+    task_pend = Faq.query.filter_by(faqid=current_user.id, status='pending').count()
+    task_In = Faq.query.filter_by(faqid=current_user.id, status='in-progress').count()
     if current_user.role =='admin':
         users=Faq.query.order_by(Faq.id.desc()).all()
     else:
         users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
-    return render_template("showchallenge.html",users=users)
+    return render_template("showchallenge.html",users=users,task_com=task_com,task_In=task_In,task_pend=task_pend)
 
 
 @app.route('/task', methods=['GET', 'POST'])
 def task():
+    # users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+    task_com = Challenge.query.filter_by(taskId=current_user.id, status='completed').count()
+    task_pend = Challenge.query.filter_by(taskId=current_user.id, status='pending').count()
+    task_In = Challenge.query.filter_by(taskId=current_user.id, status='in-progress').count()
     if current_user.role == 'admin':
         users=Challenge.query.order_by(Challenge.id.desc()).all()
     else:
-        users=Challenge.query.filter_by(id=str(current_user.id)).order_by(Challenge.id.desc()).all()
+        users=Challenge.query.filter_by(taskId=str(current_user.id)).order_by(Challenge.id.desc()).all()
     # users=Challenge.query.order_by(Challenge.id.desc()).all()
-    return render_template("task.html",users=users)
+    return render_template("task.html",users=users,task_com=task_com,task_In=task_In,task_pend=task_pend)
 
 @app.route('/auth', methods=['POST','GET'])
 def auth():
@@ -1491,6 +1493,8 @@ def budget():
     else:
         users=Budget.query.filter_by(budgetId=str(current_user.id)).order_by(Budget.id.desc()).all()
         
+    users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in users) 
     
     form=Budgetform()
     if form.validate_on_submit():
@@ -1506,7 +1510,7 @@ def budget():
             return redirect('budget')
     
     print(form.errors)
-    return render_template("budget.html", form=form, title='addalumni',users=users)
+    return render_template("budget.html",total_budget =total_budget , form=form, title='addalumni',users=users)
 
 
  
@@ -1585,7 +1589,7 @@ def main():
         instock = Item.query.filter_by(clientid=current_user.id).count()
         total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
         total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
-        total_challenges = Challenge.query.filter_by(id=current_user.id).count()
+        total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
         total_message = Committee.query.filter_by(id=current_user.id).count()
         total_stock = Item.query.filter_by(clientid=current_user.id).count()
         total_cat = Groups.query.filter_by(userId=current_user.id).count()
@@ -1967,8 +1971,8 @@ def instocklist(userid):
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
+    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).order_by(Item.id.desc()).all()
     # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
-    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
     return render_template("stock.html",users=users)
 
 
@@ -1977,20 +1981,10 @@ def stock():
 
 @app.route('/instock', methods=['GET', 'POST'])
 def instock():
-    if current_user.role =='admin':  
-        users=Item.query.order_by(Item.id.desc()).all()
-    else:
-        users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    users=Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
     print('users')
     print(users)
-    
-    
-    if current_user.role =='admin':  
-        instock = Item.query.count()
-    else:
-        instock = Item.query.filter_by(clientid=current_user.id).count()
-       
-        
+    instock = Item.query.filter_by(clientid=current_user.id).count() 
     return render_template("instock.html",users=users,instock=instock)
 
 

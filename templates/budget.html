@@ -12,6 +12,38 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <div class="row g-6 mb-6" style="">
+        <div class="col-xl-6 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Budget Spent</span>
+                         
+                            <tr>
+                                
+                                <td>
+                                    <a class="text-heading fs-1 font-semibold" href="#">
+                                       ${{ total_budget | int }}
+                                    </a>
+                                </td>
+                          
+                            <span class="h3 font-bold mb-0">{{task_com}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+       
+        
+    </div>
     <div class="row g-6 mb-6">
       
         
@@ -39,7 +71,9 @@
                 <tr>
                     <td>
                         <a class="text-heading font-semibold" href="#">
-                            {{ form.budget(class="p-3", placeholder="Enter Amount", type="number") }}
+                            <div class="input-group mb-3">
+                                <input type="number" name="budget" class="form-control" placeholder="Amount..." aria-label="Username" aria-describedby="basic-addon1">
+                              </div>
 
                         </a>
                     </td>
@@ -74,7 +108,7 @@
                         
                         <td>
                             <a class="text-heading font-semibold" href="#">
-                                Ghc {{users.budget}}
+                                ${{users.budget}}
                             </a>
                         </td>
                        
@@ -99,7 +133,7 @@
                         <td class="text-end">
                            <!-- <a href="#" class="btn btn-sm btn-neutral">Update</a>-->
                             <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                <i class="bi bi-box-arrow-right"></i>
+                                <i class="bi bi-box-trash"></i>
                             </button>
                         </td>
                     </tr>

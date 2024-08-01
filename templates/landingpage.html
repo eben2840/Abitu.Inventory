@@ -128,15 +128,15 @@
                             <i class="bi bi-house"></i> Home
                         </a>
                     </li>
-
+<!--
                     <li class="nav-item active">
                         <a class="nav-link" href="/indox">
                             <i class="bi bi-envelope-check"></i> Indox
                         </a>
-                    </li>
+                    </li>-->
 
 
-{% if current_user.role == 'admin'%}
+<!--{% if current_user.role == 'admin'%}
                     <li class="nav-item active">
                         <a class="nav-link" href="/client">
                             <i class="bi bi-envelope-check"></i> All Client
@@ -151,27 +151,40 @@
                     </li>
                     
 
-{% endif %}
+{% endif %}-->
                     <li class="nav-item active">
                         <a class="nav-link" href="/main">
                             <i class="bi bi-calendar-check"></i> Dashboard
                         </a>
                     </li>
 
-                    {% if current_user.category == "Manufacturing" %}
+                 
                     <li class="nav-item active">
                         <a class="nav-link" href="/auth">
-                            <i class="bi bi-filetype-doc"></i> Docs
+                            <i class="bi bi-bookmark-plus"></i>Purchase Order
                         </a>
                     </li>
-                    {% endif %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authchallenge">
+                            <i class="bi bi-trophy"></i> Set goals
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authtask">
+                            <i class="bi bi-check2-circle"></i>Set a task 
+                        </a>
+                    </li>
+                
+
 
                     
-                    <li class="nav-item">
+                   <!-- <li class="nav-item">
                         <a class="nav-link" href="/analytics">
                             <i class="bi bi-bar-chart"></i> Analytics
                         </a>
-                    </li>
+                    </li>-->
                    <!--<li class="nav-item">
                         <a class="nav-link" href="/authmessage">
                             <i class="bi bi-send"></i> Send Notification
@@ -219,7 +232,7 @@
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
-                         Products
+                        WareHouse
                           <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
                       -->
                               </div>
@@ -233,13 +246,13 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/group">
-                            <i class="bi bi-bookmark-plus"></i>Create a category
+                            <i class="bi bi-ui-checks"></i>Create Warehouse
                         </a>
                     </li>
 
                  <li class="nav-item">
                         <a class="nav-link" href="/add_item">
-                            <i class="bi bi-ui-checks"></i> Add a products
+                            <i class="bi bi-plus"></i> Add a products
                         </a>
                     </li>
 
@@ -259,18 +272,7 @@
                         </a>
                     </li>-->
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/authchallenge">
-                            <i class="bi bi-trophy"></i> Set goals
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/authtask">
-                            <i class="bi bi-check2-circle"></i>Set a task 
-                        </a>
-                    </li>
-                
+                   
                   
                    
                     

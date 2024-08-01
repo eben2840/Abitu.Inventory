@@ -12,14 +12,72 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <div class="row g-6 mb-6" style="">
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task Completed</span>
+                            <span class="h3 font-bold mb-0">{{task_com}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task In-Progress</span>
+                            <span class="h3 font-bold mb-0">{{task_In}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task Pending</span>
+                            <span class="h3 font-bold mb-0">{{task_pend}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row g-6 mb-6">
       
         
 
       <div class="card shadow border-0 mb-7">
         <div class="card-header d-flex" style="justify-content:space-between;">
-            <h5 class="mb-0">Task</h5>
-          <a href="/authtask">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-plus"></i>Add New</h5></a>
+            <h5 class="mb-0">My Task Load</h5>
+          <a href="/authtask">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-download"></i> Download</h5></a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
@@ -27,15 +85,16 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Tag</th>
-                        <th scope="col">Condition</th>
+                      
                         <th scope="col">Unique Number</th>
                         <!--<th scope="col">Description</th>-->
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                         <th scope="col">Status</th>
+                        <th scope="col"></th>
                        
-                        <th></th>
-                        <th></th>
+                    
+                     
                     </tr>
                 </thead>
                 <tbody>
@@ -66,36 +125,15 @@
                             <i class="bi bi-arrow-up me-1"></i>{{ users.tag }}
                         </span>
                         {% endif %}
-                            <!--<span class="badge badge-lg badge-dot">
-                                {{users.tag}}
-                            </span>-->
+                           
                         </td>
 
-                        <td>
-                            <span class="badge badge-lg badge-dot">
-                                In-progress
-                            </span>
-                        </td>
-                        <td>
-                            {{users.description}}
-                        
-
-                        <td>
-                            <!--<td>
                        
-
-                          
-                            
-                            <a class="text-heading font-semibold" href="#">
-                                {{users.task}} 
-                            </a>
-                        </td>-->
-
-                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
-                           -->
-                           <!-- <a class="text-heading font-semibold" href="#">
-                                {{users.caption}}
-                            </a>-->
+                        <td>
+                            Qwbiw12b
+                        </td>
+                    
+                        <td>
                             <span class="badge badge-lg badge-dot">
                                 <i class="bg-success"></i>{{users.start_date}}
                             </span>
@@ -108,7 +146,8 @@
                             </span>
                         </td>
                        
-                        <td>
+                     
+                            <td>
                             {% if users.status == 'pending'%}
                             <span class="badge badge-pill bg-soft-warning text-dark me-2">
                                 {% elif users.status == 'in-progress'%}
@@ -117,23 +156,26 @@
                                 <span class="badge badge-pill bg-soft-success text-dark me-2">
                                   
                                 {%endif%}
-                                    {{users.status}}
-                        <td>
+                                 
+                               {{ users.status}}
+                              
+                            </td>
+
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a  class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='pending')}}">Pending</a></li>
+                                      <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='in-progress')}}">In-progress</a></li>
+                                      <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='completed')}}">Completed</a></li>
+                                    </ul>
+                                  </div>
+                            </td>
+
+
                        
-
-
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Actions
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a  class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='pending')}}">Pending</a></li>
-                                  <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='in-progress')}}">In-progress</a></li>
-                                  <li><a class="dropdown-item" href="{{url_for('update_task_status', id=users.id, status='completed')}}">Completed</a></li>
-                                </ul>
-                              </div>
-                        </td>
                     </tr>
 
                     {%endfor%}

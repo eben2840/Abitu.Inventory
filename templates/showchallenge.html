@@ -12,14 +12,71 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
+    <div class="row g-6 mb-6" style="">
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task Completed</span>
+                            <span class="h3 font-bold mb-0">{{task_com}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task In-Progress</span>
+                            <span class="h3 font-bold mb-0">{{task_In}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Task Pending</span>
+                            <span class="h3 font-bold mb-0">{{task_pend}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row g-6 mb-6">
       
         
 
       <div class="card shadow border-0 mb-7">
         <div class="card-header d-flex" style="justify-content:space-between;">
-            <h5 class="mb-0">Challenges</h5>
-          <a href="/authchallenge">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-plus"></i>Add New</h5></a>
+            <h5 class="mb-0">My Target Goal</h5>
+          <a href="/authchallenge">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-download"></i> Download</h5></a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
@@ -27,9 +84,10 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Tag</th>
-                        <th scope="col">Condition</th>
+                       
                        <!-- <th scope="col">Challenge</th>-->
-                        <th scope="col">Start Time</th>
+                       <th scope="col">Unique Code</th>
+                       <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                         <th scope="col">Status</th>
                         <th></th>
@@ -64,27 +122,15 @@
                         </span>
                         {% endif %}
                         
-                            <!--<span class="badge badge-lg badge-dot">
-                                <i class="bg-success"></i>{{users.campus}}
-                            </span>-->
+                         
                         </td>
 
-                        <td>
-                            <span class="badge badge-lg badge-dot">
-                               In-progress
-                            </span>
-                        </td>
 
                         
-                      <!--  <td>
-                            {{users.caption}}
-                        <td>-->
+                         <td>
+                            A2as13212w
+                         </td>
 
-                            <!-- <img alt="..." src="#" class="avatar avatar-xs rounded-circle me-2">
-                           -->
-                           <!-- <a class="text-heading font-semibold" href="#">
-                                {{users.caption}}
-                            </a>-->
                             <td>
                             <span class="badge badge-lg badge-dot">
                                 <i class="bg-success"></i>{{users.start_date}}
@@ -137,7 +183,7 @@
             </table>
         </div>
         <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing all Challenges</span>
+            <span class="text-muted text-sm">Showing Goals</span>
         </div>
     </div>
   

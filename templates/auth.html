@@ -12,90 +12,38 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
+   
     <div class="row g-6 mb-6">
       
         
 
       <div class="card shadow border-0 mb-7">
         <div class="card-header d-flex" style="justify-content:space-between;">
-            <h5 class="mb-0">Docs</h5>
-          <a href="/addalumni">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-plus"></i>Add New</h5></a>
+            <h5 class="mb-0">Purchase Order</h5>
+          <a href="/addalumni">  <h5 class="mb-0 bg-primary text-white p-2" style="border-radius:5px; font-size:13px;"> <i class="bi bi-download"></i> Download</h5></a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Number</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Tags</th>
+                   
                        
-                        <th scope="col">Comment</th>
-                        
-                        <th></th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">WareHouse</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Condition</th>
+                        <th scope="col">Quantity</th>
+                        <th>Action </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {%for users in users%} 
-                    <tr>
-                        <td>
-                            <img src={{users.image_file}} class="avatar avatar-sm rounded-circle me-2">
-                            <a class="text-heading font-semibold" href="#">
-                                {{users.qualities}}
-                            </a>
-                        </td>
-
-                        <td>
-                           {{users.reason}}
-                        </td>
-
-                        <td>
-                            {% if users.campus == 'High' %}
-                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
-                            <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
-                        </span>
-                        {% elif users.campus == 'Medium' %}
-                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                            <i class="bi bi-dash me-1"></i>{{ users.campus }}
-                        </span>
-                        {% elif users.campus == 'Low' %}
-                        <span class="badge badge-pill bg-soft-success text-success me-2">
-                            <i class="bi bi-arrow-down me-1"></i>{{ users.campus }}
-                        </span>
-
-                        {% else %}
-                        <span class="badge badge-pill  text-success me-2">
-                            <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
-                        </span>
-                        {% endif %}
-                        </td>
-
-                        <td>
-                            <span class="badge badge-pill bg-soft-warning text-black me-2">
-                                <i class="bg-success"></i> {{users.fullname}}
-                            </span>
-                        </td>
-
-                       
-                       
-                       
-                        <td>
-                            {{users. position}} 
-                        </td>
-                        
-                        <td class="text-end">
-                            <a href="#" class="btn btn-sm btn-neutral">Update</a>
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    {%endfor%}
+                    <td>
+                    </td>
+                   
                 </tbody>
             </table>
         </div>
-        <div class="card-footer border-0 py-5">
-            <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+            <span class="text-muted text-sm"></span>
         </div>
     </div>
   

@@ -8,28 +8,42 @@
         
         <div class="col-lg-12">
   
-    <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
+    <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:10px;">
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
+       <hr>
         <div class="alert alert-success" style="margin-top:30px;" role="alert">
             <h6>
-            Choose any of the option categories.
+            Choose your optional warehouse categories.
             </h6>  
            </div>
         {{ form.hidden_tag() }}
+       
+    
+        <label for="basic-url" class="form-label">Enter The Name: <span class="text-danger">*</span></label>
+        <div class="input-group mb-3">
+          {{form.name(type="text", class="form-control", placeholder="WareHouse Name")}}
+        </div>
+    
+       <label for="basic-url" class="form-label">Choose A Category: <span class="text-danger">*</span></label>
+        <div class="input-group mb-3">
+          {{form.manufacturing(type="text", class="form-control", placeholder="Recipient's username")}}
+        </div>
 
-
-
-
-        <label for="#">{{current_user.category}} Category:</label>
-        {{ form.manufacturing(class="input-field", style="width:100%;" , placeholder="Category Name") }}
+       
+    
+    
+    <hr>
         
-        <br>
+        <label for="basic-url" class="form-label fs-5">Choose A date <span class="text-danger">*</span></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">{{ form.start_date.label }}</span>
+         {{ form.start_date( class="form-control" ,required="required") }}
+          
+        </div>
 
 
-        <label for="name">Create a Category:</label>
-        {{ form.name(class="input-field", style="width:100%;" , placeholder="Category Name") }}
-        <br>
-        <p><label for="name">Date of entry:</label>{{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
-       <br>
+
+        
         {{ form.submit(class="btn btn-primary" , style="width:100%;" ) }}
     </form>
 

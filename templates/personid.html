@@ -18,35 +18,73 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-center">
-          <a href="#" class="avatar avatar-xl rounded-circle">
-            <img alt="..." src="https://images.unsplash.com/photo-1579463148228-138296ac3b98?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80">
-          </a>
+          <div class="row">
+            <div class="col-12 col-lg-12 text-center">
+              <span class="d-block text-sm">Personal Information</span>
+            </div>
+            <div class="col-12 col-lg-12 text-center">
+              <a href="#" class="h5 font-bolder mb-0">My Information</a>
+            </div>
+          </div>
         </div>
-        <div class="text-center my-6">
-          <!-- Title -->
-          <a href="#" class="d-block h5 mb-0">{{current_user.name}}</a>
-          <!-- Subtitle -->
-          <span class="d-block text-sm text-muted">{{current_user.email}}</span>
+        
+        <hr>
+        
+        <div class="row">
+          <div class="col-4 col-lg-4 text-center text-align-left text-left">
+            <span class="d-block text-sm text-align-left text-left" style="text-align:left;">Email:</span>
+          </div>
+          <div class="col-8 col-lg-8 text-center text-align-left text-left">
+            <a href="#" class="h5 font-bolder mb-0 align-left" style="text-align:left;">{{current_user.email}}</a>
+          </div>
         </div>
-        <!-- Stats -->
-        <div class="d-flex">
-          
-          <div class="col-4 text-center">
-            <a href="#" class="h4 font-bolder mb-0">Delta state Nigeria</a>
-            <span class="d-block text-sm">Location</span>
+
+      
+        <hr>
+        
+        <div class="row">
+          <div class="col-4 col-lg-4 text-center text-align-left text-left">
+            <span class="d-block text-sm text-align-left text-left" style="text-align:left;">Name:</span>
           </div>
-          <div class="col-4 text-center">
-            <a href="#" class="h4 font-bolder mb-0">{{current_user.name}}</a>
-            <span class="d-block text-sm">Admin</span>
+          <div class="col-8 col-lg-8 text-center text-align-left text-left">
+            <a href="#" class="h5 font-bolder mb-0 text-align-left text-left" style="text-align:left;">{{current_user.name}}</a>
           </div>
-          <div class="col-4 text-center">
-            <a href="#" class="h4 font-bolder mb-0">{{current_user.phone}}</a>
-            <span class="d-block text-sm">Mobile Number</span>
+        </div>
+
+        <hr>
+       
+          <div class="row">
+          <div class="col-4 col-lg-4 text-center">
+            <span class="d-block text-sm" style="text-align:left;">Category:</span>
           </div>
-          
+          <div class="col-8 col-lg-8 text-center">
+            <a href="#" class="h5 font-bolder mb-0" style="text-align:left;">{{current_user.category}}</a>
+          </div>
+        </div>
+
+        <hr>
+        
+        <div class="row">
+          <div class="col-4 col-lg-4 text-center">
+            <span class="d-block text-sm" style="text-align:left;">Company Name:</span>
+          </div>
+          <div class="col-8 col-lg-8 text-center">
+            <a href="#" class="h5 font-bolder mb-0" style="text-align:left;">{{current_user.company_name}}</a>
+          </div>
+        </div>
+
+        <hr>
+        
+        <div class="row">
+          <div class="col-4 col-lg-4 text-center">
+            <span class="d-block text-sm" style="text-align:left;">Phone Number</span>
+          </div>
+          <div class="col-8 col-lg-8 text-center" style="text-align:left;">
+            <a href="#" class="h5 font-bolder mb-0" style="text-align:left;">{{current_user.phone}}</a>
+          </div>
+        </div>
          
         </div>
-      </div>
     </div>
 
 {%endblock body%}

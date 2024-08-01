@@ -52,7 +52,6 @@ class ChallengesForm(FlaskForm):
     name = StringField('name')
     tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     task = StringField('task')
-    description = StringField('description')
     start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
    

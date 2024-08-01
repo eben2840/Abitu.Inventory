@@ -14,7 +14,7 @@
 {% endwith %}
 
 <div class="row">
-  <div class="col-lg-6">
+ <!-- <div class="col-lg-6">
 <form action="" class="form" method="POST", "GET" style="margin-bottom:20px; border-radius:20px;"> 
     
   <img src="https://cdn.monday.com/images/homepage-desktop/templates-banner.png" style="width:100%; ">
@@ -37,26 +37,51 @@
        
 
 
-</div>
-<div class="col-lg-6"  style="background-color:#fff; padding:30px; border-radius:20px;">
+</div>-->
+<div class="col-lg-12"  style="background-color:#fff; padding:30px; border-radius:10px;">
   <form action="" class="form" method="POST", "GET"> 
-      
-    <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add a New Goal</h6>
-      
     {{form.hidden_tag()}}
      
   
+    <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Target Goal</h6>
+   <hr>
+   
+   <label for="basic-url" class="form-label">Enter Goal Title <span class="text-danger">*</span></label>
+    <div class="input-group mb-3">
+      <input type="text" name="answers" class="form-control" placeholder="Title..." aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+   <label for="basic-url" class="form-label">Choose A Tag <span class="text-danger">*</span></label>
+    <div class="input-group mb-3">
+      {{form.campus(type="text", class="form-control", placeholder="Recipient's username")}}
+    </div>
+
+
+    <label for="basic-url" class="form-label">Enter Goal Description <span class="text-danger">*</span></label>
+    <div class="input-group">
+      <span class="input-group-text">Description</span>
+      <textarea class="form-control" name="caption" aria-label="With textarea"></textarea>
+    </div>
+      <div class="form-text mb-5" id="basic-addon4">Keep description short and clean to remember</div>
+<hr>
+
+    
+    <label for="basic-url" class="form-label fs-5">Choose A date <span class="text-danger">*</span></label>
+    <div class="input-group mb-3">
+      <span class="input-group-text">{{ form.start_date.label }}</span>
+     {{ form.start_date( class="form-control" ,required="required") }}
+      
+      <span class="input-group-text">{{ form.end_date.label }}</span>
+      {{ form.end_date( class="form-control" ,required="required") }}
+    </div>
+    
+    
+  
     
      
   
   
     
-      {{form.answers( class="input-field", type="text", placeholder="Title of Goal",id="floatingInput", style="width:100%;", required="required")}}
-      {{form.campus( class="input-field", placeholder=" Add Tag",id="floatingInput", style="width:100%;", required="required")}}
-      {{form.caption( class="input-field", type="text", placeholder=" Description",id="floatingInput", style="width:100%;", required="required")}}
-        <p>{{ form.start_date.label }} {{ form.start_date( class="input-field", id="floatingInput", style="width:100%;", required="required") }}</p>
-          <p>{{ form.end_date.label }} {{ form.end_date ( class="input-field", id="floatingInput", style="width:100%;", required="required")  }}</p> 
-      
       {{form.submit(class="btn btn-primary has-before has-after", style="width:100%;")}}
     </form>
           
