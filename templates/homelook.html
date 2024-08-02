@@ -115,7 +115,7 @@
                 <div class="card-body ">
                     <div class="row ">
                         <div class="col-lg-12 d-grid  ">
-                            {% if workload_percentage < 50 %}
+                            {% if workload_percentage < 40 %}
                             <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                                 Your first Badge {{current_user.name}}</span>
                                 <span class="h4 font-bold m-0 text-center mb-3">Growing your Workload</span>
@@ -124,7 +124,7 @@
                         <span class="badge badge-pill bg-soft-danger text-danger me-2">
                             <i class="bi bi-arrow-down me-1"></i>{{ workload_percentage }}%
                         </span>
-                        {% elif workload_percentage >= 50 and workload_percentage <= 80 %}
+                        {% elif workload_percentage >= 40 and workload_percentage <= 60 %}
                         <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                             Great Week Ago{{current_user.name}}</span>
                             <span class="h4 font-bold m-0 text-center mb-3">Your Workload is Growing 🥳</span>
@@ -133,11 +133,20 @@
                         <span class="badge badge-pill bg-soft-warning text-warning me-2">
                             <i class="bi bi-dash me-1"></i>{{ workload_percentage }}%
                         </span>
-                        {% else %}
+                        {% elif workload_percentage >= 60 and workload_percentage <= 80 %}
                         <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                            At Your Best {{current_user.name}}</span>
                             <span class="h4 font-bold m-0 text-center mb-3">Your Workload is Amazing 🥳</span>
                         <img src="static/assetss/images/2.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
+                       
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>{{ workload_percentage }}%
+                        </span>
+                        {% else %}
+                        <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
+                           Great Job {{current_user.name}}</span>
+                            <span class="h4 font-bold m-0 text-center mb-3">You Just Capped Your Highest 🥳</span>
+                        <img src="static/assetss/images/mod.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
                        
                         <span class="badge badge-pill bg-soft-success text-success me-2">
                             <i class="bi bi-arrow-up me-1"></i>{{ workload_percentage }}%
