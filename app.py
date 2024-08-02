@@ -1592,6 +1592,7 @@ def main():
     weekly_work = calculate_weekly_work()
     workload_limit = 1000  
     workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
+    
     # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
     if current_user.role =="admin":
         total_students = Item.query.count()
@@ -1657,6 +1658,11 @@ def homelook():
     
     print(form.errors)
     
+    weekly_work = calculate_weekly_work()
+    workload_limit = 1000 
+    workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
+   
+    
     current_hour = datetime.now().hour
     greeting = ""
     
@@ -1695,7 +1701,7 @@ def homelook():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
-    return render_template('homelook.html',instock = instock, title='dashboard',user=user, 
+    return render_template('homelook.html',workload_percentage=workload_percentage,instock = instock, title='dashboard',user=user, 
                      current_time=current_time,   low_quantity_flash=low_quantity_flash, greeting=greeting, 
                          form=form, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
