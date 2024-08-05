@@ -1,72 +1,735 @@
-{% extends 'landingpage.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
-<div class="container-fluid">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-success" role="alert">
-          {{ message }}
-        </div>
-        
-      {% endfor %}
-    {% endif %}
-    {% endwith %}
-   
-   <!-- <div class="col-xl-12 col-sm-12 col-12" style="margin-bottom:20px;  ">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>AbiTrack</title>
+  <meta name="title" content="">
+  <meta name="description" content="">
+
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="static/images/cl.jpg" style="border-radius:30px;" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="static/assets/css/kinda.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+
+</head>
+
+<body onload="openModal()">
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+
+<!-- Banner -->
+<!--<a href="https://webpixels.io/components?ref=codepen" class="btn w-full btn-primary text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
+    <strong>AbiTrack System</strong>. Trial Version →
+</a>-->
+
+<a href="#" class="btn w-full  text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000; background-color:#7854F7; color:#fff;">
+    <strong>AbiTrack System</strong>. Inventory Commercial Version →
+</a>
+
+
+<!-- Dashboard -->
+<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+    <!-- Vertical Navbar -->
+    <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
+        <div class="container-fluid">
+            <!-- Toggler -->
+            <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Brand -->
+            
+            <a class= href="#">
+               
+               <a href="#" class="avatar bg-primary rounded-circle ms-4 text-white">
                 
-      <a href="/analytics" style="text-decoration: none; color: #992621;">
-      <div class="card shadow border-1" style="">
-          <div class="card-body"> 
-              <div class="row">
-                  <div class="col">
-                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                      Welcome to your Abitrack Analytics</span>
-                    <span class="h9 font-bold mb-5" style="font-size:30px; text-align:center;" >Hey there, {{current_user.name}}!👋🏼</span>
-                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                      Analytics can work as your personal headquarters, client portal, and more. </span>
-                  </div>
-                  </div>
+                {{ current_user.name[0] if current_user.name else '' }}
+                
+
+            </a>
+            <hr>
+
+             
+
+            </a>
+            <!-- User menu (mobile) -->
+            <div class="navbar-user d-lg-none">
+                <!-- Dropdown -->
+                <div class="dropdown">
+                    <!-- Toggle -->
+                    <a href="#" id="sidebarAvatar" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="avatar-parent-child">
+                           <!-- <img alt="Image Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" class="avatar avatar- rounded-circle">-->
+                            <span class="avatar-child avatar-badge bg-success">
+                                
+                            </span>
+                        </div>
+                    </a>
+                    <!-- Menu -->
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="sidebarAvatar">
+                        <a href="#" class="dropdown-item">Profile</a>
+                        <a href="#" class="dropdown-item">Settings</a>
+                        <a href="#" class="dropdown-item">Billing</a>
+                        <hr class="dropdown-divider">
+                        <a href="#" class="dropdown-item">Logout</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidebarCollapse">
+                <!-- Navigation -->
+                
+                <ul class="navbar-nav active">
+                    <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                       {{current_user.category}} Dashboard
+                        <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                    -->
+                            </div>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/homelook">
+                            <i class="bi bi-house"></i> Home
+                        </a>
+                    </li>
+<!--
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/indox">
+                            <i class="bi bi-envelope-check"></i> Indox
+                        </a>
+                    </li>-->
+
+
+<!--{% if current_user.role == 'admin'%}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/client">
+                            <i class="bi bi-envelope-check"></i> All Client
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-envelope-check"></i>Messages
+                        </a>
+                    </li>
+                    
+
+{% endif %}-->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">
+                            <i class="bi bi-calendar-check"></i> Dashboard
+                        </a>
+                    </li>
+
+                 
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/auth">
+                            <i class="bi bi-cart"></i>Purchase Order
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authchallenge">
+                            <i class="bi bi-trophy"></i> Set goals
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authtask">
+                            <i class="bi bi-check2-circle"></i>Set a task 
+                        </a>
+                    </li>
+
+                    
+
+                  <li class="nav-item">
+                        <a class="nav-link" href="/analytics">
+                            <i class="bi bi-bar-chart"></i> Analytics
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/history">
+                            <i class="bi bi-clock-history"></i>History
+                        </a>
+                    </li>
+                   <!--<li class="nav-item">
+                        <a class="nav-link" href="/authmessage">
+                            <i class="bi bi-send"></i> Send Notification
+                            <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">{{total_message}}</span>
+                        </a>
+                    </li>-->
+
+                   
+
+                    
+                 
+                   
+                </ul>
+                <!-- Navigation -->
+               
+
+
+                  <!--  <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bookmark-plus"></i>Sell
+                        </a>
+                    </li>-->
+
+<!--
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bar-chart"></i>Report File
+                        </a>
+                    </li>
+-->
+                 
                   
-              </div>     
-          </div>
-        </a>
-      </div>-->
+
+                
+
+                
+                  
+                   
+                    
+                   
+             
+                <!-- Divider -->
+                <hr class="navbar-divider my-5 opacity-20">
+                <!-- Navigation -->
+                <ul class="navbar-nav mb-md-4">
+                    <li>
+                        <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                        WareHouse
+                          <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                      -->
+                              </div>
+                    </li>
+
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="/authin">
+                            <i class="bi bi-plus"></i> Add Employees
+                        </a>
+                    </li>-->
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/group">
+                            <i class="bi bi-ui-checks"></i>Create Warehouse
+                        </a>
+                    </li>
+
+                 <li class="nav-item">
+                        <a class="nav-link" href="/add_item">
+                            <i class="bi bi-plus"></i> Add a products
+                        </a>
+                    </li>
+
+                  
+
+                   
+                   <!-- 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addalumni">
+                            <i class="bi bi-plus"></i> Add Document
+                        </a>
+                    </li>
+                   -->
+                  <!--  <li class="nav-item">
+                        <a class="nav-link"     href="/authin">
+                            <i class="bi bi-plus"></i> Add Budget
+                        </a>
+                    </li>-->
+
+                   
+                  
+                   
+                    
+                   
+                </ul>
+                <ul class="navbar-nav mb-md-4">
+                    <li>
+                        <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                          Shortcut
+                          <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                      -->
+                              </div>
+                    </li>
+                   
+                    
+                <li class="nav-item-active">
+                    <a class="nav-link" href="/person">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                </li>
+                
+               
+            </ul>
+                <!-- Push content down -->
+                <div class="mt-auto"></div>
+                <!-- User (md) -->
+                <ul class="navbar-nav">
+                 
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+  
  
-          <div class="row my-2">
-          
-            <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
-                
-              <a href="/analytics" style="text-decoration: none; color: #992621;">
-              <div class="card shadow border-1" style="">
-                  <div class="card-body"> 
-                      <div class="row">
-                          <div class="col">
-                              <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                                Warehouse Categories</span>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width:700px;">
+      <div class="offcanvas-header">
+        <h2 class="offcanvas-title" id="offcanvasRightLabel">Notification</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <div class="offcanvas-body">
+        <div class="row g-6 mb-6">
+      
+        
+
+            <div class="card shadow border-0 mb-7">
+              <!--<div class="card-header">
+                  <h5 class="mb-0">Primary</h5>
+              </div>-->
+              <div class="table-responsive">
+                  <table class="table table-hover table-nowrap">
+                      <thead class="thead-light">
+                          <tr>
+                              <th scope="col">Indox</th>
                              
-                           <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_warehouse}}</span>
-                           <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                            Total Warehouse Items</span>
-                          </div>
-                          
-                      </div>     
-                  </div>
+                               
+                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                      
+      
+                         
+      
+      
+                          <tr>
+                              <td>
+                                <div style="display:flex; justify-content:space-between;">
+                                          
+                                    <div style="display:grid;">
+                                        <a  href="#"> 
+                                          <p style="font-size:15px;" class="text-heading font-semibold">Welcome {{current_user.name}}</p>
+                                          <p style="color:#000;"> Dear {{current_user.name}}, Welcome to your inventory application!
+                                           </p>
+                                        </a>
+                                    </div> 
+    
+                                </div>
+                                  </td>
+                             
+                             <!-- <td class="text-end">
+                                  <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                      <i class="bi bi-trash"></i>
+                                  </button>
+                              </td>-->
+                              
+                          </tr>
+                          <td>
+                            {%for user in user%} 
+                        <div style="display:flex; justify-content:space-between;">
+                                  
+                            <div style="display:grid;">
+                                <a  href="#"> 
+                                  <p style="font-size:15px;" class="text-heading font-semibold">{{user.name}}</p>
+                                  <p> {{user.description}}</p>
+                                </a>
+                            </div>
+                            
+
+                        </div>
+                        {% endfor %} 
+                          </td>
+                      </tbody>
+                  </table>
               </div>
-           </a>
+              <div class="card-footer border-0 py-5">
+                  <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
+              </div>
           </div>
-          <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
+        
+       
+      </div>
+      
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Add a Budget</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="" class="form" method="POST", "GET"> 
+                    {{form.hidden_tag()}}
+                <label>
+                  
+                    <input type="email" id="email" name="email" class="form-control"class="input-field my-5 my-lg-5 mt-2 space", id="floatingInput", placeholder="Enter Amount">
+                    
+                 
+                   
+                </label>
+        
+              
+                   
+
+            
+            
+            </div>
+            <div class="modal-footer">
+             {{form.submit(class="btn btn-primary has-after", style="font-size:15px;", )}}
                 
+            </form>
+           <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-primary position-relative"
+                >
+                  <i class="bi bi-send">Submit</i>
+                </button>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+     
+      
+      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h2 class="offcanvas-title" id="staticBackdropLabel">Support & Learn</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+           
+          </div>
+        </div>
+      </div>
+
+
+
+    <!-- Main content -->
+    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
+        <!-- Header -->
+        <header class="bg-surface-primary border-bottom pt-6">
+            <div class="container-fluid">
+                <div class="mb-npx">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6 col-12 mb-4 mb-sm-0">
+                            <!-- Title -->
+                            <h1 class="h2 mb-0 ls-tight"><span class="text-primary"><b>{{greeting}}<br>Hello, {{current_user.name}} 
+                            
+                        </b><br></span>
+                            </h1>
+                            
+                            <h6 class="h6 mb-0 ls-tight"><span >Quickly access your recent boards, Inbox and workspaces
+
+                            </span>
+                            </h6>
+                            
+                        </div>
+                      
+                        <!-- Actions -->
+                        <div class="col-sm-6 col-12 text-sm-end">
+                            <div class="mx-n1">
+                                
+                                    <button type="button" class="btn btn-primary" id="liveToastBtn"
+                                     >Stock Master
+                                      <i class="bi bi-bell"></i>
+                                    </button>
+
+                                   
+                                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                      <div id="liveToast"  class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header">
+                                         <!-- <img src="..." class="rounded me-2" alt="...">-->
+                                          <strong class="me-auto"> Stock Master</strong>
+                                         <!-- <small>1 mins ago</small>-->
+                                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body" style="text-align:center;">
+                                         {% if low_quantity_flash %}
+                                {{ low_quantity_flash }}
+                                {% else %}
+                              
+                               <br>
+                               <span style="font-size:10px;"> Powered by Your Stock Masters</span>
+
+                                {% endif %}
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                       <!-- <a href="#">
+                                        <button type="button" class="btn btn-primary position-relative"
+                                       data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >
+                                       <i class="bi bi-person"></i>
+                                          </button>
+                                        </a>-->
+
+                                        <div class="dropdown" >
+                                            <!--<button type="button" class="btn btn-primary position-relative"
+                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                            <i class="bi bi-columns-gap"></i>
+                                               </button>-->
+
+                                          <!--  <a class="btn  btn btn-primary position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-plus"></i>
+                                            </a>
+                                          -->
+                                         
+                                            <ul class="dropdown-menu"style="padding:20px;" >
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                        <!-- Title -->
+                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
+                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                            <i class="bi bi-clipboard-check"></i>
+                                               </button>
+                                                        
+                                                       
+                                                        
+                                                    </div>
+                                                  
+                                                    <!-- Actions -->
+                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
+                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                         <i class="bi bi-trophy"></i>
+                                                            </button>
+                                                            
+                                    
+                                                            
+                                                        </div>
+                                                
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-check2-circle"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-check2-circle"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-filetype-doc"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
+                                                            <!-- Title -->
+                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
+                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                <i class="bi bi-calendar-check"></i>
+                                                   </button>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                <!--<li><a class="dropdown-item" href="#">Action</a></li>
+                                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                                              <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                                            </ul>
+                                   
+                                          </div>
+                                        
+                                   
+                                    
+                                  <!--  <a href="#">
+                                        <button type="button" class="btn btn-primary position-relative"
+                                          >
+                                            <i class="bi bi-bookmark-plus"></i>
+                                          </button>
+                                        </a>-->
+
+                                        
+
+          
+                                <a href="#">
+
+                             <!--   <button type="button" type="button" class="btn btn-primary position-relative"
+                                  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
+                                   
+                                    <i class="bi bi-bell"></i>
+  
+
+                                    
+                                  
+                                    <span class="badge bg-danger badge-count badge-md border-2 border-current rounded-circle position-absolute top-0 end-0 transform translate-y-n1/2 translate-x-1/2">
+                                        {% if total_message == 0%}
+                                        1
+                                        {% else %}
+                                        {{total_message}}
+                                        {% endif %}
+                                    
+                                    </span>
+                                  </button>-->
+                                </a>
+
+                               
+                                
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <!-- Nav -->
+                    <ul class="nav nav-tabs mt-4 overflow-x border-0">
+                       <!-- <li class="nav-item ">
+                            <a href="#" class="nav-link active">All files</a>
+                        </li>-->
+                        <li class="nav-item ">
+                            <a href="/instock" class="nav-link">
+                                <i class="bi bi-ui-checks"></i> My WareHouse </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stock">
+                                <i class="bi bi-bell"></i> Out-of Stock
+
+                            </a>
+                        </li>
+                        
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="/instock">
+                                <i class="bi bi-bell"></i> In Stock
+                                <span class="badge bg-soft-success text-success rounded-pill d-inline-flex align-items-center ms-auto">{{instock}}</span>
+                            </a>
+                        </li>-->
+                       <!-- <li class="nav-item ">
+                            <a href="/auth" class="nav-link">
+                                <i class="bi bi-house"></i> All Documents</a>
+                        </li>-->
+                        <!--<li class="nav-item">
+                            <a href="/category" class="nav-link font-regular">All Category</a>
+                        </li>-->
+                        <li class="nav-item ">
+                            <a href="/showchallenge" class="nav-link">
+                                <i class="bi bi-trophy"></i> Goals</a>
+                        </li>
+                        
+                        <li class="nav-item ">
+                            <a href="/task" class="nav-link">
+                                <i class="bi bi-clipboard-check"></i> Task </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/budget" class="nav-link">
+                                <i class="bi bi-credit-card"></i> Budget </a>
+                        </li>
+                        
+
+                        <li class="nav-item ">
+                            <a href="/stockmaster" class="nav-link">
+                                <i class="bi bi-columns-gap"></i> Stock Master </a>
+                        </li>
+
+                        <!-- Button trigger modal -->
+
+  
+
+
+                        <!--<li class="nav-item ">
+                            <a href="/showchallenge"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-link">
+                                <i class="bi bi-plus-circle"></i> Add Budget</a>
+                        </li>-->
+                       <!-- <li class="nav-item">
+                            <a href="#" class="nav-link font-regular">File requests</a>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <main class="py-6 bg-surface-secondary">
+         
+        
+          <div class="container">
+          <div class="row my-2">         
+          <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
+            
             <a href="/analytics" style="text-decoration: none; color: #992621;">
             <div class="card shadow border-1" style="">
                 <div class="card-body"> 
                     <div class="row">
                         <div class="col">
-                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                          Hardware Categories</span>
-                          <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_hardware}}</span>
-                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                           Total Hardware</span>
+                          <div class="d-flex">
+                            <i class="bi bi-currency-dollar bg-primary p-2 fs-4  text-light" style="border-radius:5px; height:50px;"></i>
+                            <span class="h4 m-1 font-semibold d-block mb-2 mb-2">
+                              <b> Total Budget </b><br> <span class="h6 text-muted"> Total Amount on Budget</span></span>
+  
+                          </div>
+                           <hr>
+                         <span class="h9 font-bold mb-5" style="font-size:30px; text-align:center;" >$ {{total_budget}}</span>
+                        
+                         
                         </div>
                         
                     </div>     
@@ -75,164 +738,558 @@
          </a>
         </div>
         <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
-                
+              
           <a href="/analytics" style="text-decoration: none; color: #992621;">
           <div class="card shadow border-1" style="">
               <div class="card-body"> 
-                  <div class="row">
-                      <div class="col">
-                     
-                       
-                          <div class="row"> 
-                            <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:74px;"> 🏆</span>
-                            <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
-                             <button type="button" style="margin-top:20px; width:230px; margin:auto; "class="btn btn-primary position-relative">
-                                  <i class="bi bi-plus"></i>   Set a goal
-                                 </button>   
-                         </div> 
-                      </div>
-                      </div>
-                      
-                  </div>     
+                <div class="row">
+                  <div class="col">
+                    <div class="d-flex">
+                      <i class="bi bi-currency-dollar bg-success p-2 fs-4  text-light" style="border-radius:5px; height:50px;"></i>
+                      <span class="h4 m-1 font-semibold d-block mb-2 mb-2">
+                        <b> Total Price </b><br> <span class="h6 text-muted"> Total Price</span></span>
+  
+                    </div>
+                     <hr>
+                   <span class="h9 font-bold mb-5" style="font-size:30px; text-align:center;" > $ {{ total_amount | int }} </span>
+                  
+                  
+                  </div>
+                  
+              </div>     
               </div>
           </div>
        </a>
       </div>
-
-
-      <div class="row my-2">
-          
-        <div class="col-xl-8 col-sm-3 col-12" style="margin-bottom:20px;  ">
-          <div class="row my-2">
-        <div class="col-xl-12 col-sm-3 col-12" style="margin-bottom:20px;  ">
-
-          <a href="/analytics" style="text-decoration: none; color: #992621;">
-          <div class="card shadow border-1" style="">
-              <div class="card-body"> 
-                  <div class="row">
-                      <div class="col">
-                          <span class="h3 font-semibold text-muted  d-block mb-2">
-                               Over-All Categories</span>
-                         
-                       <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_category}}</span>
-                       
-                       <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                        Total Number of Catalog</span>
-                      </div>
-                      
-                  </div>     
-              </div>
-          </div>
-       </a>
-      </div>
-      <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
-
-        <a href="/analytics" style="text-decoration: none; color: #992621;">
-        <div class="card shadow border-1" style="">
-            <div class="card-body"> 
-                <div class="row">
-                    <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                             Software Categories</span>
-                       
-                     <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_software}}</span>
-                     
-                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                      Total Software</span>
-                    </div>
-                    
-                </div>     
-            </div>
-        </div>
-     </a>
-    </div>
-      <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
-
-        <a href="/analytics" style="text-decoration: none; color: #992621;">
-        <div class="card shadow border-1" style="">
-            <div class="card-body"> 
-                <div class="row">
-                    <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                          Accessories Categories  </span>
-                       
-                     <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_accessories}}</span>
-                     
-                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                      Total Accessories</span>
-                    </div>
-                    
-                </div>     
-            </div>
-        </div>
-     </a>
-    </div>
-      </div>
-      </div>
-
-
-
       <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px;  ">
-            
+              
         <a href="/analytics" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
             <div class="card-body"> 
-                <div class="row">
-                    <div class="col">
-                      <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                        Task</span>
-                      <img src="https://img.freepik.com/premium-vector/time-management-concept-with-cartoon-people-flat-design-web-man-works-with-countdown-deadline-brainstorming-solutions-vector-illustration-social-media-banner-marketing-material_9209-15151.jpg?w=740">
-                      <!--<span class="h6 font-semibold text-muted text-sm d-block mb-2">
-                       In Progress</span>-->
-                    </div>
+              <div class="row">
+                <div class="col">
+                  <div class="d-flex">
+                    <i class="bi bi-currency-dollar bg-warning p-2 fs-4  text-light" style="border-radius:5px; height:50px;"></i>
+                    <span class="h4 m-1 font-semibold d-block mb-2 mb-2">
+                      <b> Total Product Amount</b><br> <span class="h6 text-muted">Total Amount Per Unit Product</span></span>
+  
+                  </div>
+                   <hr>
+                 <span class="h9 font-bold mb-5" style="font-size:30px; text-align:center;" >$  {{total_sum}}</span>
+                
+                
+                </div>
+                
+            </div>  
                     
                 </div>     
             </div>
         </div>
      </a>
     </div>
-    
+  
+   
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="dayFilter" class="form-label">Filter by Day:</label>
+                <select id="dayFilter" class="form-select">
+                    <option value="">All Days</option>
+                  
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="monthFilter" class="form-label">Filter by Month:</label>
+                <select id="monthFilter" class="form-select">
+                    <option value="">All Months</option>
+                   
+                </select>
+            </div>
+        </div>
+           
+          
+        <div class="row">
+          <div class="col-md-6">
+          <div class="card shadow border-1" style="">
+            <div class="card-body"> 
+                <canvas id="lineChart"></canvas>
+            </div>
+          </div>
+        </div>
 
+            <div class="col-md-6">
+            <div class="card shadow border-1" style="">
+              <div class="card-body"> 
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  <div class="row my-2">
+      
+    <div class="col-xl-8 col-sm-3 col-12" style="margin-bottom:20px;  ">
+      <div class="row my-2">
+    <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
+
+      <a href="/analytics" style="text-decoration: none; color: #992621;">
+      <div class="card shadow border-1" style="">
+          <div class="card-body"> 
+              <div class="row">
+                  <div class="col">
+                      <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                        Warehouse Categories</span>
+                     
+                   <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_warehouse}}</span>
+                   
+                   <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                    Total Warehouse</span>
+                  </div>
+                  
+              </div>     
+          </div>
+      </div>
+   </a>
+  </div>
+  <div class="col-xl-6 col-sm-3 col-12" style="margin-bottom:20px;  ">
+
+    <a href="/analytics" style="text-decoration: none; color: #992621;">
+    <div class="card shadow border-1" style="">
+        <div class="card-body"> 
+            <div class="row">
+                <div class="col">
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                      Hardwares Categories</span>
+                   
+                 <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >
+                  
+                  {{total}}
+                </span>
+                 
+                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                  Total Hardwares</span>
+                </div>
+                
+            </div>     
+        </div>
+    </div>
+ </a>
+</div>
+  <div class="col-xl-6 col-sm-6 col-12" style="margin-bottom:20px;  ">
+
+    <a href="/analytics" style="text-decoration: none; color: #992621;">
+    <div class="card shadow border-1" style="">
+        <div class="card-body"> 
+            <div class="row">
+                <div class="col">
+                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                         Software Categories</span>
+                   
+                 <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_software}}</span>
+                 
+                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                  Total Software</span>
+                </div>
+                
+            </div>     
+        </div>
+    </div>
+ </a>
+</div>
+<div class="col-xl-6 col-sm-6 col-12" style="margin-bottom:20px;  ">
+
+  <a href="/analytics" style="text-decoration: none; color: #992621;">
+  <div class="card shadow border-1" style="">
+      <div class="card-body"> 
+          <div class="row">
+              <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                    Accessories  Categories</span>
+                 
+               <span class="h9 font-bold mb-5" style="font-size:50px; text-align:center;" >{{total_accessories}}</span>
+               
+               <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                Total Accessories</span>
+              </div>
+              
+          </div>     
+      </div>
+  </div>
+</a>
+</div>
+  
+  </div>
+  </div>
+
+
+
+  <div class="col-xl-4 col-sm-3 col-12" style="margin-bottom:20px; margin-top:20px;  ">
+        
+    <a href="/analytics" style="text-decoration: none; color: #992621;">
+    <div class="card shadow border-1" style="">
+        <div class="card-body"> 
+            <div class="row">
+                <div class="col">
+                  <span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                    Task</span>
+                  <img src="https://img.freepik.com/premium-vector/time-management-concept-with-cartoon-people-flat-design-web-man-works-with-countdown-deadline-brainstorming-solutions-vector-illustration-social-media-banner-marketing-material_9209-15151.jpg?w=740">
+                  <!--<span class="h6 font-semibold text-muted text-sm d-block mb-2">
+                   In Progress</span>-->
+                </div>
+                
+            </div>     
+        </div>
+    </div>
+ </a>
+</div>
+
+
+  
+  </div>
       
       </div>
-          
-          </div>
 
-          
+  </main>
 
- <!-- Bootstrap JavaScript and Popper.js (Order is important) -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
- <!-- Triggering the Toast -->
- <script type="text/javascript">
-    window.onload = function () {
-      var chart = new CanvasJS.Chart("chartContainer",
-      {
-  
-        title:{
-        text: ""
-        },
-         data: [
-        {
-          type: "line",
-  
-          dataPoints: [
-          { x: new Date(2012, 00, 1), y: 450 },
-          { x: new Date(2012, 01, 1), y: 414 },
-          { x: new Date(2012, 02, 1), y: 520 },
-          { x: new Date(2012, 03, 1), y: 460 },
-          { x: new Date(2012, 04, 1), y: 450 }
-         
-          ]
-        }
-        ]
-      });
-  
-      chart.render();
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      const barCtx = document.getElementById('barChart').getContext('2d');
+
+      // Extract data from the Flask context
+      const items = {{ items | tojson | safe }};
+      let labels = items.map(item => item.start_date);
+      const productNames = items.map(item => item.name);
+      const prices = items.map(item => item.price);
+
+      // Populate day and month filter options
+      populateFilters(items);
+
+      // Create the charts
+      let lineChart = createLineChart(labels, prices, productNames);
+      let barChart = createBarChart(labels, prices, productNames);
+
+      // Event listeners for filters
+      document.getElementById('dayFilter').addEventListener('change', updateCharts);
+      document.getElementById('monthFilter').addEventListener('change', updateCharts);
+
+      function updateCharts() {
+        const selectedDay = document.getElementById('dayFilter').value;
+        const selectedMonth = document.getElementById('monthFilter').value;
+
+        const filteredItems = items.filter(item => {
+          const itemDate = new Date(item.start_date);
+          const itemDay = itemDate.getDate();
+          const itemMonth = itemDate.getMonth() + 1;
+
+          return (!selectedDay || itemDay == selectedDay) &&
+                 (!selectedMonth || itemMonth == selectedMonth);
+        });
+
+        labels = filteredItems.map(item => item.start_date);
+        const filteredPrices = filteredItems.map(item => item.price);
+        const filteredProductNames = filteredItems.map(item => item.name);
+
+        // Update the charts with filtered data
+        lineChart.destroy();
+        barChart.destroy();
+        lineChart = createLineChart(labels, filteredPrices, filteredProductNames);
+        barChart = createBarChart(labels, filteredPrices, filteredProductNames);
+      }
+
+      function createLineChart(labels, prices, productNames) {
+        return new Chart(lineCtx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Prices',
+              data: prices,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Date'
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Price'
+                },
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(tooltipItem) {
+                    return productNames[tooltipItem.dataIndex] + ': $' + tooltipItem.formattedValue;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function createBarChart(labels, prices, productNames) {
+        return new Chart(barCtx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Prices',
+              data: prices,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Date'
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Price'
+                },
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(tooltipItem) {
+                    return productNames[tooltipItem.dataIndex] + ': $' + tooltipItem.formattedValue;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function populateFilters(items) {
+        const dayFilter = document.getElementById('dayFilter');
+        const monthFilter = document.getElementById('monthFilter');
+
+        const days = [...new Set(items.map(item => new Date(item.start_date).getDate()))];
+        const months = [...new Set(items.map(item => new Date(item.start_date).getMonth() + 1))];
+
+        days.forEach(day => {
+          const option = document.createElement('option');
+          option.value = day;
+          option.textContent = day;
+          dayFilter.appendChild(option);
+        });
+
+        months.forEach(month => {
+          const option = document.createElement('option');
+          option.value = month;
+          option.textContent = month;
+          monthFilter.appendChild(option);
+        });
+      }
+    });
+  </script>
+
+
+
+<script>
+var idleTime = 0;
+var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+$(document).ready(function () {
+    console.log("Document ready");
+    // Zero the idle timer on mouse movement or keypress
+    $(this).mousemove(function (e) {
+        idleTime = 0;
+        console.log("Mouse moved, idleTime reset to 0");
+    });
+    $(this).keypress(function (e) {
+        idleTime = 0;
+        console.log("Key pressed, idleTime reset to 0");
+    });
+});
+
+function timerIncrement() {
+    idleTime++;
+    console.log("Idle time incremented to", idleTime);
+    if (idleTime > 19) { // 2 minutes
+        alert("Your Session will be logged out soon, check out our new AI Feature 🥳.");
+        $.ajax({
+            url: "{{ url_for('log_inactivity') }}",
+            method: "POST",
+            data: JSON.stringify({ message: "User is inactive" }),
+            contentType: "application/json",
+            success: function(response) {
+                console.log("Inactivity logged:", response);
+                setTimeout(function() {
+                    console.log("Redirecting to logout");
+                    window.location.href = "{{ url_for('logout') }}";
+                }, 60000); // 1 minute later
+            }
+        });
     }
-    </script>
-   <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script></head>
+}
+</script>
 
-    
-   
-{%endblock body%}
+
+<script>
+function generateRandomCode() {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var codeLength = 6;
+    var code = '';
+    for (var i = 0; i < codeLength; i++) {
+        var randomIndex = Math.floor(Math.random() * characters.length);
+        code += characters.charAt(randomIndex);
+    }
+    return code;
+}
+
+// Generate and display the unique code when the form is submitted
+document.getElementById('faqForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent the form from submitting
+    var uniqueCode = generateRandomCode();
+    document.getElementById('uniqueCode').innerText = 'Unique Code: ' + uniqueCode;
+});
+</script>
+
+<!-- Bootstrap JavaScript and Popper.js (Order is important) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Triggering the Toast -->
+<!-- Your existing HTML code -->
+
+<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript code -->
+
+
+<!-- Your existing HTML code -->
+
+
+<script async="" type="text/javascript" src="https://www.myhealth1st.com.au/mh1-widget/2021/popup.v3.js"></script>
+<!-- End of MyHealth1st Widget code -->
+
+<!-- 
+- custom js link
+
+<!-- 
+- ionicon link
+-->
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+
+<!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Simulate delay for demonstration purposes
+    setTimeout(function () {
+        // Hide loading screen and display content
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    }, 2000); // Adjust the delay time as needed
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Triggering the Toast -->
+<!-- <script>
+var toastElement = new bootstrap.Toast(document.querySelector('.toast'));
+toastElement.show();
+</script>-->
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+
+<!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
+
+<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript code -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var liveToastBtn = document.getElementById('liveToastBtn');
+    var liveToast = new bootstrap.Toast(document.getElementById('liveToast'));
+
+    liveToastBtn.addEventListener('click', function () {
+        liveToast.show();
+    });
+});
+</script>
+
+<script>
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBPHDVrXV4nn_4agQgWFItDlS8z9cvq5zw",
+  authDomain: "centralalumni.firebaseapp.com",
+  projectId: "centralalumni",
+  storageBucket: "centralalumni.appspot.com",
+  messagingSenderId: "270504690849",
+  appId: "1:270504690849:web:b03ee12ab92e157196dce0",
+  measurementId: "G-9T21K58F10"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+</script>
+<script src="static/assets/js/script.js"></script>
+
+<!-- 
+- ionicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

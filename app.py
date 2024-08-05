@@ -856,14 +856,46 @@ def messages():
 
 @app.route('/analytics', methods=['GET', 'POST'])
 def analytics():
+    items = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+
+    items_data = [
+        {
+            'start_date': item.start_date.strftime('%Y-%m-%d') if item.start_date else None,
+            'name': item.name,
+            'price': item.price
+        }
+        for item in items
+    ]
+    money = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    
+    budget=Budget.query.filter_by(budgetId=str(current_user.id)).order_by(Budget.id.desc()).all()   
+    budget = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in budget)
+    
+    total_amount = 0
+    total_sum = 0
+    
+    for user in money:
+        try:
+            # Convert price to float and quantity to int
+            price = float(user.price)
+            quantity = int(user.quantity)
+            total_amount += price
+            total_sum += price * quantity
+        except ValueError:
+            # Handle invalid data
+            flash('Invalid price or quantity found', 'warning')
+            continue 
+    
     # total_warehouse = db.session.query.count
     total_category =  db.session.query(Groups).filter(Groups.name.isnot(None)).count()
     total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse').count()
     total_hareware =  Groups.query.filter_by(manufacturing='Hardwares').count()
+    total =  Groups.query.filter_by(manufacturing='Hardwares').count()
     total_software =  Groups.query.filter_by(manufacturing='Softwares').count()
     total_accessories =  Groups.query.filter_by(manufacturing='Accessories').count()
     # total_warehouse = db.session.query(func.count(Groups.id)).filter(Groups.manufacturing == 'Warehouse').scalar()
-    return render_template('analytics.html',total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
+    return render_template('analytics.html',total=total, items=items_data, budget=budget,money=money,total_amount=total_amount,total_sum=total_sum,total_budget=total_budget,total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
 
 
 
