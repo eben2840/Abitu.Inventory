@@ -990,6 +990,8 @@ def landingpage():
     
     instock = Item.query.filter_by(clientid=current_user.id).count()
     
+    stockitem = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+   
      # all_product= User.query.count()
     low_quantity_flash = session.pop('low_quantity_flash', None)
     total_students = User.query.count()
@@ -1020,7 +1022,7 @@ def landingpage():
     print(users)
     print("-------------")
     
-    return render_template('landingpage.html',instock=instock, total_message=total_message, greeting=greeting, users=users, form=form,
+    return render_template('landingpage.html',stockitem=stockitem, instock=instock, total_message=total_message, greeting=greeting, users=users, form=form,
           
                         low_quantity_flash=low_quantity_flash, total_challenges=total_challenges,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges                 
                            )
@@ -2030,7 +2032,7 @@ def instocklist(userid):
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     # outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).order_by(Item.id.desc()).all()
-    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
+    users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 20).order_by(Item.id.desc()).all()
     # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
     return render_template("stock.html",users=users)
 

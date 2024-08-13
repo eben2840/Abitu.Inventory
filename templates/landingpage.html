@@ -399,46 +399,7 @@
       </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Add a Budget</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <form action="" class="form" method="POST", "GET"> 
-                    {{form.hidden_tag()}}
-                <label>
-                  
-                    <input type="email" id="email" name="email" class="form-control"class="input-field my-5 my-lg-5 mt-2 space", id="floatingInput", placeholder="Enter Amount">
-                    
-                 
-                   
-                </label>
-        
-              
-                   
-
-            
-            
-            </div>
-            <div class="modal-footer">
-             {{form.submit(class="btn btn-primary has-after", style="font-size:15px;", )}}
-                
-            </form>
-           <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary position-relative"
-                >
-                  <i class="bi bi-send">Submit</i>
-                </button>-->
-            </div>
-          </div>
-        </div>
-      </div>
-      
-
+   
      
       
       <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
@@ -480,10 +441,10 @@
                         <div class="col-sm-6 col-12 text-sm-end">
                             <div class="mx-n1">
                                 
-                                    <button type="button" class="btn btn-primary" id="liveToastBtn"
+                                   <!-- <button type="button" class="btn btn-primary" id="liveToastBtn"
                                      >Stock Master
                                       <i class="bi bi-bell"></i>
-                                    </button>
+                                    </button>-->
 
                                    
                                     <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -513,6 +474,50 @@
                                        <i class="bi bi-person"></i>
                                           </button>
                                         </a>-->
+                                        <a class="nav-link" href="/stock"><button class="btn btn-primary">Stock Master  <i class="bi bi-bell"></i></button></a>
+                                        <!--<a class="nav-link" href="/stock"><button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Stock Master  <i class="bi bi-bell"></i></button></a>
+-->
+                                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Out Of Stock</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                          <tr>
+                                                           
+                                                            <th scope="col">Product</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Price</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {%for stockitem in stockitem%}
+                                                          <tr>
+                                                            <th scope="row">{{stockitem.name}}</th>
+                                                          
+                                                            <td>{{stockitem.quantity}}</td>
+                                                            <td>{{stockitem.price}}</td>
+                                                          </tr>
+                                                          {%endfor%}
+                                                         
+                                                        </tbody>
+                                                      </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"> Ask Stock Master</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                              
+                                            </div>
+                                        </div>
 
                                         <div class="dropdown" >
                                             <!--<button type="button" class="btn btn-primary position-relative"
@@ -648,12 +653,12 @@
                                 <i class="bi bi-ui-checks"></i> My WareHouse </a>
                         </li>
 
-                        <li class="nav-item">
+                       <!-- <li class="nav-item">
                             <a class="nav-link" href="/stock">
                                 <i class="bi bi-bell"></i> Out-of Stock
 
                             </a>
-                        </li>
+                        </li>-->
                         
                         <!--<li class="nav-item">
                             <a class="nav-link" href="/instock">
@@ -686,7 +691,7 @@
 
                         <li class="nav-item ">
                             <a href="/stockmaster" class="nav-link">
-                                <i class="bi bi-columns-gap"></i> Stock Master </a>
+                                <i class="bi bi-columns-gap"></i> Ask Stock Master </a>
                         </li>
 
                         <!-- Button trigger modal -->
