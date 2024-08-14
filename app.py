@@ -274,6 +274,7 @@ class Album(db.Model,UserMixin):
 
 class Message(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
+    messageId=db.Column(db.String)
     message=db.Column(db.String)
     def __repr__(self):
         return f"Message('{self.id}', {self.message}'"
@@ -1449,8 +1450,7 @@ def stockmaster():
             db.session.commit()
             return redirect('stockmaster')
     print(form.errors)
-    users=Message.query.order_by(Message.id.asc()).all()
-    # users=Committee.query.order_by(Committee.id.desc()).all()
+    users=Message.query.filter_by(messageId=current_user.id).order_by(Message.id.desc()).all()
     return render_template("stockmaster.html",form=form,users=users)
 
 @app.route('/features', methods=['GET', 'POST'])
