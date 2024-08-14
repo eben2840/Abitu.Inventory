@@ -33,6 +33,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% set low_stock_items = [] %}
+                        {% for item in current_user.items %}
+                            {% if item.quantity | int < 20 %}
+                                {% set low_stock_items = low_stock_items + [item] %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        
+
                         {% for users in users %} 
                         <tr>
                            <!-- <td>{{ users.unique_code }}</td>-->
@@ -75,11 +84,17 @@
                             </td>-->
                         </tr>
                         {% endfor %}
+                        
                     </tbody>
+                    
                 </table>
             </div>
             <div class="card-footer border-0 py-5">
-                <span class="text-muted text-sm">Showing all stock</span>
+                {% if not low_stock_items %}
+                            You do not have any low stock 🤩
+                        
+                            {% endif %}
+                <span class="text-muted text-sm"></span>
             </div>
         </div>
     </div>

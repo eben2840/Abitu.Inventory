@@ -376,7 +376,7 @@ def calculate_weekly_work():
     week_end = week_start + timedelta(days=6)  # Get the end of the current week
 
     # Query the database to get items created within the current week
-    items_created = Item.query.filter(Item.start_date >= week_start, Item.start_date <= week_end).all()
+    items_created = Item.query.filter_by(clientid=current_user.id).filter(Item.start_date >= week_start, Item.start_date <= week_end).all()
 
     total_work = sum(int(item.quantity) for item in items_created)
     return total_work
@@ -534,9 +534,9 @@ def generate_unique_code():
 
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
-    form = AddItemForm()
+    form = AddItemForm() 
     print("FORM DATA: ", form.data)
-    form.group.choices = [(group.id, group.name) for group in Groups.query.filter_by(id=current_user.id).all()]
+    form.group.choices = [(group.id, group.name) for group in Groups.query.filter_by(userId=current_user.id).all()]
     print("GROUP CHOICES: ", form.group.choices)
     
     if form.validate_on_submit():
@@ -889,11 +889,11 @@ def analytics():
     
     # total_warehouse = db.session.query.count
     total_category =  db.session.query(Groups).filter(Groups.name.isnot(None)).count()
-    total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse').count()
-    total_hareware =  Groups.query.filter_by(manufacturing='Hardwares').count()
-    total =  Groups.query.filter_by(manufacturing='Hardwares').count()
-    total_software =  Groups.query.filter_by(manufacturing='Softwares').count()
-    total_accessories =  Groups.query.filter_by(manufacturing='Accessories').count()
+    total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse',userId=current_user.id).count()
+    total_hareware =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
+    total =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
+    total_software =  Groups.query.filter_by(manufacturing='Softwares',userId=current_user.id).count()
+    total_accessories =  Groups.query.filter_by(manufacturing='Accessories',userId=current_user.id).count()
     # total_warehouse = db.session.query(func.count(Groups.id)).filter(Groups.manufacturing == 'Warehouse').scalar()
     return render_template('analytics.html',total=total, items=items_data, budget=budget,money=money,total_amount=total_amount,total_sum=total_sum,total_budget=total_budget,total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
 
@@ -1170,7 +1170,7 @@ def authtask():
     if form.validate_on_submit():
             new=Challenge(name=form.name.data, 
                           taskId=current_user.id,
-                          status=form.status.data,
+                        #   status=form.status.data,
                    tag=form.tag.data,
                    task=form.task.data,
                    start_date=form.start_date.data,  
