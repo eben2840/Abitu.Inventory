@@ -1441,7 +1441,17 @@ def support():
 
 @app.route('/stockmaster', methods=['GET', 'POST'])
 def stockmaster():
-    return render_template("stockmaster.html")
+    form=MessageForm()
+    if form.validate_on_submit():
+            new=Message(message=form.message.data, 
+                  )
+            db.session.add(new)
+            db.session.commit()
+            return redirect('stockmaster')
+    print(form.errors)
+    users=Message.query.order_by(Message.id.asc()).all()
+    # users=Committee.query.order_by(Committee.id.desc()).all()
+    return render_template("stockmaster.html",form=form,users=users)
 
 @app.route('/features', methods=['GET', 'POST'])
 def features():
