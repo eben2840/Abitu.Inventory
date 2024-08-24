@@ -274,7 +274,8 @@ class Album(db.Model,UserMixin):
 
 class Message(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
-    messageid=db.Column(db.Integer)
+    messageid=db.Column(db.Integer())
+    userId = db.Column(db.Integer())
     message=db.Column(db.String)
     def __repr__(self):
         return f"Message('{self.id}', {self.message}'"
@@ -1440,8 +1441,6 @@ def support():
     return render_template("support.html")
 
 
-
-
 @app.route('/stockmaster', methods=['GET', 'POST'])
 def stockmaster():
     form=MessageForm()
@@ -1451,9 +1450,11 @@ def stockmaster():
             db.session.commit()
             return redirect('stockmaster')
     print(form.errors)
-    users=Message.query.filter_by(messageid=current_user.id).order_by(Message.id.desc()).all()
-    # users=Message.query.filter_by(messageId=current_ user.id).order_by(Message.id.desc()).all()
-    return render_template("stockmaster.html",form=form,users=users)
+    users=Message.query.order_by(Message.id.desc()).all()
+    # users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+    # users=Message.query.filter_by(userId=current_user.id).order_by(Message.id.desc()).all()
+    return render_template("stockmaster.html",form=form, users=users)
+
 
 @app.route('/features', methods=['GET', 'POST'])
 def features():
@@ -2043,6 +2044,7 @@ def instocklist(userid):
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
+    
     # outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).order_by(Item.id.desc()).all()
     users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 20).order_by(Item.id.desc()).all()
     # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()

@@ -1,4 +1,4 @@
-{% extends 'landingpage.html' %}
+{% extends 'ai.html' %}
 
 {% block body %}
 
@@ -12,84 +12,170 @@
 {% endif %}
 {% endwith %}
 
-<div class="container-fluid">
-  <div class="row g-4">
-    <!-- AI Stock Assistance Welcome Card -->
-    <div class="col-xl-12 col-12 mb-4">
-      <div class="card" style="border-radius: 30px 30px 0 30px;">
-        <div class="card-body ml-5" style="border-radius: 30px 30px 0 30px;">
-          <span class="h6 font-semibold text-muted text-sm d-block mb-2">
-            Welcome to your AI Stock Assistance 🤩
-          </span>
-          <span class="h3 font-bold mb-0">
-            How can I help you today, {{ current_user.name }}?
-          </span>
-        </div>
-      </div>
-    </div>
+<style>
+  .chat-container {
+    width: 80%;
+    margin: 0 auto;
+   
+    
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+    max-height: calc(100vh - 150px); /* Adjust to fit screen */
+  }
 
-    <hr>
+  .message {
+    display: flex;
+    margin-bottom: 15px;
+  }
 
-    <!-- User Name Card -->
+  .user-message .message-content {
+    background-color: #e0e0e0;
+    margin-left: 10px;
+  }
 
-    <div class="col-xl-12 col-12 mb-4">
-      {% for users in users%}
-      <div class="card" style="border-radius: 30px 30px 0 30px; margin-bottom:10px;">
-        <div class="card-body ml-5" style="border-radius: 30px 30px 0 30px;">
-<span class="h6 font-semibold text-muted  d-block mb-1">
-            {{ current_user.name }}
-          </span>
-          <span class="h5 font-bold mb-0 text-align-right text-right">
-       {{ users.message }}
-          </span>
-        </div>
-      </div>
-      {%endfor%}
-    </div>
+  .ai-message .message-content {
+    background-color: #e0f7fa;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .message-content {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .time {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+    align-self: flex-end;
+  }
 
  
 
+  .gif {
+    max-width: 100px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
 
-  <!-- Form Section -->
-  <form action="" method="post">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card bg-light-danger" style="position: fixed; bottom: 0; width: 100%; left: 0; right: 100px;">
-          {{ form.hidden_tag() }}
-          <div class="card-body d-flex">
-            <textarea name="message" class="form-control" placeholder="Enter your message here..."></textarea>
-            {{ form.submit(class="btn btn-primary", style="width: 100px; margin-left: 10px;") }}
-          </div>
-        </div>
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .dots {
+    display: flex;
+    margin-left: 10px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #333;
+    border-radius: 50%;
+    margin-right: 3px;
+    animation: blink 1.4s infinite both;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes blink {
+    0%, 20%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .input-container {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+
+  .send-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .send-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+
+<div class="chat-container">
+  
+
+  {% for user in users %}
+  <div class="message ai-message mb-5">
+    <div class="message-content">
+      <p> {{ user.message }}
+        </p>
+      <span class="time">{{ current_user.name }}</span>
+    </div>
+  </div>
+  <div class="message user-message">
+    <img src="https://img.freepik.com/premium-photo/cartoonish-3d-animation-boy-glasses-with-blue-hoodie-orange-shirt_899449-25777.jpg" alt="User Icon" class="avatar">
+    <div class="typing-indicator" style="background-color:gray; margin-left:10px; padding:10px; border-radius:20px 20px 20px 0">
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
       </div>
     </div>
-  </form>
+  </div>
+  {% endfor %}
+  <!-- User Message with GIF -->
+  
 </div>
 
-<!-- Bootstrap JavaScript and Popper.js (Order is important) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Triggering the Toast -->
-<script type="text/javascript">
-  window.onload = function () {
-    var chart = new CanvasJS.Chart("chartContainer", {
-      title: {
-        text: ""
-      },
-      data: [{
-        type: "line",
-        dataPoints: [
-          { x: new Date(2012, 00, 1), y: 450 },
-          { x: new Date(2012, 01, 1), y: 414 },
-          { x: new Date(2012, 02, 1), y: 520 },
-          { x: new Date(2012, 03, 1), y: 460 },
-          { x: new Date(2012, 04, 1), y: 450 }
-        ]
-      }]
-    });
-    chart.render();
-  }
-</script>
-<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<form method="POST" action="/stockmaster"  enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+<div class="input-container">
+  <input type="text" name="message" placeholder="Type something..." class="chat-input">
+  <button class="send-button" type="submit">Send</button>
+</div>
+<form>
 
 {% endblock body %}
