@@ -1,669 +1,114 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="static/assets/css/ai.css">
 </head>
-
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-  <!-- 
-    - primary meta tags
-  -->
-  <title>AbiTrack</title>
-  <meta name="title" content="">
-  <meta name="description" content="">
-
-
-  <!-- 
-    - favicon
-  -->
-  <link rel="shortcut icon" href="static/images/cl.jpg" style="border-radius:30px;" type="image/svg+xml">
-
-  <!-- 
-    - custom css link
-  -->
-  <link rel="stylesheet" href="static/assets/css/kinda.css">
-
-  <!-- 
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- 
-    - preload images
-  -->
-
-</head>
-
-<body onload="openModal()">
-
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
-    </div>
-
-
-<!-- Banner -->
-<!--<a href="https://webpixels.io/components?ref=codepen" class="btn w-full btn-primary text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000;">
-    <strong>AbiTrack System</strong>. Trial Version →
-</a>-->
-
-<a href="#" class="btn w-full  text-truncate rounded-0 py-2 border-0 position-relative" style="z-index: 1000; background-color:#7854F7; color:#fff;">
-    <strong>AbiTrack System</strong>. Inventory Commercial Version →
-</a>
-
-
-<!-- Dashboard -->
-<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
-  
-     
-    
-  
- 
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width:700px;">
-      <div class="offcanvas-header">
-        <h2 class="offcanvas-title" id="offcanvasRightLabel">Notification</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-
-      <div class="offcanvas-body">
-        <div class="row g-6 mb-6">
-      
-        
-
-            <div class="card shadow border-0 mb-7">
-              <!--<div class="card-header">
-                  <h5 class="mb-0">Primary</h5>
-              </div>-->
-              <div class="table-responsive">
-                  <table class="table table-hover table-nowrap">
-                      <thead class="thead-light">
-                          <tr>
-                              <th scope="col">Indox</th>
-                             
-                               
-                            
-                          </tr>
-                      </thead>
-                      <tbody>
-                      
-      
-                         
-      
-      
-                          <tr>
-                              <td>
-                                <div style="display:flex; justify-content:space-between;">
-                                          
-                                    <div style="display:grid;">
-                                        <a  href="#"> 
-                                          <p style="font-size:15px;" class="text-heading font-semibold">Welcome {{current_user.name}}</p>
-                                          <p style="color:#000;"> Dear {{current_user.name}}, Welcome to your inventory application!
-                                           </p>
-                                        </a>
-                                    </div> 
-    
-                                </div>
-                                  </td>
-                             
-                             <!-- <td class="text-end">
-                                  <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                      <i class="bi bi-trash"></i>
-                                  </button>
-                              </td>-->
-                              
-                          </tr>
-                          <td>
-                            {%for user in user%} 
-                        <div style="display:flex; justify-content:space-between;">
-                                  
-                            <div style="display:grid;">
-                                <a  href="#"> 
-                                  <p style="font-size:15px;" class="text-heading font-semibold">{{user.name}}</p>
-                                  <p> {{user.description}}</p>
-                                </a>
-                            </div>
-                            
-
-                        </div>
-                        {% endfor %} 
-                          </td>
-                      </tbody>
-                  </table>
-              </div>
-              <div class="card-footer border-0 py-5">
-                  <span class="text-muted text-sm">Showing 10 items out of 250 results found</span>
-              </div>
-          </div>
-        
+<body>
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div class="chat-header d-flex">
+            <div class="lily">
+                <a href="/" style="text-decoration:none;">
+                    <i class="fa fa-arrow-left text-dark" style="color:#000; margin-top:25px; margin-right:15px;" aria-hidden="true"></i>
+                </a>
+                <img src="https://img.freepik.com/premium-psd/approachable-female-cartoon-avatar-with-arms-crossed-generative-ai_92753-21977.jpg" style="width:50px; margin-top:10px; border:1px solid blue; height:50px; object-fit:cover; border-radius:50px;">
+                <h2 class="ai h5"><b>Stock Master</b><br><span style="color:green;">Online</span></h2>
+            </div>
+            <a href="" style="text-decoration:none;"> 
+                <h2 class="send-btn" style="font-size:15px; border-radius:50px;">Support Team</h2>
+            </a>
+        </div>
        
-      </div>
-      
+        <div class="chat-body" id="chat-body">
+           <!--  <img src="https://cupascoportal.com/static/asets/images/portfolio/no.png" style="width:100px; margin-top:10px; margin:auto; border:1px solid red; height:100px; border-radius:10px;">
+           <span style="text-align:center; border-radius:10px;" class="text-muted">Messages are end-to-end encrypted.</span>
+          -->
 
-      </div>
-    </div>
-
-   
-     
-      
-      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-        <div class="offcanvas-header">
-          <h2 class="offcanvas-title" id="staticBackdropLabel">Support & Learn</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <div>
+            
            
-          </div>
-        </div>
-      </div>
-
-
-
-    <!-- Main content -->
-    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
-        <!-- Header -->
-        <header class="bg-surface-primary border-bottom pt-6">
-            <div class="container-fluid">
-                <div class="mb-npx">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6 col-12 mb-4 mb-sm-0">
-                            <!-- Title -->
-                            <h1 class="h2 mb-0 ls-tight"><span class="text-primary"><b>{{greeting}}<br>Hello, {{current_user.name}} 
-                            
-                        </b><br></span>
-                            </h1>
-                            
-                            <h6 class="h6 mb-0 ls-tight"><span >Quickly access your recent boards, Inbox and workspaces
-
-                            </span>
-                            </h6>
-                            
-                        </div>
-                      
-                        <!-- Actions -->
-                        <div class="col-sm-6 col-12 text-sm-end">
-                            <div class="mx-n1">
-                                
-                                   <!-- <button type="button" class="btn btn-primary" id="liveToastBtn"
-                                     >Stock Master
-                                      <i class="bi bi-bell"></i>
-                                    </button>-->
-
-                                   
-                                   <!--  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                      <div id="liveToast"  class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                                        <div class="toast-header">
-                                         <img src="..." class="rounded me-2" alt="...">
-                                          <strong class="me-auto"> Stock Master</strong>
-                                          <small>1 mins ago</small>
-                                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                                        </div>
-                                        <div class="toast-body" style="text-align:center;">
-                                         {% if low_quantity_flash %}
-                                {{ low_quantity_flash }}
-                                {% else %}
-                              
-                               <br>
-                               <span style="font-size:10px;"> Powered by Your Stock Masters</span>
-
-                                {% endif %}
-                                        </div>
-                                      </div>
-                                    </div>-->
-
-                                       <!-- <a href="#">
-                                        <button type="button" class="btn btn-primary position-relative"
-                                       data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >
-                                       <i class="bi bi-person"></i>
-                                          </button>
-                                        </a>-->
-                                        <a class="nav-link" href="/stock"><button class="btn btn-primary">Stock Master  <i class="bi bi-bell"></i></button></a>
-                                        <!--<a class="nav-link" href="/stock"><button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Stock Master  <i class="bi bi-bell"></i></button></a>
-                            -->
-                                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Out Of Stock</h1>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table">
-                                                        <thead>
-                                                          <tr>
-                                                           
-                                                            <th scope="col">Product</th>
-                                                            <th scope="col">Quantity</th>
-                                                            <th scope="col">Price</th>
-                                                          </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {%for stockitem in stockitem%}
-                                                          <tr>
-                                                            <th scope="row">{{stockitem.name}}</th>
-                                                          
-                                                            <td>{{stockitem.quantity}}</td>
-                                                            <td>{{stockitem.price}}</td>
-                                                          </tr>
-                                                          {%endfor%}
-                                                         
-                                                        </tbody>
-                                                      </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"> Ask Stock Master</button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              
-                                            </div>
-                                        </div>
-
-                                        <div class="dropdown" >
-                                            <!--<button type="button" class="btn btn-primary position-relative"
-                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                            <i class="bi bi-columns-gap"></i>
-                                               </button>-->
-
-                                          <!--  <a class="btn  btn btn-primary position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bi bi-plus"></i>
-                                            </a>
-                                          -->
-                                         
-                                            <ul class="dropdown-menu"style="padding:20px;" >
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                        <!-- Title -->
-                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
-                                           role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                            <i class="bi bi-clipboard-check"></i>
-                                               </button>
-                                                        
-                                                       
-                                                        
-                                                    </div>
-                                                  
-                                                    <!-- Actions -->
-                                                    <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                        <button type="button" class="btn btn-square btn-neutral position-relative"
-                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                                         <i class="bi bi-trophy"></i>
-                                                            </button>
-                                                            
-                                    
-                                                            
-                                                        </div>
-                                                
-                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                            <!-- Title -->
-                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
-                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                                <i class="bi bi-check2-circle"></i>
-                                                   </button>
-                                                            
-                                                            
-                                                            
-                                                        </div>
-
-                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                            <!-- Title -->
-                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
-                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                                <i class="bi bi-check2-circle"></i>
-                                                   </button>
-                                                            
-                                                            
-                                                            
-                                                        </div>
-                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                            <!-- Title -->
-                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
-                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                                <i class="bi bi-filetype-doc"></i>
-                                                   </button>
-                                                            
-                                                            
-                                                            
-                                                        </div>
-                                                        <div class="col-sm-4 col-6 mb-4 mb-sm-0">
-                                                            <!-- Title -->
-                                                            <button type="button" class="btn btn-square btn-neutral position-relative"
-                                               role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                                <i class="bi bi-calendar-check"></i>
-                                                   </button>
-                                                            
-                                                            
-                                                            
-                                                        </div>
-                                                <!--<li><a class="dropdown-item" href="#">Action</a></li>
-                                              <li><a class="dropdown-item" href="#">Another action</a></li>
-                                              <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                                            </ul>
-                                   
-                                          </div>
-                                        
-                                   
-                                    
-                                  <!--  <a href="#">
-                                        <button type="button" class="btn btn-primary position-relative"
-                                          >
-                                            <i class="bi bi-bookmark-plus"></i>
-                                          </button>
-                                        </a>-->
-
-                                        
-
-          
-                                <a href="#">
-
-                             <!--   <button type="button" type="button" class="btn btn-primary position-relative"
-                                  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
-                                   
-                                    <i class="bi bi-bell"></i>
-  
-
-                                    
-                                  
-                                    <span class="badge bg-danger badge-count badge-md border-2 border-current rounded-circle position-absolute top-0 end-0 transform translate-y-n1/2 translate-x-1/2">
-                                        {% if total_message == 0%}
-                                        1
-                                        {% else %}
-                                        {{total_message}}
-                                        {% endif %}
-                                    
-                                    </span>
-                                  </button>-->
-                                </a>
-
-                               
-                                
-                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <!-- Nav -->
-                    <ul class="nav nav-tabs mt-4 overflow-x border-0">
-                       <!-- <li class="nav-item ">
-                            <a href="#" class="nav-link active">All files</a>
-                        </li>-->
-                        <li class="nav-item ">
-                            <a href="/instock" class="nav-link">
-                                <i class="bi bi-ui-checks"></i> My WareHouse </a>
-                        </li>
-
-                       <!-- <li class="nav-item">
-                            <a class="nav-link" href="/stock">
-                                <i class="bi bi-bell"></i> Out-of Stock
-
-                            </a>
-                        </li>-->
-                        
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="/instock">
-                                <i class="bi bi-bell"></i> In Stock
-                                <span class="badge bg-soft-success text-success rounded-pill d-inline-flex align-items-center ms-auto">{{instock}}</span>
-                            </a>
-                        </li>-->
-                       <!-- <li class="nav-item ">
-                            <a href="/auth" class="nav-link">
-                                <i class="bi bi-house"></i> All Documents</a>
-                        </li>-->
-                        <!--<li class="nav-item">
-                            <a href="/category" class="nav-link font-regular">All Category</a>
-                        </li>-->
-                        <li class="nav-item ">
-                            <a href="/showchallenge" class="nav-link">
-                                <i class="bi bi-trophy"></i> Goals</a>
-                        </li>
-                        
-                        <li class="nav-item ">
-                            <a href="/task" class="nav-link">
-                                <i class="bi bi-clipboard-check"></i> Task </a>
-                        </li>
-
-                        <li class="nav-item ">
-                            <a href="/budget" class="nav-link">
-                                <i class="bi bi-credit-card"></i> Budget </a>
-                        </li>
-                        
-
-                        <li class="nav-item ">
-                            <a href="/stockmaster" class="nav-link">
-                                <i class="bi bi-columns-gap"></i> Ask Stock Master </a>
-                        </li>
-
-                        <!-- Button trigger modal -->
-
-  
-
-
-                        <!--<li class="nav-item ">
-                            <a href="/showchallenge"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-link">
-                                <i class="bi bi-plus-circle"></i> Add Budget</a>
-                        </li>-->
-                       <!-- <li class="nav-item">
-                            <a href="#" class="nav-link font-regular">File requests</a>
-                        </li>-->
-                    </ul>
+            <span style="margin-top:30px;"><b>Stock Master</b></span>
+            <div class="icon"> 
+                <img src="https://img.freepik.com/premium-psd/approachable-female-cartoon-avatar-with-arms-crossed-generative-ai_92753-21977.jpg" style="width:30px; margin-top:10px; border:1px solid blue; object-fit:cover; margin-right:10px; height:30px; border-radius:10px;">
+                <div class="message bot">
+                    <p>Hello there, Im Stock Master</p>
                 </div>
             </div>
-        </header>
-
-        <main class="py-6 bg-surface-secondary">
-         
-            {% block body %}
-            <div>
-                <div class="container">
-                   
-
-                    
-                </div>
-            </div>
-            {% endblock%}
-    
            
-          </main>
+        </div>
 
+        <!--<form class="element" method="POST" onsubmit="sendMessage(event)">
+            <div class="chat-footer">
+                <input type="text" name="text" id="chat-input" placeholder="Type your message here..." class="form-control" onkeydown="if(event.keyCode==13){sendMessage(event); return false;}" style="border-radius:50px; padding:20px; border:none;">
+                <button id="sendButton" class="send-btn" style="border-radius:50px; width:60px;" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </form>-->
 
+        <span class="text-muted" style="text-align:center; font-size:11px; background-color:#f8f7f7;">Stock Master can make mistakes. Check important info. <a href="">Privacy Policy</a></span>
     </div>
-</div>
 
+  <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <img src="https://img.freepik.com/premium-psd/approachable-female-cartoon-avatar-with-arms-crossed-generative-ai_92753-21977.jpg" style="width:200px; margin-top:20px; margin-bottom:30px; margin:auto; object-fit:cover; border:1px solid blue; height:200px; border-radius:10px;">
+            <h3 class="mt-3"><b>Hello {{current_user.name}}, I'm Stock Master.</b></h3>
+            <p>Your Personalized Track AI Stock Tracker. "Get Started".</p>
+            <i class="fa fa-arrow-down text-dark" style="color:#000; margin-right:15px;" aria-hidden="true"></i>
+            <a href="/gemini">
+                <button class="get" id="get-started-btn" style="background-color: blue; border-radius:40px;">Get Started</button>
+            </a>
+        </div>
+    </div>
 
-<script>
-    var idleTime = 0;
-    var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+    <script>
+        // Initial scroll to the bottom on page load
+        window.onload = function() {
+            const chatBody = document.getElementById('chat-body');
+            chatBody.scrollTop = chatBody.scrollHeight;
 
-    $(document).ready(function () {
-        console.log("Document ready");
-        // Zero the idle timer on mouse movement or keypress
-        $(this).mousemove(function (e) {
-            idleTime = 0;
-            console.log("Mouse moved, idleTime reset to 0");
+            // Show the welcome modal on page load
+            document.getElementById('welcome-modal').classList.add('show');
+        };
+
+        // Hide the modal on "Get Started" or "Cancel" button click
+        document.getElementById('get-started-btn').addEventListener('click', function() {
+            document.getElementById('welcome-modal').classList.remove('show');
         });
-        $(this).keypress(function (e) {
-            idleTime = 0;
-            console.log("Key pressed, idleTime reset to 0");
-        });
-    });
 
-    function timerIncrement() {
-        idleTime++;
-        console.log("Idle time incremented to", idleTime);
-        if (idleTime > 19) { // 2 minutes
-            alert("Your Session will be logged out soon, check out our new AI Feature 🥳.");
-            $.ajax({
-                url: "{{ url_for('log_inactivity') }}",
-                method: "POST",
-                data: JSON.stringify({ message: "User is inactive" }),
-                contentType: "application/json",
-                success: function(response) {
-                    console.log("Inactivity logged:", response);
-                    setTimeout(function() {
-                        console.log("Redirecting to logout");
-                        window.location.href = "{{ url_for('logout') }}";
-                    }, 60000); // 1 minute later
-                }
-            });
+        // Function to add a new message to the chat
+        function addMessageToChat(sender, message) {
+            const chatBody = document.getElementById('chat-body');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerHTML = `<p>${message}</p>`;
+            chatBody.appendChild(messageElement);
+
+            // Scroll to the bottom of the chat body
+            chatBody.scrollTop = chatBody.scrollHeight;
         }
-    }
-</script>
 
+        // Function to handle sending a message
+        document.getElementById('sendButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const inputField = document.getElementById('chat-input');
+            const message = inputField.value.trim();
 
-<script>
-    function generateRandomCode() {
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        var codeLength = 6;
-        var code = '';
-        for (var i = 0; i < codeLength; i++) {
-            var randomIndex = Math.floor(Math.random() * characters.length);
-            code += characters.charAt(randomIndex);
-        }
-        return code;
-    }
+            if (message !== "") {
+                addMessageToChat('user', message);
+                inputField.value = '';
 
-    // Generate and display the unique code when the form is submitted
-    document.getElementById('faqForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent the form from submitting
-        var uniqueCode = generateRandomCode();
-        document.getElementById('uniqueCode').innerText = 'Unique Code: ' + uniqueCode;
-    });
-</script>
-
- <!-- Bootstrap JavaScript and Popper.js (Order is important) -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
- <!-- Triggering the Toast -->
-<!-- Your existing HTML code -->
-
-<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<!-- Your custom JavaScript code -->
-
-
-<!-- Your existing HTML code -->
-
-
-  <script async="" type="text/javascript" src="https://www.myhealth1st.com.au/mh1-widget/2021/popup.v3.js"></script>
-  <!-- End of MyHealth1st Widget code -->
-
-  <!-- 
-    - custom js link
-
-  <!-- 
-    - ionicon link
-  -->
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
-  
-  <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
-  
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Simulate delay for demonstration purposes
-        setTimeout(function () {
-            // Hide loading screen and display content
-            document.getElementById("loadingScreen").style.display = "none";
-            document.getElementById("mainContent").style.display = "block";
-        }, 2000); // Adjust the delay time as needed
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Triggering the Toast -->
- <!-- <script>
-    var toastElement = new bootstrap.Toast(document.querySelector('.toast'));
-    toastElement.show();
-  </script>-->
-  
-  
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
-  
-  <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
-  
-<!-- Bootstrap JS (Make sure to include Popper.js and Bootstrap JS) -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<!-- Your custom JavaScript code -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var liveToastBtn = document.getElementById('liveToastBtn');
-        var liveToast = new bootstrap.Toast(document.getElementById('liveToast'));
-
-        liveToastBtn.addEventListener('click', function () {
-            liveToast.show();
+                // Simulate bot response
+                setTimeout(() => {
+                    addMessageToChat('bot', "I'm here to help!");
+                }, 1000);
+            }
         });
-    });
-</script>
-
-  <script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyBPHDVrXV4nn_4agQgWFItDlS8z9cvq5zw",
-      authDomain: "centralalumni.firebaseapp.com",
-      projectId: "centralalumni",
-      storageBucket: "centralalumni.appspot.com",
-      messagingSenderId: "270504690849",
-      appId: "1:270504690849:web:b03ee12ab92e157196dce0",
-      measurementId: "G-9T21K58F10"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  </script>
-  <script src="static/assets/js/script.js"></script>
-
-  <!-- 
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
-
+    </script>
 </body>
-
 </html>
+

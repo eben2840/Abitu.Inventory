@@ -1,181 +1,118 @@
-{% extends 'ai.html' %}
 
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="static/assets/css/ai.css">
+</head>
+<body>
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div class="chat-header d-flex">
+            <div class="lily">
+                <a href="/" style="text-decoration:none;">
+                    <i class="fa fa-arrow-left text-dark" style="color:#000; margin-top:25px; margin-right:15px;" aria-hidden="true"></i>
+                </a>
+                <img src="https://img.freepik.com/premium-psd/approachable-female-cartoon-avatar-with-arms-crossed-generative-ai_92753-21977.jpg" style="width:50px; margin-top:10px; border:1px solid blue; height:50px; object-fit:cover; border-radius:50px;">
+                <h2 class="ai h5"><b>Stock Master</b><br><span style="color:green;">Online</span></h2>
+            </div>
+            <a href="" style="text-decoration:none;"> 
+                <h2 class="send-btn" style="font-size:15px; border-radius:50px;">Support Team</h2>
+            </a>
+        </div>
+       
+        <div class="chat-body" id="chat-body">
+           <!--  <img src="https://cupascoportal.com/static/asets/images/portfolio/no.png" style="width:100px; margin-top:10px; margin:auto; border:1px solid red; height:100px; border-radius:10px;">
+           <span style="text-align:center; border-radius:10px;" class="text-muted">Messages are end-to-end encrypted.</span>
+          -->
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-  {% for category, message in messages %}
-    <div class="alert alert-success" role="alert">
-      {{ message }}
+            {% for entry in data|reverse %}
+            <div class="icon"> 
+                <div class="messages">
+                    <p>{{ entry['input'] }}</p>
+                </div>
+            </div>
+            <span style="margin-top:30px;"><b>Stock Master</b></span>
+            <div class="icon"> 
+                <img src="https://img.freepik.com/premium-psd/approachable-female-cartoon-avatar-with-arms-crossed-generative-ai_92753-21977.jpg" style="width:30px; margin-top:10px; border:1px solid blue; object-fit:cover; margin-right:10px; height:30px; border-radius:10px;">
+                <div class="message bot">
+                    <p>{{ entry['result'] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <form class="element" method="POST" onsubmit="sendMessage(event)">
+            <div class="chat-footer">
+                <input type="text" name="text" id="chat-input" placeholder="Type your message here..." class="form-control" onkeydown="if(event.keyCode==13){sendMessage(event); return false;}" style="border-radius:50px; padding:20px; border:none;">
+                <button id="sendButton" class="send-btn" style="border-radius:50px; width:60px;" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </form>
+
+        <span class="text-muted" style="text-align:center; font-size:11px; background-color:#f8f7f7;">Stock Master can make mistakes. Check important info. <a href="">Privacy Policy</a></span>
     </div>
-  {% endfor %}
-{% endif %}
-{% endwith %}
 
-<style>
-  .chat-container {
-    width: 80%;
-    margin: 0 auto;
-   
-    
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-    overflow-y: auto;
-    max-height: calc(100vh - 150px); /* Adjust to fit screen */
-  }
+    <!--<div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <img src="static/loginassets/images/backgrounds/photo_2024-08-25_13-11-19.jpg" style="width:200px; margin-top:20px; margin-bottom:30px; margin:auto; object-fit:cover; border:1px solid red; height:200px; border-radius:10px;">
+            <h3 class="mt-3"><b>Hello there, I'm Lily Afua.</b></h3>
+            <p>Your Personalized Pass Question AI Assistant! I am here to help. Click On "Get Started".</p>
+            <i class="fa fa-arrow-down text-dark" style="color:#000; margin-right:15px;" aria-hidden="true"></i>
+            <a href="/ai">
+                <button class="get" id="get-started-btn" style="background-color: #c71111; border-radius:40px;">Get Started</button>
+            </a>
+        </div>
+    </div>-->
 
-  .message {
-    display: flex;
-    margin-bottom: 15px;
-  }
+    <script>
+        // Initial scroll to the bottom on page load
+        window.onload = function() {
+            const chatBody = document.getElementById('chat-body');
+            chatBody.scrollTop = chatBody.scrollHeight;
 
-  .user-message .message-content {
-    background-color: #e0e0e0;
-    margin-left: 10px;
-  }
+            // Show the welcome modal on page load
+            document.getElementById('welcome-modal').classList.add('show');
+        };
 
-  .ai-message .message-content {
-    background-color: #e0f7fa;
-    margin-left: auto;
-    margin-right: 10px;
-  }
+        // Hide the modal on "Get Started" or "Cancel" button click
+        document.getElementById('get-started-btn').addEventListener('click', function() {
+            document.getElementById('welcome-modal').classList.remove('show');
+        });
 
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+        // Function to add a new message to the chat
+        function addMessageToChat(sender, message) {
+            const chatBody = document.getElementById('chat-body');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerHTML = `<p>${message}</p>`;
+            chatBody.appendChild(messageElement);
 
-  .message-content {
-    max-width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
+            // Scroll to the bottom of the chat body
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
 
-  .time {
-    font-size: 12px;
-    color: #777;
-    margin-top: 5px;
-    align-self: flex-end;
-  }
+        // Function to handle sending a message
+        document.getElementById('sendButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const inputField = document.getElementById('chat-input');
+            const message = inputField.value.trim();
 
- 
+            if (message !== "") {
+                addMessageToChat('user', message);
+                inputField.value = '';
 
-  .gif {
-    max-width: 100px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
+                // Simulate bot response
+                setTimeout(() => {
+                    addMessageToChat('bot', "I'm here to help!");
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
 
-  .typing-indicator {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .dots {
-    display: flex;
-    margin-left: 10px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    background-color: #333;
-    border-radius: 50%;
-    margin-right: 3px;
-    animation: blink 1.4s infinite both;
-  }
-
-  .dot:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  .dot:nth-child(3) {
-    animation-delay: 0.4s;
-  }
-
-  @keyframes blink {
-    0%, 20%, 100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  .input-container {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .chat-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-  }
-
-  .send-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .send-button:hover {
-    background-color: #0056b3;
-  }
-</style>
-
-
-<div class="chat-container">
-  
-
-  {% for user in users %}
-  <div class="message ai-message mb-5">
-    <div class="message-content">
-      <p> {{ user.message }}
-        </p>
-      <span class="time">{{ current_user.name }}</span>
-    </div>
-  </div>
-  <div class="message user-message">
-    <img src="https://img.freepik.com/premium-photo/cartoonish-3d-animation-boy-glasses-with-blue-hoodie-orange-shirt_899449-25777.jpg" alt="User Icon" class="avatar">
-    <div class="typing-indicator" style="background-color:gray; margin-left:10px; padding:10px; border-radius:20px 20px 20px 0">
-      <div class="dots">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-  <!-- User Message with GIF -->
-  
-</div>
-
-<form method="POST" action="/stockmaster"  enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
-<div class="input-container">
-  <input type="text" name="message" placeholder="Type something..." class="chat-input">
-  <button class="send-button" type="submit">Send</button>
-</div>
-<form>
-
-{% endblock body %}

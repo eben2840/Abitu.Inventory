@@ -3,10 +3,14 @@ from email.message import EmailMessage
 import re
 import secrets
 import ssl
+from requests import post
 import smtplib
 import csv
+from google.api_core.exceptions import ResourceExhausted
 import random
+import requests
 import string
+import google.generativeai as genai
 import os
 import datetime
 from urllib import response
@@ -41,6 +45,14 @@ app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads' 
+genai.configure(api_key="AIzaSyAgE0_IAFPZYcTu_AZA-u7ExcyK3cgXln4")
+
+
+
+# curl \
+#   -H 'Content-Type: application/json' \
+#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBBbl0TRbzkI1oM5Qk18rGf0phwxgX-pCw'
 
 
 # photos=UploadSet('photos', IMAGES)
@@ -1441,20 +1453,104 @@ def support():
     return render_template("support.html")
 
 
-@app.route('/stockmaster', methods=['GET', 'POST'])
-def stockmaster():
-    form=MessageForm()
-    if form.validate_on_submit():
-            new=Message(message=form.message.data)
-            db.session.add(new)
-            db.session.commit()
-            return redirect('stockmaster')
-    print(form.errors)
-    users=Message.query.order_by(Message.id.desc()).all()
-    # users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
-    # users=Message.query.filter_by(userId=current_user.id).order_by(Message.id.desc()).all()
-    return render_template("stockmaster.html",form=form, users=users)
 
+data= []
+generation_config = {
+  "temperature": 0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "text/plain",
+}
+safety_settings = [
+  {
+    "category": "HARM_CATEGORY_HARASSMENT",
+    "threshold": "BLOCK_NONE",
+  },
+  {
+    "category": "HARM_CATEGORY_HATE_SPEECH",
+    "threshold": "BLOCK_MEDIUM_AND_ABOVE",
+  },
+  {
+    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    "threshold": "BLOCK_MEDIUM_AND_ABOVE",
+  },
+  {
+    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+    "threshold": "BLOCK_MEDIUM_AND_ABOVE",
+  },
+]
+# Endpoint to handle text and store it in the database
+# @app.route("/gemini", methods=['GET', 'POST'])
+# @login_required
+# def text():
+#     data = session.get('data', [])
+#     if request.method == "POST":
+#         input_text = request.form.get("text")
+#         if input_text:
+#             # Using generative AI model to generate content
+#             model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+#                                            safety_settings=safety_settings,
+#                                             generation_config=generation_config,
+#                                             system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer.",)
+#             response = model.generate_content(input_text)
+#             text_result = response.text
+#             data.append({'input': input_text, 'result': text_result})
+#             session['data'] = data
+#             return redirect(url_for('text'))
+#         else:
+#             flash("Please provide a valid input!", "error")
+#     return render_template("stockmaster.html", data=data[::-1])
+
+@app.route("/gemini", methods=['GET', 'POST'])
+@login_required
+def gemini():
+    data = session.get('data', [])
+    if request.method == "POST":
+        input_text = request.form.get("gemini")
+        print("Received input:", input_text)
+        if input_text:
+            print("Generating response using AI model")
+            try:
+                # Using generative AI model to generate content
+                model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+                                              safety_settings=safety_settings,
+                                              generation_config=generation_config,
+                                              system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer.")
+                response = model.generate_content(input_text)
+                text_result = response.text
+                print("Generated response:", text_result)
+                data.append({'input': input_text, 'result': text_result})
+                session['data'] = data
+                return redirect(url_for('gemini'))
+            except ResourceExhausted as e:
+                print("Resource exhausted: ", e)
+                flash("Quota exceeded. Please try again later.", "error")
+                return redirect(url_for('gemini'))
+        else:
+            print("No input provided")
+            # sendtelegram("New User")
+            print("didnt work")
+    print("Rendering ai.html template")
+    return render_template("stockmaster.html", data=data[::-1])
+
+# @app.route('/stockmaster', methods=['GET', 'POST'])
+# def stockmaster():
+#     form=MessageForm()
+#     if form.validate_on_submit():
+#             new=Message(message=form.message.data)
+#             db.session.add(new)
+#             db.session.commit()
+#             return redirect('stockmaster')
+#     print(form.errors)
+#     users=Message.query.order_by(Message.id.desc()).all()
+#     # users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+#     # users=Message.query.filter_by(userId=current_user.id).order_by(Message.id.desc()).all()
+#     return render_template("stockmaster.html",form=form, users=users)
+
+@app.route('/ai', methods=['GET', 'POST'])
+def ai():
+    return render_template("ai.html")
 
 @app.route('/features', methods=['GET', 'POST'])
 def features():
