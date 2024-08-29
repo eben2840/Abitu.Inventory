@@ -1501,6 +1501,7 @@ safety_settings = [
 #         else:
 #             flash("Please provide a valid input!", "error")
 #     return render_template("stockmaster.html", data=data[::-1])
+data= []
 
 @app.route("/gemini", methods=['GET', 'POST'])
 @login_required
@@ -1512,7 +1513,6 @@ def gemini():
         if input_text:
             print("Generating response using AI model")
             try:
-                # Using generative AI model to generate content
                 model = genai.GenerativeModel(model_name="gemini-1.5-pro",
                                               safety_settings=safety_settings,
                                               generation_config=generation_config,
@@ -1529,7 +1529,6 @@ def gemini():
                 return redirect(url_for('gemini'))
         else:
             print("No input provided")
-            # sendtelegram("New User")
             print("didnt work")
     print("Rendering ai.html template")
     return render_template("stockmaster.html", data=data[::-1])
@@ -2304,13 +2303,8 @@ def getlist():
  
 
 @app.route('/leader', methods=['GET', 'POST'])
-@login_required
 def leader():
-    print("Fetching all")
-    users=Leaders.query.order_by(Leaders.id.desc()).all()
-    print(users)
-    print(current_user)
-    return render_template("leader.html", users=users, current_user=current_user)
+    return render_template("leader.html")
  
 @app.route('/log_inactivity', methods=['POST'])
 def log_inactivity():
