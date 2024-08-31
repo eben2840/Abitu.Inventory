@@ -1527,6 +1527,10 @@ def gemini():
                 print("Resource exhausted: ", e)
                 flash("Quota exceeded. Please try again later.", "error")
                 return redirect(url_for('gemini'))
+            except Exception as ex:
+                print("An error occurred:", ex)
+                flash("Currently Working on Update. Please try again later.", "error")
+                return redirect(url_for('text'))
         else:
             print("No input provided")
             print("didnt work")
@@ -2131,15 +2135,15 @@ def list(userid):
  
  
 @app.route('/instocklist/<int:userid>', methods=['GET', 'POST'])
+@login_required
 def instocklist(userid):  
-    
     profile=Item.query.get_or_404(userid)
     return render_template("instocklist.html", profile=profile)
 
 
 @app.route('/stock', methods=['GET', 'POST'])
+@login_required
 def stock():
-    
     # outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).order_by(Item.id.desc()).all()
     users = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 20).order_by(Item.id.desc()).all()
     # users=Item.query.filter_by(clientid=current_user.id, Item.quantity < 10).order_by(Item.id.desc()).all()
@@ -2150,6 +2154,7 @@ def stock():
 # total_cat = Groups.query.filter_by(userId=current_user.id).count()
 
 @app.route('/instock', methods=['GET', 'POST'])
+@login_required
 def instock():
     users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
     
@@ -2173,6 +2178,7 @@ def instock():
     return render_template("instock.html",users=users,total_sum=total_sum,instock=instock,total_amount=total_amount)
 
 @app.route('/auth', methods=['GET', 'POST'])
+@login_required
 def auth():
     users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
     
