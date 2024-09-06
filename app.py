@@ -34,6 +34,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 app=Flask(__name__)
+
 CORS(app)
 # 'postgresql://postgres:new_password@45.222.128.55:5432/src'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -1508,15 +1509,18 @@ data= []
 def gemini():
     data = session.get('data', [])
     if request.method == "POST":
-        input_text = request.form.get("gemini")
+        input_text = request.form.get("text")
         print("Received input:", input_text)
         if input_text:
             print("Generating response using AI model")
-            try:
+            try: 
+                # Using generative AI model to generate content
                 model = genai.GenerativeModel(model_name="gemini-1.5-pro",
                                               safety_settings=safety_settings,
-                                              generation_config=generation_config,
-                                              system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer.")
+                                               generation_config=generation_config,
+                                              system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer."
+                                               
+                                              )
                 response = model.generate_content(input_text)
                 text_result = response.text
                 print("Generated response:", text_result)
@@ -1525,16 +1529,48 @@ def gemini():
                 return redirect(url_for('gemini'))
             except ResourceExhausted as e:
                 print("Resource exhausted: ", e)
-                flash("Quota exceeded. Please try again later.", "error")
+                flash(" Please try again later.", "error")
                 return redirect(url_for('gemini'))
             except Exception as ex:
                 print("An error occurred:", ex)
                 flash("Currently Working on Update. Please try again later.", "error")
-                return redirect(url_for('text'))
+                return redirect(url_for('gemini'))
         else:
             print("No input provided")
+            sendtelegram("New User")
             print("didnt work")
     print("Rendering ai.html template")
+    # data = session.get('data', [])
+    # if request.method == "POST":
+    #     input_text = request.form.get("gemini")
+    #     print("Received input:", input_text)
+    #     if input_text:
+    #         print("Generating response using AI model")
+    #         try:
+    #             model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+    #                                           safety_settings=safety_settings,
+    #                                           generation_config=generation_config,
+    #                                         #   system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer."
+                                              
+    #                                           )
+    #             response = model.generate_content(input_text)
+    #             text_result = response.text
+    #             print("Generated response:", text_result)
+    #             data.append({'input': input_text, 'result': text_result})
+    #             session['data'] = data
+    #             return redirect(url_for('gemini'))
+    #         except ResourceExhausted as e:
+    #             print("Resource exhausted: ", e)
+    #             flash("Quota exceeded. Please try again later.", "error")
+    #             return redirect(url_for('gemini'))
+    #         except Exception as ex:
+    #             print("An error occurred:", ex)
+    #             flash("Currently Working on Update. Please try again later.", "error")
+    #             return redirect(url_for('text'))
+    #     else:
+    #         print("No input provided")
+    #         print("didnt work")
+    # print("Rendering ai.html template")
     return render_template("stockmaster.html", data=data[::-1])
 
 # @app.route('/stockmaster', methods=['GET', 'POST'])
@@ -2536,7 +2572,7 @@ def signup():
             return redirect(url_for('signup'))
         
         if not is_gmail_address(form.email.data):
-            flash('Please provide a valid Gmail email address.', 'danger')
+            flash('Please provide a valid email address.', 'danger')
             print("Invalid email address")
             return redirect(url_for('signup'))
 

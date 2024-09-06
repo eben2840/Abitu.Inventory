@@ -15,18 +15,19 @@
 {% endwith %}
 <br>
 
-
-
-
-
-
-
 <div class="container-fluid">
+
+
+    <div class="alert alert-primary mb-5" role="alert">
+        Create your Warehouse to store track of your product. <a href="/group"><b>Click Here</b></a>
+      </div>
+
+
     <div class="row g-4 mb-6">
     
        
          
-  <div class="col-xl-4 col-sm-4 col-12" style="margin-bottom:20px;  ">
+  <div class="col-xl-2 col-sm-2 col-12" style="margin-bottom:20px;  ">
                 
         <a href="/ai" style="text-decoration: none; color: #992621; cursor: pointer;">
         <div class="card shadow border-1" style="">
@@ -34,19 +35,17 @@
                 <div class="row">
                     <div class="col">
                         <span class="h6 font-semibold text-muted text-sm d-block">
-                            Your overall analysis</span>
+                            Hello {{current_user.name}},</span>
                             <hr>
-                            <div class="card-body"> 
-                               <div class="row"> 
-                                <img src="#"  class="">
-                                   <!--<span  style=" margin-bottom:10px; text-align:center;font-size:74px;">  </span>-->
-                                   <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:14px;"> Hello there, {{current_user.name}}.<br> This is Abi, your personalized AI tracker.</span>
-                                      
-                               <button type="button" style="margin-top:20px; border-radius:50px; width:230px; margin:auto; "class="btn btn-primary position-relative">
-                                        <i class="bi bi-wave"></i>Stock Master
-                                       </button>  
-                               </div>            
-                           </div>
+                           
+                            <div style="text-align: center;">
+                                <img src="static/assetss/images/White Minimalist Eat Well Healthy Food Nutrition Instagram Post (1).png"  
+                                     class="mx-auto" 
+                                     style="width:200px; border:1px solid #000; border-radius:10px; margin:auto;">
+                            </div>
+                              
+                              
+                       
                     </div>
                 </div>     
             </div>
@@ -54,7 +53,7 @@
      </a>
     </div>
 
-    <div class="col-xl-5 col-sm-12 col-12" style="margin-bottom:20px;  ">
+    <div class="col-xl-7 col-sm-7 col-12" style="margin-bottom:20px;  ">
                 
         <a href="#" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
@@ -124,7 +123,7 @@
                             <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                                 Get Interactive {{current_user.name}}</span>
                                 <span class="h4 font-bold m-0 text-center mb-3">Keep growing your Workload</span>
-                            <img src="static/assetss/images/1.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
+                            <img src="https://static.vecteezy.com/system/resources/previews/007/627/725/non_2x/bronze-award-sport-medal-for-winners-with-red-ribbon-vector.jpg" style="width:150px; margin:auto; justify-content:center; align-item:center;">
                            
                         <span class="badge badge-pill bg-soft-danger text-danger me-2">
                             <i class="bi bi-arrow-down me-1"></i>{{ workload_percentage }}%
@@ -133,7 +132,7 @@
                         <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                             Great Week Ago{{current_user.name}}</span>
                             <span class="h4 font-bold m-0 text-center mb-3">Your Workload is Growing 🥳</span>
-                        <img src="static/assetss/images/1.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
+                        <img src="https://t3.ftcdn.net/jpg/04/87/34/18/360_F_487341885_43bjb9IUYv8c7Fhxm5kp9KgvWgZUeNMo.jpg" style="width:100px; margin:auto; justify-content:center; align-item:center;">
                        
                         <span class="badge badge-pill bg-soft-warning text-warning me-2">
                             <i class="bi bi-dash me-1"></i>{{ workload_percentage }}%
@@ -142,7 +141,7 @@
                         <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                            At Your Best {{current_user.name}}</span>
                             <span class="h4 font-bold m-0 text-center mb-3">Your Workload is Amazing 🥳</span>
-                        <img src="static/assetss/images/2.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
+                        <img src="https://media.istockphoto.com/id/1391778705/vector/golden-award-sport-medal-for-winners-with-blue-ribbon.jpg?s=612x612&w=0&k=20&c=Y3Z7-3VZBuafddlCAssuHv1V13V4tolBni2T9obZ_so=" style="width:100px; margin:auto; justify-content:center; align-item:center;">
                        
                         <span class="badge badge-pill bg-soft-success text-success me-2">
                             <i class="bi bi-arrow-up me-1"></i>{{ workload_percentage }}%
@@ -151,7 +150,7 @@
                         <span class="h6 font-semibold text-center text-muted text-sm d-block mb-2 justify-content:center; align-item:center;">
                            Great Job {{current_user.name}}</span>
                             <span class="h4 font-bold m-0 text-center mb-3">You Just Capped Your Highest 🥳</span>
-                        <img src="static/assetss/images/mod.png" style="width:100px; margin:auto; justify-content:center; align-item:center;">
+                        <img src="https://i.ebayimg.com/images/g/ffAAAOSwoMVjrOiM/s-l1200.jpg" style="width:100px; margin:auto; justify-content:center; align-item:center;">
                        
                         <span class="badge badge-pill bg-soft-success text-success me-2">
                             <i class="bi bi-arrow-up me-1"></i>{{ workload_percentage }}%

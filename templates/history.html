@@ -27,9 +27,12 @@
       
 
    
-                                   
+        {% if users  %}
+        
+
+                       
     <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:5px;">
-                
+               
         <div class="card shadow  mb-7">
             <div class="card-header">
                 <h5 class="mb-0">In-Stock</h5>
@@ -44,11 +47,7 @@
                             <th>Price</th>
                             <th>Total Price</th>
                             <th>Date</th>
-                   
-                           
-    <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-    -->
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -105,9 +104,7 @@
                                 </span>
                             {% endif %}
                             
-                               <!-- <span class="badge badge-lg badge-dot">
-                                    <i class="bg-success"></i>In-Stock
-                                </span>-->
+                              
                             </td>
                             <td>
                                 {{users.quantity}}
@@ -141,10 +138,14 @@
       
   
     </div>
+        
+    {%else %}
+
+    {%endif%}
 
 
-
-                                   
+                 
+    {% if user%}
     <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:5px;">
                 
         <div class="card shadow  mb-7">
@@ -258,9 +259,13 @@
       
   
     </div>
+{%else%}
+{%endif%}
+
+             
 
 
-                                   
+{% if goal%}
     <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:5px;">
                 
         <div class="card shadow  mb-7">
@@ -390,6 +395,11 @@
       
   
     </div>
+    {%else%}
+{%endif%}
+
+
+{% if task%}
     <div class="col-xl-6 col-sm-4 col-12" style="margin-bottom:10px;  ">        
         
         <div class="card shadow border-0 mb-7">
@@ -492,7 +502,8 @@
     </div>
 </div>
 
-
+{%else%}
+{%endif%}
 
     </div>
 
