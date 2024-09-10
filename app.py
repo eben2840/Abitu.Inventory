@@ -1,4 +1,4 @@
-import os
+
 from email.message import EmailMessage
 import re
 import secrets
@@ -12,6 +12,8 @@ import requests
 import string
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import datetime
 from urllib import response
 # from datetime import datetime
@@ -36,17 +38,15 @@ from datetime import datetime, timedelta
 app=Flask(__name__)
 
 CORS(app)
-# 'postgresql://postgres:new_password@45.222.128.55:5432/src'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("CENTRAL_MINISTRY_DB_URL","sqlite:///test.db")
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:new_password@45.222.128.55:5432/src'
-app.config['SECRET_KEY'] ="thisismysecretkey"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_ABITU")
+
+app.config['SECRET_KEY'] =os.getenv("SECRET")
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads' 
-genai.configure(api_key="AIzaSyAgE0_IAFPZYcTu_AZA-u7ExcyK3cgXln4")
+genai.configure(api_key=os.getenv("API"))
 
 
 
@@ -93,7 +93,7 @@ def load_user(user_id):
 
 
 def sendtelegram(params):
-    url = "https://api.telegram.org/bot7174034710:AAGMITwp6BvnS6JPO-j2ulYiP3VOgK43LzE/sendMessage?chat_id=-4165806132&text=" + urllib.parse.quote(params)
+    url = os.getenv("TELEGRAM_URL") + urllib.parse.quote(params)
     content = urllib.request.urlopen(url).read()
     print(content)
     return content
