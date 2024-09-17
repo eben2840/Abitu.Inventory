@@ -41,7 +41,7 @@
                             <span class="h3 font-bold mb-0">${{ total_budget | int }}</span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                            <div class="icon icon-shape bg-success text-white text-lg rounded-circle">
                                 <i class="bi bi-credit-card"></i>
                             </div>
                         </div>
@@ -70,9 +70,23 @@
                         </div>
                     </div>
                     <div class="mt-2 mb-0 text-sm">
-                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                            <i class="bi bi-arrow-right me-1"></i>Total Product
+                        {% if total_students < 50 %}
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-down me-1"></i>Total Product
                         </span>
+                        {% elif total_students >= 50 and total_students <= 80 %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>Total Product
+                        </span>
+                        {% else %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>Total Product
+                        </span>
+                        {% endif %}
+
+                       <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-arrow-right me-1"></i>Total Product
+                        </span>-->
                         <span class="text-nowrap text-xs text-muted"> </span>
                     </div>
                 </div>
@@ -93,9 +107,22 @@
                         </div>
                     </div>
                     <div class="mt-2 mb-0 text-sm">
+                        {% if total_cat < 50 %}
                         <span class="badge badge-pill bg-soft-danger text-danger me-2">
-                            <i class="bi bi-arrow-right me-1"></i>My WareHouse
+                            <i class="bi bi-arrow-down me-1"></i>My WareHouse
                         </span>
+                        {% elif total_cat >= 50 and total_cat <= 80 %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>My WareHouse
+                        </span>
+                        {% else %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>My WareHouse
+                        </span>
+                        {% endif %}
+                       <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-arrow-right me-1"></i>
+                        </span>-->
                         <span class="text-nowrap text-xs text-muted"> </span>
                     </div>
                 </div>
@@ -171,14 +198,14 @@
                                 <span class="h3 font-bold mb-0">{{ outstock}}</span>
                             </div>
                             <div class="col-auto">
-                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
                                     <i class="bi bi-bell-fill"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-2 mb-0 text-sm">
-                            <span class="badge badge-pill bg-soft-success text-success me-2">
-                                <i class="bi bi-arrow-right me-1"></i>Out-Of-Stock
+                            <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                <i class="bi bi-arrow-down me-1"></i>Out-Of-Stock
                             </span>
                             <span class="text-nowrap text-xs text-muted"> </span>
                         </div>
@@ -194,14 +221,14 @@
                                 <span class="h3 font-bold mb-0">{{total_stock}}</span>
                             </div>
                             <div class="col-auto">
-                                <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                <div class="icon icon-shape bg-success text-white text-lg rounded-circle">
                                     <i class="bi bi-bookmarks"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-2 mb-0 text-sm">
-                            <span class="badge badge-pill bg-soft-info text-info me-2">
-                                <i class="bi bi-arrow-right me-1"></i>In-Stock
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class="bi bi-arrow-up me-1"></i>In-Stock
                             </span>
                             <span class="text-nowrap text-xs text-muted"> </span>
                         </div>
@@ -223,9 +250,22 @@
                             </div>
                         </div>
                         <div class="mt-2 mb-0 text-sm">
-                            <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                                <i class="bi bi-arrow-right me-1"></i>My Task
-                            </span>
+                            {% if total_challenges < 50 %}
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-down me-1"></i>My Task
+                        </span>
+                        {% elif total_challenges >= 50 and total_challenges <= 80 %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>My Task
+                        </span>
+                        {% else %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>My Task
+                        </span>
+                        {% endif %}
+                           <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                                <i class="bi bi-arrow-right me-1"></i>
+                            </span>-->
                             <span class="text-nowrap text-xs text-muted"> </span>
                         </div>
                     </div>
@@ -246,9 +286,22 @@
                             </div>
                         </div>
                         <div class="mt-2 mb-0 text-sm">
-                            <span class="badge badge-pill bg-soft-success text-success me-2">
-                                <i class="bi bi-arrow-right me-1"></i>My Set Goals
-                            </span>
+                            {% if total_Faq < 50 %}
+                        <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                            <i class="bi bi-arrow-down me-1"></i>My Goals
+                        </span>
+                        {% elif total_Faq >= 50 and total_Faq <= 80 %}
+                        <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <i class="bi bi-dash me-1"></i>My Goals
+                        </span>
+                        {% else %}
+                        <span class="badge badge-pill bg-soft-success text-success me-2">
+                            <i class="bi bi-arrow-up me-1"></i>My Goals
+                        </span>
+                        {% endif %}
+                           <!-- <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class="bi bi-arrow-right me-1"></i>
+                            </span>-->
                             <span class="text-nowrap text-xs text-muted"></span>
                         </div>
                     </div>

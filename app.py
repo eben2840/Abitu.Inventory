@@ -534,7 +534,8 @@ def group():
         return redirect(url_for('main'))
 
     print(form.errors)
-    return render_template('groups.html', form=form)
+    users=Groups.query.filter_by(userId=current_user.id).count()
+    return render_template('groups.html', form=form,users=users)
 
 
 
@@ -587,7 +588,8 @@ def add_item():
         return redirect(url_for('main'))
 
     print("FORM ERRORS: ", form.errors)
-    return render_template('add_item.html', form=form)
+    users = Item.query.filter_by(clientid=current_user.id).count()
+    return render_template('add_item.html', form=form,users=users)
 
 
     
@@ -872,7 +874,21 @@ def messages():
 @app.route('/analytics', methods=['GET', 'POST'])
 def analytics():
     items = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
-
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    total_cat = Groups.query.filter_by(userId=current_user.id).count()
+    weekly_work = calculate_weekly_work()
+    workload_limit = 1000  
+    workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)
+    outstock = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).count()
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    instock = Item.query.filter_by(clientid=current_user.id).count()
+    total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
+    total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+    total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
+    total_message = Committee.query.filter_by(id=current_user.id).count()
+    total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
+    total_cat = Groups.query.filter_by(userId=current_user.id).count() 
+    
     items_data = [
         {
             'start_date': item.start_date.strftime('%Y-%m-%d') if item.start_date else None,
@@ -910,7 +926,7 @@ def analytics():
     total_software =  Groups.query.filter_by(manufacturing='Softwares',userId=current_user.id).count()
     total_accessories =  Groups.query.filter_by(manufacturing='Accessories',userId=current_user.id).count()
     # total_warehouse = db.session.query(func.count(Groups.id)).filter(Groups.manufacturing == 'Warehouse').scalar()
-    return render_template('analytics.html',total=total, items=items_data, budget=budget,money=money,total_amount=total_amount,total_sum=total_sum,total_budget=total_budget,total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
+    return render_template('analytics.html',total_message=total_message,outstock=outstock,instock =instock , total_stock=total_stock, total_Faq=total_Faq, total_challenges=total_challenges,workload_percentage=workload_percentage,total_cat=total_cat,total=total,total_students=total_students, items=items_data, budget=budget,money=money,total_amount=total_amount,total_sum=total_sum,total_budget=total_budget,total_category=total_category,total_warehouse=total_warehouse, total_hardware=total_hareware, total_software=total_software, total_accessories=total_accessories)
 
 
 
@@ -1198,7 +1214,9 @@ def authtask():
             return redirect('main')
 
     print(form.errors)
-    return render_template("authtask.html", form=form)
+    # users=Challenge.query.filter(taskId=current_user.id).count()
+    users = Challenge.query.filter_by(taskId=current_user.id).count()
+    return render_template("authtask.html", form=form,users=users)
 
 @app.route('/logger', methods=['GET', 'POST'])
 def logger():
@@ -1279,7 +1297,7 @@ def update_task_status(id,status):
 def authchallenge():
     form=FaqForm()
     if form.validate_on_submit():
-        
+
             new=Faq(
                 faqid=current_user.id,
                 caption=form.caption.data, 
@@ -1301,7 +1319,9 @@ def authchallenge():
             
     print(form.errors)
     # current_time = datetime.now()
-    return render_template("authchallenge.html", form=form)
+    users=Faq.query.filter_by(faqid=current_user.id).count()
+    # total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+    return render_template("authchallenge.html", form=form,users=users)
     # return render_template("authchallenge.html", form=form, current_time=current_time)
 
 
@@ -1820,6 +1840,7 @@ def main():
         flash(f"There was a problem")
     return render_template('current.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+
 
 
 @app.route('/homelook', methods=['GET', 'POST'])
@@ -2601,7 +2622,7 @@ def signup():
         print(form.errors)
         print("Form validation failed")
        
-    return render_template('signup.html', form=form)
+    return render_template('signupuser.html', form=form)
 
 # @app.route('/test_email_validation/<test_email>')
 # def test_email_validation(test_email):

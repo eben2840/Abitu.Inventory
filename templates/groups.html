@@ -6,7 +6,7 @@
    
     <div class="row">
         
-        <div class="col-lg-12">
+        <div class="col-lg-8 mb-5">
   
     <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:10px;">
         <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
@@ -18,25 +18,26 @@
            </div>
         {{ form.hidden_tag() }}
        
-    
-        <label for="basic-url" class="form-label">Enter The Name: <span class="text-danger">*</span></label>
-        <div class="input-group mb-3">
-          {{form.name(type="text", class="form-control", placeholder="WareHouse Name")}}
-        </div>
-    
-       <label for="basic-url" class="form-label">Choose A Category: <span class="text-danger">*</span></label>
+        <label for="basic-url" class="form-label">Choose A Category: <span class="text-danger">*</span></label>
         <div class="input-group mb-3">
           {{form.manufacturing(type="text", class="form-control", placeholder="Recipient's username")}}
         </div>
 
+
+        <label for="basic-url" class="form-label mt-10">Enter The Name: <span class="text-danger">*</span></label>
+        <div class="input-group mb-3">
+          {{form.name(type="text", class="form-control", placeholder="WareHouse Name")}}
+        </div>
+    
+     
        
     
     
-    <hr>
+
         
-        <label for="basic-url" class="form-label fs-5">Choose A date <span class="text-danger">*</span></label>
+        <label for="basic-url" class="form-label mt-10">Choose A date <span class="text-danger">*</span></label>
         <div class="input-group mb-3">
-          <span class="input-group-text">{{ form.start_date.label }}</span>
+         
          {{ form.start_date( class="form-control" ,required="required") }}
           
         </div>
@@ -61,8 +62,15 @@
     {% endif %}
 </div>
 
-<div class="col-lg-6">
-                                   
+<div class="col-lg-4">
+    <div style="background-color:#fff; padding:30px; border-radius:10px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
+            <h6 class="h4 mb-5" style="margin-bottom:10px;">{{users}}</h6> 
+        </div>
+
+    <a name="" id="" class="btn btn-primary" href="#" role="button">My Warehouse</a>
+    </div>                            
 </div>
 
 </div>
