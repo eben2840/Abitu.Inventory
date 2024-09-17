@@ -2614,12 +2614,13 @@ def signup():
             db.session.add(user)
             db.session.commit()
             # send_email()
-            # flash("We sent you a confirmation Email, kindly confirm your email.", 'success')
+            # flash("Congratulation on creating your account.", 'success')
             login_user(user, remember=True)
             print("User created and logged in successfully")
             return redirect (url_for('login'))
     else:
         print(form.errors)
+        flash("An error occupied, kindly fill the form again", 'danger')
         print("Form validation failed")
        
     return render_template('signupuser.html', form=form)
