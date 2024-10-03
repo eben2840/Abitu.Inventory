@@ -19,9 +19,45 @@
     {% endwith %}
    
    
-      
 
         <div class="row g-4 mb-6">
+
+            <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                        <div class="col-xl-12 col-sm-12 col-12" style="  ">
+                            <div class="card  shadow border-1 " style="background-color:#5a00c1; color:#fff; ">
+                                
+                                <div class="card-body "> 
+                                    <div class="row"> 
+                                        <div class="col-xl-12 col-12">
+                                            <h6  style=" text-align:left;font-size:24px; color:#fff;"> <b>{{greeting}} {{current_user.name}}.</b><br> Create Unique Warehouses 🎉 </h6>
+                                        
+                                           <h6  style="  color:#fff; text-align:left; font-size:14px;"> Boost your workflow in minutes by tracking products.</h6> 
+                
+                                               <a href="/group"> <button type="button" style="margin-top:20px; border-radius:50px; width:250px; background-color:#c9b9db; color:#fff;"class="btn position-relative">
+                                                    <i class="bi bi-ui-checks fs-6"></i>  Create WareHouse
+                                                </button></a>   
+                                        </div>
+                
+                                       
+                                       
+                                       
+                                    </div>
+                                    
+                                    <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    -->       
+                                </div>
+                            </div>
+                        </div>
+                       <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
         <div class="col-xl-8 col-sm-12 col-12" style="  ">
             <div class="card  shadow border-1 " style="background-color:#5a00c1; color:#fff; ">
                 <div class="card-body "> 
@@ -362,6 +398,15 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script to automatically show modal -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+        myModal.show();
+    });
+</script>
 
  <!-- Bootstrap JavaScript and Popper.js (Order is important) -->
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
