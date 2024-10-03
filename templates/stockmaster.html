@@ -25,9 +25,9 @@
                
                 <h2 class="ai h5"><b>Stock Master</b><br><span style="color:green;">Online</span></h2>
             </div>
-            <a href="/homelook" style="text-decoration:none;"> 
+            <!--<a href="/homelook" style="text-decoration:none;"> 
                 <h2 class="send-btn" style="font-size:15px; border-radius:20px;">Dashboard</h2>
-            </a>
+            </a>-->
         </div>
        
         <div class="chat-body" id="chat-body">
@@ -36,7 +36,7 @@
           -->
           <span style="margin-top:30px;"><b>Stock Master</b></span>
           <div class="icon"> 
-              <img src="https://subbb-images.s3.amazonaws.com/f34b0519-1039-4f1c-83ae-bcc77984ec91-1725367321238-3.jpeg" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; height:30px; border-radius:50px;">
+              <img src="https://i.pinimg.com/originals/91/16/f7/9116f7fd184238ada99fdff9e2f2e3ac.gif" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; height:30px; border-radius:50px;">
               <div class="message bot">
                   <p>Hello <b>{{current_user.name}}</b>. I'm Stock Master, How can I help you today? </p>
               </div>
@@ -44,13 +44,16 @@
 
             {% for entry in data|reverse %}
             <div class="icon"> 
+                <img src="https://subbb-images.s3.amazonaws.com/f34b0519-1039-4f1c-83ae-bcc77984ec91-1725367321238-3.jpeg" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; height:30px; border-radius:50px;">
                 <div class="messages">
+
+                    
                     <p>{{ entry['input'] }}</p>
                 </div>
             </div>
             <span style="margin-top:30px;"><b>Stock Master</b></span>
             <div class="icon"> 
-                <img src="https://subbb-images.s3.amazonaws.com/f34b0519-1039-4f1c-83ae-bcc77984ec91-1725367321238-3.jpeg" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; height:30px; border-radius:50px;">
+                <img src="https://i.pinimg.com/originals/91/16/f7/9116f7fd184238ada99fdff9e2f2e3ac.gif" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; height:30px; border-radius:50px;">
                 <div class="message bot">
                     <p>{{ entry['result'] }}</p>
                 </div>
