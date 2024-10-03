@@ -9,7 +9,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mb-3" role="alert">
           {{ message }}
         </div>
         
@@ -26,17 +26,18 @@
             <div class="card  shadow border-1 " style="background-color:#5a00c1; color:#fff; ">
                 <div class="card-body "> 
                     <div class="row"> 
-                        <div class="col-xl-8 col-12 d-grid">
-                            <span  style=" text-align:left;font-size:24px; color:#fff;"> <b>{{greeting}} {{current_user.name}}</b>, Finish Setting Up Your Account. 🎉 </span>
+                        <div class="col-xl-8 col-12">
+                            <h6  style=" text-align:left;font-size:24px; color:#fff;"> <b>{{greeting}} {{current_user.company_name}}.</b><br> Finish Setting Up Your Account. 🎉 </h6>
                         
-                            <span  style="  color:#fff; text-align:left; font-size:14px;"> Boost your workflow in minutes by tracking products.</span> 
+                           <h6  style="  color:#fff; text-align:left; font-size:14px;"> Boost your workflow in minutes by tracking products.</h6> 
 
-                               <a href="/group"> <button type="button" style=" border-radius:50px; width:250px; background-color:#c9b9db; color:#fff;"class="btn position-relative">
+                               <a href="/group"> <button type="button" style="margin-top:20px; border-radius:50px; width:250px; background-color:#c9b9db; color:#fff;"class="btn position-relative">
                                     <i class="bi bi-ui-checks fs-6"></i>  Create WareHouse
                                 </button></a>   
                         </div>
 
                         <div class="col-xl-4 col-12 mt-5">
+                            
                             <img src="https://static.vecteezy.com/system/resources/previews/010/869/737/non_2x/data-analysis-concept-illustration-flat-vector-design-statistical-and-data-analysis-for-business-finance-investment-concept-taking-part-in-business-activities-free-png.png">
                         </div>
 
@@ -55,7 +56,11 @@
                         
                         <div class="row ">
                             <div class="col-lg-12 d-grid  ">
+
+                              <!--  <img src="https://subbb-images.s3.amazonaws.com/f34b0519-1039-4f1c-83ae-bcc77984ec91-1725367321238-3.jpeg" style="width:140px; margin-top:10px; margin:auto; justify-content:center; align-item:center;  height:140px; object-fit:cover; border-radius:80px; box-shadow: 0px 0px 10px rgba(107, 107, 161, 0.25);">
+               -->
                                 {% if workload_percentage < 40 %}
+                                
                                 <img src="https://static.vecteezy.com/system/resources/previews/007/627/725/non_2x/bronze-award-sport-medal-for-winners-with-red-ribbon-vector.jpg" style="width:140px; margin:auto; justify-content:center; align-item:center;">
                                
                            

@@ -1000,11 +1000,11 @@ def landingpage():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning."
+        greeting = "Good morning,"
     elif current_hour < 17:
-        greeting = "Good afternoon."
+        greeting = "Good afternoon,"
     else:
-        greeting = "Good evening."
+        greeting = "Good evening,"
         
     total_message = Committee.query.count()
     form=WaitForm()
@@ -1762,11 +1762,11 @@ def main():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning."
+        greeting = "Good morning,"
     elif current_hour < 17:
-        greeting = "Good afternoon."
+        greeting = "Good afternoon,"
     else:
-        greeting = "Good evening."
+        greeting = "Good evening,"
         
     form=WaitForm()
     if form.validate_on_submit():
@@ -1870,11 +1870,11 @@ def homelook():
     greeting = ""
     
     if current_hour < 12:
-        greeting = "Good morning."
+        greeting = "Good morning,"
     elif current_hour < 17:
-        greeting = "Good afternoon"
+        greeting = "Good afternoon,"
     else:
-        greeting = "Good evening."
+        greeting = "Good evening,"
     
     # all_product= User.query.count()
     current_time = datetime.now()
@@ -2555,26 +2555,19 @@ def mot():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-       
-            
         user = Person.query.filter_by(email=form.email.data).first()
         if user and user.password==form.password.data:
             login_user(user)
-             
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             if current_user.category == 'Manufacturing':
                 return redirect(url_for('analytics'))
-            
             elif current_user.category == "Cooperate":
                 return redirect(url_for('homelook'))
             else:
                 return redirect(url_for('main'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
-           
     return render_template('login.html', form=form)  
 
 
@@ -2591,12 +2584,10 @@ def signup():
             flash(f'This Email has already been used','danger')
             print("Email already in use")
             return redirect(url_for('signup'))
-        
         if not is_gmail_address(form.email.data):
             flash('Please provide a valid email address.', 'danger')
-            print("Invalid email address")
+            print("Invalid email address") 
             return redirect(url_for('signup'))
-
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
@@ -2606,7 +2597,7 @@ def signup():
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data, 
-                        # role=form.role.data, 
+                        # role=form.role.data, -----------
                         category=form.category.data,
                         email=form.email.data,
                         phone=form.phone.data,
@@ -2620,7 +2611,7 @@ def signup():
             return redirect (url_for('login'))
     else:
         print(form.errors)
-        flash("An error occupied, kindly fill the form again", 'danger')
+        # flash("An error occupied, kindly fill the form again", 'danger')
         print("Form validation failed")
        
     return render_template('signupuser.html', form=form)
