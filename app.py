@@ -1522,44 +1522,117 @@ safety_settings = [
 #         else:
 #             flash("Please provide a valid input!", "error")
 #     return render_template("stockmaster.html", data=data[::-1])
-data= []
 
 @app.route("/gemini", methods=['GET', 'POST'])
 @login_required
 def gemini():
     data = session.get('data', [])
+    
     if request.method == "POST":
         input_text = request.form.get("text")
         print("Received input:", input_text)
+        
         if input_text:
+            # Check if the user is asking about stock levels
+            if "stock" in input_text.lower():
+                # Query the database for items with low or high stock
+                # high_stock_items = Item.query.filter(Item.quantity >= 20, Item.clientid == current_user.id).all()
+                # low_stock_items = Item.query.filter(Item.quantity >= 10,Item.quantity <= 20, Item.clientid == current_user.id).all()
+                out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
+
+                # Build messages for stock status
+                # low_stock_message = "Low stock items: " + ", ".join([item.name for item in low_stock_items]) if low_stock_items else "No items with low stock."
+                # high_stock_message = "High stock items: " + ", ".join([item.name for item in high_stock_items]) if high_stock_items else "No items with high stock."
+                out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
+
+                # stock_status_message = f"{low_stock_message}\n{high_stock_message}\n{out_of_stock_message}"
+                stock_status_message = f"{out_of_stock_message}"
+
+                # input_text += f"\n\nHere is the current stock status:\n{stock_status_message}"
+                
+                model_prompt = (
+                    f"User input: {input_text}\n\n"
+                    f"Current stock status:\n{stock_status_message}\n\n"
+                    "Based on the above information, respond to the user's query naturally."
+                )
+
             print("Generating response using AI model")
-            try: 
+            try:
                 # Using generative AI model to generate content
-                model = genai.GenerativeModel(model_name="gemini-1.5-pro",
-                                              safety_settings=safety_settings,
-                                               generation_config=generation_config,
-                                              system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer."
-                                               
-                                              )
-                response = model.generate_content(input_text)
+                model = genai.GenerativeModel(
+                    model_name="gemini-1.5-pro",
+                    safety_settings=safety_settings,
+                    generation_config=generation_config,
+                    # system_instruction="Your name is Stock Master. You are an expert at inventory, finding locations, and data structure. Help users with stock-related queries."
+                )
+                
+                response = model.generate_content(model_prompt)
                 text_result = response.text
+                
+               
+                
                 print("Generated response:", text_result)
                 data.append({'input': input_text, 'result': text_result})
                 session['data'] = data
+                
                 return redirect(url_for('gemini'))
+                
             except ResourceExhausted as e:
                 print("Resource exhausted: ", e)
-                flash(" Please try again later.", "error")
+                flash("Please try again later in a few minutes", "error")
                 return redirect(url_for('gemini'))
+                
             except Exception as ex:
                 print("An error occurred:", ex)
-                flash("Currently Working on Update. Please try again later.", "error")
+                flash("Please try again later in a few minutes", "error")
                 return redirect(url_for('gemini'))
+                
         else:
             print("No input provided")
             sendtelegram("New User")
-            print("didnt work")
-    print("Rendering ai.html template")
+            print("didn't work")
+    
+    print("Rendering stockmaster.html template")
+    return render_template("stockmaster.html", data=data[::-1])
+
+# data= []
+
+# @app.route("/gemini", methods=['GET', 'POST'])
+# @login_required
+# def gemini():
+#     data = session.get('data', [])
+#     if request.method == "POST":
+#         input_text = request.form.get("text")
+#         print("Received input:", input_text)
+#         if input_text:
+#             print("Generating response using AI model")
+#             try: 
+#                 # Using generative AI model to generate content
+#                 model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+#                                               safety_settings=safety_settings,
+#                                                generation_config=generation_config,
+#                                               system_instruction="Your name is Stock Master, You are an expert at inventory, finding locations and data structure. Find closet places to get any product or stock that are low. Help getting budget plans for users and help them get products in stock. Give a straight to the point answer."
+                                               
+#                                               )
+#                 response = model.generate_content(input_text)
+#                 text_result = response.text
+#                 print("Generated response:", text_result)
+#                 data.append({'input': input_text, 'result': text_result})
+#                 session['data'] = data
+#                 return redirect(url_for('gemini'))
+#             except ResourceExhausted as e:
+#                 print("Resource exhausted: ", e)
+#                 flash(" Please try again later.", "error")
+#                 return redirect(url_for('gemini'))
+#             except Exception as ex:
+#                 print("An error occurred:", ex)
+#                 flash("Currently Working on Update. Please try again later.", "error")
+#                 return redirect(url_for('gemini'))
+#         else:
+#             print("No input provided")
+#             sendtelegram("New User")
+#             print("didnt work")
+#     print("Rendering ai.html template")
     # data = session.get('data', [])
     # if request.method == "POST":
     #     input_text = request.form.get("gemini")
@@ -1591,7 +1664,7 @@ def gemini():
     #         print("No input provided")
     #         print("didnt work")
     # print("Rendering ai.html template")
-    return render_template("stockmaster.html", data=data[::-1])
+    # return render_template("stockmaster.html", data=data[::-1])
 
 # @app.route('/stockmaster', methods=['GET', 'POST'])
 # def stockmaster():
