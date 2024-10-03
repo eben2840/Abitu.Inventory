@@ -35,7 +35,6 @@
                           {% for message in messages %}
                             <div class="alert alert-danger mb-3" role="alert">
                               {{ message }}
-                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                           {% endfor %}
                         {% endif %}
@@ -43,37 +42,84 @@
                           
                           
                           <label class="text-left">Category</label>
-                          {{ form.category( id="businessCategory",class="input-field",  style="width:100%; background-color:#fff; padding:15px; color:#000;",   required='required') }}
-                
+                          {{ form.category(class="input-field",  style="width:100%; background-color:#fff; padding:15px; color:#000;",   required='required') }}
+                          {% if form.category.errors %}
+                              <div class="text-danger">
+                                  {% for error in form.category.errors %}
+                                      <small>{{ error }}</small>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
                          
                           
                           <label class="mt-2"> <b>Abitrack.com/</b></label>
-                           <input type="text"  class="input" name="company_name" id="businessName" style="width:100%;" placeholder="your company name" />
-                
-                          <label class="mt-2 ">Full Name</label>
-                          <input type="text" name="name" class="input" id="fullName" style="width:100%;" placeholder="What is your full name?" required />
-                
+                           <!--<input type="text"  class="input" name="company_name" id="businessName" style="width:100%;" placeholder="your company name" />
+                          -->
+                           {{ form.company_name(class="input-field", id="businessName", style="width:100%;", placeholder="your business name") }}
+                           {% if form.company_name.errors %}
+                               <div class="text-danger">
+                                   {% for error in form.company_name.errors %}
+                                       <small>{{ error }}</small>
+                                   {% endfor %}
+                               </div>
+                           {% endif %}
+                          
+                          
+                           <label class="mt-2 ">Full Name</label>
+                          
+                          {{ form.name(class="input-field", id="fullName", style="width:100%;", placeholder="Your Name") }}
+                          {% if form.name.errors %}
+                              <div class="text-danger">
+                                  {% for error in form.name.errors %}
+                                      <small>{{ error }}</small>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
                         
                         
                           <label class="mt-2 ">Email</label>
-                          <input type="email" class="input"  name="email" id="emailAddress" style="width:100%;" placeholder="What is your email address?" />
-                
+                          {{ form.email(class="input-field", id="emailAddress", style="width:100%;", placeholder="name@gmail.com") }}
+                          {% if form.email.errors %}
+                              <div class="text-danger">
+                                  {% for error in form.email.errors %}
+                                      <small>{{ error }}</small>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
                          
                           <label class="mt-2 ">Phone Number</label>
-                          <input type="number" name="phone" class="input" id="phoneNumber" style="width:100%; " placeholder="What is your phone number?" required />
-                
+                          {{ form.phone(class="input-field", id="phoneNumber", style="width:100%;", placeholder="Phone Number") }}
+                          {% if form.phone.errors %}
+                              <div class="text-danger">
+                                  {% for error in form.phone.errors %}
+                                      <small>{{ error }}</small>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
                          
                         
                 
                      
                        
                           <label class="mt-2 ">Password</label>
-                          <input type="password" name="password" class="input" id="password" style="width:100%;" placeholder="Enter your password" required />
-                
+                          {{ form.password(class="input-field", id="inputPassword5", style="width:100%;", placeholder="Enter your password") }}
+                          {% if form.password.errors %}
+                              <div class="text-danger">
+                                  {% for error in form.password.errors %}
+                                      <small>{{ error }}</small>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
                        
                           <label class="mt-2 ">Confirm password</label>
-                          <input type="password" name="confirm_password" class="input" id="confirmPassword" style="width:100%;" placeholder="Confirm your password" required />
-                
+                          {{ form.confirm_password(class="input-field", id="confirmPassword", style="width:100%;", placeholder="Confirm your password") }}
+                            {% if form.confirm_password.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.confirm_password.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                          
                 
                           <button type="submit" class="login mb-4" class="input" style="width:100%; background-color:#5a00c1; padding:10px; border:none; border-radius:20px; color:#fff; margin-top:20px;" >Submit</button>

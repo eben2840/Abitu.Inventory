@@ -2593,6 +2593,10 @@ def signup():
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
             print("Invalid password")
             return redirect(url_for('signup'))
+        # Check if password and confirm_password match
+        # if 'password_hash' in form.errors:
+        #     flash(form.errors['password_hash'][0], 'danger')  # Flash the first error for the password field
+        #     return redirect(url_for('signup'))
         else:
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
@@ -2605,7 +2609,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
             # send_email()
-            # flash("Congratulation on creating your account.", 'success')
+            flash("Congratulation on creating your account.", 'success')
             login_user(user, remember=True)
             print("User created and logged in successfully")
             return redirect (url_for('login'))
@@ -2613,6 +2617,13 @@ def signup():
         print(form.errors)
         # flash("An error occupied, kindly fill the form again", 'danger')
         print("Form validation failed")
+        
+        for field, errors in form.errors.items():
+        # for errors in form.errors.items():
+            for error in errors:
+                # flash(f"{error}", 'danger')
+                flash(f"Error: {error}", 'danger')
+
        
     return render_template('signupuser.html', form=form)
 

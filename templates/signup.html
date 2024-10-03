@@ -1,191 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AbiTrack</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="static/assetss/css/logs.css" />
-</head>
-<body>
-  <div class="content">
-    <div class="flex-div">
-      <h2><b>Let’s create your account.</b></h2><br>
+<form id="businessForm" action="" method="POST">
+  {{ form.hidden_tag() }}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger mb-3" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
 
-      <form id="businessForm" action="" method="POST">
-        {{ form.hidden_tag() }}
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-danger mb-3" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% endfor %}
-        {% endif %}
-        {% endwith %}
+  <div class="form-part part-1">ssssssss
+    <h4><b>Tell us about your business</b></h4><br>
 
-        <div class="form-part part-1">
-          <h4><b>Tell us about your business</b></h4><br>
-         
-          <span class="error-message" id="businessCategoryError" style="color:red;"></span>
-          <label>What category is your business?</label>
-          {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", id="businessCategory", style="padding:20px; border:1px solid #2E2D7F; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", required='required') }}
-
-          
-          <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(1)">Continue</button>
-          <hr>
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
-            </label>
-          </div>
-         
+    <span class="error-message" id="businessCategoryError" style="color:red;"></span>
+    <label>What category is your business?</label>
+    {{ form.category(class="input-field my-3 my-lg-3 mt-2 space", id="businessCategory", style="padding:20px; border:1px solid #2E2D7F; border-radius:15px; width:100%; box-shadow: var(--shadow-1);", required='required') }}
+    {% if form.category.errors %}
+        <div class="text-danger">
+            {% for error in form.category.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
         </div>
+    {% endif %}
 
-        <div class="form-part part-2" style="display:none;">
-          <h4><b>Let's get started.</b></h4><br>
-
-          <span class="error-message" id="businessNameError" style="color:red;"></span>
-          <label>What is your business name?</label>
-          <input type="text" name="company_name" id="businessName" style="width:100%;" placeholder="What is the business called?" />
-
-          <span class="error-message" id="emailAddressError" style="color:red;"></span>
-          <label>What is your email?</label>
-          <input type="email" name="email" id="emailAddress" style="width:100%;" placeholder="What is your email address?" />
-
-          <span class="error-message" id="phoneNumberError" style="color:red;"></span>
-          <label>What is your Phone Number?</label>
-          <input type="text" name="phone" id="phoneNumber" style="width:100%; " placeholder="What is your phone number?" required />
-
-         
-          <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(2)">Continue</button>
-          <hr>
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-part part-3" style="display:none;">
-          <h4><b>Fill Your Personal Information</b></h4><br>
-
-          <span class="error-message" id="fullNameError" style="color:red;"></span>
-          <label>What is your Full Name?</label>
-          <input type="text" name="name" id="fullName" style="width:100%;" placeholder="What is your full name?" required />
-
-          <span class="error-message" id="passwordError" style="color:red;"></span>
-          <label>What would you like to set as your account password?</label>
-          <input type="password" name="password" id="password" style="width:100%;" placeholder="Enter your password" required />
-
-          <span class="error-message" id="confirmPasswordError" style="color:red;"></span>
-          <label>Please re-type your password:</label>
-          <input type="password" name="confirm_password" id="confirmPassword" style="width:100%;" placeholder="Confirm your password" required />
-
-         
-
-          <button type="button" class="login mb-4" style="width:100%;" onclick="validateAndShowNextPart(3)">Submit</button>
-          <hr>
-          <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
-            <label class="form-check-label">
-              <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
-            </label>
-          </div>
-        </div>
-      </form>
+    <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(1)">Continue</button>
+    <hr>
+    <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+      <label class="form-check-label">
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+      </label>
     </div>
   </div>
 
-  <script>
-    function validateAndShowNextPart(part) {
-      let isValid = true;
+  <div class="form-part part-2" style="display:none;">
+    <h4><b>Let's get started.</b></h4><br>
 
-      if (part === 1) {
-        // Clear previous error messages
-        document.getElementById('businessCategoryError').textContent = '';
+    <span class="error-message" id="businessNameError" style="color:red;"></span>
+    <label>What is your business name?</label>
+    {{ form.company_name(class="input-field my-3", id="businessName", style="width:100%;", placeholder="What is the business called?") }}
+    {% if form.company_name.errors %}
+        <div class="text-danger">
+            {% for error in form.company_name.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        // Get input values
-        const businessCategory = document.getElementById('businessCategory').value.trim();
+    <span class="error-message" id="emailAddressError" style="color:red;"></span>
+    <label>What is your email?</label>
+    {{ form.email(class="input-field my-3", id="emailAddress", style="width:100%;", placeholder="What is your email address?") }}
+    {% if form.email.errors %}
+        <div class="text-danger">
+            {% for error in form.email.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        // Validate inputs
-        if (!businessCategory) {
-          document.getElementById('businessCategoryError').textContent = 'Business category is required';
-          isValid = false;
-        }
+    <span class="error-message" id="phoneNumberError" style="color:red;"></span>
+    <label>What is your Phone Number?</label>
+    {{ form.phone(class="input-field my-3", id="phoneNumber", style="width:100%;", placeholder="What is your phone number?") }}
+    {% if form.phone.errors %}
+        <div class="text-danger">
+            {% for error in form.phone.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        // Show next part if valid
-        if (isValid) {
-          document.querySelector('.part-1').style.display = 'none';
-          document.querySelector('.part-2').style.display = 'block';
-        }
-      } else if (part === 2) {
-        // Clear previous error messages
-        document.getElementById('businessNameError').textContent = '';
-        document.getElementById('emailAddressError').textContent = '';
-        document.getElementById('phoneNumberError').textContent = '';
+    <button type="button" class="login mb-4" style="width:100%; background-color:#7854F7;" onclick="validateAndShowNextPart(2)">Continue</button>
+    <hr>
+    <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+      <label class="form-check-label">
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+      </label>
+    </div>
+  </div>
 
-        // Get input values
-        const businessName = document.getElementById('businessName').value.trim();
-        const emailAddress = document.getElementById('emailAddress').value.trim();
-        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+  <div class="form-part part-3" style="display:none;">
+    <h4><b>Fill Your Personal Information</b></h4><br>
 
-        // Validate inputs
-        if (!businessName) {
-          document.getElementById('businessNameError').textContent = 'Business name is required';
-          isValid = false;
-        }
+    <span class="error-message" id="fullNameError" style="color:red;"></span>
+    <label>What is your Full Name?</label>
+    {{ form.name(class="input-field my-3", id="fullName", style="width:100%;", placeholder="What is your full name?") }}
+    {% if form.name.errors %}
+        <div class="text-danger">
+            {% for error in form.name.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        if (!emailAddress) {
-          document.getElementById('emailAddressError').textContent = 'Email address is required';
-          isValid = false;
-        }
+    <span class="error-message" id="passwordError" style="color:red;"></span>
+    <label for="inputPassword5">What would you like to set as your account password?</label>
+    {{ form.password(class="input-field my-3", id="inputPassword5", style="width:100%;", placeholder="Enter your password") }}
+    {% if form.password.errors %}
+        <div class="text-danger">
+            {% for error in form.password.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        if (!phoneNumber) {
-          document.getElementById('phoneNumberError').textContent = 'Phone number is required';
-          isValid = false;
-        }
+    <span class="error-message" id="confirmPasswordError" style="color:red;"></span>
+    <label>Please re-type your password:</label>
+    {{ form.confirm_password(class="input-field my-3", id="confirmPassword", style="width:100%;", placeholder="Confirm your password") }}
+    {% if form.confirm_password.errors %}
+        <div class="text-danger">
+            {% for error in form.confirm_password.errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        // Show next part if valid
-        if (isValid) {
-          document.querySelector('.part-2').style.display = 'none';
-          document.querySelector('.part-3').style.display = 'block';
-        }
-      } else if (part === 3) {
-        // Clear previous error messages
-        document.getElementById('fullNameError').textContent = '';
-        document.getElementById('passwordError').textContent = '';
-        document.getElementById('confirmPasswordError').textContent = '';
-
-        // Get input values
-        const fullName = document.getElementById('fullName').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
-        // Validate inputs
-        if (!fullName) {
-          document.getElementById('fullNameError').textContent = 'Full name is required';
-          isValid = false;
-        }
-
-        if (!password) {
-          document.getElementById('passwordError').textContent = 'Password is required';
-          isValid = false;
-        }
-
-        if (password !== confirmPassword) {
-          document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-          isValid = false;
-        }
-
-        // Submit form if valid
-        if (isValid) {
-          document.getElementById('businessForm').submit();
-        }
-      }
-    }
-  </script>
-</body>
-</html>
+    <button type="button" class="login mb-4" style="width:100%;" onclick="validateAndShowNextPart(3)">Submit</button>
+    <hr>
+    <div class="form-check" style="margin-top:10px; margin-bottom:10px;">
+      <label class="form-check-label">
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Already Have An Account <a href="/login">Click Here</a>
+      </label>
+    </div>
+  </div>
+</form>
