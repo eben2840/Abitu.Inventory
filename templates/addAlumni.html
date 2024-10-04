@@ -1,4 +1,4 @@
-{% extends 'landingpage.html' %}
+{% extends 'pagebase.html' %}
 {% block body %}
 
 
@@ -7,57 +7,14 @@
     <article>
 
      
-      <form action="{{ url_for('addalumni') }}" method="post" enctype="multipart/form-data" >
+      <form action="{{ url_for('moji') }}" method="post" enctype="multipart/form-data" >
         {{form.hidden_tag()}}
      
+
+        
           <section class="section newslettr" aria-label="newsletter">
             <div class="container" style="background-color:#fff; padding:30px;">
 
-            
-
-              
-           
-              <div class="input-group mb-3">
-                <span class="input-group-text" >Name</span>
-                {{form.qualities(class="form-control", style="color:#000;", placeholder="Enter Name", required="required")}}
-              </div>
-
-              <div class="input-group mb-3">
-                <span class="input-group-text">Number</span>
-                {{form.reason( class="form-control", type="number", placeholder="Add a mobile number",id="floatingInput", required="required")}}
-                
-                <span class="input-group-text"></span>
-              </div>
-
-              <div class="input-group mb-3">
-                {{form.campus( class="form-control", type="number",id="floatingInput", required="required")}}
-              </div>
-              
-              <div class="input-group mb-3">
-                {{form.fullname(class="form-control",  placeholder="eg.favorite docs", id="floatingInput", required="required")}}
-                <span class="input-group-text" id="basic-addon2">Tags</span>
-              </div>
-              
-
-            
-              <div class="input-group">
-                <span class="input-group-text">Add Comment</span>
-                <textarea name="position" type="position" class="form-control" placeholder="" required="required">       </textarea>
-              
-              </div>
-    
-              <div class="newsletter-content" data-reveal="right">
-                
-                
-                
-                
-            
-                
-                
-               
-                
-                 
-               
                 <span class="input-group-text mt-5">Upload pics</span>
                 <label for="image-picker" style="">
                   <div>
@@ -69,16 +26,11 @@
                   </div>      
                   <h6 id="error" style="color: red; display: none;">Please upload an image to continue</h6>
               </label>
-                  
-               
-                  
-                  <!--{{form.position( class="input-field my-5 my-lg-5 mt-2 space", style="  margin-bottom:90px;",placeholder="Position",id="floatingInput")}}
-                  -->
-                  {{form.image_file (class="form-control",style="", id="firebaseLink" )}}
+               {{form.image_file (class="form-control",style="", style="decoration:none;", id="firebaseLink" )}}
                  
-                
-                <input style="display:none" id="image-picker" type="file" required="required" accept="image/*" />
-                
+                  
+                <input style="display:none;" id="image-picker" type="file" required="required" accept="image/*" />
+               
 <div id="submitButton">
   {{form.submit( class="submit", class="btn btn-primary has-before has-after",style="margin-top:30px; width:100%;" )}}
   

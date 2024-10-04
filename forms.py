@@ -18,22 +18,12 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
 class Adduser(FlaskForm):
-    fullname = StringField('fullname')
-#    
-
-    campus= SelectField('campus', choices=[('Demand','Demand'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
-
-   
-    reason= StringField('reason')
-    qualities= StringField('qualities')
-   
-    position= StringField('position')
     image_file = StringField('image_file', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Send')
     
 class WaitForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Update Moji')
     
     
 class LogForm(FlaskForm):

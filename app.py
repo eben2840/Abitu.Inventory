@@ -1150,25 +1150,21 @@ def cisl():
     return render_template('cisl.html', form=form)
 
 
-@app.route('/addalumni', methods=['GET', 'POST'])
-def addalumni():
+@app.route('/moji', methods=['GET', 'POST'])
+def moji():
     form=Adduser()
     if form.validate_on_submit():
-            new=User(fullname=form.fullname.data,        
-                   position=form.position.data,
-                   reason=form.reason.data,
-                   campus=form.campus.data,
-                   qualities=form.qualities.data,
+            new=User(
                image_file=form.image_file.data
                   )
             db.session.add(new)
             db.session.commit()
             # send_email()
-            flash("You just added a new product",
+            flash("Moji Updated",
                   "success")
             return redirect('auth')
     print(form.errors)
-    return render_template("addAlumni.html", form=form, title='addalumni')
+    return render_template("addAlumni.html", form=form)
 
 static_timestamp = datetime.now() 
 
