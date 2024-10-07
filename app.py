@@ -39,7 +39,6 @@ app=Flask(__name__)
 
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_ABITU")
-
 app.config['SECRET_KEY'] =os.getenv("SECRET")
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
@@ -54,10 +53,10 @@ genai.configure(api_key=os.getenv("API"))
 #   -H 'Content-Type: application/json' \
 #   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
 #   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBBbl0TRbzkI1oM5Qk18rGf0phwxgX-pCw'
-
-
 # photos=UploadSet('photos', IMAGES)
 # configure_uploads(app, photos)
+
+
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -82,7 +81,6 @@ from forms import *
 def load_user(user_id):
     return Person.query.get(int(user_id))
 
-
 # def sendtelegram(params):
 #     url = "" + urllib.parse.quote(params)
 #     content = urllib.request.urlopen(url).read()
@@ -106,11 +104,9 @@ class Person(db.Model, UserMixin):
     # role= db.Column(db.String())
     email= db.Column(db.String())
     role= db.Column(db.String())
-    
     company_name= db.Column(db.String())
     category= db.Column(db.String())
-
-    phone= db.Column(db.String()    )
+    phone= db.Column(db.String())
     image_file = db.Column(db.String())
     password = db.Column(db.String(128))
     confirm_password = db.Column(db.String(128))
@@ -1535,8 +1531,10 @@ def gemini():
                 # high_stock_items = Item.query.filter(Item.quantity >= 20, Item.clientid == current_user.id).all()
                 # low_stock_items = Item.query.filter(Item.quantity >= 10,Item.quantity <= 20, Item.clientid == current_user.id).all()
                 out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
-
-                # Build messages for stock status
+                
+                location_items = Person.query.filter(Person.clientid == current_user.id).all()
+                
+                # Build messages for stock status.
                 # low_stock_message = "Low stock items: " + ", ".join([item.name for item in low_stock_items]) if low_stock_items else "No items with low stock."
                 # high_stock_message = "High stock items: " + ", ".join([item.name for item in high_stock_items]) if high_stock_items else "No items with high stock."
                 out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
@@ -1551,7 +1549,6 @@ def gemini():
                     f"Current stock status:\n{stock_status_message}\n\n"
                     "Based on the above information, respond to the user's query naturally."
                 )
-
             print("Generating response using AI model")
             try:
                 # Using generative AI model to generate content
@@ -1561,28 +1558,20 @@ def gemini():
                     generation_config=generation_config,
                     # system_instruction="Your name is Stock Master. You are an expert at inventory, finding locations, and data structure. Help users with stock-related queries."
                 )
-                
                 response = model.generate_content(model_prompt)
                 text_result = response.text
-                
-               
-                
                 print("Generated response:", text_result)
                 data.append({'input': input_text, 'result': text_result})
                 session['data'] = data
-                
-                return redirect(url_for('gemini'))
-                
+                return redirect(url_for('gemini'))    
             except ResourceExhausted as e:
                 print("Resource exhausted: ", e)
                 flash("Please try again later in a few minutes", "error")
                 return redirect(url_for('gemini'))
-                
             except Exception as ex:
                 print("An error occurred:", ex)
                 flash("Please try again later in a few minutes", "error")
-                return redirect(url_for('gemini'))
-                
+                return redirect(url_for('gemini'))  
         else:
             print("No input provided")
             sendtelegram("New User")
@@ -2630,11 +2619,11 @@ def login():
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             if current_user.category == 'Manufacturing':
-                return redirect(url_for('analytics'))
+                return redirect(url_for('homelook'))
             elif current_user.category == "Cooperate":
                 return redirect(url_for('homelook'))
             else:
-                return redirect(url_for('main'))
+                return redirect(url_for('homelook'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
     return render_template('login.html', form=form)  
@@ -2645,7 +2634,6 @@ def signup():
     print("Starting signup...")
     form = Registration()
     print(f"Form data: {form.data}")
-    
     if form.validate_on_submit():
         print("Form validated successfully")
         checkUser = Person.query.filter_by(email=form.email.data).first()
@@ -2746,10 +2734,6 @@ def userbase():
 @app.route('/logs', methods=['POST','GET'])
 def logs():
     return render_template("logs.html")
-
-
-
-
 
 
 @app.route('/category', methods=['POST','GET'])
