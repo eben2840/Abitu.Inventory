@@ -9,12 +9,23 @@
         <div class="col-lg-8 mb-5">
   
     <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:10px;">
+        {% if current_user.category=="Personal"%}
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
+        {%else%}
         <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
+
+        {%endif%}
        <hr>
         <div class="alert alert-success" style="margin-top:30px;" role="alert">
+            {% if current_user.category=="Personal"%}
             <h6>
-            Choose your optional warehouse categories.
+            Choose your optional expense categories.
             </h6>  
+            {%else%}
+            <h6>
+                Choose your optional warehouse categories.
+            </h6>  
+            {%endif%}
            </div>
         {{ form.hidden_tag() }}
        

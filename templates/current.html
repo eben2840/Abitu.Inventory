@@ -37,7 +37,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Budget</span>
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Income Budget</span>
                             <span class="h3 font-bold mb-0">${{ total_budget | int }}</span>
                         </div>
                         <div class="col-auto">
@@ -163,32 +163,9 @@
         </div>
   
 
- 
-        <!--<div class="col-xl-4 col-sm-6 col-12">
-            <a href="/female_users" style="text-decoration: none; color: #992621;">
-            <div class="card shadow border-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Our Team</span>
-                            <span class="h3 font-bold mb-0">{{ total_female }}10</span>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
-                                <i class="bi bi-person"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                        
-                        
-                    </div>
-                </div>
-            </div>
-        </a>
-        </div>-->
        
-       
+       {% if current_user.category=="Personal"%}
+       {%else%}
             <div class="col-xl-4 col-sm-6 col-12">
                 <div class="card shadow border-0">
                     <div class="card-body">
@@ -235,6 +212,7 @@
                     </div>
                 </div>
             </div>
+            {%endif%}
             <div class="col-xl-4 col-sm-6 col-12">
                 <div class="card shadow border-0">
                     <div class="card-body">

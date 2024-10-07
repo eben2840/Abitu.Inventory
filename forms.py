@@ -222,7 +222,6 @@ class AddItemForm(FlaskForm):
     item_name = StringField('Item Name')
     quantity = StringField('Quantity')
     des= StringField('Description')
-    serial = StringField('Serial')
     start_date = DateField('Start Date', validators=[DataRequired()])
     tag= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     price = StringField('Price', validators=[DataRequired()])
@@ -239,7 +238,7 @@ class Registration(FlaskForm):
     password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
-    category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail') ])
+    category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail'),('Personal','Personal') ])
     submit =SubmitField('submit')
     
 

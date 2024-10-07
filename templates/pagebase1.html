@@ -4,6 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- Bootstrap JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -42,7 +49,7 @@
     - google font link
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.g/static.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- 
@@ -122,17 +129,38 @@
                             </div>
                     <li class="nav-item active">
                         <a class="nav-link" href="/homelook">
-                            <i class="bi bi-house fs-6"></i> Home
+                            <i class="bi bi-house fs-6"></i> Dashboard
                         </a>
                     </li>
 
                     <li class="nav-item active">
                         <a class="nav-link" href="/main">
-                            <i class="bi bi-calendar-check fs-6"></i> Dashboard
+                            <i class="bi bi-bar-chart fs-6"></i> Analytics
                         </a>
                     </li>
 
-                 
+                    {%if current_user.category=="Personal"%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authchallenge">
+                            <i class="bi bi-trophy fs-6"></i> Set goals
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authtask">
+                            <i class="bi bi-check2-circle fs-6"></i>Set a task 
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/budget">
+                            <i class="bi bi-credit-card fs-6"></i>Income Budget
+                        </a>
+                    </li>
+                    {%else%}
+
+                   
+
                     <li class="nav-item active">
                         <a class="nav-link" href="/auth">
                             <i class="bi bi-cart fs-6"></i>Purchase Order
@@ -151,19 +179,25 @@
                         </a>
                     </li>
 
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/budget">
+                            <i class="bi bi-credit-card fs-6"></i>Income Budget
+                        </a>
+                    </li>
 
-                  <li class="nav-item">
+                    {%endif%}
+
+                <!--  <li class="nav-item">
                         <a class="nav-link" href="/analytics">
                             <i class="bi bi-bar-chart fs-6"></i> Analytics
                         </a>
-                    </li>
+                    </li>-->
 
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" href="/history">
                             <i class="bi bi-clock-history fs-6"></i>History
                         </a>
-                    </li>
+                    </li>-->
                    <!--<li class="nav-item">
                         <a class="nav-link" href="/authmessage">
                             <i class="bi bi-send"></i> Send Notification
@@ -203,11 +237,46 @@
                   
                    
                     
+                    {%if current_user.category=="Personal"%}
+                    <!-- Divider -->
+                <hr class="navbar-divider my-5 opacity-20">
+                <!-- Navigation -->
+                 
+                <ul class="navbar-nav mb-md-4">
+                    <li>
+                        <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                        Expenses
+                          <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                      -->
+                              </div>
+                    </li>
+
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="/authin">
+                            <i class="bi bi-plus"></i> Add Employees
+                        </a>
+                    </li>-->
+
                    
-             
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/group">
+                            <i class="bi bi-ui-checks fs-6"></i>Create Expense
+                        </a>
+                    </li>
+
+                 <li class="nav-item">
+                        <a class="nav-link" href="/add_item">
+                            <i class="bi bi-plus fs-6"></i>Products Purchased
+                        </a>
+                    </li>
+                    {% else %}
+                   
+                                
                 <!-- Divider -->
                 <hr class="navbar-divider my-5 opacity-20">
                 <!-- Navigation -->
+                 
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
@@ -223,6 +292,8 @@
                         </a>
                     </li>-->
 
+                   
+
                     <li class="nav-item">
                         <a class="nav-link" href="/group">
                             <i class="bi bi-ui-checks fs-6"></i>Create Warehouse
@@ -235,7 +306,7 @@
                         </a>
                     </li>
 
-                  
+                    {% endif %}
 
                    
                    <!-- 
@@ -260,7 +331,7 @@
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
-                          Shortcut
+                          Profile
                           <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
                       -->
                               </div>
@@ -375,9 +446,9 @@
    
      
       
-      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+      <div class="offcanvas offcanvas-start" data-bs-backdrop="/static" tabindex="-1" id="/staticBackdrop" aria-labelledby="/staticBackdropLabel">
         <div class="offcanvas-header">
-          <h2 class="offcanvas-title" id="staticBackdropLabel">Support & Learn</h2>
+          <h2 class="offcanvas-title" id="/staticBackdropLabel">Support & Learn</h2>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -447,7 +518,12 @@
                                        <i class="bi bi-person"></i>
                                           </button>
                                         </a>-->
-                                        <a class="nav-link" href="/stock"><button class="btn btn-primar" style="border-radius:30px; background-color:#5a00c1; color:#fff;">Stock Master  <i class="bi bi-bell"></i></button></a>
+                                    <!--<a class="nav-link" href="/moji">-->
+                                         <img src="https://i.pinimg.com/474x/21/1b/25/211b2554a3b2f53e4db9f4f8c04263a9.jpg" lazy="loading" style="width:70px; margin-top:10px;  height:70px; object-fit:cover; border-radius:50px; box-shadow: 0px 0px 10px rgba(107, 107, 161, 0.25);">
+                                       
+               
+                                        <!--<a class="nav-link" href="/stock"><button class="btn btn-primar" style="border-radius:30px; background-color:#5a00c1; color:#fff;">Stock Master  <i class="bi bi-bell"></i></button></a>
+                                       -->
                                         <!--<a class="nav-link" href="/stock"><button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Stock Master  <i class="bi bi-bell"></i></button></a>
 -->
                                         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -621,6 +697,28 @@
                        <!-- <li class="nav-item ">
                             <a href="#" class="nav-link active">All files</a>
                         </li>-->
+                        {%if current_user.category=="Personal"%}
+                        <li class="nav-item ">
+                            <a href="/instock" class="nav-link">
+                                <i class="bi bi-ui-checks"></i> My Expenses </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/showchallenge" class="nav-link">
+                                <i class="bi bi-trophy"></i> Goals</a>
+                        </li>
+                        
+                        <li class="nav-item ">
+                            <a href="/task" class="nav-link">
+                                <i class="bi bi-clipboard-check"></i> Task </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/budget" class="nav-link">
+                                <i class="bi bi-credit-card"></i> Budget </a>
+                        </li>
+
+                        {%else%} 
                         <li class="nav-item ">
                             <a href="/instock" class="nav-link">
                                 <i class="bi bi-ui-checks"></i> My Products </a>
@@ -661,11 +759,11 @@
                                 <i class="bi bi-credit-card"></i> Budget </a>
                         </li>
                         
-
-                        <li class="nav-item ">
+                        {%endif%}
+                        <!--<li class="nav-item ">
                             <a href="/ai" class="nav-link">
                                 <i class="bi bi-columns-gap"></i> Ask Stock Master </a>
-                        </li>
+                        </li>-->
 
                         <!-- Button trigger modal -->
 
@@ -702,7 +800,33 @@
 
     </div>
 </div>
+<div >
+    <a href="/ai" style="display: inline-block; width: 76px; height: 75px; overflow: hidden; border-radius: 50%;">
+        <img src="https://i.pinimg.com/originals/91/16/f7/9116f7fd184238ada99fdff9e2f2e3ac.gif"
+             class="floating-button"
+             class="mx-auto"
+             style="width: 80px; height: 80px; object-fit: cover; border-radius:50px;"
+             loading="lazy"
+             alt="Floating Button">
+    </a>
+            </div>
 
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                    myModal.show();
+                });
+                </script>
+                
+
+  <script>
+    function createOrder() {
+      // You can redirect to the order page like this:
+      window.location.href = "/ai";
+    }
+  </script>
+  
 
 <script>
     var idleTime = 0;
@@ -792,12 +916,12 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+ <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-app.js"></script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+  <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+  <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-storage.js"></script>
   
   <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
   
@@ -822,12 +946,12 @@
   
   
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-app.js"></script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+  <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+  <script src="https://www.g/static.com/firebasejs/8.9.1/firebase-storage.js"></script>
   
   <!-- <script defer src="//firebase/8.9.1/firebase-storage.js"></script> -->
   
@@ -865,7 +989,7 @@
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
   </script>
-  <script src="static/assets/js/sc/ript.js"></script>
+  <script src="/static/assets/js/script.js"></script>
 
   <!-- 
     - ionicon link

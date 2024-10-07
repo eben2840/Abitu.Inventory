@@ -127,11 +127,40 @@
                         <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
                     -->
                             </div>
+                            <hr class="navbar-divider my-5 opacity-20">
                     <li class="nav-item active">
                         <a class="nav-link" href="/homelook">
                             <i class="bi bi-house fs-6"></i> Dashboard
                         </a>
                     </li>
+
+                    
+
+                    {%if current_user.category=="Personal"%}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">
+                            <i class="bi bi-bar-chart fs-6"></i> Analytics
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authchallenge">
+                            <i class="bi bi-trophy fs-6"></i> Set goals
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authtask">
+                            <i class="bi bi-check2-circle fs-6"></i>Set a task 
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/budget">
+                            <i class="bi bi-credit-card fs-6"></i>Income Budget
+                        </a>
+                    </li>
+                    {%else%}
 
                     <li class="nav-item active">
                         <a class="nav-link" href="/analytics">
@@ -139,7 +168,6 @@
                         </a>
                     </li>
 
-                 
                     <li class="nav-item active">
                         <a class="nav-link" href="/auth">
                             <i class="bi bi-cart fs-6"></i>Purchase Order
@@ -160,11 +188,11 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/budget">
-                            <i class="bi bi-credit-card fs-6"></i>Set Budget 
+                            <i class="bi bi-credit-card fs-6"></i>Income Budget
                         </a>
                     </li>
 
-                    
+                    {%endif%}
 
                 <!--  <li class="nav-item">
                         <a class="nav-link" href="/analytics">
@@ -216,11 +244,46 @@
                   
                    
                     
+                    {%if current_user.category=="Personal"%}
+                    <!-- Divider -->
+                <hr class="navbar-divider my-5 opacity-20">
+                <!-- Navigation -->
+                 
+                <ul class="navbar-nav mb-md-4">
+                    <li>
+                        <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                        Expenses
+                          <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
+                      -->
+                              </div>
+                    </li>
+
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="/authin">
+                            <i class="bi bi-plus"></i> Add Employees
+                        </a>
+                    </li>-->
+
                    
-             
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/group">
+                            <i class="bi bi-ui-checks fs-6"></i>Create Expense
+                        </a>
+                    </li>
+
+                 <li class="nav-item">
+                        <a class="nav-link" href="/add_item">
+                            <i class="bi bi-plus fs-6"></i>Products Purchased
+                        </a>
+                    </li>
+                    {% else %}
+                   
+                                
                 <!-- Divider -->
                 <hr class="navbar-divider my-5 opacity-20">
                 <!-- Navigation -->
+                 
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
@@ -236,6 +299,8 @@
                         </a>
                     </li>-->
 
+                   
+
                     <li class="nav-item">
                         <a class="nav-link" href="/group">
                             <i class="bi bi-ui-checks fs-6"></i>Create Warehouse
@@ -248,7 +313,7 @@
                         </a>
                     </li>
 
-                  
+                    {% endif %}
 
                    
                    <!-- 
@@ -270,10 +335,11 @@
                     
                    
                 </ul>
+                <hr class="navbar-divider my-5 opacity-20">
                 <ul class="navbar-nav mb-md-4">
                     <li>
                         <div class="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
-                          Shortcut
+                          Profile
                           <!--<span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">0</span>
                       -->
                               </div>
@@ -639,6 +705,24 @@
                        <!-- <li class="nav-item ">
                             <a href="#" class="nav-link active">All files</a>
                         </li>-->
+                        {%if current_user.category=="Personal"%}
+                        <li class="nav-item ">
+                            <a href="/instock" class="nav-link">
+                                <i class="bi bi-ui-checks"></i> My Expenses </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a href="/showchallenge" class="nav-link">
+                                <i class="bi bi-trophy"></i> Goals</a>
+                        </li>
+                        
+                        <li class="nav-item ">
+                            <a href="/task" class="nav-link">
+                                <i class="bi bi-clipboard-check"></i> Task </a>
+                        </li>
+
+                       
+                        {%else%} 
                         <li class="nav-item ">
                             <a href="/instock" class="nav-link">
                                 <i class="bi bi-ui-checks"></i> My Products </a>
@@ -674,12 +758,8 @@
                                 <i class="bi bi-clipboard-check"></i> Task </a>
                         </li>
 
-                        <li class="nav-item ">
-                            <a href="/budget" class="nav-link">
-                                <i class="bi bi-credit-card"></i> Budget </a>
-                        </li>
-                        
-
+                      
+                        {%endif%}
                         <!--<li class="nav-item ">
                             <a href="/ai" class="nav-link">
                                 <i class="bi bi-columns-gap"></i> Ask Stock Master </a>

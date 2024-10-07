@@ -49,18 +49,24 @@
         <div class="col-lg-8 mb-5" style="background-color:#fff; padding:30px; border-radius:20px;">
             
             <form method="POST" action="/add_item"  enctype="multipart/form-data">
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Products to Warehouse</h6>
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Add Products</h6>
         <hr>
         {{ form.hidden_tag() }}
     
 
         <div class="alert alert-success" style="margin-top:30px;" role="alert">
+          {% if current_user.category=="Personal"%}
           <h6>
-          Choose your warehouse to add product.
-          </h6>  
+          Choose your expense to add product.
+          </h6> 
+          {%else%}
+          <h6>
+            Choose your warehouse to add product.
+            </h6> 
+          {%endif%} 
          </div>
  
-    <label for="basic-url" class="form-label">Warehouse <span class="text-danger">*</span></label>
+    <label for="basic-url" class="form-label">Choose <span class="text-danger">*</span></label>
      <div class="input-group mb-3">
        {{form.group(type="text", class="form-control", placeholder="Recipient's username")}}
      </div>
@@ -70,10 +76,7 @@
        <input type="text" name="item_name" class="form-control" placeholder="Name of Product" aria-label="Username" aria-describedby="basic-addon1">
      </div>
 
-     <label for="basic-url" class="form-label">Enter Product Serial Number <span class="text-danger">*</span></label>
-     <div class="input-group mb-3">
-       <input type="number" name="serial" class="form-control" placeholder="Serial Number" aria-label="Username" aria-describedby="basic-addon1">
-     </div>
+     
 
      <label for="basic-url" class="form-label">Enter Quantity <span class="text-danger">*</span></label>
      <div class="input-group mb-3">

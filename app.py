@@ -562,7 +562,6 @@ def add_item():
             des=form.des.data,
             price=form.price.data,
             quantity=int(form.quantity.data),  # Convert to integer here
-            serial=form.serial.data,
             start_date=form.start_date.data
         )
         try:
@@ -2289,8 +2288,11 @@ def instock():
             continue
     
     instock = Item.query.filter_by(clientid=current_user.id).count()
+    
+    usersman = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in usersman) 
   
-    return render_template("instock.html",users=users,total_sum=total_sum,instock=instock,total_amount=total_amount)
+    return render_template("instock.html",total_budget=total_budget,usersman=usersman,users=users,total_sum=total_sum,instock=instock,total_amount=total_amount)
 
 @app.route('/auth', methods=['GET', 'POST'])
 @login_required
@@ -2639,7 +2641,7 @@ def signup():
         checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
             flash(f'This Email has already been used','danger')
-            print("Email already in use")
+            print("Email alsready in use")
             return redirect(url_for('signup'))
         if not is_gmail_address(form.email.data):
             flash('Please provide a valid email address.', 'danger')
