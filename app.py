@@ -2528,7 +2528,7 @@ def update(id):
             db.session.commit()
             return redirect(url_for('pascoadmin')) 
         except:
-            return"errrrror"
+            return redirect(url_for('pascoadmin')) 
     return render_template("leadersadd.html", form=form)
     
 #delete route
@@ -2538,9 +2538,10 @@ def deleteproduct(id):
     try:
             db.session.delete(delete)
             db.session.commit()
+            flash("Deleted Successfully")
             return redirect(url_for('instock')) 
     except: 
-        return "errrrrorrr"
+        return redirect(url_for('instock')) 
 
 
 @app.route("/deleteme/<int:id>")
@@ -2549,9 +2550,10 @@ def deletelist(id):
     try:
             db.session.delete(delete)
             db.session.commit()
+            flash("Deleted Successfully")
             return redirect(url_for('lists')) 
     except: 
-        return "errrrrorrr"
+        return redirect(url_for('instock')) 
         
     
 #delete route
@@ -2564,7 +2566,7 @@ def delete(id):
             flash ('User deleted succesfully' , 'success')
             return redirect(url_for('pascoadmin')) 
     except: 
-        return "errrrrorrr"
+        return redirect(url_for('instock')) 
     
 
 # @app.route('/login', methods=['POST','GET'])
