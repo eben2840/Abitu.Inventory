@@ -6,6 +6,8 @@ import ssl
 from requests import post
 import smtplib
 import csv
+import pytesseract
+from PIL import Image
 from google.api_core.exceptions import ResourceExhausted
 import random
 import requests
@@ -44,7 +46,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 app.config['UPLOADED_PHOTOS_DEST'] ='uploads'
 app.config['UPLOAD_FOLDER'] = 'uploads/pdfs' 
 UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = 'uploads' 
+app.config['UPLOAD_FOLDER'] = 'uploads/'
 genai.configure(api_key=os.getenv("API"))
 
 
@@ -101,8 +103,11 @@ def sendtelegram(params):
 class Person(db.Model, UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
+    latitude = db.Column(db.Float) 
+    longitude = db.Column(db.Float) 
     # role= db.Column(db.String())
     email= db.Column(db.String())
+    location= db.Column(db.String())
     role= db.Column(db.String())
     company_name= db.Column(db.String())
     category= db.Column(db.String())
@@ -1514,6 +1519,108 @@ safety_settings = [
 #             flash("Please provide a valid input!", "error")
 #     return render_template("stockmaster.html", data=data[::-1])
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.route("   ini", methods=['GET', 'POST'])
+# @login_required
+# def gemini():
+#     data = session.get('data', [])
+    
+#     if request.method == "POST":
+#         input_text = request.form.get("text")
+#         print("Received input:", input_text)
+        
+#         if input_text:
+#             # Check if the user is asking about stock levels
+#             if "stock" in input_text.lower():
+#                 # Query the database for items with low or high stock
+#                 # high_stock_items = Item.query.filter(Item.quantity >= 20, Item.clientid == current_user.id).all()
+#                 # low_stock_items = Item.query.filter(Item.quantity >= 10,Item.quantity <= 20, Item.clientid == current_user.id).all()
+#                 out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
+                
+#                 location_items = Person.query.filter(Person.clientid == current_user.id).all()
+                
+#                 # Build messages for stock status.
+#                 # low_stock_message = "Low stock items: " + ", ".join([item.name for item in low_stock_items]) if low_stock_items else "No items with low stock."
+#                 # high_stock_message = "High stock items: " + ", ".join([item.name for item in high_stock_items]) if high_stock_items else "No items with high stock."
+#                 out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
+
+#                 # stock_status_message = f"{low_stock_message}\n{high_stock_message}\n{out_of_stock_message}"
+#                 stock_status_message = f"{out_of_stock_message}"
+
+#                 # input_text += f"\n\nHere is the current stock status:\n{stock_status_message}"
+                
+#                 model_prompt = (
+#                     f"User input: {input_text}\n\n"
+#                     f"Current stock status:\n{stock_status_message}\n\n"
+#                     "Based on the above information, respond to the user's query naturally."
+#                 )
+#             print("Generating response using AI model")
+#             try:
+#                 # Using generative AI model to generate content
+#                 model = genai.GenerativeModel(
+#                     model_name="gemini-1.5-pro",
+#                     safety_settings=safety_settings,
+#                     generation_config=generation_config,
+#                     # system_instruction="Your name is Stock Master. You are an expert at inventory, finding locations, and data structure. Help users with stock-related queries."
+#                 )
+#                 response = model.generate_content(model_prompt)
+#                 text_result = response.text
+#                 print("Generated response:", text_result)
+#                 data.append({'input': input_text, 'result': text_result})
+#                 session['data'] = data
+#                 return redirect(url_for('gemini'))    
+#             except ResourceExhausted as e:
+#                 print("Resource exhausted: ", e)
+#                 flash("Please try again later in a few minutes", "error")
+#                 return redirect(url_for('gemini'))
+#             except Exception as ex:
+#                 print("An error occurred:", ex)
+#                 flash("Please try again later in a few minutes", "error")
+#                 return redirect(url_for('gemini'))  
+#         else:
+#             print("No input provided")
+#             sendtelegram("New User")
+#             print("didn't work")
+    
+#     print("Rendering stockmaster.html template")
+#     return render_template("stockmaster.html", data=data[::-1])
+
+
+
+
+
+
+
+
+
+
+
+
+def extract_text_from_image(image_path):
+    img = Image.open(image_path)
+    extracted_text = pytesseract.image_to_string(img)
+    return extracted_text
+
+# Function for parsing the receipt data
+def parse_receipt_data(extracted_text):
+    items = extracted_text.split('\n')  # Assuming each item is on a new line
+    return [item.strip() for item in items if item.strip()]
+
+
 @app.route("/gemini", methods=['GET', 'POST'])
 @login_required
 def gemini():
@@ -1521,46 +1628,70 @@ def gemini():
     
     if request.method == "POST":
         input_text = request.form.get("text")
+        receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
         print("Received input:", input_text)
         
         if input_text:
             # Check if the user is asking about stock levels
             if "stock" in input_text.lower():
-                # Query the database for items with low or high stock
-                # high_stock_items = Item.query.filter(Item.quantity >= 20, Item.clientid == current_user.id).all()
-                # low_stock_items = Item.query.filter(Item.quantity >= 10,Item.quantity <= 20, Item.clientid == current_user.id).all()
                 out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
-                
-                location_items = Person.query.filter(Person.clientid == current_user.id).all()
-                
-                # Build messages for stock status.
-                # low_stock_message = "Low stock items: " + ", ".join([item.name for item in low_stock_items]) if low_stock_items else "No items with low stock."
-                # high_stock_message = "High stock items: " + ", ".join([item.name for item in high_stock_items]) if high_stock_items else "No items with high stock."
                 out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
 
-                # stock_status_message = f"{low_stock_message}\n{high_stock_message}\n{out_of_stock_message}"
-                stock_status_message = f"{out_of_stock_message}"
-
-                # input_text += f"\n\nHere is the current stock status:\n{stock_status_message}"
-                
                 model_prompt = (
                     f"User input: {input_text}\n\n"
-                    f"Current stock status:\n{stock_status_message}\n\n"
+                    f"Current stock status:\n{out_of_stock_message}\n\n"
                     "Based on the above information, respond to the user's query naturally."
                 )
+            elif receipt_image:  # If a receipt is scanned
+                if receipt_image.filename == '':
+                    flash('No file selected!', 'error')
+                    return redirect(url_for('gemini'))
+
+                filename = secure_filename(receipt_image.filename)
+                image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                receipt_image.save(image_path)
+
+                # Extract text from the receipt using OCR
+                extracted_text = extract_text_from_image(image_path)
+                print("Extracted text from receipt:", extracted_text)
+                
+                # Parse the receipt data to extract item names
+                receipt_items = parse_receipt_data(extracted_text)
+
+                # Categorize each item into groups (warehouse) from the DB
+                categorized_items = {}
+                for item_name in receipt_items:
+                    item = Item.query.filter_by(name=item_name).first()  # Query the database for each item
+                    if item:
+                        group = item.group  # Get the associated group (warehouse)
+                        categorized_items[item_name] = {
+                            'group': group.name if group else "No group (warehouse) assigned",
+                            'quantity': item.quantity
+                        }
+                    else:
+                        categorized_items[item_name] = {'group': "Unknown", 'quantity': "Unknown"}
+
+                # Prepare the AI model prompt with categorized items
+                model_prompt = (
+                    f"User scanned a receipt with the following items:\n\n"
+                    f"Receipt items and their respective groups (warehouses):\n{categorized_items}\n\n"
+                    "Help categorize these items based on the database data."
+                )
+
             print("Generating response using AI model")
             try:
-                # Using generative AI model to generate content
+                # Using generative AI model to generate content based on the prompt
                 model = genai.GenerativeModel(
                     model_name="gemini-1.5-pro",
                     safety_settings=safety_settings,
                     generation_config=generation_config,
-                    # system_instruction="Your name is Stock Master. You are an expert at inventory, finding locations, and data structure. Help users with stock-related queries."
                 )
                 response = model.generate_content(model_prompt)
                 text_result = response.text
-                print("Generated response:", text_result)
-                data.append({'input': input_text, 'result': text_result})
+                print("Generated AI response:", text_result)
+
+                # Append the result to session data
+                data.append({'input': input_text or "Receipt Scan", 'result': text_result})
                 session['data'] = data
                 return redirect(url_for('gemini'))    
             except ResourceExhausted as e:
@@ -1573,12 +1704,10 @@ def gemini():
                 return redirect(url_for('gemini'))  
         else:
             print("No input provided")
-            sendtelegram("New User")
-            print("didn't work")
+            flash("Please provide input text or upload a receipt.", "error")
     
     print("Rendering stockmaster.html template")
     return render_template("stockmaster.html", data=data[::-1])
-
 # data= []
 
 # @app.route("/gemini", methods=['GET', 'POST'])
@@ -2639,6 +2768,12 @@ def signup():
     form = Registration()
     print(f"Form data: {form.data}")
     if form.validate_on_submit():
+        latitude = form.latitude.data
+        longitude = form.longitude.data 
+        print(f"location data: {form.latitude.data} {form.longitude}")
+        if not latitude or not longitude:
+            flash("Allow Acces to your location", 'danger')
+            return redirect(url_for('signup'))
         print("Form validated successfully")
         checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
@@ -2661,12 +2796,15 @@ def signup():
         else:
             user = Person(password=form.password.data,
                         confirm_password=form.confirm_password.data,
-                        company_name=form.company_name.data, 
+                        company_name=form.company_name.data,
+                        latitude=latitude,
+                        longitude=longitude,
                         # role=form.role.data, -----------
                         category=form.category.data,
                         email=form.email.data,
-                        phone=form.phone.data,
-                        name=form.name.data)
+                        # phone=form.phone.data,
+                        # name=form.name.data
+                        )
             db.session.add(user)
             db.session.commit()
             # send_email()

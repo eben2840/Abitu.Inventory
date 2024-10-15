@@ -1,4 +1,4 @@
-from wtforms import DateField, Form, BooleanField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
+from wtforms import DateField, Form, BooleanField, HiddenField, StringField, PasswordField, validators, SubmitField, SelectField, IntegerField,PasswordField, SearchField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, NumberRange
@@ -230,10 +230,12 @@ class AddItemForm(FlaskForm):
 class Registration(FlaskForm):
     indexnumber= StringField('indexNumber')
     email = StringField('Email', validators=[DataRequired()])
-    phone = StringField('Phone', validators=[DataRequired()])
+    # location = StringField('Location', validators=[DataRequired()])
+    # phone = StringField('Phone', validators=[DataRequired()])
     # role= SelectField('tag', choices=[('Tag','Tag'),('admin', 'admin'), ('client','client')], default=None )
-    
-    name = StringField('Name', validators=[DataRequired()]) 
+    latitude = HiddenField('Latitude')  
+    longitude = HiddenField('Longitude')
+    # name = StringField('Name', validators=[DataRequired()]) 
     
     password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
