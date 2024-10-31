@@ -41,8 +41,8 @@
 
 
                         <label for="email" class="mt-2">Password</label>
-                        {{ form.password(class="input-field",  style="width:100%; background-color:#fff; padding:15px; color:#000;",placeholder="********",   required='required') }}
-
+                        {{ form.password(class="input-field", id="myInput",  style="width:100%; background-color:#fff; padding:15px; color:#000;",placeholder="********",   required='required') }}
+                        <input type="checkbox" onclick="myFunction()">Show Password
                         {% if form.password.errors %}
                         <div class="text-danger">
                         {% for error in form.password.errors %}
@@ -73,5 +73,16 @@
             </div>
         </div>
     </div>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+    </script>
 </body>
 </html>

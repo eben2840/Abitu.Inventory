@@ -1,58 +1,98 @@
-{% extends 'try.html' %}
+{% extends 'pagebase.html' %}
 {% block body %}
 
+<body>
+    <div class="container mt-5">
+        <h2>Add Group</h2>
+        <form method="POST" action="{{ url_for('group') }}" style="background-color:#fff; padding:30px; border-radius:10px;">
+            <div class="row">
+            <div class="col-lg-8 mb-5">
+                {% if current_user.category == "Personal" %}
+                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
+                {% else %}
+                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
+                {% endif %}
+                <hr>
+                <div class="alert alert-success" style="margin-top:30px;" role="alert">
+                    {% if current_user.category == "Personal" %}
+                    <h6>Add Your Expense Categories.</h6>  
+                    {% else %}
+                    <h6>Add Your Warehouse Categories.</h6>  
+                    {% endif %}
+                </div>
+            {{ form.hidden_tag() }}
 
-<div class="container-fluid">
-  <!-- Card stats -->
-  
-  <div class="row g-4 mb-6">
-    {%for user in users%} 
-    <div class="col-xl-4 col-sm-6 col-12">
-        <a href="#" style="text-decoration: none; color: #992621;">
-          
-          <div class="card shadow border-0">
-              <div class="card-body">
-                  <div class="row">
-                      <div class="col">
-                          <span class="h6 font-semibold text-muted text-sm d-block mb-2">Level:{{user.ministry}}</span>
-                          <span class="h3 font-bold mb-0">{{user.fullname}} </span>
-                      </div>
-                      <div class="col-auto">
-                          <div class="icon icon-shape bg-danger text-white text-lg rounded-circle">
-                              <i class="bi bi-people"></i>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                          <i class="fas-fa-call me-1">{{user.telephone}}</i>
-                      </span>
-                     <span class="text-nowrap text-xs text-muted"><b>{{user.program}}</b></span>
-                  </div>
-                  <div class="mt-2 mb-0 text-sm">
-                    <span class=" text-xs text-success me-7">
-                        {{user.campus}}
-                    </span>
-                   <span class="text-nowrap text-xs text-muted"><b>{{user.email}}</b></span>
-              <a href="/delete/{{user.id}}">Delete User</a>
-                
-                  </div>
-              </div>
-          </div>
-        </a>
-      </div>
-      {% endfor %}    
+            <div class="form-group">
+                {{ form.name.label }} 
+                {{ form.name(class="form-control") }} 
+                {% if form.name.errors %}
+                    <div class="text-danger">{{ form.name.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#autoFillModal">
+                Auto-fill predefined groups
+            </button>
+        </div>
+        <div class="col-lg-4">
+            <div style="background-color:#fff; padding:30px; border-radius:10px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
+                    <h6 class="h4 mb-5" style="margin-bottom:10px;">{{users}}</h6> 
+                </div>
+                <a class="btn btn-primary" href="#" role="button">My Warehouse</a>
+            </div>                            
+        </div>
     </div>
-  </div>
+
+            <!-- Modal for auto-fill options -->
+            <div class="modal fade" id="autoFillModal" tabindex="-1" role="dialog" aria-labelledby="autoFillModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="autoFillModalLabel">Auto-fill Predefined Groups</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="auto_fill" value="yes">
+                                    Auto-fill predefined groups
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual submit button outside the modal -->
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Add Group Manually</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    {% if show_modal %}
+        <script>
+            $(document).ready(function() {
+                $('#autoFillModal').modal('show');
+            });
+        </script>
+    {% endif %}
 
 
-
-
-
-
-
-{% endblock body %}
-
+    {% endblock body %}
 
 
 

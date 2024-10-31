@@ -204,11 +204,8 @@ class Addinfo(FlaskForm):
 
 
 class GroupForm(FlaskForm):
-    manufacturing = SelectField('tag', choices=[('categories','categories'),('Warehouse', 'Warehouse'), ('Hardwares','Hardwares'), ('Softwares','Softwares'), ('Accessories','Accessories'), ('Others','Others') ], default=None )
     name = StringField('Group Name')
-    end_date = StringField('End Start')
-    start_date = DateField('Start Date', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Yes, Auto Fill')
     
 class Budgetform(FlaskForm):
     budget = StringField('Budget')
@@ -222,7 +219,7 @@ class AddItemForm(FlaskForm):
     item_name = StringField('Item Name')
     quantity = StringField('Quantity')
     des= StringField('Description')
-    start_date = DateField('Start Date', validators=[DataRequired()])
+    # start_date = DateField('Start Date', validators=[DataRequired()])
     tag= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     price = StringField('Price', validators=[DataRequired()])
     submit = SubmitField('Add Item')
@@ -230,15 +227,11 @@ class AddItemForm(FlaskForm):
 class Registration(FlaskForm):
     indexnumber= StringField('indexNumber')
     email = StringField('Email', validators=[DataRequired()])
-    # location = StringField('Location', validators=[DataRequired()])
-    # phone = StringField('Phone', validators=[DataRequired()])
-    # role= SelectField('tag', choices=[('Tag','Tag'),('admin', 'admin'), ('client','client')], default=None )
     latitude = HiddenField('Latitude')  
-    longitude = HiddenField('Longitude')
-    # name = StringField('Name', validators=[DataRequired()]) 
-    
-    password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
-    confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
+    longitude = HiddenField('Longitude')    
+    password = PasswordField('password_hash', validators=[DataRequired()]) 
+    # password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
+    # confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
     category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail'),('Personal','Personal') ])
     submit =SubmitField('submit')

@@ -368,6 +368,7 @@ class Item(db.Model):
     serial = db.Column(db.String)
     tag = db.Column(db.String)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id', name='ft_item_group_id'))
+    
 
 
 class QuantityChangeLog(db.Model):
@@ -517,27 +518,46 @@ if not os.path.exists(UPLOAD_FOLDER):
 #                   )
 
 @app.route('/group', methods=['GET', 'POST'])
+@login_required
 def group():
     form = GroupForm()
+    print("User role: ", current_user.category) 
+    show_modal = False
+    if current_user.category == 'Cooperate':
+        show_modal = True
 
     if form.validate_on_submit():
-        group = Groups(
-            userId=current_user.id,
-            manufacturing=form.manufacturing.data,
-            
-            name=form.name.data,
-            start_date=form.start_date.data 
-        )
-        db.session.add(group)
-        db.session.commit()
-
-        flash("You just added a new Category")
+        print("Form submitted with data: ", form.name.data)  # Debug line
+        print("Auto-fill status: ", request.form.get('auto_fill'))  # Debug line
+        print("User category: ", current_user.category)  # Debug line
+        predefined_groups = []
+        if request.form.get('auto_fill') == 'yes':
+            if current_user.category == 'Cooperate':
+                predefined_groups = ['Food', 'Transport', 'Rent']
+            elif current_user.category == 'Manufacturing':
+                predefined_groups = ['Storage', 'Logistics', 'Inventory']
+            print("Adding predefined groups: ", predefined_groups)  # Debug line
+            for group_name in predefined_groups:
+                group = Groups(
+                    userId=current_user.id,
+                    name=group_name,
+                )
+                db.session.add(group)
+            db.session.commit()
+            flash("You just added predefined Categories.")
+        else:
+            print("Adding new category: ", form.name.data)  # Debug line
+            group = Groups(
+                userId=current_user.id,
+                name=form.name.data,
+            )
+            db.session.add(group)
+            db.session.commit()
+            flash("You just added a new Category.")
         return redirect(url_for('main'))
-
-    print(form.errors)
-    users=Groups.query.filter_by(userId=current_user.id).count()
-    return render_template('groups.html', form=form,users=users)
-
+    users = Groups.query.filter_by(userId=current_user.id).count()
+    print("Number of groups: ", users)  # Debug line
+    return render_template('groups.html', form=form, users=users, show_modal=show_modal)
 
 
 def generate_unique_code():
@@ -567,7 +587,7 @@ def add_item():
             des=form.des.data,
             price=form.price.data,
             quantity=int(form.quantity.data),  # Convert to integer here
-            start_date=form.start_date.data
+            # start_date=form.start_date.data
         )
         try:
             db.session.add(item)
@@ -1625,86 +1645,95 @@ def parse_receipt_data(extracted_text):
 @login_required
 def gemini():
     data = session.get('data', [])
+    print("Session data retrieved:", data)
     
-    if request.method == "POST":
-        input_text = request.form.get("text")
-        receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
-        print("Received input:", input_text)
-        
-        if input_text:
-            # Check if the user is asking about stock levels
-            if "stock" in input_text.lower():
-                out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
-                out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
+    # if request.method == "POST":
+    #     input_text = request.form.get("text")
+    #     receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
+    #     print("Received input:", input_text)
+    #     print("Receipt image received:", receipt_image is not None)
+    #     if input_text:
+    #         # Check if the user is asking about stock levels
+    #         if "stock" in input_text.lower():
+    #             print("User query related to stock levels.")
+    #             out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
+    #             out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
+    #             print("Out of stock message prepared:", out_of_stock_message)
+    #             model_prompt = (
+    #                 f"User input: {input_text}\n\n"
+    #                 f"Current stock status:\n{out_of_stock_message}\n\n"
+    #                 "Based on the above information, respond to the user's query naturally."
+    #             )
+    #             print("Model prompt prepared for stock query.")
+    #         elif receipt_image:  # If a receipt is scanned
+    #             print("Receipt image processing started.")
+    #             if receipt_image.filename == '':
+    #                 print("No file selected for receipt image.")
+    #                 flash('No file selected!', 'error')
+    #                 return redirect(url_for('gemini'))
+    #             filename = secure_filename(receipt_image.filename)
+    #             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #             receipt_image.save(image_path)
+    #             print("Receipt image saved at:", image_path)
 
-                model_prompt = (
-                    f"User input: {input_text}\n\n"
-                    f"Current stock status:\n{out_of_stock_message}\n\n"
-                    "Based on the above information, respond to the user's query naturally."
-                )
-            elif receipt_image:  # If a receipt is scanned
-                if receipt_image.filename == '':
-                    flash('No file selected!', 'error')
-                    return redirect(url_for('gemini'))
-
-                filename = secure_filename(receipt_image.filename)
-                image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                receipt_image.save(image_path)
-
-                # Extract text from the receipt using OCR
-                extracted_text = extract_text_from_image(image_path)
-                print("Extracted text from receipt:", extracted_text)
+    #             # Extract text from the receipt using OCR
+    #             extracted_text = extract_text_from_image(image_path)
+    #             print("Extracted text from receipt:", extracted_text)
                 
-                # Parse the receipt data to extract item names
-                receipt_items = parse_receipt_data(extracted_text)
+    #             # Parse the receipt data to extract item names
+    #             receipt_items = parse_receipt_data(extracted_text)
+    #             print("Parsed receipt items:", receipt_items)
 
-                # Categorize each item into groups (warehouse) from the DB
-                categorized_items = {}
-                for item_name in receipt_items:
-                    item = Item.query.filter_by(name=item_name).first()  # Query the database for each item
-                    if item:
-                        group = item.group  # Get the associated group (warehouse)
-                        categorized_items[item_name] = {
-                            'group': group.name if group else "No group (warehouse) assigned",
-                            'quantity': item.quantity
-                        }
-                    else:
-                        categorized_items[item_name] = {'group': "Unknown", 'quantity': "Unknown"}
+    #             # Categorize each item into groups (warehouse) from the DB
+    #             categorized_items = {}
+    #             for item_name in receipt_items:
+    #                 item = Item.query.filter_by(name=item_name).first()  # Query the database for each item
+    #                 if item:
+    #                     group = item.group  # Get the associated group (warehouse)
+    #                     categorized_items[item_name] = {
+    #                         'group': group.name if group else "No group (warehouse) assigned",
+    #                         'quantity': item.quantity
+    #                     }
+    #                 else:
+    #                     categorized_items[item_name] = {'group': "Unknown", 'quantity': "Unknown"}
+    #             print("Categorized items:", categorized_items)
 
-                # Prepare the AI model prompt with categorized items
-                model_prompt = (
-                    f"User scanned a receipt with the following items:\n\n"
-                    f"Receipt items and their respective groups (warehouses):\n{categorized_items}\n\n"
-                    "Help categorize these items based on the database data."
-                )
+    #             # Prepare the AI model prompt with categorized items
+    #             model_prompt = (
+    #                 f"User scanned a receipt with the following items:\n\n"
+    #                 f"Receipt items and their respective groups (warehouses):\n{categorized_items}\n\n"
+    #                 "Help categorize these items based on the database data."
+    #             )
+    #             print("Model prompt prepared for receipt scan.")
 
-            print("Generating response using AI model")
-            try:
-                # Using generative AI model to generate content based on the prompt
-                model = genai.GenerativeModel(
-                    model_name="gemini-1.5-pro",
-                    safety_settings=safety_settings,
-                    generation_config=generation_config,
-                )
-                response = model.generate_content(model_prompt)
-                text_result = response.text
-                print("Generated AI response:", text_result)
+    #         print("Generating response using AI model")
+    #         try:
+    #             # Using generative AI model to generate content based on the prompt
+    #             model = genai.GenerativeModel(
+    #                 model_name="gemini-1.5-pro",
+    #                 safety_settings=safety_settings,
+    #                 generation_config=generation_config,
+    #             )
+    #             response = model.generate_content(model_prompt)
+    #             text_result = response.text
+    #             print("Generated AI response:", text_result)
 
-                # Append the result to session data
-                data.append({'input': input_text or "Receipt Scan", 'result': text_result})
-                session['data'] = data
-                return redirect(url_for('gemini'))    
-            except ResourceExhausted as e:
-                print("Resource exhausted: ", e)
-                flash("Please try again later in a few minutes", "error")
-                return redirect(url_for('gemini'))
-            except Exception as ex:
-                print("An error occurred:", ex)
-                flash("Please try again later in a few minutes", "error")
-                return redirect(url_for('gemini'))  
-        else:
-            print("No input provided")
-            flash("Please provide input text or upload a receipt.", "error")
+    #             # Append the result to session data
+    #             data.append({'input': input_text or "Receipt Scan", 'result': text_result})
+    #             session['data'] = data
+    #             print("Session data updated:", session['data'])
+    #             return redirect(url_for('gemini'))    
+    #         except ResourceExhausted as e:
+    #             print("Resource exhausted: ", e)
+    #             flash("Please try again later in a few minutes", "error")
+    #             return redirect(url_for('gemini'))
+    #         except Exception as ex:
+    #             print("An error occurred:", ex)
+    #             flash("Please try again later in a few minutes", "error")
+    #             return redirect(url_for('gemini'))  
+    #     else:
+    #         print("No input provided")
+    #         flash("Please provide input text or upload a receipt.", "error")
     
     print("Rendering stockmaster.html template")
     return render_template("stockmaster.html", data=data[::-1])
@@ -2795,7 +2824,7 @@ def signup():
         #     return redirect(url_for('signup'))
         else:
             user = Person(password=form.password.data,
-                        confirm_password=form.confirm_password.data,
+                        # confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data,
                         latitude=latitude,
                         longitude=longitude,

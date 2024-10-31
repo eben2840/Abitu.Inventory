@@ -1,91 +1,95 @@
-
 {% extends 'pagebase.html' %}
-
 {% block body %}
-<div class="container">
-   
-    <div class="row">
-        
-        <div class="col-lg-8 mb-5">
-  
-    <form method="POST" action="{{ url_for('group') }}"style="background-color:#fff; padding:30px; border-radius:10px;">
-        {% if current_user.category=="Personal"%}
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
-        {%else%}
-        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
 
-        {%endif%}
-       <hr>
-        <div class="alert alert-success" style="margin-top:30px;" role="alert">
-            {% if current_user.category=="Personal"%}
-            <h6>
-            Choose your optional expense categories.
-            </h6>  
-            {%else%}
-            <h6>
-                Choose your optional warehouse categories.
-            </h6>  
-            {%endif%}
-           </div>
-        {{ form.hidden_tag() }}
-       
-        <label for="basic-url" class="form-label">Choose A Category: <span class="text-danger">*</span></label>
-        <div class="input-group mb-3">
-          {{form.manufacturing(type="text", class="form-control", placeholder="Recipient's username")}}
-        </div>
+<body>
+    <div class="container mt-5">
+        <form method="POST" action="{{ url_for('group') }}" style="background-color:#fff; padding:30px; border-radius:10px;">
+            <div class="row">
+            <div class="col-lg-8 mb-5">
+                {% if current_user.category == "Personal" %}
+                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
+                {% else %}
+                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
+                {% endif %}
+                <hr>
+                <div class="alert alert-success" style="margin-top:30px;" role="alert">
+                    {% if current_user.category == "Personal" %}
+                    <h6>Add Your Expense Categories.</h6>  
+                    {% else %}
+                    <h6>Add Your Warehouse Categories.</h6>  
+                    {% endif %}
+                </div>
+            {{ form.hidden_tag() }}
 
+            <div class="form-group">
+                <label>Category Name</label>
+                {{ form.name(class="form-control") }} 
+                {% if form.name.errors %}
+                    <div class="text-danger">{{ form.name.errors[0] }}</div>
+                {% endif %}
+            </div>
 
-        <label for="basic-url" class="form-label mt-10">Enter The Name: <span class="text-danger">*</span></label>
-        <div class="input-group mb-3">
-          {{form.name(type="text", class="form-control", placeholder="WareHouse Name")}}
-        </div>
-    
-     
-       
-    
-    
-
-        
-        <label for="basic-url" class="form-label mt-10">Choose A date <span class="text-danger">*</span></label>
-        <div class="input-group mb-3">
-         
-         {{ form.start_date( class="form-control" ,required="required") }}
+            <!-- Button to trigger modal -->
           
         </div>
+       <!-- <div class="col-lg-4">
+            <div style="background-color:#fff; padding:30px; border-radius:10px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
+                    <h6 class="h4 mb-5" style="margin-bottom:10px;">{{users}}</h6> 
+                </div>
+                <a class="btn btn-primary" href="#" role="button">My Warehouse</a>
+            </div>                            
+        </div>-->
+    </div>
 
+            <!-- Modal for auto-fill options -->
+            <div class="modal fade" id="autoFillModal" tabindex="-1" role="dialog" aria-labelledby="autoFillModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="autoFillModalLabel">Auto-fill Predefined Categories.</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="auto_fill" value="yes" required>
+                                   &nbsp; Auto-fill predefined Categories.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {{ form.submit(class="btn btn-primary") }}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I want to add manually</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Manual submit button outside the modal -->
+            <div class="form-group ">
+                <button type="submit" class="btn btn-primary">Add Group Manually</button>
+            </div>
+        </form>
+    </div>
 
-        
-        {{ form.submit(class="btn btn-primary" , style="width:100%;" ) }}
-    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    {% if form.errors %}
-        <div style="color: red;">
-            <p>Errors:</p>
-            <ul>
-                {% for field, errors in form.errors.items() %}
-                    {% for error in errors %}
-                        <li>{{ field }}: {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-            </ul>
-        </div>
+    {% if show_modal %}
+        <script>
+            $(document).ready(function() {
+                $('#autoFillModal').modal('show');
+            });
+        </script>
     {% endif %}
-</div>
-
-<div class="col-lg-4">
-    <div style="background-color:#fff; padding:30px; border-radius:10px;">
-        <div class="d-flex justify-content-between">
-            <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
-            <h6 class="h4 mb-5" style="margin-bottom:10px;">{{users}}</h6> 
-        </div>
-
-    <a name="" id="" class="btn btn-primary" href="#" role="button">My Warehouse</a>
-    </div>                            
-</div>
-
-</div>
-</div>
 
 
-{%endblock body%}
+    {% endblock body %}
+
+
+
+
+
+

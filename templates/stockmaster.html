@@ -61,11 +61,14 @@
 
         <form class="element" method="POST" onsubmit="sendMessage(event)">
             <div class="chat-footer">
-                <input type="text" name="text" id="chat-input" placeholder="Type your message here..." class="form-control" onkeydown="if(event.keyCode==13){sendMessage(event); return false;}" style="border-radius:50px; padding:20px; border:none;">
+                <textarea type="text" name="text" id="chat-input" placeholder="Type your message here..." class="form-control" onkeydown="if(event.keyCode==13){sendMessage(event); return false;}" style=" border-radius:20px;  border:none;">
+                </textarea>
                 <button id="sendButton" class="send-btn" style="border-radius:50px; width:60px;" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                <button class="send-btn" style="border-radius:50px; width:60px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+               
+                <input type="file" class="send-btn" style="border-radius:50px; width:60px;" name="receipt_image" id="receipt_image" accept="image/*">
+                <!-- <button class="send-btn"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                     <i class="fa fa-upload" aria-hidden="true"></i>
-                </button>
+                </button>-->
                
             </div>
         </form>
@@ -74,24 +77,31 @@
     </div>
 
     <!-- Upload Modal -->
-    <form method="POST" enctype="multipart/form-data">
+   <!-- <form method="POST" enctype="multipart/form-data">
         <label for="text">Enter your query:</label>
         <input type="text" name="text" id="text">
         
         <label for="receipt_image">Or upload receipt image:</label>
-        <input type="file" name="receipt_image" id="receipt_image" accept="image/*">
+       
         
         <button type="submit">Submit</button>
-    </form>
+    </form>-->
 
     
-
     <script>
         // Initial scroll to the bottom on page load
         window.onload = function() {
             const chatBody = document.getElementById('chat-body');
             chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Show the welcome modal on page load
+            document.getElementById('welcome-modal').classList.add('show');
         };
+
+        // Hide the modal on "Get Started" or "Cancel" button click
+        document.getElementById('get-started-btn').addEventListener('click', function() {
+            document.getElementById('welcome-modal').classList.remove('show');
+        });
 
         // Function to add a new message to the chat
         function addMessageToChat(sender, message) {
@@ -100,12 +110,14 @@
             messageElement.classList.add('message', sender);
             messageElement.innerHTML = `<p>${message}</p>`;
             chatBody.appendChild(messageElement);
+
+            // Scroll to the bottom of the chat body
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
         // Function to handle sending a message
         document.getElementById('sendButton').addEventListener('click', function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent form submission
             const inputField = document.getElementById('chat-input');
             const message = inputField.value.trim();
 
@@ -113,6 +125,7 @@
                 addMessageToChat('user', message);
                 inputField.value = '';
 
+                // Simulate bot response
                 setTimeout(() => {
                     addMessageToChat('bot', "I'm here to help!");
                 }, 1000);
