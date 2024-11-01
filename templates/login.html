@@ -42,7 +42,7 @@
 
                         <label for="email" class="mt-2">Password</label>
                         {{ form.password(class="input-field", id="myInput",  style="width:100%; background-color:#fff; padding:15px; color:#000;",placeholder="********",   required='required') }}
-                        <input type="checkbox" onclick="myFunction()">Show Password
+
                         {% if form.password.errors %}
                         <div class="text-danger">
                         {% for error in form.password.errors %}
@@ -50,12 +50,7 @@
                             {% endfor %}
                             </div>
                         {% endif %}
-                       <!-- <div class="form-check">
-                          <input class="form-check-input"  type="checkbox" value="">
-                          <label class="form-check-label" for="flexCheckDefault">
-                            Remember me?
-                          </label>
-                        </div>-->
+                      
                        
                  
                         <button type="submit" class="sign-in-btn mt-4 ">Log In</button>
@@ -74,7 +69,21 @@
         </div>
     </div>
 
+    <script>
+        $(".toggle-password").click(function() {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") == "password") {
+              input.attr("type", "text");
+            } else {
+              input.attr("type", "password");
+            }
+          });
+        </script>    
+
 <script>
+    
     function myFunction() {
         var x = document.getElementById("myInput");
         if (x.type === "password") {

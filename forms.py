@@ -205,7 +205,7 @@ class Addinfo(FlaskForm):
 
 class GroupForm(FlaskForm):
     name = StringField('Group Name')
-    submit = SubmitField('Yes, Auto Fill')
+    submit = SubmitField('Auto Fill')
     
 class Budgetform(FlaskForm):
     budget = StringField('Budget')
@@ -233,7 +233,8 @@ class Registration(FlaskForm):
     # password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
     # confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     company_name = StringField('company_name', validators=[DataRequired()]) 
-    category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail'),('Personal','Personal') ])
+    # category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail'),('Personal','Personal') ])
+    category = SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')
     
 

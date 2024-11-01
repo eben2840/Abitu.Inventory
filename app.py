@@ -6,7 +6,7 @@ import ssl
 from requests import post
 import smtplib
 import csv
-import pytesseract
+# import pytesseract
 from PIL import Image
 from google.api_core.exceptions import ResourceExhausted
 import random
@@ -532,9 +532,9 @@ def group():
         print("User category: ", current_user.category)  # Debug line
         predefined_groups = []
         if request.form.get('auto_fill') == 'yes':
-            if current_user.category == 'Cooperate':
+            if current_user.category == 'Personal':
                 predefined_groups = ['Food', 'Transport', 'Rent']
-            elif current_user.category == 'Manufacturing':
+            elif current_user.category == 'Business':
                 predefined_groups = ['Storage', 'Logistics', 'Inventory']
             print("Adding predefined groups: ", predefined_groups)  # Debug line
             for group_name in predefined_groups:
@@ -941,7 +941,7 @@ def analytics():
     # total_warehouse = db.session.query.count
     total_category =  db.session.query(Groups).filter(Groups.name.isnot(None)).count()
     total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse',userId=current_user.id).count()
-    total_hareware =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
+    total_hareware =  Groups.query.filter_by(manufacturibudgetng='Hardwares',userId=current_user.id).count()
     total =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
     total_software =  Groups.query.filter_by(manufacturing='Softwares',userId=current_user.id).count()
     total_accessories =  Groups.query.filter_by(manufacturing='Accessories',userId=current_user.id).count()
@@ -2600,6 +2600,7 @@ def log_inactivity():
 def logout():
     if current_user:
         print(current_user.email)
+        flash('You have been logged out.','danger')
         logout_user()
     else:
         print("Well that didnt work")

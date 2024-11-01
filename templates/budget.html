@@ -13,6 +13,57 @@
     {% endif %}
     {% endwith %}
 
+<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="{{ url_for('budget') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
+       
+        {{ form.hidden_tag() }}
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Enter Amount:</label>
+            <input type="text" name="budget" placeholder="20" class="form-control" id="recipient-name">
+          </div>
+
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control"  id="message-text"></textarea>
+          </div>
+
+            <div class="d-flex">
+            <div class="mb-3">
+            <label for="message-text" class="col-form-label">Start Date:</label>
+                {{ form.start_date(class="p-3 btn btn-neutral", placeholder="Catalog Name") }}
+        
+            </div>
+   
+
+            <div class="mb-3">
+                <label for="message-text" class="col-form-label">End Date:</label>
+                {{ form.end_date(class="p-3 btn btn-neutral", placeholder="Catalog Name") }}
+            </div>
+            </div>
+
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Set Budget</button>
+      </div>
+    </div>
+</form>
+  </div>
+</div>
+
     <div class="row g-6 mb-6" style="">
         <div class="col-xl-6 col-sm-6 col-12">
             <div class="card shadow border-0">
@@ -49,28 +100,30 @@
         
 
       <div class="card shadow border-0 mb-7">
-        <div class="card-header">
-            <h5 class="mb-0">Set your Budget </h5>
+        <div class="card-header d-flex justify-content-between">
+            <h5 class="mt-3">Set your Budget </h5>
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="bi bi-currency-dollar"></i> Add Budget</button>
+
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Budget</th>
-                        <!--<th scope="col">Description</th>-->
+                      <th scope="col">Description</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                        
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <form method="POST" action="{{ url_for('budget') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
+                    <!--<form method="POST" action="{{ url_for('budget') }}"style="background-color:#fff; padding:30px; border-radius:20px;">
        
                         {{ form.hidden_tag() }}
                 <tr>
                     <td>
-                        <a class="text-heading font-semibold" href="#">
+                      
                             <div class="input-group mb-3">
                                 <input type="number" name="budget" class="form-control" placeholder="Amount..." aria-label="Username" aria-describedby="basic-addon1">
                               </div>
@@ -102,19 +155,21 @@
                     </td>
                         
                 </tr>
-                    </form>
+                    </form>btn-neutral-->
                     {%for users in users%} 
                     <tr>
                         
                         <td>
-                            <a class="text-heading font-semibold" href="#">
+                            <a class="text-heading btn btn-sm " href="#">
                                 ${{users.budget}}
                             </a>
                         </td>
                        
 
-                       
-                    <td>
+                        <td>
+                        </td>
+
+                        <td>
                             <span class="badge badge-lg badge-dot">
                                 <i class="bg-success"></i>{{users.start_date}}
                             </span>
@@ -130,12 +185,7 @@
                         
                        
 
-                        <td class="text-end">
-                           <!-- <a href="#" class="btn btn-sm btn-neutral">Update</a>-->
-                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                <i class="bi bi-box-trash"></i>
-                            </button>
-                        </td>
+                       
                     </tr>
 
                     {%endfor%}
