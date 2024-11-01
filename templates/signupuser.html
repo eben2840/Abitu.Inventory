@@ -47,8 +47,7 @@
                           
                           <label class="text-left">Category</label>
                           <div class="d-flex">
-                          {{ form.category(class="input-field",  style="width:100%; background-color:#fff; padding:15px; border-radius:20px; color:#000;",   required='required') }}
-                          &nbsp; <button type="button" style="width:100%; height:50px; background-color:#cbb3e7; border:none; border-radius:20px; color:#fff; " class="login" onclick="getLocation()"> <i class="bi bi-geo-alt"></i> Location</button>
+                          {{ form.category(class="input-field",  style="width:100%; background-color:#fff; padding:15px; padding:20px;  color:#000;",   required='required') }}
                           </div>
                           {% if form.category.errors %}
                               <div class="text-danger">
@@ -64,7 +63,7 @@
                           <label class="mt-2"> <b>Abitrack.com/</b></label>
                            <!--<input type="text"  class="input" name="company_name" id="businessName" style="width:100%;" placeholder="your company name" />
                           -->
-                           {{ form.company_name(class="input-field",  id="businessName", style="width:100%;border-radius:20px;",  placeholder="your business name") }}
+                           {{ form.company_name(class="input-field",  id="businessName", style="width:100%;",  placeholder="your business name") }}
                           
                            {% if form.company_name.errors %}
                                <div class="text-danger">
@@ -80,7 +79,7 @@
                            
                         
                           <label class="mt-2 ">Email</label>
-                          {{ form.email(class="input-field", id="emailAddress", style="width:100%;border-radius:20px;",placeholder="name@gmail.com") }}
+                          {{ form.email(class="input-field", id="emailAddress", style="width:100%;",placeholder="name@gmail.com") }}
                           {% if form.email.errors %}
                               <div class="text-danger">
                                   {% for error in form.email.errors %}
@@ -96,7 +95,7 @@
                      
                        
                           <label class="mt-2 ">Password</label>
-                          {{ form.password(class="input-field", id="inputPassword5", style="width:100%; border-radius:20px;", placeholder="Enter your password") }}
+                          {{ form.password(class="input-field", id="inputPassword5", style="width:100%; ", placeholder="Enter your password") }}
                           {% if form.password.errors %}
                               <div class="text-danger">
                                   {% for error in form.password.errors %}
@@ -105,6 +104,7 @@
                               </div>
                           {% endif %}
                        
+                          <button type="button" style="width:100%; height:50px; margin-top:20px; border-radius:20px; background-color:#cbb3e7; border:none;  color:#fff; " class="login" onclick="getLocation()"> <i class="bi bi-geo-alt"></i> Pick My Location</button>
                 
                           <button type="submit" class="btn btn-secondary" class="input" style="width:100%; background-color:#5a00c1; padding:10px; border:none; border-radius:20px; color:#fff; margin-top:20px;" onclick="checkValues()" >Submit</button>
 
