@@ -410,6 +410,26 @@ def calculate_workload_percentage(total_work, workload_limit):
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
     
+    
+    
+@app.errorhandler(404)
+def page_not_found(error=None):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(error=None):
+    return render_template('404.html'), 500
+
+@app.errorhandler(400)
+def bad_request(error=None):
+    return render_template('404.html'), 400
+
+# Catch-all route for unknown routes
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('404.html'), 404
+
+    
 # @app.route('/backup_database', methods=['GET'])
 # def backup_database():
 #     source_db_path = 'test.db'  # Replace with the actual path to your SQLite database file.
