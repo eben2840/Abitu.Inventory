@@ -1,0 +1,91 @@
+{% extends 'pagebase1.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+
+   
+    
+
+
+        <div class="col-lg-8 mb-5" style="background-color:#fff; padding:30px; border-radius:20px;">
+            
+        <form method="POST", "GET"  action=""  enctype="multipart/form-data">
+        <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">User Information</h6>
+        <hr>
+        {{ form.hidden_tag() }}
+    
+
+        <div class="alert alert-success" style="margin-top:30px;" role="alert">
+     
+          <h6>
+          Edit Your {{current_user.category}} Information
+          </h6> 
+         
+         </div>
+ 
+    <label for="basic-url" class="form-label">Change Your Bussiness Name </label>
+     <div class="input-group mb-3">
+
+      {{form.company_name( class="form-control space " ,id="floatingInput",placeholder="eg. Joe Doe")}}
+
+     </div>
+
+     <label for="basic-url" class="form-label">E-mail</label>
+     <div class="input-group mb-3">
+      {{form.email( class="form-control space " ,id="floatingInput",placeholder="eg. Joe Doe")}}
+
+     </div>
+
+     
+ 
+     <div class="alert alert-success" style="margin-top:30px;" role="alert">
+     
+      <h6>
+      Change your category from {{current_user.category}}
+      </h6> 
+     
+     </div>
+     <label for="basic-url" class="form-label">Category</label>
+     <div class="input-group">
+      {{ form.category(class="form-control", style="width:100%;") }}
+       
+       <div class="form-text " id="basic-addon4">No need to create another account, just click here to change it to your preferred account</div>
+     </div>
+ 
+        {{ form.submit(class="btn btn-primary mb-5", value="save", style="width:100px; margin-top:20px;") }}
+    </form>
+
+          
+   <!-- <h6 class="h3 font-bold mb-5 mt-5" style="margin-bottom:10px; margin-top:50px;">Email Notifications</h6>
+    <hr>
+    
+    
+    
+    <div class="d-flex" style="margin-top:30px;" role="alert">
+      <label for="basic-url" class="form-label">Feature</label>
+      <h6 class="h3 font-bold mt-2" style="margin-bottom:10px; margin-left:40px;">Feature</h6>
+
+    -->
+
+</div>
+
+
+<!--border-radius:50px; box-shadow: 0px 0px 10px rgba(107, 107, 161, 0.25);-->
+<div class="col-lg-4">
+  <div style="background-color:#fff; padding:30px; border-radius:10px;">
+    <div class="d-grid justify-content-center">
+        <h6 class="h4 mb-5 text-align-center" style="margin-bottom:10px; text-align:center;">Your Bitmoji</h6> 
+        
+      <img src="https://i.pinimg.com/474x/21/1b/25/211b2554a3b2f53e4db9f4f8c04263a9.jpg" lazy="loading" style="width:70px; margin-top:10px;  height:120px; object-fit:cover; ">
+                               
+    </div>
+
+</div>                       
+</div>
+
+</div>
+</div>
+
+
+{%endblock body%}

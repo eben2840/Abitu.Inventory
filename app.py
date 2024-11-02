@@ -182,6 +182,7 @@ class StudentData(db.Model):
 class User(db.Model,UserMixin):
     id= db.Column(db.Integer, primary_key=True)
     fullname= db.Column(db.String())
+    email= db.Column(db.String())
     position= db.Column(db.String())
     qualities = db.Column(db.String())
     reason = db.Column(db.String())
@@ -543,7 +544,7 @@ def group():
     form = GroupForm()
     print("User role: ", current_user.category) 
     show_modal = False
-    if current_user.category == 'Cooperate':
+    if current_user.category == 'Business' or current_user.category == 'Personal':
         show_modal = True
 
     if form.validate_on_submit():
@@ -632,10 +633,13 @@ def add_item():
     return render_template('add_item.html', form=form,users=users)
 
 
+
+
+    
     
 radio = 'yboateng057@gmail.com'
 email_password = 'hsgtqiervnkabcma'
-radio_display_name = ' Abitu Industries'
+radio_display_name = ' Abitu'
 
 # users_data = [
 #     {'email': 'user1@example.com', 'date': '2022-01-01', 'activity': 'Activity 1', 'implementation': 'Implementation 1', 'tag': 'Tag 1', 'challenges': 'Challenges 1', 'future': 'Future 1'},
@@ -646,53 +650,155 @@ def send_email():
     if request.method == 'POST':
         email_receiver = request.form['email']
 
-        subject = 'AbiTrack Inventory'
+        subject = 'You have been invited to Abitrack!'
         
         
         # users = Logger.query.order_by(Logger.id.desc()).all()
         # HTML content of the email
         # html_content = render_template('printout.html',users=users)
-        html_content = """
+        html_content = f"""
         <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-            @font-face {
-                font-family: 'Plus Jakarta';
-                src: url('PlusJakartaSans-VariableFont_wght.woff2') format('woff2-variations'),
-                     url('PlusJakartaSans-Italic-VariableFont_wght.woff2') format('woff2-variations');
-                font-weight: 100 900; /* Adjust font weights based on available weights */
-                font-style: normal;
-            }
+    <html>
+    <head>
+        <style>
+       
+body {{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }}
 
-            body {
-                font-family: 'Plus Jakarta', sans-serif;
-            }
-            </style>
-        </head>
-        <body>
-                <div class="container">
-                    <div style="display:flex; padding:10px; justify-content:space-between;">
-                        AbiTrack  🚀
-                          </div>
-                     <h3 style="text-align:center; font-size:40px;">Welcome to AbiTrack Management System
-                   
-                </h3>      
-                    <img src="https://abitu-ce1b6c8eb118.herokuapp.com/static/asets/images/portfolio/Portfolio.jpg" style="width:100%;">
-                          
-               
-                
-                
-                
-              
+        .email-container {{
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }}
 
-               
-            </div>
-            
-            
-        </body>
-        </html>
-        """
+        .email-header {{
+            background-color: #061536;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }}
+
+        .email-header img {{
+            width: 30px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }}
+
+        .email-header h1 {{
+            display: inline;
+            font-size: 24px;
+            vertical-align: middle;
+        }}
+
+        .email-body {{
+            padding: 20px;
+        }}
+
+        .email-body h2 {{
+            font-size: 20px;
+            color: #333;
+        }}
+
+        .email-body p {{
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }}
+
+        .email-body strong {{
+            color: #333;
+        }}
+
+        .email-footer {{
+            padding: 20px;
+            background-color: #f4f4f9;
+            text-align: center;
+        }}
+
+        .email-footer img {{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+        }}
+
+        .email-footer h3 {{
+            margin: 10px 0 5px;
+            font-size: 18px;
+            color: #333;
+        }}
+
+        .email-footer p {{
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }}
+
+        .email-footer a {{
+            display: inline-block;
+            margin: 10px 5px;
+            color: #fff;
+            background-color: #3a64c9;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }}
+
+        .social-icons a {{
+            display: inline-block;
+            margin: 0 5px;
+            color: #3a64c9;
+            font-size: 20px;
+            text-decoration: none;
+        }}
+       
+        </style>
+    </head>
+    <body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>
+            You're in!🎉</h1>
+        </div>
+        <div class="email-body">
+        The time has finally come to test Notibly! To accept your invite and get started, click the link below and signup for your account.
+        <br>
+        <br>
+        <br>
+        <div style="display: flex; justify-content: center;">
+            <a href="https://abitrack.com/trailusersignup" style="color: #fff; background-color: black; justify-content: center; padding: 10px 20px; border-radius: 5px; text-decoration: none;" target="_blank">Accept your invite</a>
+        </div>
+        <br>
+        <br>
+    
+        Thanks for taking the time to explore and test Abitrack. We'd love to hear your thoughts! Don't hesitate to share feature requests or report any bugs here. <br>Spoiler: you definitely will run into bugs.
+        <br>
+        <br>
+        If you run into any issues accepting, please email us at info@abitu.org.
+        <br><br>
+        © 2024 Abitrack. All rights reserved.
+        </div>
+        
+        <div class="email-header">
+            <!--<img src="https://img.icons8.com/ios-filled/50/ffffff/airplane-take-off.png" alt="E-Marketing Logo">-->
+            <h1>Cheers,<br>
+            Abitrack Team</h1>
+        </div>
+        
+    </div>
+        
+    </body>
+    </html>
+    """
 
     
         em = EmailMessage()
@@ -961,7 +1067,7 @@ def analytics():
     # total_warehouse = db.session.query.count
     total_category =  db.session.query(Groups).filter(Groups.name.isnot(None)).count()
     total_warehouse =  Groups.query.filter_by(manufacturing='Warehouse',userId=current_user.id).count()
-    total_hareware =  Groups.query.filter_by(manufacturibudgetng='Hardwares',userId=current_user.id).count()
+    total_hareware =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
     total =  Groups.query.filter_by(manufacturing='Hardwares',userId=current_user.id).count()
     total_software =  Groups.query.filter_by(manufacturing='Softwares',userId=current_user.id).count()
     total_accessories =  Groups.query.filter_by(manufacturing='Accessories',userId=current_user.id).count()
@@ -1857,10 +1963,31 @@ def integration():
 
 @app.route('/', methods=['GET', 'POST'])
 def homme():
+    form=WaitForm()
+    if form.validate_on_submit():
+        # email_checker=User.query.filter_by(email=form.email.data).first()
+        # if email_checker:
+        #     flash("Email has been used already!")
+        #     print("email is already in use")
+        #     return redirect(url_for('homme'))
+        # else:   
+            new=User(
+                    fullname=form.fullname.data,
+                    email=form.email.data,
+                        )
+            db.session.add(new)
+            db.session.commit()
+            send_email()
+            print(form.email.data)
+            flash("Request sent successfully! We'll be in touch!", "success")
+            return render_template("newhome.html")
+    
     if current_user.is_authenticated:
         return redirect(url_for('homelook'))
     else:
         return render_template("newhome.html")
+
+
 
 @app.route('/thank', methods=['GET', 'POST'])
 def thank():
@@ -2624,7 +2751,6 @@ def logout():
         logout_user()
     else:
         print("Well that didnt work")
-    flash('You have been logged out.','danger')
     return redirect(url_for("login"))
 
 
@@ -2683,6 +2809,30 @@ def members():
     persons=Person.query.all()
     return render_template('members.html', persons=persons)
 
+
+@app.route('/profileuser/<int:id>', methods=['GET', 'POST'])
+@login_required
+def profileuser(id):
+    form = Registration()
+    user=Person.query.get_or_404(id)
+    if request.method== 'GET':
+        form.email.data = user.email
+        form.company_name.data =user.company_name
+        form.category.data =user.category
+         
+    if form.validate_on_submit():
+        user.email = form.email.data
+        user.company_name = form.company_name.data
+        user.category = form.category.data
+        try:    
+            # db.session.add(new)
+            db.session.commit()
+            flash('User Information Updated.', 'success')
+            return redirect(url_for('homelook')) 
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating user information: {e}', 'danger')
+    return render_template('profileme.html',form=form)
 
 
 #CRUD(update and delete routes)
@@ -2812,7 +2962,7 @@ def login():
     return render_template('login.html', form=form)  
 
 
-@app.route('/signup', methods=['POST','GET'])
+@app.route('/trailusersignup', methods=['POST','GET'])
 def signup():
     print("Starting signup...")
     form = Registration()

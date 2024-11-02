@@ -1,7 +1,7 @@
 {% extends 'pagebase.html' %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid mt-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -11,7 +11,7 @@
       {% endfor %}
     {% endif %}
     {% endwith %}
-    <div class="row g-6 mb-6">
+    <!--<div class="row g-6 mb-6">
         <div class="col-xl-6 col-sm-6 col-12">
             <div class="card shadow border-0">
                 <div class="card-body">
@@ -28,9 +28,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
-        <div class="col-xl-6 col-sm-6 col-12">
+        <!--<div class="col-xl-6 col-sm-6 col-12">
             <div class="card shadow border-0">
                 <div class="card-body">
                     <div class="row">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="row g-6 mb-6">
         <div class="card shadow border-0 mb-7">
@@ -64,8 +64,6 @@
                             <th scope="col">Condition</th>
                             <th>Quantity</th>
                             <th>Price</th>
-                            <th>Total Price</th>
-                            <th>Date</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -96,8 +94,8 @@
                             </td>
                             <td>{{ user.quantity }}</td>
                             <td>$ {{ user.price }}.00</td>
-                            <td>$ {{ user.quantity|float * user.price|float }}</td>
-                            <td>{{ user.start_date }}</td>
+                           <!-- <td>$ {{ user.quantity|float * user.price|float }}</td>
+                            <td>{{ user.start_date }}</td>-->
                             <td class="text-end">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-square btn-neutral dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

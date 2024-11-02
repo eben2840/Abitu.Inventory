@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">My Total Expense</span>
+                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Pricing</span>
                          
                             <tr>
                                 
@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">My Total Income Budget</span>
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Income Budget</span>
                              
                                 <tr>
                                     
@@ -90,9 +90,9 @@
                         {%endif%}
                         <th>Quantity</th>
                         <th>Price</th>
-                        <th>Total Price</th>
-                        <th>Date</th>
-                     <!--   <th>QR</th>-->
+                       <!-- <th>Total Price</th>-->
+                       
+                    
                        
 <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
@@ -177,28 +177,22 @@
                            $ {{users.price}}
                         </td>
                         
-                        <td>$ {{ users.quantity|float * users.price|float }}</td>
-
-
-                        <td>
+                        <!--<td>$ {{ users.quantity|float * users.price|float }}</td> <td>
                             {{users.start_date}}
                         </td>
+-->
+
+                       
 
 
-                     <!--   <td>
+                        <!--<td>
                             <img alt="..." src="https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg" class="avatar avatar-xs square-circle me-2">
                           
                         </td>-->
 
                         <td class="text-end">
-                          <!--  <a href="#" class="btn  btn-sm btn-neutral">Report</a>
-
-                         -->  
-                            <!--a href="" style="text-decoration: none; color: #992621;">
-         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"  class="btn btn-sm btn-square btn-neutral text-danger-hover" >
-                          
-                            </button></a>
--->
+                         
+                           
 
                             <!-- Example split danger button -->
 <div class="btn-group">
@@ -207,9 +201,9 @@
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu">
-        <!-- <li><a class="dropdown-item" href="{{url_for("instocklist", userid=users.id)}}">  <i class="bi bi-clipboard2-data"></i> Report</a></li>
-   
-       <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Update</a></li> -->
+       <!--<li><a class="dropdown-item" href="{{url_for("instocklist", userid=users.id)}}">  <i class="bi bi-clipboard2-data"></i> Report</a></li>
+   -->
+       <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Update</a></li> 
       <li><a class="dropdown-item" href="/deleteproduct/{{users.id}}">  <i class="bi bi-trash"></i> Delete</a></li>
       <!--<li><hr class="dropdown-divider"></li>-->
     </ul>

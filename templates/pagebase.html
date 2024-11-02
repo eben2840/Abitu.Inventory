@@ -145,7 +145,7 @@
 
                     {%if current_user.category=="Personal"%}
                     <!-- Divider -->
-                <hr class="navbar-divider my-5 opacity-20">
+               
                 <!-- Navigation -->
                  
                
@@ -256,7 +256,7 @@
 
                
                    
-
+                   
                     
                  
                    
@@ -266,7 +266,11 @@
                 <hr class="navbar-divider my-5 opacity-20">
                 <ul class="navbar-nav mb-md-4">
                    
-               
+                    <li class="nav-item btn btn-neutral  text-white p-1 text-center justify-content-center" style="margin:10px; border-radius:50px;">
+                        <a class="nav-link text-center" href="#">
+                            <i class="bi bi-patch-question-fill fs-5"></i> </i>User Guide
+                        </a>
+                    </li>
             </ul>
                 <!-- Push content down -->
                 <div class="mt-auto"></div>
@@ -391,7 +395,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                             <!-- Title -->
-                            <h1 class="h2 mb-0 ls-tight"><span style="color:#5a00c1;"><b>Hello, {{current_user.name}} 👋🏻
+                            <h1 class="h2 mb-0 ls-tight"><span style="color:#5a00c1;"><b>Hello, {{current_user.company_name}} 👋🏻
                             
                         </b><br></span>
                             </h1>
@@ -421,8 +425,8 @@
                                 </a>
                               
                                 <ul class="dropdown-menu">
-                                  <!--<li><a class="dropdown-item" href="#"><i class="bi bi-person-check border p-2 text-center" style="border-radius:5px; margin-right:5px;"></i> Profile</a></li>
-                                  -->
+                                 <li><a class="dropdown-item" href="{{ url_for('profileuser', id=current_user.id) }}"><i class="bi bi-person-check border p-2 text-center" style="border-radius:5px; margin-right:5px;"></i> Profile</a></li>
+                                 
                                   <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-in-right border p-2 text-center" style="border-radius:5px; margin-right:5px;"></i> Log out</a></li>
                                   
                                 </ul>
