@@ -639,7 +639,7 @@ def add_item():
     
 radio = 'yboateng057@gmail.com'
 email_password = 'hsgtqiervnkabcma'
-radio_display_name = ' Abitu'
+radio_display_name = ' Abitu Industries'
 
 # users_data = [
 #     {'email': 'user1@example.com', 'date': '2022-01-01', 'activity': 'Activity 1', 'implementation': 'Implementation 1', 'tag': 'Tag 1', 'challenges': 'Challenges 1', 'future': 'Future 1'},
@@ -664,7 +664,7 @@ def send_email():
        
 body {{
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #061536;
             margin: 0;
             padding: 0;
         }}
@@ -679,8 +679,7 @@ body {{
         }}
 
         .email-header {{
-            background-color: #061536;
-            color: #fff;
+            color: #000;
             padding: 20px;
             text-align: center;
             position: relative;
@@ -702,7 +701,8 @@ body {{
             padding: 20px;
         }}
 
-        .email-body h2 {{
+        .email-body p {{
+            text-align: center;
             font-size: 20px;
             color: #333;
         }}
@@ -710,7 +710,7 @@ body {{
         .email-body p {{
             font-size: 16px;
             color: #666;
-            line-height: 1.5;
+            text-align: center;
         }}
 
         .email-body strong {{
@@ -719,7 +719,7 @@ body {{
 
         .email-footer {{
             padding: 20px;
-            background-color: #f4f4f9;
+            color:#000;
             text-align: center;
         }}
 
@@ -767,33 +767,27 @@ body {{
     <div class="email-container">
         <div class="email-header">
             <h1>
-            You're in!🎉</h1>
+            Congratulations, You're in!🎉</h1>
         </div>
+        
         <div class="email-body">
-        The time has finally come to test Notibly! To accept your invite and get started, click the link below and signup for your account.
-        <br>
-        <br>
-        <br>
-        <div style="display: flex; justify-content: center;">
-            <a href="https://abitrack.com/trailusersignup" style="color: #fff; background-color: black; justify-content: center; padding: 10px 20px; border-radius: 5px; text-decoration: none;" target="_blank">Accept your invite</a>
-        </div>
-        <br>
-        <br>
-    
-        Thanks for taking the time to explore and test Abitrack. We'd love to hear your thoughts! Don't hesitate to share feature requests or report any bugs here. <br>Spoiler: you definitely will run into bugs.
-        <br>
-        <br>
-        If you run into any issues accepting, please email us at info@abitu.org.
-        <br><br>
-        © 2024 Abitrack. All rights reserved.
-        </div>
-        
+       <p> The time has finally come to test Abitrack! To accept your invite and get started, click the link below and signup for your account.</p>
         <div class="email-header">
-            <!--<img src="https://img.icons8.com/ios-filled/50/ffffff/airplane-take-off.png" alt="E-Marketing Logo">-->
-            <h1>Cheers,<br>
-            Abitrack Team</h1>
+            <a href="https://abitrack.com/trailusersignup" style="color: #fff; background-color: black;  padding: 10px 20px; border-radius: 5px; text-decoration: none;" target="_blank">Accept your invite</a>
+        </div>
+        <p>Thanks for taking the time to explore and test Abitrack. We'd love to hear your thoughts! Don't hesitate to share feature requests or report any bugs here. <br>Spoiler: you definitely will run into bugs.
+       <br>
+        If you run into any issues accepting, please email us at info@abitu.org.</p>
+      
+       <p> © 2024 Abitrack. All rights reserved.</p>
         </div>
         
+         <!--<div class="email-header">
+        <img src="https://www.storehub.com/ph/wp-content/uploads/sites/3/2023/12/PH-inventory-management-banner.png" style="width:100%;">
+            
+        </div>-->
+       
+       
     </div>
         
     </body>
@@ -1970,7 +1964,7 @@ def homme():
         #     flash("Email has been used already!")
         #     print("email is already in use")
         #     return redirect(url_for('homme'))
-        # else:   
+        # else: 
             new=User(
                     fullname=form.fullname.data,
                     email=form.email.data,
