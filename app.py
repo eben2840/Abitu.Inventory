@@ -1,11 +1,14 @@
 
 from email.message import EmailMessage
+import pprint
 import re
 import secrets
 import ssl
 from requests import post
 import smtplib
 import csv
+import pytesseract
+from PIL import Image
 # import pytesseract
 from PIL import Image
 from google.api_core.exceptions import ResourceExhausted
@@ -940,6 +943,100 @@ def add_course():
     return render_template('add_course.html')
 
 
+
+# Route to render the upload page
+@app.route('/upload', methods=['GET'])
+def upload_page():
+    return render_template('upload_receipt.html')
+
+# Route to handle the receipt upload
+@app.route('/upload-receipt', methods=['POST'])
+def upload_receipt():
+    # Check if file is present in the request
+    if 'file' not in request.files:
+        flash("No file uploaded", "error")
+        return redirect(url_for('upload_page'))
+
+    file = request.files['file']
+    if file and allowed_file(file.filename):  # Validate the uploaded file
+        extracted_data = extract_data_from_receipt(file)
+        print("Extracted Data:", extracted_data) 
+        
+        if not extracted_data:
+            flash("No data could be extracted from the receipt.", "error")
+            return redirect(url_for('upload_page'))
+
+        # Parse and save data to the database
+        for item_data in extracted_data:
+            item = Item(
+                clientid=item_data.get('clientid', None),
+                unique_code=item_data.get('unique_code', ''),
+                name=item_data.get('name', 'Unknown Item'),
+                des=item_data.get('description', ''),
+                quantity=item_data.get('quantity', 0),
+                price=item_data.get('price', 0.0),
+                serial=item_data.get('serial', ''),
+                group_id=item_data.get('group_id', None)
+            )
+            db.session.add(item)
+        db.session.commit()
+
+        print("Receipt processed and data saved successfully.")
+        pprint.pprint(item)
+        flash("Receipt processed and data saved successfully.", "success")
+        return redirect(url_for('itemm'))
+    else:
+        flash("Invalid file type. Please upload an image file.", "error")
+        return redirect(url_for('upload_page'))
+    
+    
+@app.route('/itemm')
+def itemm():
+    items = Item.query.all()
+    return render_template('itemm.html', items=items)
+
+# Helper function to check if the file is an allowed image type
+def allowed_file(filename):
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'tiff', 'bmp'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+# Function to extract data from the receipt using OCR
+def extract_data_from_receipt(file):
+    # Load image and extract text using OCR
+    image = Image.open(file)
+    text = pytesseract.image_to_string(image)
+    print("OCR Extracted Text:", text)
+    # Example parsing logic (adjust based on receipt format)
+    lines = text.splitlines()
+    extracted_data = []
+    current_item = {}
+
+    for line in lines:
+        line = line.strip()
+        if 'Item:' in line:
+            if current_item:
+                extracted_data.append(current_item)
+                current_item = {}
+            current_item['name'] = line.split('Item:')[-1].strip()
+        elif 'Qty:' in line:
+            try:
+                current_item['quantity'] = int(line.split('Qty:')[-1].strip())
+            except ValueError:
+                current_item['quantity'] = 0
+        elif 'Price:' in line:
+            try:
+                current_item['price'] = float(line.split('Price:')[-1].strip())
+            except ValueError:
+                current_item['price'] = 0.0
+        elif 'Serial:' in line:
+            current_item['serial'] = line.split('Serial:')[-1].strip()
+        elif 'Description:' in line:
+            current_item['description'] = line.split('Description:')[-1].strip()
+
+    if current_item:
+        extracted_data.append(current_item)
+
+    return extracted_data
 
 
 @app.route('/level100', methods=['GET', 'POST'])

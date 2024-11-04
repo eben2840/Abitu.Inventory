@@ -92,6 +92,7 @@
                 </div>
             </div>
             {%endif%}
+            {%if current_user.category=="Personal"%}
         <div class="col-xl-8 col-sm-12 col-12" style="  ">
             <div class="card  shadow border-1 " style="background-color:#5a00c1; color:#fff; ">
                 <div class="card-body "> 
@@ -184,7 +185,7 @@
 
 
 
-
+{%endif%}
 
 
 
@@ -261,6 +262,35 @@
     </div>-->
     <div class="col-xl-4 col-sm-6 col-12" style="margin-bottom:20px;  ">
                 
+        <a href="/upload" style="text-decoration: none; color: #992621;">
+        <div class="card shadow border-1" style="">
+            <div class="card-body"> 
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block ">
+                            Your Overall Analysis</span>
+                            <hr>
+                            <div class="card-body"> 
+                               <div class="row"> 
+                                  <span  style="  text-align:center;font-size:74px;">
+                                     <img src="https://img.freepik.com/free-vector/qr-code-scan-mobile-phone_78370-5887.jpg" style="width:125px; margin:auto;"> </span>
+                                   <span  style="margin-top:10px; margin-bottom:10px; text-align:center;font-size:14px;"> Boost your workflow in minutes with ready-made templates</span>
+                                      
+                                  <button type="button" style="margin-top:20px; border-radius:50px; width:230px; margin:auto; background-color:#5a00c1; color:#fff;  "class="btn position-relative">
+                                        <i class="bi bi-plus"></i>   Scan Receipt
+                                       </button>   
+                               </div>            
+                           </div>
+                    </div>
+                    
+                </div>     
+            </div>
+        </div>
+     </a>
+    </div>
+
+    <div class="col-xl-4 col-sm-6 col-12" style="margin-bottom:20px;  ">
+                
         <a href="/authtask" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
             <div class="card-body"> 
@@ -286,7 +316,7 @@
         </div>
      </a>
     </div>
-    <div class="col-xl-4 col-sm-6 col-12" style="margin-bottom:20px;  ">
+        <div class="col-xl-4 col-sm-6 col-12" style="margin-bottom:20px;  ">
                 
         <a href="/analytics" style="text-decoration: none; color: #992621;">
         <div class="card shadow border-1" style="">
