@@ -984,7 +984,7 @@ def upload_receipt():
         print("Receipt processed and data saved successfully.")
         pprint.pprint(item)
         flash("Receipt processed and data saved successfully.", "success")
-        return redirect(url_for('itemm'))
+        return redirect(url_for('homelook'))
     else:
         flash("Invalid file type. Please upload an image file.", "error")
         return redirect(url_for('upload_page'))

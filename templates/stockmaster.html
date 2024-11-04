@@ -29,7 +29,7 @@
             <div class="icon"> 
                 <img src="https://i.pinimg.com/originals/91/16/f7/9116f7fd184238ada99fdff9e2f2e3ac.gif" style="width:30px; margin-top:10px; height:30px; object-fit:cover; margin-right:10px; border-radius:50px;">
                 <div class="message bot">
-                    <p>Hello <b>{{current_user.name}}</b>. I'm Stock Master, How can I help you today? </p>
+                    <p>Hello <b>{{current_user.company_name}}</b>. I'm Stock Master, How can I help you today? </p>
                 </div>
             </div>
 
@@ -63,9 +63,8 @@
             <div class="chat-footer">
                 <textarea type="text" name="text" id="chat-input" placeholder="Type your message here..." class="form-control" onkeydown="if(event.keyCode==13){sendMessage(event); return false;}" style=" border-radius:20px;  border:none;">
                 </textarea>
-                <button id="sendButton" class="send-btn" style="border-radius:50px; width:60px;" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button id="sendButton" class="send-btn" style="border-radius:20px; width:60px;" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                
-                <input type="file" class="send-btn" style="border-radius:50px; width:60px;" name="receipt_image" id="receipt_image" accept="image/*">
                 <!-- <button class="send-btn"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                     <i class="fa fa-upload" aria-hidden="true"></i>
                 </button>-->
