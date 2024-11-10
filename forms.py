@@ -226,15 +226,9 @@ class AddItemForm(FlaskForm):
     submit = SubmitField('Add Item')
     
 class Registration(FlaskForm):
-    indexnumber= StringField('indexNumber')
     email = StringField('Email')
-    latitude = HiddenField('Latitude')  
-    longitude = HiddenField('Longitude')    
     password = PasswordField('password_hash') 
-    # password = PasswordField('password_hash', validators=[DataRequired(), EqualTo('confirm_password', message='Password Must Match!')]) 
-    # confirm_password = PasswordField('confirm password', validators=[DataRequired()]) 
     company_name = StringField('company_name') 
-    # category = SelectField('category', choices=[('Category','Category'),('Manufacturing','Manufacturing'),('Cooperate', 'Cooperate'), ('Retail','Retail'),('Personal','Personal') ])
     category = SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')
     

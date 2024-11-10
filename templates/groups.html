@@ -5,86 +5,99 @@
     <div class="container mt-5">
         <form method="POST" action="{{ url_for('group') }}" style="background-color:#fff; padding:30px; border-radius:10px;">
             <div class="row">
-            <div class="col-lg-8 mb-5">
-                {% if current_user.category == "Personal" %}
-                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
-                {% else %}
-                <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
-                {% endif %}
-                <hr>
-                <div class="alert alert-success" style="margin-top:30px;" role="alert">
+                <div class="col-lg-8 mb-5">
                     {% if current_user.category == "Personal" %}
-                    <h6>Add Your Expense Categories.</h6>  
+                    <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Expense</h6>
                     {% else %}
-                    <h6>Add Your Warehouse Categories.</h6>  
+                    <h6 class="h3 font-bold mb-5" style="margin-bottom:10px;">Create Warehouse</h6>
                     {% endif %}
-                </div>
-            {{ form.hidden_tag() }}
+                    <hr>
+                    <div class="alert alert-success" style="margin-top:30px;" role="alert">
+                        {% if current_user.category == "Personal" %}
+                        <h6>Add Your Expense Categories.</h6>  
+                        {% else %}
+                        <h6>Add Your Warehouse Categories.</h6>  
+                        {% endif %}
+                    </div>
+                    {{ form.hidden_tag() }}
 
-            <div class="form-group">
-                <label>Category Name</label>
-                {{ form.name(class="form-control") }} 
-                {% if form.name.errors %}
-                    <div class="text-danger">{{ form.name.errors[0] }}</div>
-                {% endif %}
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        {{ form.name(class="form-control") }} 
+                        {% if form.name.errors %}
+                            <div class="text-danger">{{ form.name.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Button to trigger modal -->
+                </div>
+                <div class="col-lg-4">
+                    <div style="background-color:#fff; padding:30px; border-radius:10px;">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
+                            <h6 class="h4 mb-5" style="margin-bottom:10px;">{{ users }}</h6> 
+                        </div>
+                        <a class="btn btn-primary" href="#" role="button">My Warehouse</a>
+                    </div>                            
+                </div>
             </div>
-
-            <!-- Button to trigger modal -->
-          
-        </div>
-        <div class="col-lg-4">
-            <div style="background-color:#fff; padding:30px; border-radius:10px;">
-                <div class="d-flex justify-content-between">
-                    <h6 class="h4 mb-5" style="margin-bottom:10px;">Total Warehouse</h6> 
-                    <h6 class="h4 mb-5" style="margin-bottom:10px;">{{users}}</h6> 
-                </div>
-                <a class="btn btn-primary" href="#" role="button">My Warehouse</a>
-            </div>                            
-        </div>
-    </div>
 
             <!-- Modal for auto-fill options -->
             <div class="modal fade" id="autoFillModal" tabindex="-1" role="dialog" aria-labelledby="autoFillModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header d-flex">
-                            <h5 class="modal-title" id="autoFillModalLabel">Auto-fill Predefined Warehouse.</h5>
+                            <h5 class="modal-title" id="autoFillModalLabel">Select Predefined Warehouse Categories</h5>
                             🤗
                         </div>
                         <div class="modal-body">
                             <div class="form-group" style="text-align:center;">
-                                <div class="d-flex text-center" >
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-ui-checks"></i> Office Equipment</h6>
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-folder"></i> IT and Networking</h6>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Office Equipment">
+                                        Office Equipment
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="IT and Networking">
+                                        IT and Networking
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Facility">
+                                        Facility
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Office Supplies">
+                                        Office Supplies
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Energy and Utility">
+                                        Energy and Utility
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Health and Safety">
+                                        Health and Safety
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Miscellaneous">
+                                        Miscellaneous
+                                    </label>
+                                    <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                        <input type="checkbox" name="predefined_groups[]" value="Distribution">
+                                        Distribution
+                                    </label>
                                 </div>
-                                <div class="d-flex">
-                                <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:100px;"><i class="bi bi-distribute-vertical"></i> Facility</h6>
-                                <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-archive"></i> Office Supplies</h6>
-                                </div>
-                                <div class="d-flex">
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-menu-app"></i> Energy and Utility </h6>
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-heart-pulse"></i> Health and Safety</h6>
-                                </div>
-                                <div class="d-flex">
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:180px;"><i class="bi bi-graph-down"></i> Miscellaneous</h6>
-                                    <h6 class="border p-2 text-center m-1" style="border-radius:10px; width:150px;"><i class="bi bi-server"></i> Distribution</h6>
-                                </div>
-                                <label style="text-align:center;">
-                                    <input type="checkbox" name="auto_fill" value="yes" required>
-                                   &nbsp; Auto-fill Predefined Warehouse.
-                                </label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {{ form.submit(class="btn btn-primary") }}
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I want to add manually</button>
+                            {{ form.submit(class="btn btn-primary", value="Add Selected Categories") }}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Manual submit button outside the modal -->
-            <div class="form-group ">
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Add Group Manually</button>
             </div>
         </form>
@@ -102,11 +115,6 @@
         </script>
     {% endif %}
 
+</body>
 
-    {% endblock body %}
-
-
-
-
-
-
+{% endblock body %}

@@ -1,0 +1,162 @@
+{% extends 'concept-master/basee.html' %}
+{% block body %}
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Hello {{current_user.company_name}}, </h2>
+                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Warehouse</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="container ">
+                    <form method="POST" action="{{ url_for('group') }}">
+                        {{ form.hidden_tag() }}
+            
+                        <!-- Modal for auto-fill options -->
+                        <div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex">
+                                        <h5 class="modal-title" id="myModal">Select Predefined Warehouse Categories</h5>
+                                        🤗
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group" style="text-align:center;">
+                                            <div class="d-flex flex-wrap justify-content-center">
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Office Equipment">
+                                                    Office Equipment
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="IT and Networking">
+                                                    IT and Networking
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Facility">
+                                                  Office  Facility
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Office Supplies">
+                                                    Office Supplies
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Energy and Utility">
+                                                    Energy and Utility
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Health and Safety">
+                                                    Health and Safety
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Miscellaneous">
+                                                    Miscellaneous
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Distribution">
+                                                    Distribution
+                                                </label>
+                                                <label class="border p-2 m-1" style="border-radius:10px; width:180px;">
+                                                    <input type="checkbox" name="predefined_groups[]" value="Distribution">
+                                                    Office Seat
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{ form.submit(class="btn btn-primary", value="Add Selected Categories") }}
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Skip</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                       
+                    
+                </div>
+                    
+                    <div class="row">
+                        <!-- ============================================================== -->
+                        <!-- valifation types -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Add Your Warehouse</h5>
+                                <div class="card-body">
+                                    <!--<form id="validationform" data-parsley-validate="" novalidate="">-->
+                                        <div class="form-group row">
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Warehouse Name</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                {{ form.name(class="form-control", placeholder="Type here...") }} 
+                                    {% if form.name.errors %}
+                                        <div class="text-danger">{{ form.name.errors[0] }}</div>
+                                    {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                      
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label text-sm-right"></label>
+                                            <div class="col-sm-6">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control custom-checkbox">
+                                                        
+                                                        <input id="ck1" name="ck1" type="checkbox" checked data-parsley-multiple="groups" value="bar" data-parsley-mincheck="2" data-parsley-errors-container="#error-container1" class="custom-control-input"><span class="custom-control-label">Add Warehouse</span>
+                                                    </label>
+                                                    
+                                                    <div id="error-container1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                       
+                                        <div class="form-group row text-right">
+                                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                                <button class="btn btn-space btn-secondary">Reset</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end valifation types -->
+                        <!-- ============================================================== -->
+                    </div>
+           
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                    myModal.show();
+                });
+            </script>
+
+            {% endblock body %}

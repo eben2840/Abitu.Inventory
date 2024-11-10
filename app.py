@@ -540,27 +540,18 @@ def catch_all(path):
 # new=Committee(name=form.name.data, 
 #                   description=form.description.data,
 #                   )
-
 @app.route('/group', methods=['GET', 'POST'])
 @login_required
 def group():
     form = GroupForm()
-    print("User role: ", current_user.category) 
     show_modal = False
-    if current_user.category == 'Business' or current_user.category == 'Personal':
+    if current_user.category in ['Business', 'Personal']:
         show_modal = True
 
     if form.validate_on_submit():
-        print("Form submitted with data: ", form.name.data)  # Debug line
-        print("Auto-fill status: ", request.form.get('auto_fill'))  # Debug line
-        print("User category: ", current_user.category)  # Debug line
-        predefined_groups = []
-        if request.form.get('auto_fill') == 'yes':
-            if current_user.category == 'Personal':
-                predefined_groups = ['Food', 'Transport', 'Rent']
-            elif current_user.category == 'Business':
-                predefined_groups = ['Storage', 'Logistics', 'Inventory']
-            print("Adding predefined groups: ", predefined_groups)  # Debug line
+        predefined_groups = request.form.getlist('predefined_groups[]')
+        if predefined_groups:
+            print("Adding selected predefined groups: ", predefined_groups)  # Debug line
             for group_name in predefined_groups:
                 group = Groups(
                     userId=current_user.id,
@@ -568,7 +559,7 @@ def group():
                 )
                 db.session.add(group)
             db.session.commit()
-            flash("You just added predefined Categories.")
+            flash("Selected categories have been added.")
         else:
             print("Adding new category: ", form.name.data)  # Debug line
             group = Groups(
@@ -579,9 +570,10 @@ def group():
             db.session.commit()
             flash("You just added a new Category.")
         return redirect(url_for('main'))
+
     users = Groups.query.filter_by(userId=current_user.id).count()
-    print("Number of groups: ", users)  # Debug line
     return render_template('groups.html', form=form, users=users, show_modal=show_modal)
+
 
 
 def generate_unique_code():
@@ -1387,19 +1379,22 @@ def cisl():
     return render_template('cisl.html', form=form)
 
 
-@app.route('/moji', methods=['GET', 'POST'])
-def moji():
+@app.route('/banneredit', methods=['GET', 'POST'])
+def banneredit():
     form=Adduser()
     if form.validate_on_submit():
-            new=User(
-               image_file=form.image_file.data
-                  )
-            db.session.add(new)
-            db.session.commit()
-            # send_email()
-            flash("Moji Updated",
-                  "success")
-            return redirect('auth')
+        print("Form validated successfully")
+        new=User(
+           image_file=form.image_file.data
+              )
+        print("New User:")
+        print(new)
+        db.session.add(new)
+        db.session.commit()
+        # send_email()
+        flash("Moji Updated",
+              "success")
+        return redirect('homepage')
     print(form.errors)
     return render_template("addAlumni.html", form=form)
 
@@ -2055,6 +2050,7 @@ def integration():
 @app.route('/', methods=['GET', 'POST'])
 def homme():
     form=WaitForm()
+    
     if form.validate_on_submit():
         # email_checker=User.query.filter_by(email=form.email.data).first()
         # if email_checker:
@@ -2070,7 +2066,7 @@ def homme():
             db.session.commit()
             send_email()
             print(form.email.data)
-            flash("Request sent successfully! We'll be in touch!", "success")
+            flash("Email request sent successfully! kindly check your email", "success")
             return render_template("newhome.html")
     
     if current_user.is_authenticated:
@@ -3042,15 +3038,186 @@ def login():
             login_user(user)
             print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
-            if current_user.category == 'Manufacturing':
-                return redirect(url_for('homelook'))
-            elif current_user.category == "Cooperate":
-                return redirect(url_for('homelook'))
+            if current_user.category == 'Personal':
+                return redirect(url_for('homepage'))
+            elif current_user.category == "Business":
+                return redirect(url_for('homepage'))
             else:
-                return redirect(url_for('homelook'))
+                return redirect(url_for('homepage'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
     return render_template('login.html', form=form)  
+
+@app.route('/homepage', methods=['POST','GET'])
+@login_required
+def homepage():
+    users = User.query.order_by(User.id.asc()).all()
+    # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
+    return render_template('concept-master/index.html',users=users)  
+
+
+@app.route('/signmein', methods=['POST','GET'])
+def signmein():
+    print("Starting signup...")
+    form = Registration()
+    print(f"Form data: {form.data}")
+    if form.validate_on_submit():
+        
+        print("Form validated successfully")
+        checkUser = Person.query.filter_by(email=form.email.data).first()
+        if checkUser:
+            flash(f'This Email has already been used','danger')
+            print("Email alsready in use")
+            return redirect(url_for('signup'))
+        if not is_gmail_address(form.email.data):
+            flash('Please provide a valid email address.', 'danger')
+            print("Invalid email address") 
+            return redirect(url_for('signup'))
+        password = form.password.data
+        if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
+            flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
+            print("Invalid password")
+            return redirect(url_for('signup'))
+      
+        else:
+            user = Person(password=form.password.data,
+                        company_name=form.company_name.data,
+                      
+                        category=form.category.data,
+                        email=form.email.data,
+                      
+                        )
+            db.session.add(user)
+            db.session.commit()
+            # send_email()
+            flash("Congratulation on creating your account.", 'success')
+            login_user(user, remember=True)
+            print("User created and logged in successfully")
+            return redirect (url_for('login'))
+    else:
+        print(form.errors)
+        # flash("An error occupied, kindly fill the form again", 'danger')
+        print("Form validation failed")
+        
+        for field, errors in form.errors.items():
+        # for errors in form.errors.items():
+            for error in errors:
+                # flash(f"{error}", 'danger')
+                flash(f"Error: {error}", 'danger')
+
+    return render_template('concept-master/pages/sign-up.html', form=form)  
+
+@app.route('/warehouse', methods=['POST','GET'])
+@login_required
+def warehouse():
+    form = GroupForm()
+    myModal = False
+    if current_user.category in ['Business', 'Personal']:
+        myModal = True
+
+    if form.validate_on_submit():
+        predefined_groups = request.form.getlist('predefined_groups[]')
+        if predefined_groups:
+            print("Adding selected predefined groups: ", predefined_groups)  # Debug line
+            for group_name in predefined_groups:
+                group = Groups(
+                    userId=current_user.id,
+                    name=group_name,
+                )
+                db.session.add(group)
+            db.session.commit()
+            flash("Selected categories have been added.")
+        else:
+            print("Adding new category: ", form.name.data)  # Debug line
+            group = Groups(
+                userId=current_user.id,
+                name=form.name.data,
+            )
+            db.session.add(group)
+            db.session.commit()
+            flash("You just added a new Category.")
+        return redirect(url_for('main'))
+
+    users = Groups.query.filter_by(userId=current_user.id).count()
+    return render_template('concept-master/forms.html', form=form, users=users, myModal=myModal)  
+
+@app.route('/myproduct', methods=['POST','GET'])
+@login_required
+def myproduct():
+    return render_template('concept-master/myproduct.html')  
+
+@app.route('/employee', methods=['POST','GET'])
+@login_required
+def employee():
+    return render_template('concept-master/employee.html') 
+
+@app.route('/reportme', methods=['POST','GET'])
+@login_required
+def reportme():
+    return render_template('concept-master/report.html')
+
+@app.route('/create', methods=['POST','GET'])
+@login_required
+def create():
+    return render_template('concept-master/create.html')
+
+
+@app.route('/createtask', methods=['POST','GET'])
+@login_required
+def createtask():
+    return render_template('concept-master/createinvoice.html')
+                                        
+
+@app.route('/cashflow', methods=['POST','GET'])
+@login_required
+def cashflow():
+    return render_template('concept-master/dashboard-finance.html')
+
+
+@app.route('/createachievement', methods=['POST','GET'])
+@login_required
+def createachievement():
+    return render_template('concept-master/createach.html')
+
+
+@app.route('/addproduct', methods=['POST','GET'])
+@login_required
+def addproduct():
+    return render_template('concept-master/addproduct.html')
+
+
+@app.route('/banner', methods=['POST','GET'])
+@login_required
+def banner():
+    return render_template('concept-master/banner.html')
+
+
+@app.route('/addemployee', methods=['POST','GET'])
+@login_required
+def addemployee():
+    return render_template('concept-master/addempl.html')
+  
+@app.route('/taskme', methods=['POST','GET'])
+@login_required
+def taskme():
+    return render_template('concept-master/pages/sortable-nestable-lists.html')  
+
+
+@app.route('/myprofile', methods=['POST','GET'])
+@login_required
+def myprofile():
+    return render_template('concept-master/profile.html')  
+
+@app.route('/achievement', methods=['POST','GET'])
+@login_required
+def achievement():
+    return render_template('concept-master/achievement.html')  
+
+@app.route('/purchase', methods=['POST','GET'])
+@login_required
+def purchase():
+    return render_template('concept-master/purchase.html')  
+    
 
 
 @app.route('/trailusersignup', methods=['POST','GET'])
@@ -3059,12 +3226,12 @@ def signup():
     form = Registration()
     print(f"Form data: {form.data}")
     if form.validate_on_submit():
-        latitude = form.latitude.data
-        longitude = form.longitude.data 
-        print(f"location data: {form.latitude.data} {form.longitude}")
-        if not latitude or not longitude:
-            flash("Allow Acces to your location", 'danger')
-            return redirect(url_for('signup'))
+        # latitude = form.latitude.data
+        # longitude = form.longitude.data 
+        # print(f"location data: {form.latitude.data} {form.longitude}")
+        # if not latitude or not longitude:
+        #     flash("Allow Acces to your location", 'danger')
+        #     return redirect(url_for('signup'))
         print("Form validated successfully")
         checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
@@ -3088,8 +3255,8 @@ def signup():
             user = Person(password=form.password.data,
                         # confirm_password=form.confirm_password.data,
                         company_name=form.company_name.data,
-                        latitude=latitude,
-                        longitude=longitude,
+                        # latitude=latitude,
+                        # longitude=longitude,
                         # role=form.role.data, -----------
                         category=form.category.data,
                         email=form.email.data,

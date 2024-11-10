@@ -1,0 +1,100 @@
+{% extends 'concept-master/pages/baseme.html' %}
+{% block body %}
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">My Task</h2>
+                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">My Task</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="dashboard-short-list">
+                    <div class="row">
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 co-12">
+                        <!-- ============================================================== -->
+                        <a href="{{url_for('createtask')}}" class="btn btn-primary mb-3 text-center">Add My Task</a>
+
+                            <section class="card card-fluid">
+                                <h5 class="card-header drag-handle"> My Task</h5>
+                                <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
+                                    <li class="list-group-item align-items-center drag-handle">
+                                        <span class="drag-indicator"></span>
+                                        <div> Item one </div>
+                                        <div class="btn-group ml-auto">
+                                            <button class="btn btn-sm btn-outline-success text-white bg-success">High</button>
+                                            <button class="btn btn-sm btn-outline-light">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                        <span class="drag-indicator"></span>
+                                        <div> Item two </div>
+                                        <div class="btn-group ml-auto">
+                                            <button class="btn btn-sm btn-outline-primary bg-primary">Low</button>
+                                            <button class="btn btn-sm btn-outline-light">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                        <span class="drag-indicator"></span>
+                                        <div>Item three</div>
+                                        <div class="btn-group ml-auto">
+                                            <button class="btn btn-sm btn-outline-warning bg-warning">Medium</button>
+                                            <button class="btn btn-sm btn-outline-light">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                   
+                                </ul>
+                            </section>
+                        </div>
+                        
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end shortable list  -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- nestable list  -->
+                    <!-- ============================================================== -->
+                    
+                    
+                    <!-- ============================================================== -->
+                    <!-- end nestable list  -->
+                    <!-- ============================================================== -->
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
+        </div>
+        {% endblock body %}

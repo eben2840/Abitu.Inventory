@@ -26,7 +26,6 @@ typing_extensions==4.10.0
 Werkzeug==3.0.1
 WTForms==3.1.2
 pytesseract==0.3.10
-
 yarl==1.9.4
 google-ai-generativelanguage==0.4.0
 google-api-core==2.15.0
