@@ -6,6 +6,8 @@
             <!-- ============================================================== -->
             <!-- pageheader  -->
             <!-- ============================================================== -->
+             
+            {% if total_cat == 0 %}
             <div id="myModal" class="modal fade" id="autoFillModal" tabindex="-1" role="dialog" aria-labelledby="autoFillModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -19,10 +21,8 @@
                                     
                                     <h3 class="modal-title  justify-content-center">Hello {{current_user.company_name}}, Take A Quick Tour!</h3>
                             <p class="lead justify-content-center"> Start by creating your warehouse to stay organised</p>
-
                                             <p class="justify-content-center"> Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
                                                 <br> Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -33,13 +33,17 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+
+            {%endif%}
 
 
 
             <div class="row">
+                
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
-                        <h2 class="pageheader-title">Hello {{current_user.company_name}},</h2>
+                        <h2 class="pageheader-title">{{greeting}} {{current_user.company_name}}.</h2>
                         <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
                         <div class="page-breadcrumb">
                             <nav aria-label="breadcrumb">
@@ -52,178 +56,106 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end pageheader  -->
             
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary mb-3" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+    
+
+          
+
             <!-- ============================================================== -->
+
+            <div class="d-flex justify-content-between" style="justify-content:space-between;">
+                <div class="">
+                   
+                </div>
+
+                <div class="mb-3">Privacy Setting
+                    <div class="switch-button switch-button-success" >
+                        <input type="checkbox" checked="" name="switch16" id="switch16" onclick="toggleRowVisibility()">
+                        <span><label for="switch16"></label></span>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+
             <div class="ecommerce-widget ">
-                <div class="row ">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="card">
-                            <h5 class="card-header"><a href="{{url_for('banneredit')}}"><i class="fa fa-fw fa-edit"></i> Edit Business Banner</a></h5>
-                            <div class="card-body">
-                                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                        {% for user in users %}
-                                        <div class="carousel-item active">
-                                            <img class="d-block w-100" src="{{ user.image_file }}" style="height:300px; object-fit:cover;">
-                                        </div>
-                                        {% endfor %}
 
-                                        <!--<div class="carousel-item">
-                                            <img class="d-block w-100" src="https://earlygrowthfinancialservices.com/wp-content/uploads/2020/07/AdobeStock_338508879.jpeg" alt="Second slide"style="height:300px; object-fit:cover;">
-                                        </div>-->
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-
-                <div class="row ">
+                <div class="row " id="hidden-row">
+                    <h5 class="text-muted">Financial Dashboard</h5>
                     <div class=" col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                       <a href="/addproduct">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="text-muted">Total Income Budget</h5>
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1">0.00</h1>
                                 </div>
-                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                <div class="metric-label d-inline-block float-right text-success">
+                                    <i class="fa fa-fw fa-caret-up"></i><span>5.27%</span>
                                 </div>
                             </div>
-                            <div id="sparkline-revenue"></div>
+                            <div id="sparkline-revenu5"></div>
                         </div>
+                    </a>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/myproduct">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="text-muted">Total Product</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">0</h1>
+                                    <h1 class="mb-1">{{total_students}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                 </div>
                             </div>
-                            <div id="sparkline-revenue2"></div>
+                           
+                            <div id="sparkline-revenu3"></div>
                         </div>
+                    </a>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/warehouse">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="text-muted">Total Warehouse</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">0</h1>
+                                    <h1 class="mb-1">{{total_cat}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                 </div>
                             </div>
-                            <div id="sparkline-revenue3"></div>
+                            <div id="sparkline-revenu2"></div>
                         </div>
+                    </a>
                     </div>
+                    
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/achievement">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="text-muted">My Achievement</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">0</h1>
+                                    <h1 class="mb-1">{{total_Faq}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                 </div>
                             </div>
-                            <div id="sparkline-revenue4"></div>
                         </div>
+                    </a>
                     </div>
                 </div>
 
                 <div class="row">
-                    <!-- ============================================================== -->
-              
-                    <!-- ============================================================== -->
-
-                                  <!-- recent orders  -->
-                    <!-- ============================================================== -->
-<!--                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
-                        <div class="card">
-                            <h5 class="card-header">Recent Orders</h5>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="bg-light">
-                                            <tr class="border-0">
-                                                <th class="border-0">#</th>
-                                                <th class="border-0">Image</th>
-                                                <th class="border-0">Product Name</th>
-                                                <th class="border-0">Product Id</th>
-                                                <th class="border-0">Quantity</th>
-                                                <th class="border-0">Price</th>
-                                                <th class="border-0">Order Time</th>
-                                                <th class="border-0">Customer</th>
-                                                <th class="border-0">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>
-                                                    <div class="m-r-10"><img src="static/mainassets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>
-                                                <td>Product #1 </td>
-                                                <td>id000001 </td>
-                                                <td>20</td>
-                                                <td>$80.00</td>
-                                                <td>27-08-2018 01:22:12</td>
-                                                <td>Patricia J. King </td>
-                                                <td><span class="badge-dot badge-brand mr-1"></span>InTransit </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>
-                                                    <div class="m-r-10"><img src="static/mainassets/images/product-pic-2.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>
-                                                <td>Product #2 </td>
-                                                <td>id000002 </td>
-                                                <td>12</td>
-                                                <td>$180.00</td>
-                                                <td>25-08-2018 21:12:56</td>
-                                                <td>Rachel J. Wicker </td>
-                                                <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>
-                                                    <div class="m-r-10"><img src="static/mainassets/images/product-pic-3.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>
-                                                <td>Product #3 </td>
-                                                <td>id000003 </td>
-                                                <td>23</td>
-                                                <td>$820.00</td>
-                                                <td>24-08-2018 14:12:77</td>
-                                                <td>Michael K. Ledford </td>
-                                                <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>
-                                                    <div class="m-r-10"><img src="static/mainassets/images/product-pic-4.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>
-                                                <td>Product #4 </td>
-                                                <td>id000004 </td>
-                                                <td>34</td>
-                                                <td>$340.00</td>
-                                                <td>23-08-2018 09:12:35</td>
-                                                <td>Michael K. Ledford </td>
-                                                <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
+                    
                     
                 </div>
                 
@@ -445,7 +377,17 @@
 </div>
 
 
-
+<script>
+    function toggleRowVisibility() {
+      var hiddenRow = document.getElementById("hidden-row");
+  
+      if (hiddenRow.style.display === "none") {
+        hiddenRow.style.display = "";
+      } else {
+        hiddenRow.style.display = "none";
+      }
+    }
+  </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

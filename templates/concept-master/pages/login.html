@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/libs/css/style.css">
-    <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="../static/mainassets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="../static/mainassets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/mainassets/libs/css/style.css">
+    <link rel="stylesheet" href="../static/mainassets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <style>
     html,
     body {
@@ -34,39 +34,88 @@
     <!-- ============================================================== -->
     <div class="splash-container">
         <div class="card ">
-            <div class="card-header text-center"><a href="../index.html"><img class="logo-img" src="../assets/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+            <div class="card-header text-center">
+                <h3 class="mb-1 text-center">Log In to Abitrack</h3>
+                <p class="text-center">Please enter your user information.</p>
+                </div>
+           
+          
             <div class="card-body">
-                <form>
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-primary mb-3" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="username" type="text" placeholder="Username" autocomplete="off">
+                        <input class="form-control form-control-lg" id="username" type="email" name="email" placeholder="Email" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="password" type="password" placeholder="Password">
+                        <input class="form-control form-control-lg" type="password" name="password" id="myInput" placeholder="Password">
                     </div>
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         <label class="custom-control custom-checkbox">
                             <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
                         </label>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input"  onclick="myFunction()" type="checkbox"><span class="custom-control-label">Show Password</span>
+                        </label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+
+                  
+                    <button type="submit" class="btn btn-block btn-primary shadow" type="submit" style=" background:#5e3bc1; border:none; border-radius:10px;">Sign in</button>
+                    <div class="form-group mt-0">
+                      
+                    </div>
+                    <div class="form-group row pt-0">
+                   
+                        
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                            <h4 class="text-center">Or</h4>
+                            <button class="btn btn-block btn-social btn- shadow " style="background:#fff; border-radius:10px;" type="button">Login With Unique ID</button>
+                        </div>
+                       
+                    </div>
                 </form>
             </div>
             <div class="card-footer bg-white p-0  ">
                 <div class="card-footer-item card-footer-item-bordered">
-                    <a href="#" class="footer-link">Create An Account</a></div>
-                <div class="card-footer-item card-footer-item-bordered">
+                    Dont Have An Account? <a href="/signmein" class="footer-primary"> Create An Account.</a></div>
+               <!-- <div class="card-footer-item card-footer-item-bordered">
                     <a href="#" class="footer-link">Forgot Password</a>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
   
     <!-- ============================================================== -->
     <!-- end login page  -->
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
+    </script>
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
-    <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="../static/mainassets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../static/mainassets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
  
 </html>

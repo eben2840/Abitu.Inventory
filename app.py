@@ -551,7 +551,7 @@ def group():
     if form.validate_on_submit():
         predefined_groups = request.form.getlist('predefined_groups[]')
         if predefined_groups:
-            print("Adding selected predefined groups: ", predefined_groups)  # Debug line
+            print("Adding selected predefined groups: ", predefined_groups)  
             for group_name in predefined_groups:
                 group = Groups(
                     userId=current_user.id,
@@ -3046,14 +3046,93 @@ def login():
                 return redirect(url_for('homepage'))
         else:
             flash(f'Incorrect details, please try again', 'danger')
-    return render_template('login.html', form=form)  
+    return render_template('concept-master/pages/login.html', form=form)  
+
+
 
 @app.route('/homepage', methods=['POST','GET'])
 @login_required
 def homepage():
-    users = User.query.order_by(User.id.asc()).all()
+    current_hour = datetime.now().hour
+    greeting = ""
+    
+    if current_hour < 12:
+        greeting = "Good morning,"
+    elif current_hour < 17:
+        greeting = "Good afternoon,"
+    else:
+        greeting = "Good evening,"
+        
+    form=WaitForm()
+    if form.validate_on_submit():
+        wait=Waitlist(
+            email=form.email.data
+            )
+        db.session.add(wait)
+        db.session.commit()
+        send_email()
+        print(form.email.data)
+       
+        flash("Invitation Sent to" + ' ' + wait.email)
+        return redirect('main')
+    print(form.errors)
+   
+    current_time = datetime.now()
+    # all_product= User.query.count()
+    
+    # outstock = db.session.query(Item.quantity).filter(Item.quantity < 5).all()
+    outstock = db.session.query(Item).filter_by(clientid=current_user.id).filter(Item.quantity < 5).count()
+    
+    users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in users) 
+    
+    weekly_work = calculate_weekly_work()
+    workload_limit = 1000  
+    workload_percentage = calculate_workload_percentage(weekly_work, workload_limit)  
+    
+    # outstock = db.session.query(Item).filter(Item.quantity < 5).count()
+    if current_user.role =="admin":
+        total_students = Item.query.count()
+        instock = Item.query.count()
+        total_getfundstudents = Getfunds.query.count()
+        total_Faq = Faq.query.count()
+        total_challenges = Challenge.query.count()
+        total_message = Committee.query.count()
+        # total_stock = Item.query.count()
+        
+        total_cat = Groups.query.count() 
+    else:
+        outstock = Item.query.filter(Item.clientid == current_user.id, Item.quantity < 10).count()
+        total_students = Item.query.filter_by(clientid=current_user.id).count()
+        instock = Item.query.filter_by(clientid=current_user.id).count()
+        total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
+        total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+        total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
+        total_message = Committee.query.filter_by(id=current_user.id).count()
+        total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
+        total_cat = Groups.query.filter_by(userId=current_user.id).count()
+        print("Total categories:", total_cat)
+    users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
+    total_people_with_positions = db.session.query(User).filter(User.position != '').count()
+   
+   
+    # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
+    message = Message.query.filter_by(id=current_user.id).count()
+    print(users_with_positions)
+    user =Committee.query.filter_by(id=current_user.id).order_by(Committee.id.desc()).all()
+    # total_male = User.query.filter_by(gender='Male').count()
+    # total_female = User.query.filter_by(gender='Female').count() 
+    users=User.query.order_by(User.id.desc()).all()
+    challenges=Challenges.query.filter_by(id=current_user.id).order_by(Challenges.id.desc()).all()
+    print(users)
+    total_leaders = Leaders.query.count()
+    print(total_leaders)
+    online =Person.query.filter_by(id=current_user.id).order_by(Person.id.desc()).all()
+    print(current_user)
     # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
-    return render_template('concept-master/index.html',users=users)  
+    return render_template('concept-master/index.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
+          total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
+
 
 
 @app.route('/signmein', methods=['POST','GET'])
@@ -3114,7 +3193,6 @@ def warehouse():
     myModal = False
     if current_user.category in ['Business', 'Personal']:
         myModal = True
-
     if form.validate_on_submit():
         predefined_groups = request.form.getlist('predefined_groups[]')
         if predefined_groups:
@@ -3126,25 +3204,28 @@ def warehouse():
                 )
                 db.session.add(group)
             db.session.commit()
-            flash("Selected categories have been added.")
+            flash("Warehouse have been added.")
         else:
-            print("Adding new category: ", form.name.data)  # Debug line
+            print("Adding new category: ", form.name.data)  
             group = Groups(
                 userId=current_user.id,
                 name=form.name.data,
             )
             db.session.add(group)
             db.session.commit()
-            flash("You just added a new Category.")
-        return redirect(url_for('main'))
+            flash("You just added a new warehouse.",'success')
+        return redirect(url_for('homepage'))
 
     users = Groups.query.filter_by(userId=current_user.id).count()
+    
     return render_template('concept-master/forms.html', form=form, users=users, myModal=myModal)  
 
 @app.route('/myproduct', methods=['POST','GET'])
 @login_required
 def myproduct():
-    return render_template('concept-master/myproduct.html')  
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    return render_template('concept-master/myproduct.html',total_students=total_students,users=users)  
 
 @app.route('/employee', methods=['POST','GET'])
 @login_required
@@ -3162,10 +3243,7 @@ def create():
     return render_template('concept-master/create.html')
 
 
-@app.route('/createtask', methods=['POST','GET'])
-@login_required
-def createtask():
-    return render_template('concept-master/createinvoice.html')
+
                                         
 
 @app.route('/cashflow', methods=['POST','GET'])
@@ -3177,13 +3255,73 @@ def cashflow():
 @app.route('/createachievement', methods=['POST','GET'])
 @login_required
 def createachievement():
-    return render_template('concept-master/createach.html')
+    form=FaqForm()
+    if form.validate_on_submit():
+            new=Faq(
+                faqid=current_user.id,
+                caption=form.caption.data, 
+                answers=form.answers.data, 
+                campus=form.campus.data, 
+                start_date=form.start_date.data,  
+            end_date=form.end_date.data
+                  )
+            db.session.add(new)
+            db.session.commit()
+            # send_email()
+            session['message'] = "You just added a New Achievement."
+            session['category'] = "success"
+        
+            flash("You just added a New Achievement.",
+                  "success")
+            return redirect('homepage')  
+    print(form.errors)
+    users=Faq.query.filter_by(faqid=current_user.id).count()
+    return render_template('concept-master/createach.html',form=form,users=users)
 
 
 @app.route('/addproduct', methods=['POST','GET'])
 @login_required
 def addproduct():
-    return render_template('concept-master/addproduct.html')
+    form = AddItemForm() 
+    print("FORM DATA: ", form.data)
+    form.group.choices = [(group.id, group.name) for group in Groups.query.filter_by(userId=current_user.id).all()]
+    print("GROUP CHOICES: ", form.group.choices)
+    
+    if form.validate_on_submit():
+        unique_code = secrets.token_hex(6)
+        item = Item(
+            clientid=current_user.id,
+            unique_code=unique_code,
+            name=form.item_name.data,
+            group_id=form.group.data,
+            tag=form.tag.data,
+            des=form.des.data,
+            price=form.price.data,
+            quantity=int(form.quantity.data),  # Convert to integer here
+            # start_date=form.start_date.data
+        )
+        try:
+            db.session.add(item)
+            db.session.commit()
+            print("ITEM: ", item)
+            print("ITEM ADDED TO DB")
+        except Exception as e:
+            print(e)
+        
+        # Check the quantity directly as an integer
+        quantity_value = item.quantity
+        if quantity_value < 5:
+            flash(f"Low quantity (less than 5) of {item.name}!")
+        elif quantity_value < 10:
+            flash(f"Low quantity (less than 10) of {item.name}!")
+        
+        flash("Item added to the group successfully")
+        return redirect(url_for('homepage'))
+
+    print("FORM ERRORS: ", form.errors)
+    users = Item.query.filter_by(clientid=current_user.id).count()
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    return render_template('concept-master/addproduct.html',total_students=total_students, form=form,users=users)
 
 
 @app.route('/banner', methods=['POST','GET'])
@@ -3200,18 +3338,47 @@ def addemployee():
 @app.route('/taskme', methods=['POST','GET'])
 @login_required
 def taskme():
-    return render_template('concept-master/pages/sortable-nestable-lists.html')  
+    auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
+    users = Challenge.query.filter_by(taskId=current_user.id).order_by(Faq.id.desc()).all()
+    return render_template('concept-master/pages/sortable-nestable-lists.html',auth_task=auth_task,users=users)
+
+@app.route('/createtask', methods=['POST','GET'])
+@login_required
+def createtask():
+    form=ChallengesForm()
+    if form.validate_on_submit():
+            new=Challenge(name=form.name.data, 
+                          taskId=current_user.id,
+                        #   status=form.status.data,
+                   tag=form.tag.data,
+                   task=form.task.data,
+                   start_date=form.start_date.data,  
+                    end_date=form.end_date.data
+                  )
+            db.session.add(new)
+            db.session.commit()
+            flash("You just added a New Task",
+                  "success")
+            return redirect('main')
+
+    print(form.errors)
+    # users=Challenge.query.filter(taskId=current_user.id).count()
+    users = Challenge.query.filter_by(taskId=current_user.id).count()
+    return render_template('concept-master/createinvoice.html', form=form,users=users)  
 
 
 @app.route('/myprofile', methods=['POST','GET'])
 @login_required
 def myprofile():
-    return render_template('concept-master/profile.html')  
+    users = User.query.order_by(User.id.asc()).all()
+    return render_template('concept-master/profile.html',users=users)  
 
 @app.route('/achievement', methods=['POST','GET'])
 @login_required
 def achievement():
-    return render_template('concept-master/achievement.html')  
+    total_ach=Faq.query.filter_by(faqid=current_user.id).count()
+    users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+    return render_template('concept-master/achievement.html',users=users,total_ach=total_ach)  
 
 @app.route('/purchase', methods=['POST','GET'])
 @login_required
