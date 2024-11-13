@@ -1,100 +1,180 @@
-{% extends 'concept-master/pages/baseme.html' %}
+{% extends 'concept-master/basee.html' %}
 {% block body %}
-        <!-- ============================================================== -->
-        <!-- end left sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- wrapper  -->
-        <!-- ============================================================== -->
-        <div class="dashboard-wrapper">
-            <div class="container-fluid dashboard-content">
-                <!-- ============================================================== -->
-                <!-- pageheader -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="page-header">
-                            <h2 class="pageheader-title">My Task</h2>
-                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                            <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">My Task</li>
-                                    </ol>
-                                </nav>
-                            </div>
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Hello {{current_user.company_name}},</h2>
+                        <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">My Product</li>
+                                </ol>
+                            </nav>
                         </div>
                     </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- end pageheader -->
-                <!-- ============================================================== -->
-                <div class="dashboard-short-list">
-                    <div class="row">
-                        <!-- ============================================================== -->
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 co-12">
-                        <!-- ============================================================== -->
-                        <a href="{{url_for('createtask')}}" class="btn btn-primary mb-3 text-center">Add My Task</a>
-
-                            <section class="card card-fluid">
-                                <h5 class="card-header drag-handle"> My Task</h5>
-                                <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
-                                    <li class="list-group-item align-items-center drag-handle">
-                                        <span class="drag-indicator"></span>
-                                        <div> Item one </div>
-                                        <div class="btn-group ml-auto">
-                                            <button class="btn btn-sm btn-outline-success text-white bg-success">High</button>
-                                            <button class="btn btn-sm btn-outline-light">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                        <span class="drag-indicator"></span>
-                                        <div> Item two </div>
-                                        <div class="btn-group ml-auto">
-                                            <button class="btn btn-sm btn-outline-primary bg-primary">Low</button>
-                                            <button class="btn btn-sm btn-outline-light">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                        <span class="drag-indicator"></span>
-                                        <div>Item three</div>
-                                        <div class="btn-group ml-auto">
-                                            <button class="btn btn-sm btn-outline-warning bg-warning">Medium</button>
-                                            <button class="btn btn-sm btn-outline-light">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                   
-                                </ul>
-                            </section>
-                        </div>
-                        
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- end shortable list  -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- nestable list  -->
-                    <!-- ============================================================== -->
-                    
-                    
-                    <!-- ============================================================== -->
-                    <!-- end nestable list  -->
-                    <!-- ============================================================== -->
                 </div>
             </div>
             <!-- ============================================================== -->
-            <!-- footer -->
+            <!-- end pageheader  -->
             <!-- ============================================================== -->
             
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
-        </div>
-        {% endblock body %}
+            {%if total_ach == 0 %}
+            <div class=" row">
+                <div class="mx-auto col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                    
+                    <div class="accrodion-regular">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                       <button class="btn btn-link text-center" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      All My Task
+                                       </button>
+                                      </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body text-center">
+                                      <!-- <img src="https://wishlistmember.com/wp-content/uploads/2024/03/zoom-icon.png" style="width:100px;">-->
+                                       <h4> No Task Yet!</h4>
+                                       <p> Boost your workflow in minutes with abitrack</p>
+                                        <a href="{{url_for('createachievement')}}" class="btn btn-primary text-center">Add Achievement Here</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            {%else%}
+            
+          
+                <div class="row">
+                    <div class="mx-auto col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                        <a href="{{url_for('createtask')}}" class="btn btn-primary text-center ">Add Task Here</a><br>
+                            <div class="card-boy p-0 mx-auto justify-content-center d-flex"style="width:100%; justify-content-center">
+                                <img src="https://cdni.iconscout.com/illustration/premium/thumb/task-completion-illustration-download-in-svg-png-gif-file-formats--complete-tasks-list-checklist-business-miscellaneous-pack-illustrations-5230173.png" style="width:50%; justify-content-center" class="mx-auto">
+                            </div>
+                        </div>
+                    </div>
+               <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Recent Task</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0"></th>
+                                                <th class="border-0">Title</th>
+                                                <th class="border-0">Priority</th>
+                                                <th class="border-0">Due Date</th>
+                                                <th class="border-0">Action</th>
+                                              
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {%for users in users%} 
+                                            <tr>
+                                                <td>
+                                                </td>
+                                                <td> {{users.name}} </td>
+
+                                               
+                                                <td> {% if users.tag == 'High' %}
+                                                    <span class="badge badge-pill bg-danger text-white me-2">
+                                                        <i class="bi bi-arrow-up me-1"></i>{{ users.tag }}
+                                                    </span>
+                                                    {% elif users.tag == 'Medium' %}
+                                                    <span class="badge badge-pill bg-warning text-white me-2">
+                                                        <i class="bi bi-dash me-1"></i>{{ users.tag }}
+                                                    </span>
+                                                    {% elif users.tag == 'Low' %}
+                                                    <span class="badge badge-pill bg-success text-white me-2">
+                                                        <i class="bi bi-arrow-down me-1"></i>{{ users.tag }}
+                                                    </span>
+                            
+                                                    {% else %}
+                                                    <span class="badge badge-pill  text-white me-2">
+                                                        <i class="bi bi-arrow-up me-1"></i>{{ users.tag }}
+                                                    </span>
+                                                    {% endif %}
+                                                </td>
+                                                
+                                                <td><span class="badge-dot badge-danger mr-1"></span>{{users.end_date}}</td>
+                                                    <!-- <td>
+                                                    {% if users.status == 'pending'%}
+                                                    <span class="badge badge-pill bg-soft-warning text-dark me-2">
+                                                        {% elif users.status == 'in-progress'%}
+                                                        <span class="badge badge-pill bg-soft-primary text-dark me-2">
+                                                        {% elif users.status == 'completed'%}
+                                                        <span class="badge badge-pill bg-soft-success text-dark me-2">
+                                                          
+                                                            {%endif%}
+                                                         
+                                                       {{ users.status}}
+                                                    </td>-->
+
+                                                   
+                                         
+                                                      <td>
+                                                        
+                                                          <div class="dropdown"><button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <div class="dropdown">
+                                                        
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
+                                                                    <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
+                                                                    <li><a class="dropdown-item" href="">View Details</a></li>
+                                                                    <li><a class="dropdown-item" href="">Rename</a></li>
+                                                                    <li><a class="dropdown-item" href="">Delete</a></li>
+                                                                  </ul>
+                                                             </div>
+                              
+                                                      </td>
+
+                                                     
+                                               
+
+                                                      
+                                            </tr>
+                                            
+                                           
+                                            {%endfor%}
+                                           <!-- <tr>
+                                                <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+
+                {% endif %}
+                
+                
+
+                
+                
+
+            </div>
+    </div>
+   
+</div>
+{% endblock body %}

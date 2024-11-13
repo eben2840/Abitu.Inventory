@@ -3050,6 +3050,7 @@ def login():
 
 
 
+
 @app.route('/homepage', methods=['POST','GET'])
 @login_required
 def homepage():
@@ -3339,7 +3340,7 @@ def addemployee():
 @login_required
 def taskme():
     auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
-    users = Challenge.query.filter_by(taskId=current_user.id).order_by(Faq.id.desc()).all()
+    users = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()
     return render_template('concept-master/pages/sortable-nestable-lists.html',auth_task=auth_task,users=users)
 
 @app.route('/createtask', methods=['POST','GET'])
@@ -3351,17 +3352,18 @@ def createtask():
                           taskId=current_user.id,
                         #   status=form.status.data,
                    tag=form.tag.data,
-                   task=form.task.data,
-                   start_date=form.start_date.data,  
+                #    task=form.task.data,
+                #    start_date=form.start_date.data,  
                     end_date=form.end_date.data
                   )
             db.session.add(new)
             db.session.commit()
             flash("You just added a New Task",
                   "success")
-            return redirect('main')
+            return redirect('homepage')
 
     print(form.errors)
+    
     # users=Challenge.query.filter(taskId=current_user.id).count()
     users = Challenge.query.filter_by(taskId=current_user.id).count()
     return render_template('concept-master/createinvoice.html', form=form,users=users)  
@@ -3377,8 +3379,10 @@ def myprofile():
 @login_required
 def achievement():
     total_ach=Faq.query.filter_by(faqid=current_user.id).count()
+    tag_user=Faq.query.filter_by(campus='High').order_by(Faq.id.desc()).all()
     users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
-    return render_template('concept-master/achievement.html',users=users,total_ach=total_ach)  
+    return render_template('concept-master/achievement.html',tag_user=tag_user,users=users,total_ach=total_ach)  
+
 
 @app.route('/purchase', methods=['POST','GET'])
 @login_required

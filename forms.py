@@ -42,8 +42,8 @@ class LogForm(FlaskForm):
 class ChallengesForm(FlaskForm):
     name = StringField('name')
     tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
-    task = StringField('task')
-    start_date = DateField('Start Date', validators=[DataRequired()])
+    # task = StringField('task')
+    # start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Send')
     
@@ -150,7 +150,7 @@ class CommitteeForm(FlaskForm):
 class FaqForm(FlaskForm):
     caption = StringField('caption', validators=[DataRequired()])
     answers = StringField('answer', validators=[DataRequired()])
-    campus= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    campus = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
     start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
    

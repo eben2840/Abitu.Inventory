@@ -67,7 +67,7 @@
                                         <thead class="bg-light">
                                             <tr class="border-0">
                                                 <th class="border-0"></th>
-                                                <th class="border-0"></th>
+                                               
                                                 <th class="border-0">Product Id</th>
                                                 <th class="border-0">Product Name</th>
                                                 <th class="border-0">WareHouse</th>
@@ -80,9 +80,9 @@
                                             {%for users in users%} 
                                             <tr>
                                                 <td></td>
-                                                <td>
+                                                <!--<td>
                                                     <div class="m-r-10"><img src="static/mainassets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>
+                                                </td>-->
                                                 <td>{{ users.unique_code }} </td>
                                                 <td> {{users.name}}</td>
                                                 <td> {{users.group.name}}</td>
