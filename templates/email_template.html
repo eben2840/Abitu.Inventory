@@ -1,16 +1,135 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* Your CSS styles here */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>{{ subject }}</h1>
-        <p>Email to: {{ email_receiver }}</p>
-        <p>{{ email_body }}</p> <!-- Add a variable for the email body -->
-        <!-- Your email content here -->
+    <html>
+    <head>
+        <style>
+       
+body {
+            font-family: Arial, sans-serif;
+            background-color: #061536;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .email-header {
+            color: #000;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .email-header img {
+            width: 30px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .email-header h1 {
+            display: inline;
+            font-size: 24px;
+            vertical-align: middle;
+        }
+
+        .email-body {
+            padding: 20px;
+        }
+
+        .email-body p {
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .email-body p {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+        }
+
+        .email-body strong {
+            color: #333;
+        }
+
+        .email-footer {
+            padding: 20px;
+            color:#000;
+            text-align: center;
+        }
+
+        .email-footer img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .email-footer h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .email-footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .email-footer a {
+            display: inline-block;
+            margin: 10px 5px;
+            color: #fff;
+            background-color: #3a64c9;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 5px;
+            color: #3a64c9;
+            font-size: 20px;
+            text-decoration: none;
+        }
+       
+        </style>
+    </head>
+    <body>
+    <div class="email-container">
+      
+        
+        <div class="email-body">
+        <p>
+       Hello {{company_name}}, The time has finally come to test Abitrack! To accept your invite and get started, click the link below and signup for your account.</p>
+        <div class="email-header">
+            <a href="https://abitrack.com/login" style="color: #fff; background-color: black;  padding: 10px 20px; border-radius: 5px; text-decoration: none;" target="_blank">Click Here To Login</a>
+        </div>
+
+        <p>Thanks for taking the time to explore and test Abitrack. We'd love to hear your thoughts! Don't hesitate to share feature requests or report any bugs here. Spoiler: you definitely will run into bugs.</p>
+       <br>
+    <p>If you run into any issues accepting, please email us at info@abitu.org.</p>
+      
+       <p> © 2024 Abitrack. All rights reserved.</p>
+        </div>
+        
+         <!--<div class="email-header">
+        <img src="https://www.storehub.com/ph/wp-content/uploads/sites/3/2023/12/PH-inventory-management-banner.png" style="width:100%;">
+            
+        </div>-->
+       
+       
     </div>
-</body>
-</html>
+        
+    </body>
+    </html>
+    """

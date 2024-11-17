@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AbiTrack | Inventory Management</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/mainassets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="../static/mainassets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/mainassets/libs/css/style.css">
+    <link rel="stylesheet" href="../static/mainassets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        background-color:#fff;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+        /* Style all input fields */
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+}
+
+/* Style the container for inputs */
+.container {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  color: #000;
+  position: relative;
+}
+
+#message p {
+  font-size: 15px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+}
+    </style>
+</head>
+<!-- ============================================================== -->
+<!-- signup form  -->
+<!-- ============================================================== -->
+
+<body>
+    <!-- ============================================================== -->
+    <!-- signup form  -->
+    <!-- ============================================================== -->
+    <form class="splash-container " action="" method="POST">
+      <div class="card shadow">
+        <div class="card-header text-center justify-content-center">
+            <div class="card-body">
+              <div class="card-header text-center justify-content-center">
+                <!--<img src="https://nxtgenerationit.com/assets/img/jo.png" style="width:100px; margin-bottom:20px;">-->
+                <h3 class="mb-1 text-center">Let's get you in to Abitrack</h3>
+                <p class="text-center">Open your Email for our confirmation message to proceed.</p>
+            </div><br><br>
+
+               <img src="https://cdn-icons-png.freepik.com/256/5610/5610944.png?semt=ais_hybrid">
+               <br><br>
+               <div>
+                <p>Kindly wait for some time if you havent received the message yet.</p>
+            </div>
+              </div>
+        </div>
+      </div>
+    </form>
+
+
+
+
+
+    <script>
+        function toggleCompanyName() {
+            const categorySelect = document.getElementById("category");
+            const companyNameField = document.getElementById("company_name_field");
+        
+            console.log("Category selected:", categorySelect.value);  // Debugging line
+        
+            // Show or hide company_name_field based on the selected option
+            if (categorySelect.value === "business") {
+                companyNameField.style.display = "block";
+            } else {
+                companyNameField.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        var myInput = document.getElementById("psw");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var special = document.getElementById("special");
+        var length = document.getElementById("length");
+        
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+          document.getElementById("message").style.display = "block";
+        }
+        
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+          document.getElementById("message").style.display = "none";
+        }
+        
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+          // Validate lowercase letters
+          var lowerCaseLetters = /[a-z]/g;
+          if(myInput.value.match(lowerCaseLetters)) {
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+          } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+        }
+        
+          // Validate capital letters
+          var upperCaseLetters = /[A-Z]/g;
+          if(myInput.value.match(upperCaseLetters)) {
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+          } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+          }
+        
+          // Validate numbers
+          var numbers = /[0-9]/g;
+          if(myInput.value.match(numbers)) {
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+          } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+          }
+
+          var special_cha = /[!@#$%%^&*()_+]/g;
+          if(myInput.value.match(special_cha)) {
+            special.classList.remove("invalid");
+            special.classList.add("valid");
+          } else {
+            special.classList.remove("valid");
+            special.classList.add("invalid");
+          }
+        
+          // Validate length
+          if(myInput.value.length >= 8) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+          } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+          }
+        }
+        </script>
+</body>
+
+ 
+</html>

@@ -766,29 +766,12 @@ body {{
     </head>
     <body>
     <div class="email-container">
-        <div class="email-header">
-            <h1>
-            Congratulations, You're in!🎉</h1>
-        </div>
         
         <div class="email-body">
-       <p> The time has finally come to test Abitrack! To accept your invite and get started, click the link below and signup for your account.</p>
-        <div class="email-header">
-            <a href="https://abitrack.com/trailusersignup" style="color: #fff; background-color: black;  padding: 10px 20px; border-radius: 5px; text-decoration: none;" target="_blank">Accept your invite</a>
-        </div>
-        <p>Thanks for taking the time to explore and test Abitrack. We'd love to hear your thoughts! Don't hesitate to share feature requests or report any bugs here. <br>Spoiler: you definitely will run into bugs.
-       <br>
-        If you run into any issues accepting, please email us at info@abitu.org.</p>
-      
-       <p> © 2024 Abitrack. All rights reserved.</p>
-        </div>
         
-         <!--<div class="email-header">
-        <img src="https://www.storehub.com/ph/wp-content/uploads/sites/3/2023/12/PH-inventory-management-banner.png" style="width:100%;">
-            
-        </div>-->
-       
-       
+      
+        <p>{body}</p>
+        </div>
     </div>
         
     </body>
@@ -798,12 +781,9 @@ body {{
     
         em = EmailMessage()
         em['From'] = f'{radio_display_name} <{radio}>'
-        # em['From'] = f'{radio_display_name}'
-        # em['From'] = f'{radio_display_name} <{radio}>'  # Use both display name and email address
-        # em.replace_header('From', radio_display_name)  
         em['To'] = email_receiver
         em['Subject'] = subject
-        em.set_content('')
+        em.set_content(body)
         em.add_alternative(html_content, subtype='html')
         context = ssl.create_default_context()
 
@@ -3115,7 +3095,7 @@ def homepage():
 
     total_ware=Groups.query.filter_by(userId=current_user.id).count()
     total_ach=Faq.query.filter_by(faqid=current_user.id).count()
-    auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
+    auth_task = Item.query.filter_by(clientid=current_user.id).count()
     # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
     return render_template('concept-master/index.html',auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
@@ -3133,17 +3113,17 @@ def signmein():
         checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
             flash(f'This Email has already been used','danger')
-            print("Email alsready in use")
-            return redirect(url_for('signup'))
+            print("Email already in use")
+            return redirect(url_for('signmein'))
         if not is_gmail_address(form.email.data):
             flash('Please provide a valid email address.', 'danger')
             print("Invalid email address") 
-            return redirect(url_for('signup'))
+            return redirect(url_for('signmein'))
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
             print("Invalid password")
-            return redirect(url_for('signup'))
+            return redirect(url_for('signmein'))
       
         else:
             user = Person(password=form.password.data,
@@ -3155,11 +3135,22 @@ def signmein():
                         )
             db.session.add(user)
             db.session.commit()
+            
+            email_body = render_template(
+                'email_template.html',
+                company_name=form.company_name.data,
+                # company_name=current_user.company_name,  
+            )
+            send_email(
+                email_receiver=form.email.data,
+                subject="Congratulations, You're in!🎉",
+                body=email_body
+            )
             # send_email()
             flash("Congratulation on creating your account.", 'success')
             login_user(user, remember=True)
             print("User created and logged in successfully")
-            return redirect (url_for('login'))
+            return redirect (url_for('confirmpage'))
     else:
         print(form.errors)
         # flash("An error occupied, kindly fill the form again", 'danger')
@@ -3173,6 +3164,9 @@ def signmein():
 
     return render_template('concept-master/pages/sign-up.html', form=form) 
 
+@app.route('/confirmpage', methods=['GET', 'POST'])
+def confirmpage():
+    return render_template('concept-master/pages/confirm.html') 
 
 @app.route('/profileuser/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -3477,6 +3471,7 @@ def addproduct():
     
     if form.validate_on_submit():
         unique_code = secrets.token_hex(6)
+        print("Generated unique code:", unique_code)
         item = Item(
             clientid=current_user.id,
             unique_code=unique_code,
@@ -3485,35 +3480,39 @@ def addproduct():
             tag=form.tag.data,
             des=form.des.data,
             price=form.price.data,
-            quantity=int(form.quantity.data),  # Convert to integer here
-            # start_date=form.start_date.data
+            quantity=int(form.quantity.data),
         )
         try:
             db.session.add(item)
             db.session.commit()
             print("ITEM: ", item)
             print("ITEM ADDED TO DB")
-            email_body = f"""
-            Hello {current_user.company_name},\n\n
-            You have successfully added a new Product:\n\n
-            group_id: {form.group_id.data}\n
-            Tag: {form.tag.data}\n
-            Description: {form.des.data}\n\n
-            Price: {form.price.data}\n\n
-            Quantity: {form.quantity.data}\n\n
-            Keep up the great work!
-            """
+            
+
+            email_body = render_template(
+                'email_body.html',
+                name=form.item_name.data,
+                company_name=current_user.company_name,
+                company_currency=current_user.currency,
+                group=form.group.data,
+                tag=form.tag.data,
+                description=form.des.data,
+                price=form.price.data,
+                quantity=form.quantity.data
+            )
             
             send_email(
                 email_receiver=current_user.email,
-                subject="Abitrack New Product Added",
+                subject="New Product Added",
                 body=email_body
             )
+            print(current_user.email, "Abitrack: New Product Added", email_body)
+            print("Email sent to:", current_user.email)
         except Exception as e:
-            print(e)
+            print("Error occurred while adding item to DB:", e)
         
-        # Check the quantity directly as an integer
         quantity_value = item.quantity
+        print("Item quantity:", quantity_value)
         if quantity_value < 5:
             flash(f"Low quantity (less than 5) of {item.name}!")
         elif quantity_value < 10:
@@ -3524,8 +3523,10 @@ def addproduct():
 
     print("FORM ERRORS: ", form.errors)
     users = Item.query.filter_by(clientid=current_user.id).count()
+    print("Total number of user items:", users)
     total_students = Item.query.filter_by(clientid=current_user.id).count()
-    return render_template('concept-master/addproduct.html',total_students=total_students, form=form,users=users)
+    print("Total students:", total_students)
+    return render_template('concept-master/addproduct.html', total_students=total_students, form=form, users=users)
 
 
 @app.route('/banner', methods=['POST','GET'])
