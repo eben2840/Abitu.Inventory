@@ -80,6 +80,7 @@
                                                 <th class="border-0">Select</th>
                                                 <th class="border-0">Title</th>
                                                 <th class="border-0">Priority</th>
+                                                <th class="border-0">Due Date</th>
                                                 <th class="border-0">Status</th>
                                                 <th class="border-0">Action</th>
                                                 <th class="border-0">View Detail</th>
@@ -108,7 +109,7 @@
 
                                                
                                                 <td> {% if users.tag == 'High' %}
-                                                    <span class="badge badge-pill bg-success text-white me-2">
+                                                    <span class="badge badge-pill bg-danger text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.tag }}
                                                     </span>
                                                     {% elif users.tag == 'Favorite' %}
@@ -116,7 +117,7 @@
                                                         <i class=" fas fa-star me-1"></i>{{ users.tag }}
                                                     </span>
                                                     {% elif users.tag == 'Low' %}
-                                                    <span class="badge badge-pill bg-danger text-white me-2">
+                                                    <span class="badge badge-pill bg-success text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.tag }}
                                                     </span>
                             
@@ -127,15 +128,18 @@
                                                     {% endif %}
                                                 </td>
                                                 
-                                                
+                                                <td>
+                                                    <i class="far fa-bookmark text-danger fs-5 text-center justify-content-center" aria-hidden="true"></i></td>
+
+                                                   <td>
                                                     {% if users.status == 'pending'%}
                                                    <span class="badge badge-pill bg-warning fw-bold text-white p-1 me-2"> <i class="fas fa-check-circle text-white" aria-hidden="true"></i>
                                                         {% elif users.status == 'in-progress'%}
                                                    <span class="badge badge-pill bg-primary fw-bold text-white p-1 me-2"> <i class="fas fa-check-circle text-white" aria-hidden="true"></i>
                                                         {% elif users.status == 'completed'%}
                                                    <span class="badge badge-pill bg-success fw-bold text-white p-1 me-2"> <i class="fas fa-check-circle text-white" aria-hidden="true"></i>                                                          
-                                                    {% elif users.status == 'Task'%}
-                                                    <span class="badge badge-white bg-light shadow-1 text-dark p-1 me-2"> <i class="fas fa-circle text-primary" aria-hidden="true"></i>                                                          
+                                                    {% elif users.status == 'My Task'%}
+                                                    <span class="badge badge-white bg-light shadow-1 text-dark p-1 me-2"> <i class="fas fa-circle text-white" aria-hidden="true"></i>                                                          
                                                              
                                                     {%endif%}
                                                          
@@ -171,9 +175,7 @@
                                             
                                            
                                             {%endfor%}
-                                           <!-- <tr>
-                                                <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
-                                            </tr>-->
+                                         
                                         </tbody>
                                     </table>
                                 </div>

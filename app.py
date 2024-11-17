@@ -643,14 +643,17 @@ radio_display_name = ' Abitu Industries'
 #     {'email': 'user1@example.com', 'date': '2022-01-01', 'activity': 'Activity 1', 'implementation': 'Implementation 1', 'tag': 'Tag 1', 'challenges': 'Challenges 1', 'future': 'Future 1'},
 # ]
 
-@app.route('/send_email', methods=['POST'])
-def send_email():
-    if request.method == 'POST':
-        email_receiver = request.form['email']
+# @app.route('/send_email', methods=['POST'])
+# def send_email():
+#     if request.method == 'POST':
+#         email_receiver = request.form['email']
 
-        subject = 'You have been invited to Abitrack!'
+#         subject = 'You have been invited to Abitrack!'
         
-        
+@app.route('/send_email', methods=['POST'])
+def send_email(email_receiver, subject, body): 
+    if request.method == 'POST':
+       
         # users = Logger.query.order_by(Logger.id.desc()).all()
         # HTML content of the email
         # html_content = render_template('printout.html',users=users)
@@ -2351,6 +2354,8 @@ def homelook():
     if current_user == None:
         flash("Welcome to the Dashboard" + current_user.email, "Success")
         flash(f"There was a problem")
+        
+     
     return render_template('homelook.html',workload_percentage=workload_percentage,instock = instock, title='dashboard',user=user, 
                      current_time=current_time,   low_quantity_flash=low_quantity_flash, greeting=greeting, 
                          form=form, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
@@ -3106,8 +3111,13 @@ def homepage():
     print(total_leaders)
     online =Person.query.filter_by(id=current_user.id).order_by(Person.id.desc()).all()
     print(current_user)
+
+
+    total_ware=Groups.query.filter_by(userId=current_user.id).count()
+    total_ach=Faq.query.filter_by(faqid=current_user.id).count()
+    auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
     # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
-    return render_template('concept-master/index.html',outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
+    return render_template('concept-master/index.html',auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
@@ -3410,8 +3420,10 @@ def cashflow():
 @app.route('/createachievement', methods=['POST','GET'])
 @login_required
 def createachievement():
+    print("ENTERING createachievement function")
     form=FaqForm()
     if form.validate_on_submit():
+            print("FORM DATA: ", form.data)
             new=Faq(
                 faqid=current_user.id,
                 caption=form.caption.data, 
@@ -3420,17 +3432,38 @@ def createachievement():
                 start_date=form.start_date.data,  
             end_date=form.end_date.data
                   )
+            print("NEW FAQ: ", new)
             db.session.add(new)
             db.session.commit()
+            print("COMMITTING NEW FAQ TO DATABASE")
+            
+            email_body = f"""
+            Hello {current_user.company_name},\n\n
+            You have successfully added a new achievement:\n\n
+            Caption: {form.caption.data}\n
+            Answers: {form.answers.data}\n
+            Campus: {form.campus.data}\n
+            Start Date: {form.start_date.data}\n
+            End Date: {form.end_date.data}\n\n
+            Keep up the great work!
+            """
+            
+            send_email(
+                email_receiver=current_user.email,
+                subject="New Achievement Added",
+                body=email_body
+            )
             # send_email()
             session['message'] = "You just added a New Achievement."
             session['category'] = "success"
         
+            print("FLASHING MESSAGE:", "You just added a New Achievement.")
             flash("You just added a New Achievement.",
                   "success")
             return redirect('homepage')  
-    print(form.errors)
+    print("FORM ERRORS:", form.errors)
     users=Faq.query.filter_by(faqid=current_user.id).count()
+    print("USERS:", users)
     return render_template('concept-master/createach.html',form=form,users=users)
 
 
@@ -3460,6 +3493,22 @@ def addproduct():
             db.session.commit()
             print("ITEM: ", item)
             print("ITEM ADDED TO DB")
+            email_body = f"""
+            Hello {current_user.company_name},\n\n
+            You have successfully added a new Product:\n\n
+            group_id: {form.group_id.data}\n
+            Tag: {form.tag.data}\n
+            Description: {form.des.data}\n\n
+            Price: {form.price.data}\n\n
+            Quantity: {form.quantity.data}\n\n
+            Keep up the great work!
+            """
+            
+            send_email(
+                email_receiver=current_user.email,
+                subject="Abitrack New Product Added",
+                body=email_body
+            )
         except Exception as e:
             print(e)
         
@@ -3516,6 +3565,20 @@ def createtask():
                   )
             db.session.add(new)
             db.session.commit()
+            email_body = f"""
+            Hello {current_user.company_name},\n\n
+            You have successfully added a new Task:\n\n
+            Nmae: {form.name.data}\n
+            Tag: {form.tag.data}\n
+            End Date: {form.end_date.data}\n\n
+            Keep up the great work!
+            """
+            
+            send_email(
+                email_receiver=current_user.email,
+                subject="Abitrack New Task Added",
+                body=email_body
+            )
             flash("You just added a New Task",
                   "success")
             return redirect('homepage')
