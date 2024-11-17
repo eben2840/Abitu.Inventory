@@ -41,7 +41,7 @@ class LogForm(FlaskForm):
     
 class ChallengesForm(FlaskForm):
     name = StringField('name')
-    tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Favorite','Favorite'), ('Low','Low') ], default=None )
     # task = StringField('task')
     # start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
@@ -150,7 +150,7 @@ class CommitteeForm(FlaskForm):
 class FaqForm(FlaskForm):
     caption = StringField('caption', validators=[DataRequired()])
     answers = StringField('answer', validators=[DataRequired()])
-    campus = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    campus = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Favorite','Favorite'), ('Low','Low') ], default=None )
     start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
    
@@ -232,6 +232,21 @@ class Registration(FlaskForm):
     category = SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')
     
+    
+class Registrationform(FlaskForm):
+    bus_email = StringField('Business Email')
+    name = StringField('Name')
+    email = StringField('Email')
+    password = PasswordField('password_hash') 
+    company_name = StringField('company_name') 
+    bio = StringField('Bio') 
+    phone = StringField('phone') 
+    currency = SelectField('currency', choices=[('Currency','Currency'),('$','$'),('₵','₵'),('€','€') ])
+    category= SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
+    submit =SubmitField('submit')
+
+
+ 
 
 class AddDepartment(FlaskForm):
     name = StringField('Department', validators=[DataRequired()])

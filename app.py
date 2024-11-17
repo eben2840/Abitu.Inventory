@@ -110,6 +110,9 @@ class Person(db.Model, UserMixin):
     longitude = db.Column(db.Float) 
     # role= db.Column(db.String())
     email= db.Column(db.String())
+    bus_email= db.Column(db.String())
+    currency= db.Column(db.String())
+    bio= db.Column(db.String())
     location= db.Column(db.String())
     role= db.Column(db.String())
     company_name= db.Column(db.String())
@@ -1842,15 +1845,6 @@ safety_settings = [
 
 
 
-def extract_text_from_image(image_path):
-    img = Image.open(image_path)
-    extracted_text = pytesseract.image_to_string(img)
-    return extracted_text
-
-# Function for parsing the receipt data
-def parse_receipt_data(extracted_text):
-    items = extracted_text.split('\n')  # Assuming each item is on a new line
-    return [item.strip() for item in items if item.strip()]
 
 
 @app.route("/gemini", methods=['GET', 'POST'])
@@ -1859,96 +1853,100 @@ def gemini():
     data = session.get('data', [])
     print("Session data retrieved:", data)
     
-    # if request.method == "POST":
-    #     input_text = request.form.get("text")
-    #     receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
-    #     print("Received input:", input_text)
-    #     print("Receipt image received:", receipt_image is not None)
-    #     if input_text:
-    #         # Check if the user is asking about stock levels
-    #         if "stock" in input_text.lower():
-    #             print("User query related to stock levels.")
-    #             out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
-    #             out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
-    #             print("Out of stock message prepared:", out_of_stock_message)
-    #             model_prompt = (
-    #                 f"User input: {input_text}\n\n"
-    #                 f"Current stock status:\n{out_of_stock_message}\n\n"
-    #                 "Based on the above information, respond to the user's query naturally."
-    #             )
-    #             print("Model prompt prepared for stock query.")
-    #         elif receipt_image:  # If a receipt is scanned
-    #             print("Receipt image processing started.")
-    #             if receipt_image.filename == '':
-    #                 print("No file selected for receipt image.")
-    #                 flash('No file selected!', 'error')
-    #                 return redirect(url_for('gemini'))
-    #             filename = secure_filename(receipt_image.filename)
-    #             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    #             receipt_image.save(image_path)
-    #             print("Receipt image saved at:", image_path)
+    if request.method == "POST":
+        input_text = request.form.get("text")
+        receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
+        print("Received input:", input_text)
+        print("Receipt image received:", receipt_image is not None)
+        if input_text:
+            # Check if the user is asking about stock levels
+            if "stock" in input_text.lower():
+                print("User query related to stock levels.")
+                out_of_stock_items = Item.query.filter(Item.quantity < 10, Item.clientid == current_user.id).all()
+                out_of_stock_message = "Out of stock items: " + ", ".join([item.name for item in out_of_stock_items]) if out_of_stock_items else "No items are out of stock."
+                print("Out of stock message prepared:", out_of_stock_message)
+                model_prompt = (
+                    f"User input: {input_text}\n\n"
+                    f"Current stock status:\n{out_of_stock_message}\n\n"
+                    "Based on the above information, respond to the user's query naturally."
+                )
+                print("Model prompt prepared for stock query.")
+            elif receipt_image:  # If a receipt is scanned
+                print("Receipt image processing started.")
+                if receipt_image.filename == '':
+                    print("No file selected for receipt image.")
+                    flash('No file selected!', 'error')
+                    return redirect(url_for('gemini'))
+                filename = secure_filename(receipt_image.filename)
+                image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                receipt_image.save(image_path)
+                print("Receipt image saved at:", image_path)
 
-    #             # Extract text from the receipt using OCR
-    #             extracted_text = extract_text_from_image(image_path)
-    #             print("Extracted text from receipt:", extracted_text)
+                # Extract text from the receipt using OCR
+                extracted_text = extract_text_from_image(image_path)
+                print("Extracted text from receipt:", extracted_text)
                 
-    #             # Parse the receipt data to extract item names
-    #             receipt_items = parse_receipt_data(extracted_text)
-    #             print("Parsed receipt items:", receipt_items)
+                # Parse the receipt data to extract item names
+                receipt_items = parse_receipt_data(extracted_text)
+                print("Parsed receipt items:", receipt_items)
 
-    #             # Categorize each item into groups (warehouse) from the DB
-    #             categorized_items = {}
-    #             for item_name in receipt_items:
-    #                 item = Item.query.filter_by(name=item_name).first()  # Query the database for each item
-    #                 if item:
-    #                     group = item.group  # Get the associated group (warehouse)
-    #                     categorized_items[item_name] = {
-    #                         'group': group.name if group else "No group (warehouse) assigned",
-    #                         'quantity': item.quantity
-    #                     }
-    #                 else:
-    #                     categorized_items[item_name] = {'group': "Unknown", 'quantity': "Unknown"}
-    #             print("Categorized items:", categorized_items)
+                # Categorize each item into groups (warehouse) from the DB
+                categorized_items = {}
+                for item_name in receipt_items:
+                    item = Item.query.filter_by(name=item_name).first()  # Query the database for each item
+                    if item:
+                        group = item.group  # Get the associated group (warehouse)
+                        categorized_items[item_name] = {
+                            'group': group.name if group else "No group (warehouse) assigned",
+                            'quantity': item.quantity
+                        }
+                    else:
+                        categorized_items[item_name] = {'group': "Unknown", 'quantity': "Unknown"}
+                print("Categorized items:", categorized_items)
 
-    #             # Prepare the AI model prompt with categorized items
-    #             model_prompt = (
-    #                 f"User scanned a receipt with the following items:\n\n"
-    #                 f"Receipt items and their respective groups (warehouses):\n{categorized_items}\n\n"
-    #                 "Help categorize these items based on the database data."
-    #             )
-    #             print("Model prompt prepared for receipt scan.")
+                # Prepare the AI model prompt with categorized items
+                model_prompt = (
+                    f"User scanned a receipt with the following items:\n\n"
+                    f"Receipt items and their respective groups (warehouses):\n{categorized_items}\n\n"
+                    "Help categorize these items based on the database data."
+                )
+                print("Model prompt prepared for receipt scan.")
 
-    #         print("Generating response using AI model")
-    #         try:
-    #             # Using generative AI model to generate content based on the prompt
-    #             model = genai.GenerativeModel(
-    #                 model_name="gemini-1.5-pro",
-    #                 safety_settings=safety_settings,
-    #                 generation_config=generation_config,
-    #             )
-    #             response = model.generate_content(model_prompt)
-    #             text_result = response.text
-    #             print("Generated AI response:", text_result)
+            print("Generating response using AI model")
+            try:
+                # Using generative AI model to generate content based on the prompt
+                model = genai.GenerativeModel(
+                    model_name="gemini-1.5-pro",
+                    safety_settings=safety_settings,
+                    generation_config=generation_config,
+                )
+                response = model.generate_content(model_prompt)
+                text_result = response.text
+                print("Generated AI response:", text_result)
 
-    #             # Append the result to session data
-    #             data.append({'input': input_text or "Receipt Scan", 'result': text_result})
-    #             session['data'] = data
-    #             print("Session data updated:", session['data'])
-    #             return redirect(url_for('gemini'))    
-    #         except ResourceExhausted as e:
-    #             print("Resource exhausted: ", e)
-    #             flash("Please try again later in a few minutes", "error")
-    #             return redirect(url_for('gemini'))
-    #         except Exception as ex:
-    #             print("An error occurred:", ex)
-    #             flash("Please try again later in a few minutes", "error")
-    #             return redirect(url_for('gemini'))  
-    #     else:
-    #         print("No input provided")
-    #         flash("Please provide input text or upload a receipt.", "error")
+                # Append the result to session data
+                data.append({'input': input_text or "Receipt Scan", 'result': text_result})
+                session['data'] = data
+                print("Session data updated:", session['data'])
+                return redirect(url_for('gemini'))    
+            except ResourceExhausted as e:
+                print("Resource exhausted: ", e)
+                flash("Please try again later in a few minutes", "error")
+                return redirect(url_for('gemini'))
+            except Exception as ex:
+                print("An error occurred:", ex)
+                flash("Please try again later in a few minutes", "error")
+                return redirect(url_for('gemini'))  
+        else:
+            print("No input provided")
+            flash("Please provide input text or upload a receipt.", "error")
     
     print("Rendering stockmaster.html template")
     return render_template("stockmaster.html", data=data[::-1])
+
+
+
+
 # data= []
 
 # @app.route("/gemini", methods=['GET', 'POST'])
@@ -2897,29 +2895,7 @@ def members():
     return render_template('members.html', persons=persons)
 
 
-@app.route('/profileuser/<int:id>', methods=['GET', 'POST'])
-@login_required
-def profileuser(id):
-    form = Registration()
-    user=Person.query.get_or_404(id)
-    if request.method== 'GET':
-        form.email.data = user.email
-        form.company_name.data =user.company_name
-        form.category.data =user.category
-         
-    if form.validate_on_submit():
-        user.email = form.email.data
-        user.company_name = form.company_name.data
-        user.category = form.category.data
-        try:    
-            # db.session.add(new)
-            db.session.commit()
-            flash('User Information Updated.', 'success')
-            return redirect(url_for('homelook')) 
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error updating user information: {e}', 'danger')
-    return render_template('profileme.html',form=form)
+
 
 
 #CRUD(update and delete routes)
@@ -3185,7 +3161,75 @@ def signmein():
                 # flash(f"{error}", 'danger')
                 flash(f"Error: {error}", 'danger')
 
-    return render_template('concept-master/pages/sign-up.html', form=form)  
+    return render_template('concept-master/pages/sign-up.html', form=form) 
+
+
+@app.route('/profileuser/<int:id>', methods=['GET', 'POST'])
+@login_required
+def profileuser(id):
+    form = Registration()
+    user=Person.query.get_or_404(id)
+    if request.method== 'GET':
+        form.email.data = user.email
+        form.company_name.data =user.company_name
+        form.category.data =user.category
+         
+    if form.validate_on_submit():
+        user.email = form.email.data
+        user.company_name = form.company_name.data
+        user.category = form.category.data
+        try:    
+            # db.session.add(new)
+            db.session.commit()
+            flash('User Information Updated.', 'success')
+            return redirect(url_for('homelook')) 
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating user information: {e}', 'danger')
+    return render_template('profileme.html',form=form)
+
+
+@app.route("/updateprofile/<int:id>", methods=['POST', 'GET'])
+def updateprofile(id):
+    form=Registrationform()
+    user=Person.query.get_or_404(id)
+    print(f"Updating user {user.name} with id {user.id}")
+    if request.method== 'GET':
+        print(f"Form data: {form.data}")
+        form.name.data = user.name
+        form.company_name.data =user.company_name
+        form.category.data=user.category
+        form.email.data=user.email
+        form.phone.data=user.phone
+        form.currency.data=user.currency
+        form.bus_email.data=user.bus_email
+        form.bio.data=user.bio     
+    if form.validate_on_submit():
+        # print(f"Form data: {form.data}")
+        user.name=form.name.data
+        user.company_name=form.company_name.data
+        user.category= form.category.data
+        user.email=form.email.data
+        user.phone=form.phone.data
+        user.currency=form.currency.data
+        user.bus_email=form.bus_email.data
+        user.bio=form.bio.data
+                #   )
+        # print(f"Updating user with data {form.data}")
+        try:    
+            # db.session.add(new)
+            db.session.commit()
+            flash('User Information Updated.', 'success')
+            return redirect(url_for('homepage')) 
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating user information: {e}', 'danger')
+    users = User.query.order_by(User.id.asc()).all()
+    print("Rendering profile page")
+    return render_template('concept-master/profile.html',users=users, form=form) 
+
+
+ 
 
 @app.route('/warehouse', methods=['POST','GET'])
 @login_required
@@ -3216,9 +3260,7 @@ def warehouse():
             db.session.commit()
             flash("You just added a new warehouse.",'success')
         return redirect(url_for('homepage'))
-
-    users = Groups.query.filter_by(userId=current_user.id).count()
-    
+    users = Groups.query.filter_by(userId=current_user.id).count()  
     return render_template('concept-master/forms.html', form=form, users=users, myModal=myModal)  
 
 @app.route('/myproduct', methods=['POST','GET'])
@@ -3236,12 +3278,124 @@ def employee():
 @app.route('/reportme', methods=['POST','GET'])
 @login_required
 def reportme():
-    return render_template('concept-master/report.html')
+    return render_template('concept-master/report.html') 
+    
 
-@app.route('/create', methods=['POST','GET'])
+
+# Function to extract text from receipt image
+def extract_text_from_image(image_path):
+    img = Image.open(image_path)
+    extracted_text = pytesseract.image_to_string(img)
+    return extracted_text
+
+# Function for parsing the receipt data and extracting item, quantity, price
+
+# Function to extract text from image using Tesseract OCR
+def extract_text_from_image(image_path):
+    img = Image.open(image_path)
+    extracted_text = pytesseract.image_to_string(img)
+    return extracted_text
+
+# Function for parsing the receipt data (item, quantity, price)
+def parse_receipt_data(extracted_text):
+    items = extracted_text.split('\n')  # Assuming each item is on a new line
+    receipt_items = []
+    
+    for item in items:
+        item_data = item.strip()
+        if item_data:
+            try:
+                # Attempt to split the item string into name, quantity, and price
+                parts = item_data.split()
+                
+                # You may need to adjust this based on your receipt format
+                name = parts[0]  # Assuming first part is the name
+                quantity = parts[1]  # Assuming second part is the quantity
+                price = parts[2]  # Assuming third part is the price
+
+                # Validate and sanitize quantity
+                try:
+                    quantity = int(quantity)
+                except ValueError:
+                    quantity = 0  # If invalid, set to 0
+
+                # Validate and sanitize price
+                try:
+                    price = float(price)
+                except ValueError:
+                    price = 0.0  # If invalid, set to 0.0
+                
+                receipt_items.append({
+                    'name': name,
+                    'quantity': quantity,
+                    'price': price,
+                })
+            except IndexError:
+                # Handle cases where item doesn't split correctly into name, quantity, and price
+                continue
+    
+    return receipt_items
+
+
+@app.route('/create', methods=['POST', 'GET'])
 @login_required
 def create():
-    return render_template('concept-master/create.html')
+    data = session.get('data', [])
+    print("Session data retrieved:", data)
+    
+    if request.method == "POST":
+        receipt_image = request.files.get('receipt_image')  # Get the receipt image if uploaded
+        print("Receipt image received:", receipt_image is not None)
+        
+        if receipt_image:
+            print("Receipt image processing started.")
+            if receipt_image.filename == '':
+                print("No file selected for receipt image.")
+                flash('No file selected!', 'error')
+                return redirect(url_for('create'))
+            
+            filename = secure_filename(receipt_image.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            receipt_image.save(image_path)
+            print("Receipt image saved at:", image_path)
+
+            # Extract text from the receipt using OCR
+            extracted_text = extract_text_from_image(image_path)
+            print("Extracted text from receipt:", extracted_text)
+            
+            # Parse the receipt data to extract item names, quantities, and prices
+            receipt_items = parse_receipt_data(extracted_text)
+            print("Parsed receipt items:", receipt_items)
+
+            # Categorize and insert each item into the database
+            for item_data in receipt_items:
+                # Find the group (warehouse) associated with this item
+                group = Groups.query.filter_by(name="Scan Receipt").first()  # Assuming "Scan Receipt" is a group in your DB
+
+                # Insert each item into the database
+                new_item = Item(
+                    name=item_data['name'],
+                    quantity=item_data['quantity'],
+                    price=item_data['price'],
+                    group_id=group.id if group else None,  # Link to the group if found
+                    clientid=current_user.id if current_user.is_authenticated else None,  # Assign clientid if logged in
+                )
+                db.session.add(new_item)
+
+            db.session.commit()  # Commit all the new items to the database
+            print("Items inserted into the database successfully.")
+            
+            # Save categorized items to session for display
+            data.append({'receipt_items': receipt_items})
+            session['data'] = data
+            print("Session data updated:", session['data'])
+            return redirect(url_for('create'))
+        else:
+            print("No receipt image uploaded.")
+            flash("Please upload a receipt image.", "error")
+    
+    return render_template('concept-master/create.html', data=data)
+
 
 
 
@@ -3339,6 +3493,10 @@ def addemployee():
 @app.route('/taskme', methods=['POST','GET'])
 @login_required
 def taskme():
+    status_version = Challenge.query.filter_by(status=None).all()
+    for hospital in status_version:
+        hospital.status = 'Task'
+    db.session.commit()
     auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
     users = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()
     return render_template('concept-master/pages/sortable-nestable-lists.html',auth_task=auth_task,users=users)
@@ -3369,19 +3527,16 @@ def createtask():
     return render_template('concept-master/createinvoice.html', form=form,users=users)  
 
 
-@app.route('/myprofile', methods=['POST','GET'])
-@login_required
-def myprofile():
-    users = User.query.order_by(User.id.asc()).all()
-    return render_template('concept-master/profile.html',users=users)  
+ 
 
 @app.route('/achievement', methods=['POST','GET'])
 @login_required
 def achievement():
     total_ach=Faq.query.filter_by(faqid=current_user.id).count()
     tag_user=Faq.query.filter_by(campus='High').order_by(Faq.id.desc()).all()
+    fav_user=Faq.query.filter_by(campus='Favorite').order_by(Faq.id.desc()).all()
     users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
-    return render_template('concept-master/achievement.html',tag_user=tag_user,users=users,total_ach=total_ach)  
+    return render_template('concept-master/achievement.html',fav_user=fav_user,tag_user=tag_user,users=users,total_ach=total_ach)  
 
 
 @app.route('/purchase', methods=['POST','GET'])
@@ -3392,7 +3547,7 @@ def purchase():
 
 
 @app.route('/trailusersignup', methods=['POST','GET'])
-def signup():
+def trailusersignup():
     print("Starting signup...")
     form = Registration()
     print(f"Form data: {form.data}")

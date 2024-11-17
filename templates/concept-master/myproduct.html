@@ -67,6 +67,7 @@
                                         <thead class="bg-light">
                                             <tr class="border-0">
                                                 <th class="border-0"></th>
+                                                <th class="border-0">Select</th>
                                                
                                                 <th class="border-0">Product Id</th>
                                                 <th class="border-0">Product Name</th>
@@ -80,23 +81,33 @@
                                             {%for users in users%} 
                                             <tr>
                                                 <td></td>
-                                                <!--<td>
-                                                    <div class="m-r-10"><img src="static/mainassets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                </td>-->
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input"  onclick="myFunction()" type="checkbox"><span class="custom-control-label"></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
                                                 <td>{{ users.unique_code }} </td>
-                                                <td> {{users.name}}</td>
+
+                                                <td class="col-2 text-truncate">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 50px;">
+                                                   {{users.name}}
+                                                      </span>
+                                                        
+                                                </td>
                                                 <td> {{users.group.name}}</td>
                                                 <td>{% if users.quantity | int >= 20 %}
-                                                    <span class="badge badge-pill bg-soft-success text-success me-2">
-                                                        <i class="bi bi-arrow-up me-1"></i>In-stock
+                                                    <span class="badge badge-pill bg-success text-white fw-bold me-2">
+                                                        <i class="fas fa-check-circle text-white" aria-hidden="true"></i> In-stock
                                                     </span>
                                                 {% elif users.quantity | int >= 10 and users.quantity | int <= 20 %}
-                                                    <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                                                        <i class="bi bi-dash me-1"></i>Low Stock
+                                                    <span class="badge badge-pill bg-warning text-white fw-bold me-2">
+                                                        <i class="fas fa-dot-circle text-white" aria-hidden="true"></i> Low Stock
                                                     </span>
                                                 {% elif users.quantity | int < 10 %}
-                                                    <span class="badge badge-pill bg-soft-danger text-danger me-2">
-                                                        <i class="bi bi-arrow-down me-1"></i>Out of Stock
+                                                    <span class="badge badge-pill bg-danger text-white fw-bold me-2">
+                                                        <i class=" fas fa-circle text-white" aria-hidden="true"></i> Out of Stock
                                                     </span>
                                                 {% endif %}</td>
                                                 <td>{{users.quantity}}</td>

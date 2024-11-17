@@ -70,44 +70,63 @@
                                         <thead class="bg-light">
                                             <tr class="border-0">
                                                 <th class="border-0"></th>
+                                                <th class="border-0">Select</th>
                                                 <th class="border-0">Title</th>
                                                 <th class="border-0">Priority</th>
-                                                <th class="border-0">Start Date</th>
+                                                <th class="border-0">Desc</th>
                                                 <th class="border-0">Due Date</th>
-                                                <th class="border-0">Action</th>
-                                                <th class="border-0"></th>
+                                                <th class="border-0">View Details</th>
+                                                <th class="border-0">More</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {%for users in users%} 
+                                        {%for users in users%} 
                                             <tr>
+                                                <td></td>
                                                 <td>
+                                                    <div class="form-group">
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input"  onclick="myFunction()" type="checkbox"><span class="custom-control-label"></span>
+                                                        </label>
+                                                    </div>
                                                 </td>
-                                                <td> {{users.answers}} </td>
+                                                <td class="col-2 text-truncate">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 70px;">
+                                                   {{users.answers}}
+                                                      </span>
+                                                        
+                                                </td>
+                                            
 
-                                               
                                                 <td> {% if users.campus == 'High' %}
                                                     <span class="badge badge-pill bg-danger text-white me-2">
-                                                        <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
+                                                        <i class=" fas fa-tags fs-9" aria-hidden="true"></i>{{ users.campus }}
                                                     </span>
-                                                    {% elif users.campus == 'Medium' %}
+                                                    {% elif users.campus == 'Favorite' %}
                                                     <span class="badge badge-pill bg-warning text-white me-2">
-                                                        <i class="bi bi-dash me-1"></i>{{ users.campus }}
+                                                        <i class=" fas fa-star fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Low' %}
                                                     <span class="badge badge-pill bg-success text-white me-2">
-                                                        <i class="bi bi-arrow-down me-1"></i>{{ users.campus }}
+                                                        <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                             
                                                     {% else %}
                                                     <span class="badge badge-pill  text-white me-2">
-                                                        <i class="bi bi-arrow-up me-1"></i>{{ users.campus }}
+                                                        <i class=" fas fa-tags fs-5" aria-hidden="true"></i>{{ users.campus }}
                                                     </span>
                                                     {% endif %}
                                                 </td>
+
+
+                                                <td class="col-2 text-truncate">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                        <i class="far fa-file" aria-hidden="true"></i> {{users.caption}}
+                                                      </span>
+                                                        
+                                                </td>
                                                 
-                                                <td><span class="badge-dot badge-success mr-1"></span>{{users.start_date}}</td>
-                                                <td><span class="badge-dot badge-danger mr-1"></span>{{users.end_date}}</td>
+                                                <td> <i class="far fa-bookmark text-danger" aria-hidden="true"></i> {{users.end_date}}</td>
                                                     <!-- <td>
                                                     {% if users.status == 'pending'%}
                                                     <span class="badge badge-pill bg-soft-warning text-dark me-2">
@@ -123,31 +142,37 @@
 
                                                    
                                          
-                                                      <td>
-                                                        
-                                                          <div class="dropdown"><button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            <div class="dropdown">
-                                                        
-                                                                <ul class="dropdown-menu">
-                                                                    <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
-                                                                    <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
-                                                                    <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
-                                                                  </ul>
-                                                             </div>
-                              
-                                                      </td>
+                                                  
+                                                            <td>
+                                                                <a href="#" class="btn btn-outline-light">View Details</a></td>
 
-                                                     
-                                               
-
-                                                      
-                                            </tr>
+                                                                <td>
+                                                        
+                                                                    <div class="dropdown"><button class="btn btn-sm  btn-outline-light " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                      <div class="dropdown">
+                                                                          <i class="fas fa-list" aria-hidden="true"></i>
+                                                                  
+                                                                          <ul class="dropdown-menu">
+                                                                             <!-- <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
+                                                                              <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
+                                                                              <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
+                                                                             -->
+                                                                              <li><a class="dropdown-item" href="#">Update</a></li>
+                                                                              <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                                            </ul>
+                                                                       </div>
+                                        
+                                                                      </td>
+                                                            </tr>
                                             
                                            
+                                              
                                             {%endfor%}
-                                           <!-- <tr>
-                                                <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
-                                            </tr>-->
+                                          <tr>
+                                                <td>
+                                                    </td>
+                                                    
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

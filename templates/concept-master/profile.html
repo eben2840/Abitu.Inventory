@@ -1,4 +1,4 @@
-{% extends 'concept-master/basee.html' %}
+{% extends 'concept-master/pages/baseme.html' %}
 {% block body %}
         <!-- ============================================================== -->
         <!-- end left sidebar -->
@@ -62,8 +62,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form id="validationform" data-parsley-validate="" novalidate="">
-                                    
+                                <form id="validationform" method="POST", "GET"  action=""  data-parsley-validate="" novalidate="">
+                                    {{ form.hidden_tag() }}
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-sm-right"></label>
                                         <div class="col-12 col-sm-8 col-lg-6">
@@ -73,10 +73,19 @@
                                     </div>
                                     
 
+                                   <!-- <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Admin Name</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            <input type="text" name="name" required="" placeholder="" class="form-control">
+                                        </div>
+                                       
+                                    </div>-->
+
+
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-sm-right">User Name</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input id="pass2" type="password" required="" placeholder="" class="form-control">
+                                            <input type="text" name="company_name" required="" placeholder="" class="form-control">
                                         </div>
                                        
                                     </div>
@@ -84,30 +93,58 @@
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-sm-right">Personal Email</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="email" required="" data-parsley-minlength="" placeholder="Type Product..." class="form-control">
+                                            <input type="email" name="email" required="" disabled data-parsley-minlength=""  class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-sm-right">Business Email</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="email" required="" data-parsley-maxlength="" placeholder="Type Quantity..." class="form-control">
+                                            <input type="email" name="bus-email" required="" data-parsley-maxlength="" placeholder="@gmail.com" class="form-control">
                                         </div>
                                     </div>
+
+                                   
+
                                     
 
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-sm-right">Phone Number</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="number" id="inputText4" required="" data-parsley-min="6" placeholder="+1XXXXXXXXXX" class="form-control">
+                                            <input type="number" name="phone" id="inputText4" required="" data-parsley-min="6" placeholder="+1XXXXXXXXXX" class="form-control">
                                             
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">{{current_user.category}} Bio</label>
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Bio</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <textarea required="" class="form-control"></textarea>
+                                            <textarea required="" name="bio" class="form-control"></textarea>
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Currency</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.currency(class="form-control")}}
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right"></label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                    <p class="text-lg-center bg-primary border-0 p-2 rounded">Change My Category</p>
+
+                                        </div>
+                                    </div>
+                                   
+
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Category</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.category(class="form-control")}}
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row text-right">
                                         <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
                                             <button type="submit" class="btn btn-space btn-primary">Submit</button>

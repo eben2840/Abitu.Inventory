@@ -102,7 +102,7 @@
                                     <h5 class="mb-0 text-white nav-user-name">{{current_user.company_name}} </h5>
                                     <span class="status"></span><span class="ml-2">{{current_user.category}}</span>
                                 </div>
-                                <a class="dropdown-item" href="{{url_for('myprofile')}}"><i class="fas fa-user mr-2"></i>Account</a>
+                                <a class="dropdown-item" href="{{url_for('updateprofile', id=current_user.id)}}"><i class="fas fa-user mr-2"></i>Account</a>
                                 <a class="dropdown-item" href="{{url_for('logout')}}"><i class="fas fa-power-off mr-2"></i>Logout</a>
                             </div>
                         </li>
@@ -158,9 +158,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" style="font-size:15px;" href="{{url_for('taskme')}}"  aria-expanded="false" data-target="#submenu-7" aria-controls="submenu-7"><i class="fas fa-fw fa-inbox"></i>Task <span class="badge badge-secondary">New</span></a>
                             </li>
-                           <!-- <li class="nav-item">
-                                <a class="nav-link" style="font-size:15px;" href="{{url_for('employee')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fas fa-fw fa-table"></i>Employees</a>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('addemployee')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fas fa-fw fa-table"></i>Employees</a>
                             </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('updateprofile', id=current_user.id)}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="far fa-sun fa-fw"></i>Settings</a>
+                            </li>
+                            <!--
                             <li class="nav-item">
                                 <a class="nav-link" style="font-size:15px;" href="{{url_for('purchase')}}"  aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>Expense Order</a>
                             </li>-->

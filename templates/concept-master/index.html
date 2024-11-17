@@ -96,10 +96,11 @@
                             <div class="card-body">
                                 <h5 class="text-muted">Total Income Budget</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">0.00</h1>
+                                    <h1 class="mb-1">{{current_user.currency}} 0.00</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success">
-                                    <!--<i class="fa fa-fw fa-caret-up"></i><span>5.27%</span>-->
+                                    <i class="far fa-money-bill-alt fs-5"></i> 
+                                  <span></span>
                                 </div>
                             </div>
                             <div id="sparkline-revenu1"></div>
@@ -114,7 +115,8 @@
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1">{{total_students}}</h1>
                                 </div>
-                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                <div class="metric-label d-inline-block float-right text-warning font-weight-bold">
+                                    <i class="far fa-list-alt fs-5"></i> 
                                 </div>
                             </div>
                            
@@ -131,6 +133,7 @@
                                     <h1 class="mb-1">{{total_cat}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                    <i class="far fa-folder-open fs-5"></i> 
                                 </div>
                             </div>
                             <div id="sparkline-revenu2"></div>
@@ -147,6 +150,7 @@
                                     <h1 class="mb-1">{{total_Faq}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                    <i class="far fa-gem fs-5"></i>  
                                 </div>
                             </div>
                         </div>
@@ -166,7 +170,8 @@
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">My Task</h5>
-                            <div class="card-body">
+                            <div class="card-body text-center justify-content-center">
+                                <i class=" far fa-calendar-alt fs-3" aria-hidden="true"></i>
                                 <h5 class=" text-center"> No Task yet!</h5>
                               
                                 <p class=" text-center">CheckList On Your Task Now</p>
@@ -213,7 +218,8 @@
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header"> Stock keeper</h5>
-                            <div class="card-body">
+                            <div class="card-body text-center justify-content-center">
+                                <i class=" far fa-clipboard fs-3" aria-hidden="true"></i>
                             <h5 class=" text-center"> No Stock yet!</h5>
                             <p class=" text-center">CheckList On Your Stock Now</p>
                             
@@ -245,7 +251,8 @@
                         
                         <div class="card">
                             <h5 class="card-header"> My Achievement</h5>
-                            <div class="card-body">
+                            <div class="card-body text-center justify-content-center">
+                                <i class="  far fa-star fs-3" aria-hidden="true"></i>
                                     <h5 class=" text-center"> No Achievement yet!</h5>
                                     <p class=" text-center">CheckList On Your Achievement Now</p>
                             </div>
@@ -261,7 +268,7 @@
                     <!-- ============================================================== -->
                     <div class="card col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
                         <div class="section-block">
-                            <h5 class="section-title">Setup Checklist</h5>
+                            <h5 class="section-title">Finishing Setting Up Checklist</h5>
                             <p class="text-success">CheckList On Your Dashboard</p>
                            
                             <hr>       
@@ -269,27 +276,30 @@
                                
                         <div class="accrodion-regular">
                             <div id="accordion">
-                                <div class="card">
+                                <div class="card" style="margin-bottom:20px;">
                                     <div class="card-header" id="headingOne">
                                         <div class="custom-control custom-checkbox was-validated">
                                             <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
-                                            <label class="text-success">First CheckList</label>
+                                            <label class="text-success">My CheckList</label>
                                         </div>
-                                        <h5 class="mb-0 fs-1" >
+                                        <!--<h5 class="mb-0 fs-1" >
                                            <button style="font-size:20px;" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                           Create Your Warehouse
                                            </button>
-                                          </h5>
+                                          </h5>-->
                                     </div>
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div class="card-body">
-                                            <p class="lead"> 100%: Start by creating your warehouse to stay organised</p>
-                                            <p> Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</p>
+                                            <p class="lead"> <i class=" far fa-check-circle text-success" aria-hidden="true"></i> Start by creating your warehouse to stay organised</p>
+                                            <hr>
+                                            <p class="lead"> <i class=" far fa-check-circle text-success" aria-hidden="true"></i> Add Unlimited Product to your warehouse</p>
+                                            <hr>
+                                            <p class="lead"> <i class=" far fa-check-circle text-success" aria-hidden="true"></i> Create Task and Achievements to Track Growth</p>
                                            <a href="{{url_for('warehouse')}}" class="btn btn-success">Let's Get Started</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
+                                <!--<div class="card">
                                     <div class="card-header" id="headingTwo">
                                         <div class="custom-control custom-checkbox was-validated">
                                             <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
@@ -309,8 +319,8 @@
 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card mb-5">
+                                </div>-->
+                                <!--<div class="card mb-5">
                                     <div class="card-header" id="headingThree">
                                        
                                         <div class="custom-control custom-checkbox was-validated">
@@ -319,8 +329,8 @@
                                         </div>
                                         
                                         <h5 class="mb-0">
-                        <button style="font-size:20px;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Set Your Business Achievement
+                                        <button style="font-size:20px;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Set Your Business Achievement
                                          </button>
                                                    </h5>
                                     </div>
@@ -332,7 +342,7 @@
                                             <a href="{{url_for('createachievement')}}" class="btn btn-success">Go Now!</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
