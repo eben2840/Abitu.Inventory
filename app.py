@@ -3495,7 +3495,7 @@ def addemployee():
 def taskme():
     status_version = Challenge.query.filter_by(status=None).all()
     for hospital in status_version:
-        hospital.status = 'Task'
+        hospital.status = 'My Task'
     db.session.commit()
     auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
     users = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()

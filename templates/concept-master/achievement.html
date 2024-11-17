@@ -74,7 +74,6 @@
                                                 <th class="border-0">Title</th>
                                                 <th class="border-0">Priority</th>
                                                 <th class="border-0">Desc</th>
-                                                <th class="border-0">Due Date</th>
                                                 <th class="border-0">View Details</th>
                                                 <th class="border-0">More</th>
                                             </tr>
@@ -99,7 +98,7 @@
                                             
 
                                                 <td> {% if users.campus == 'High' %}
-                                                    <span class="badge badge-pill bg-danger text-white me-2">
+                                                    <span class="badge badge-pill bg-success text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i>{{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Favorite' %}
@@ -107,7 +106,7 @@
                                                         <i class=" fas fa-star fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Low' %}
-                                                    <span class="badge badge-pill bg-success text-white me-2">
+                                                    <span class="badge badge-pill bg-danger text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                             
@@ -126,8 +125,9 @@
                                                         
                                                 </td>
                                                 
+                                                    <!-- 
                                                 <td> <i class="far fa-bookmark text-danger" aria-hidden="true"></i> {{users.end_date}}</td>
-                                                    <!-- <td>
+                                                <td>
                                                     {% if users.status == 'pending'%}
                                                     <span class="badge badge-pill bg-soft-warning text-dark me-2">
                                                         {% elif users.status == 'in-progress'%}
@@ -168,11 +168,7 @@
                                            
                                               
                                             {%endfor%}
-                                          <tr>
-                                                <td>
-                                                    </td>
-                                                    
-                                            </tr>
+                                          
                                         </tbody>
                                     </table>
                                 </div>
