@@ -2040,15 +2040,16 @@ def homme():
         #     return redirect(url_for('homme'))
         # else: 
             new=User(
+                    position=form.position.data,
                     fullname=form.fullname.data,
                     email=form.email.data,
                         )
             db.session.add(new)
             db.session.commit()
-            send_email()
+            # send_email()
             print(form.email.data)
             flash("Email request sent successfully! kindly check your email", "success")
-            return render_template("newhome.html")
+            return redirect(url_for('confirmpage'))
     
     if current_user.is_authenticated:
         return redirect(url_for('homelook'))

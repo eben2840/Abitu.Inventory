@@ -24,6 +24,7 @@ class Adduser(FlaskForm):
 class WaitForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     fullname = StringField('Username', validators=[DataRequired()])
+    position = StringField('Username', validators=[DataRequired()])
     submit = SubmitField('Update Moji')
     
     
