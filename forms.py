@@ -235,13 +235,13 @@ class Registration(FlaskForm):
     
     
 class Registrationform(FlaskForm):
-    bus_email = StringField('Business Email')
-    name = StringField('Name')
-    email = StringField('Email')
+    # bus_email = StringField('Business Email')
+    # name = StringField('Name')
+    # email = StringField('Email')
     password = PasswordField('password_hash') 
-    company_name = StringField('company_name') 
-    bio = StringField('Bio') 
-    phone = StringField('phone') 
+    # company_name = StringField('company_name') 
+    # bio = StringField('Bio') 
+    # phone = StringField('phone') 
     currency = SelectField('currency', choices=[('Currency','Currency'),('$','$'),('₵','₵'),('€','€') ])
     category= SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')

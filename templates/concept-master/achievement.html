@@ -74,7 +74,8 @@
                                                 <th class="border-0">Title</th>
                                                 <th class="border-0">Priority</th>
                                                 <th class="border-0">Desc</th>
-                                                <th class="border-0">View Details</th>
+                                                <th class="border-0">Start Date</th>
+                                                <th class="border-0">Due Date</th>
                                                 <th class="border-0">More</th>
                                             </tr>
                                         </thead>
@@ -99,7 +100,7 @@
 
                                                 <td> {% if users.campus == 'High' %}
                                                     <span class="badge badge-pill bg-success text-white me-2">
-                                                        <i class=" fas fa-tags fs-9" aria-hidden="true"></i>{{ users.campus }}
+                                                        <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Favorite' %}
                                                     <span class="badge badge-pill bg-warning text-white me-2">
@@ -119,7 +120,7 @@
 
 
                                                 <td class="col-2 text-truncate">
-                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 250px;">
                                                         <i class="far fa-file" aria-hidden="true"></i> {{users.caption}}
                                                       </span>
                                                         
@@ -140,29 +141,37 @@
                                                        {{ users.status}}
                                                     </td>-->
 
-                                                   
-                                         
-                                                  
-                                                            <td>
-                                                                <a href="#" class="btn btn-outline-light">View Details</a></td>
 
-                                                                <td>
+                                                    <td>
+                                                        <a href="#" class="btn "><i class=" fas fa-flag text-success" aria-hidden="true"></i> {{users.start_date}}</a></td>
+
+                                                    <td>
+                                                        <a href="#" class="btn "><i class=" fas fa-flag text-danger" aria-hidden="true"></i> {{users.end_date}}</a></td>
+
+                                                   
+                                                   
+                                                   
+                                                    <td>
                                                         
-                                                                    <div class="dropdown"><button class="btn btn-sm  btn-outline-light " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                      <div class="dropdown">
-                                                                          <i class="fas fa-list" aria-hidden="true"></i>
-                                                                  
-                                                                          <ul class="dropdown-menu">
-                                                                             <!-- <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
-                                                                              <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
-                                                                              <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
-                                                                             -->
-                                                                              <li><a class="dropdown-item" href="#">Update</a></li>
-                                                                              <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                                            </ul>
-                                                                       </div>
-                                        
-                                                                      </td>
+                                                        <div class="dropdown"><button class="btn btn-sm  btn-outline-light " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                          <div class="dropdown">
+                                                              <i class="fas fa-list" aria-hidden="true"></i>
+                                                      
+                                                              <ul class="dropdown-menu">
+                                                                 <!-- <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
+                                                                  <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
+                                                                  <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
+                                                                 -->
+                                                                 <li><a class="dropdown-item" href="#">View Details</a></li>
+                                                                 <li><a class="dropdown-item" href="#">Update</a></li>
+                                                                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                                </ul>
+                                                           </div>
+                            
+                                                </td>
+                                                  
+                       
+
                                                             </tr>
                                             
                                            

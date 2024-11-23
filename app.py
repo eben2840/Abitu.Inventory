@@ -2052,7 +2052,7 @@ def homme():
             return redirect(url_for('confirmpage'))
     
     if current_user.is_authenticated:
-        return redirect(url_for('homelook'))
+        return redirect(url_for('homepage'))
     else:
         return render_template("newhome.html")
 
@@ -2995,18 +2995,27 @@ def mot():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        print("In login post")
+        print("Form email:", form.email.data)
+        print("Form password:", form.password.data)
         user = Person.query.filter_by(email=form.email.data).first()
+        if user:
+            print("User found:", user.company_name)
         if user and user.password==form.password.data:
+            print("Password matches")
             login_user(user)
-            print(form.password.data) 
             flash("Welcome to your dashboard " + " "  + user.company_name ,  'success')
             if current_user.category == 'Personal':
+                print("Redirecting to homepage")
                 return redirect(url_for('homepage'))
             elif current_user.category == "Business":
+                print("Redirecting to homepage")
                 return redirect(url_for('homepage'))
             else:
+                print("Redirecting to homepage")
                 return redirect(url_for('homepage'))
         else:
+            print("Password does not match")
             flash(f'Incorrect details, please try again', 'danger')
     return render_template('concept-master/pages/login.html', form=form)  
 
@@ -3074,6 +3083,8 @@ def homepage():
         total_message = Committee.query.filter_by(id=current_user.id).count()
         total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
         total_cat = Groups.query.filter_by(userId=current_user.id).count()
+        taskme = Challenge.query.filter_by(taskId=current_user.id).count()
+        total_taskme = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()
         print("Total categories:", total_cat)
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
@@ -3098,7 +3109,27 @@ def homepage():
     total_ach=Faq.query.filter_by(faqid=current_user.id).count()
     auth_task = Item.query.filter_by(clientid=current_user.id).count()
     # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
-    return render_template('concept-master/index.html',auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock, title='dashboard',user=user, form=form,
+    
+    
+   
+    total_users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
+    total_budget = sum(int(user.budget) for user in total_users) 
+    
+    form=Budgetform()
+    if form.validate_on_submit():
+            new=Budget(budget=form.budget.data,
+                       budgetId=current_user.id,
+                    start_date=form.start_date.data,
+                    end_date=form.end_date.data
+                
+                  )
+            db.session.add(new)
+            db.session.commit()
+            flash("New Budget Added", "success")
+            return redirect('homepage')
+    
+
+    return render_template('concept-master/index.html', title='addalumni',total_users=total_users,auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock,user=user, form=form,total_taskme=total_taskme,taskme=taskme,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
@@ -3201,24 +3232,24 @@ def updateprofile(id):
     print(f"Updating user {user.name} with id {user.id}")
     if request.method== 'GET':
         print(f"Form data: {form.data}")
-        form.name.data = user.name
-        form.company_name.data =user.company_name
+        # form.name.data = user.name
+        # form.company_name.data =user.company_name
         form.category.data=user.category
-        form.email.data=user.email
-        form.phone.data=user.phone
+        # form.email.data=user.email
+        # form.phone.data=user.phone
         form.currency.data=user.currency
-        form.bus_email.data=user.bus_email
-        form.bio.data=user.bio     
+        # form.bus_email.data=user.bus_email
+        # form.bio.data=user.bio     
     if form.validate_on_submit():
         # print(f"Form data: {form.data}")
-        user.name=form.name.data
-        user.company_name=form.company_name.data
+        # user.name=form.name.data
+        # user.company_name=form.company_name.data
         user.category= form.category.data
-        user.email=form.email.data
-        user.phone=form.phone.data
+        # user.email=form.email.data
+        # user.phone=form.phone.data
         user.currency=form.currency.data
-        user.bus_email=form.bus_email.data
-        user.bio=form.bio.data
+        # user.bus_email=form.bus_email.data
+        # user.bio=form.bio.data
                 #   )
         # print(f"Updating user with data {form.data}")
         try:    

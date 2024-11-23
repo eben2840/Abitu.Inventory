@@ -45,7 +45,7 @@
                                       <!-- <img src="https://wishlistmember.com/wp-content/uploads/2024/03/zoom-icon.png" style="width:100px;">-->
                                        <h4> No Task Yet!</h4>
                                        <p> Boost your workflow in minutes with abitrack</p>
-                                        <a href="{{url_for('createachievement')}}" class="btn btn-primary text-center">Add Achievement Here</a>
+                                        <a href="{{url_for('createtask')}}" class="btn btn-primary text-center">Add Task Here</a>
                                     </div>
                                 </div>
                             </div>
@@ -58,6 +58,7 @@
             </div>
             {%else%}
             
+            <a href="{{url_for('createtask')}}" class="btn btn-primary text-center mb-4">Add Task Here</a>
           
                 <div class="row">
                    <!-- <div class="mx-auto col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
@@ -83,7 +84,6 @@
                                                 <th class="border-0">Due Date</th>
                                                 <th class="border-0">Status</th>
                                                 <th class="border-0">Action</th>
-                                                <th class="border-0">View Detail</th>
                                               
                                             </tr>
                                         </thead>
@@ -101,7 +101,7 @@
                                                 </td>
 
                                                 <td class="col-2 text-truncate">
-                                                    <span class="d-inline-block text-truncate" style="max-width: 70px;">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 100px;">
                                                    {{users.name}}
                                                       </span>
                                                         
@@ -127,10 +127,15 @@
                                                     </span>
                                                     {% endif %}
                                                 </td>
-                                                
-                                                <td>
-                                                    <i class="far fa-bookmark text-danger fs-5 text-center justify-content-center" aria-hidden="true"></i></td>
 
+
+
+                                                <td>
+                                                    <a href="#" class="btn"><i class="far fa-bookmark text-danger" aria-hidden="true"></i> {{users.end_date}}</a></td>
+
+                                               
+                                                
+                      
                                                    <td>
                                                     {% if users.status == 'pending'%}
                                                    <span class="badge badge-pill bg-warning fw-bold text-white p-1 me-2"> <i class="fas fa-check-circle text-white" aria-hidden="true"></i>
@@ -150,9 +155,9 @@
                                          
                                                       <td>
                                                         
-                                                          <div class="dropdown"><button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                          <div class="dropdown"><button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <div class="dropdown">
-                                                        
+                                                                <i class="fas fa-list" aria-hidden="true"></i>
                                                                 <ul class="dropdown-menu">
                                                                     <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
@@ -166,10 +171,7 @@
                                                       </td>
 
                                                      
-                                                      <td>
-                                                        <a href="#" class="btn btn-outline-light">View Details</a></td>
-
-
+                                     
                                                       
                                             </tr>
                                             
