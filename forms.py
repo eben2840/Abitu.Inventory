@@ -230,7 +230,7 @@ class Registration(FlaskForm):
     email = StringField('Email')
     password = PasswordField('password_hash') 
     company_name = StringField('company_name') 
-    category = SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
+    # category = SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')
     
     

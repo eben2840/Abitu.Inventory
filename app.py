@@ -3022,6 +3022,20 @@ def login():
 
 
 
+@app.route('/pricingme')
+def pricingme():
+    return render_template('concept-master/pages/pricing.html') 
+
+
+@app.route('/integrationapp')
+def integrationapp():
+    return render_template('concept-master/pages/cards.html') 
+
+
+@app.route('/docs')
+def docs():
+    return render_template('concept-master/pages/typography.html')  
+
 @app.route('/homepage', methods=['POST','GET'])
 @login_required
 def homepage():
@@ -3089,7 +3103,24 @@ def homepage():
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
    
-   
+    users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    
+    total_amount = 0
+    total_sum = 0
+    
+    for user in users:
+        try:
+            # Convert price to float and quantity to int
+            price = float(user.price)
+            quantity = int(user.quantity)
+            total_amount += price
+            total_sum += price * quantity
+        except ValueError:
+            # Handle invalid data
+            flash('Invalid price or quantity found', 'warning')
+            continue
+        
+        
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
     message = Message.query.filter_by(id=current_user.id).count()
     print(users_with_positions)
@@ -3110,10 +3141,15 @@ def homepage():
     auth_task = Item.query.filter_by(clientid=current_user.id).count()
     # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc()).all()
     
-    
+   
    
     total_users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
     total_budget = sum(int(user.budget) for user in total_users) 
+    
+    chart_data = [
+        {"budget": user.budget, "start_date": user.start_date.strftime('%Y-%m-%d'), "end_date": user.end_date.strftime('%Y-%m-%d')}
+        for user in total_users
+    ]
     
     form=Budgetform()
     if form.validate_on_submit():
@@ -3129,7 +3165,7 @@ def homepage():
             return redirect('homepage')
     
 
-    return render_template('concept-master/index.html', title='addalumni',total_users=total_users,auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock,user=user, form=form,total_taskme=total_taskme,taskme=taskme,
+    return render_template('concept-master/index.html',total_sum=total_sum,total_amount=total_amount,chart_data=chart_data, title='addalumni',total_users=total_users,auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock,user=user, form=form,total_taskme=total_taskme,taskme=taskme,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
@@ -3161,7 +3197,7 @@ def signmein():
             user = Person(password=form.password.data,
                         company_name=form.company_name.data,
                       
-                        category=form.category.data,
+                        # category=form.category.data,
                         email=form.email.data,
                       
                         )

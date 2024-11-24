@@ -84,7 +84,7 @@
 
             {%endif%}
 
-
+           
 
             <div class="row">
                 
@@ -103,6 +103,13 @@
                     </div>
                 </div>
             </div>
+
+            <div class="alert alert-primary alert-dismissible fade show shadow" role="alert">
+              
+              The new sale order module gives you a lot more flexibility compared to the previous module. This new addition will allow you to manage sale order details, custom line items, multiple products.
+               <br> <i class="fas fa-play-circle fs-6" aria-hidden="true"></i>  <strong>Watch the intro here!</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
             
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -115,7 +122,94 @@
             {% endwith %}
     
 
-          
+
+            <div class="card row">
+            {% if total_ware > 0 and auth_task > 0 and total_ach > 0 %}
+                
+            {% else %}
+                <div class=" col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
+                   
+                           
+                    <div class="accrodion-regular">
+                        <div id="accordion">
+                            <div class="card" style="margin-bottom:20px;">
+                                <div class="card-header" id="headingOne">
+                                    <div class="custom-control custom-checkbox was-validated">
+                                        <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
+                                        {%if total_ware == 0 %}
+                                        <h5 class="section-title">Set Up Checklist</h5>
+                                        <p class="text-success">CheckList On Your Dashboard</p>
+                                      
+                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 55%"></div>
+                                        </div>
+                                        {%elif auth_task== 0 %}
+                                        <h5 class="section-title">Set Up Checklist</h5>
+                                        <p class="text-success">CheckList On Your Dashboard</p>
+                                      
+                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 55%"></div>
+                                        </div>
+                                        {%elif total_ach== 0  %}
+                                        <h5 class="section-title">Set Up Checklist</h5>
+                                        <p class="text-success">CheckList On Your Dashboard</p>
+                                      
+                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success  progress-bar-striped progress-bar-animated" style="width: 80%"></div>
+                                        </div>
+                                        {%else  %}
+                                        <h5 class="section-title">Set Up Checklist</h5>
+                                        <p class="text-success">CheckList On Your Dashboard</p>
+                                      
+                                        <label class="text-success">Congratulations, CheckList Completed 🎉</label>
+                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                                        </div>
+                                        {%endif%}
+
+                                    
+                                    </div>
+                                   
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+
+                                        {%if total_ware == 0 %}
+                                        <h5 class="section-title">Set Up Checklist</h5>
+                                        <p class="text-success">CheckList On Your Dashboard</p>
+                                      
+                                        <p class="lead"> 
+                                            <i class=" far fa-check-circle text-success" aria-hidden="true"> </i>Start by creating your warehouse to stay organised 
+                                        </p>
+                                        <a href="{{url_for('warehouse')}}" class="btn btn-success">Add WareHouse </a>
+                                        <hr>
+                                        {%endif%}
+                                        {%if auth_task== 0 %}
+                                        <p class="lead"> 
+                                            <i class=" far fa-check-circle text-success" aria-hidden="true"></i>  Add Unlimited Product to your warehouse
+                                        </p>
+                                        <a href="{{url_for('addproduct')}}" class="btn btn-success">Add Product </a>
+                                        <hr>
+                                        {%endif%}
+                                        {%if total_ach== 0 %}
+                                        <p class="lead"> 
+                                            <i class=" far fa-check-circle text-success" aria-hidden="true"></i>  Create Task and Achievements to Track Growth
+                                        </p>
+                                        <a href="{{url_for('createachievement')}}" class="btn btn-success">Add Achievement </a>
+                                        {%endif%}
+                                       <!-- <a href="{{url_for('warehouse')}}" class="btn btn-success">Congratulations 🎉</a>
+                                    -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+               <!-- <div class="card col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                <canvas id="budgetChart" width="400" height="200"></canvas>
+                </div>-->
+        </div>
 
             <!-- ============================================================== -->
 
@@ -135,7 +229,9 @@
 
             <div class="ecommerce-widget ">
 
-                <div class="row " id="hidden-row">
+                <div class="card p-3" id="hidden-row">
+                    <div class=" row " id="hidden-row">
+
                     <h5 class="text-muted">Financial Dashboard</h5>
                     <div class=" col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 " type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 
@@ -159,6 +255,57 @@
                             </div>
                             <div id="sparkline-revenu1"></div>
                         </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/myproduct">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Cost Of Goods</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-warning font-weight-bold">
+                                    <i class="far fa-money-bill-alt fs-5"></i> 
+                                </div>
+                            </div>
+                           
+                            <div id="sparkline-revenu3"></div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/myproduct">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Total Sale</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                    <i class="far fa-money-bill-alt fs-5"></i> 
+                                </div>
+                            </div>
+                           
+                            <div id="sparkline-revenu3"></div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/myproduct">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Gross Profit </h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                    <i class="far fa-money-bill-alt fs-5"></i> 
+                                </div>
+                            </div>
+                           
+                            <div id="sparkline-revenu3"></div>
+                        </div>
+                    </a>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                         <a href="/myproduct">
@@ -209,268 +356,78 @@
                         </div>
                     </a>
                     </div>
-                </div>
-
-                <div class="row">
-                    
-                    
-                </div>
-                
-
-                
-                <div class="row dashboard-short-list">
-                    
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        
-                        <div class="card card-fluid">
-                            <h5 class="card-header drag-handle"> My Task </h5>
-                            {%if taskme == 0 %}
-                            <div class="card-body text-center justify-content-center">
-                                <i class=" far fa-calendar-alt fs-3" aria-hidden="true"></i>
-                                <h5 class=" text-center"> No Task yet!</h5>
-                              
-                                <p class=" text-center">CheckList On Your Task Now</p>
-                                
-                            </div>
-                           {%else %}
-                           <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
-                            {%for total_taskme in total_taskme%}      
-                            <li class="list-group-item align-items-center drag-handle">
-                                <span class="drag-indicator"></span>
-                                                        {% if total_taskme.status == 'pending'%}
-                                                  <i class="fas fa-check-circle text-warning mr-1" aria-hidden="true"></i>
-                                                        {% elif total_taskme.status == 'in-progress'%}
-                                                   <i class="fas fa-check-circle text-primary mr-1" aria-hidden="true"></i>
-                                                        {% elif total_taskme.status == 'completed'%}
-                                               <i class="fas fa-check-circle text-success mr-1" aria-hidden="true"></i>                                                          
-                                                        {% elif total_taskme.status == 'My Task'%}
-                                                <i class="fas fa-circle text-light mr-1" aria-hidden="true"></i>                                                          
-                                                             
-                                                    {%endif%}
-                                 <!--<i class="fas fa-check-circle text-success mr-1" aria-hidden="true"></i> -->
-                                  {{total_taskme.name}}
-                                  <span class="text-muted ml-1">  / {{total_taskme.status}}</span>
-                                <div><h6 class="text-primary"> </h6></div>
-                                <div class="btn-group ml-auto">
-                                    
-                                    <button class="btn btn-sm btn-outline-light"><i class="far fa-flag text-danger" aria-hidden="true"></i> {{total_taskme.end_date}}</button>
-                                    <button class="btn btn-sm btn-outline-light">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-light">
-                                        <i class="far fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </li>
-                            {%endfor%} 
-                            </ul>
-                            
-                            {%endif%}
-                            
-                            <div class="card-footer text-center">
-                                <a href="{{url_for('createtask')}}" class="btn-primary-link ">My TaskList</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    <!-- ============================================================== -->
-                    <!--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <a href="/achievement">
                         <div class="card">
-                            <h5 class="card-header"> Stock keeper</h5>
-                            <div class="card-body text-center justify-content-center">
-                                <i class=" far fa-clipboard fs-3" aria-hidden="true"></i>
-                            <h5 class=" text-center"> No Stock yet!</h5>
-                            <p class=" text-center">CheckList On Your Stock Now</p>
-                            
-                              
-                            </div>
-                            <div class="card-footer text-center">
-                                <a href="#" class="btn-primary-link">My CheckList</a>
+                            <div class="card-body">
+                                <h5 class="text-muted">My Task</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{total_Faq}}</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                    <i class="far fa-star fs-5"></i>  
+                                </div>
                             </div>
                         </div>
-                    </div>-->
-                
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        
-                        <div class="card card-fluid">
-                            <h5 class="card-header drag-handle"> Stock Master</h5>
-                            {%if taskme == 0 %}
-                            <div class="card-body text-center justify-content-center">
-                                <i class=" far fa-clipboard fs-3" aria-hidden="true"></i>
-                            <h5 class=" text-center"> No Stock yet!</h5>
-                            <p class=" text-center">CheckList On Your Stock Now</p>
-                            
-                              
-                            {%else %}
-                            <ul class="sortable-lists list-group list-group-flush list-group-bordered" id="items">
-                                {%for total_taskme in total_taskme%}      
-                                <li class="list-group-item align-items-center drag-handle">
-                                    <span class="drag-indicator"></span>
-                                                            {% if total_taskme.status == 'pending'%}
-                                                      <i class="fas fa-check-circle text-warning mr-1" aria-hidden="true"></i>
-                                                            {% elif total_taskme.status == 'in-progress'%}
-                                                       <i class="fas fa-check-circle text-primary mr-1" aria-hidden="true"></i>
-                                                            {% elif total_taskme.status == 'completed'%}
-                                                   <i class="fas fa-check-circle text-success mr-1" aria-hidden="true"></i>                                                          
-                                                            {% elif total_taskme.status == 'My Task'%}
-                                                    <i class="fas fa-circle text-light mr-1" aria-hidden="true"></i>                                                          
-                                                                 
-                                                        {%endif%}
-                                     <!--<i class="fas fa-check-circle text-success mr-1" aria-hidden="true"></i> -->
-                                      {{total_taskme.name}}
-                                      <span class="text-muted ml-1">  / {{total_taskme.status}}</span>
-                                    <div><h6 class="text-primary"> </h6></div>
-                                    <div class="btn-group ml-auto">
-                                        
-                                        <button class="btn btn-sm btn-outline-light"><i class="far fa-flag text-danger" aria-hidden="true"></i> {{total_taskme.end_date}}</button>
-                                        <button class="btn btn-sm btn-outline-light">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-light">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                                {%endfor%} 
-                                </ul>
-                                {%endif%}
-                            <div class="card-footer text-center">
-                                <a href="#" class="btn-primary-link">My CheckList</a>
-                            </div>
-                        </div>
+                    </a>
                     </div>
                 </div>
+
+        
+
+                
+                
                 <div class=" row">
                     <!-- ============================================================== -->
                     <!-- accrodions style one -->
                     <!-- ============================================================== -->
-                {% if total_ware > 0 and auth_task > 0 and total_ach > 0 %}
                 
-                {% else %}
-                    <div class=" col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
-                       
-                               
+
+                    <div class=" col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 ">
+                        
                         <div class="accrodion-regular">
                             <div id="accordion">
-                                <div class="card" style="margin-bottom:20px;">
+                                <div class="card">
                                     <div class="card-header" id="headingOne">
-                                        <div class="custom-control custom-checkbox was-validated">
-                                            <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
-                                            {%if total_ware == 0 %}
-                                            <h5 class="section-title">Set Up Checklist</h5>
-                                            <p class="text-success">CheckList On Your Dashboard</p>
-                                          
-                                            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 55%"></div>
-                                            </div>
-                                            {%elif auth_task== 0 %}
-                                            <h5 class="section-title">Set Up Checklist</h5>
-                                            <p class="text-success">CheckList On Your Dashboard</p>
-                                          
-                                            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 55%"></div>
-                                            </div>
-                                            {%elif total_ach== 0  %}
-                                            <h5 class="section-title">Set Up Checklist</h5>
-                                            <p class="text-success">CheckList On Your Dashboard</p>
-                                          
-                                            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar bg-success  progress-bar-striped progress-bar-animated" style="width: 80%"></div>
-                                            </div>
-                                            {%else  %}
-                                            <h5 class="section-title">Set Up Checklist</h5>
-                                            <p class="text-success">CheckList On Your Dashboard</p>
-                                          
-                                            <label class="text-success">Congratulations, CheckList Completed 🎉</label>
-                                            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-                                            </div>
-                                            {%endif%}
-
-                                        
-                                        </div>
-                                       
+                                        <h5 class="mb-0">
+                                           <button class="btn btn-link text-center" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                          Shortcuts
+                                           </button>
+                                          </h5>
                                     </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
+                                    <div class="card-body text-center" style="margin-bottom:50px;">
+                                    <div class="container row">
+                                        <div class=" col-xl-3 col-lg-3">
+                                            <a href="/create">  <i class="far fa-file-alt text-success shadow p-4 mb-3" style="font-size:30px; border-radius:30px;" aria-hidden="true"></i></a><br>
+                                           Scan Invoice
+                                        </div> 
+                                        <div class=" col-xl-3 col-lg-3">
+                                            <a href="/addproduct">   <i class="fab fa-discourse text-success shadow p-4 mb-3" style="font-size:30px; border-radius:30px;" aria-hidden="true"></i></a><br>
 
-                                            {%if total_ware == 0 %}
-                                            <h5 class="section-title">Set Up Checklist</h5>
-                                            <p class="text-success">CheckList On Your Dashboard</p>
-                                          
-                                            <p class="lead"> 
-                                                <i class=" far fa-check-circle text-success" aria-hidden="true"> </i>Start by creating your warehouse to stay organised 
-                                            </p>
-                                            <a href="{{url_for('warehouse')}}" class="btn btn-success">Add WareHouse </a>
-                                            <hr>
-                                            {%endif%}
-                                            {%if auth_task== 0 %}
-                                            <p class="lead"> 
-                                                <i class=" far fa-check-circle text-success" aria-hidden="true"></i>  Add Unlimited Product to your warehouse
-                                            </p>
-                                            <a href="{{url_for('addproduct')}}" class="btn btn-success">Add Product </a>
-                                            <hr>
-                                            {%endif%}
-                                            {%if total_ach== 0 %}
-                                            <p class="lead"> 
-                                                <i class=" far fa-check-circle text-success" aria-hidden="true"></i>  Create Task and Achievements to Track Growth
-                                            </p>
-                                            <a href="{{url_for('createachievement')}}" class="btn btn-success">Add Achievement </a>
-                                            {%endif%}
-                                           <!-- <a href="{{url_for('warehouse')}}" class="btn btn-success">Congratulations 🎉</a>
-                                        -->
-                                        </div>
-                                    </div>
+                                            Stock Master
+                                         </div> 
+                                         <div class=" col-xl-3 col-lg-3">
+                                           <a href="/addproduct"> <i class="fab fa-opencart text-success shadow p-4 mb-3" style="font-size:30px; border-radius:30px;" aria-hidden="true"></i></a><br>
+
+
+                                            Add Product
+                                         </div>  
+                                         <div class=" col-xl-3 col-lg-3">
+                                            <a href="/createtask">   <i class="far fa-plus-square text-success shadow p-4 mb-3" style="font-size:30px; border-radius:30px;" aria-hidden="true"></i></a><br>
+
+                                            Add Task    
+                                         </div>  
+
+
+                                         <p class="mt-5"> Boost your workflow in minutes with ready-made templates</p>
+
+                                         
+                                    </div>  
+                                    </div>  
                                 </div>
-                                <!--<div class="card">
-                                    <div class="card-header" id="headingTwo">
-                                        <div class="custom-control custom-checkbox was-validated">
-                                            <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
-                                            <label class="text-success">Second CheckList</label>
-                                        </div>
-                                        <h5 class="mb-0">
-                                           <button style="font-size:20px;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Track All Products
-                                         </button>       </h5>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <p class="lead"> Start by creating your warehouse to stay organised</p>
-
-                                           <p> Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                                            <a href="{{url_for('addproduct')}}" class="btn btn-success">Let's Go</a>
-
-                                        </div>
-                                    </div>
-                                </div>-->
-                                <!--<div class="card mb-5">
-                                    <div class="card-header" id="headingThree">
-                                       
-                                        <div class="custom-control custom-checkbox was-validated">
-                                            <input type="checkbox" class="custom-control-input valid" style="font-size:20px;"  checked id="customControlValidation2" required>
-                                            <label class="text-success">Last CheckList</label>
-                                        </div>
-                                        
-                                        <h5 class="mb-0">
-                                        <button style="font-size:20px;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Set Your Business Achievement
-                                         </button>
-                                                   </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <p class="lead"> Start by creating your warehouse to stay organised</p>
-
-                                            <p> Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                                            <a href="{{url_for('createachievement')}}" class="btn btn-success">Go Now!</a>
-                                        </div>
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
                     </div>
-                    {%endif%}
 
 
                     <div class=" col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
@@ -481,26 +438,28 @@
                                     <div class="card-header" id="headingOne">
                                         <h5 class="mb-0">
                                            <button class="btn btn-link text-center" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                          Tips On Your Dashboard
+                                            
+                                            Help Center / <span class="text-muted"> Tips On Abitrack</span>
                                            </button>
                                           </h5>
                                     </div>
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div class="card-body text-center">
-                                           <img src="https://wishlistmember.com/wp-content/uploads/2024/03/zoom-icon.png" style="width:100px;">
-                                           <h4> Tips On Abitrack</h4>
-                                           <p> Boost your workflow in minutes with ready-made templates</p>
+                                            
+                                            <iframe style="width:100%; height:300px;" src="https://www.youtube.com/embed/6xd4oIP6Uws" title="018 CULTUR FM (2024 Live Afrobeats Mix by MS DSF)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                             <a href="#" class="btn btn-primary text-center">Watch Demo</a>
                                         </div>
                                     </div>
                                 </div>
                                 
+
                                 
                             </div>
                         </div>
                     </div>
                     
             </div>
+            
         </div>
     </div>
     <!-- ============================================================== -->
@@ -511,7 +470,44 @@
     <!-- end footer -->
     <!-- ============================================================== -->
 </div>
+    <script>
+        const chartData = {{ chart_data | tojson }};
+        
+        const labels = chartData.map(item => `${item.start_date} to ${item.end_date}`);
+        const budgets = chartData.map(item => item.budget);
 
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Budgets',
+                    data: budgets,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Budget Overview'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
 <script>
     function toggleRowVisibility() {

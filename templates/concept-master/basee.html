@@ -8,7 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css' rel='stylesheet'>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
      <!-- Add these in your base template or the template where you're using modals -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -69,8 +69,15 @@
                 </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
-                        
-                        
+
+
+                        <li class="nav-item dropdown connection mt-2 mr-3">
+                        <a href="/integration" class="btn btn-primary"><i class="fas fa-phone-squarefar fa-folder-open" aria-hidden="true"></i> Documentation</a>
+                        </li>
+
+                        <li class="nav-item dropdown connection mt-2 ">
+                            <a href="#" class="btn btn-primary"><i class="fas fa-phone-square" aria-hidden="true"></i> Book Appointment</a>
+                            </li>
                         <li class="nav-item dropdown connection">
                             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
                             <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
@@ -110,7 +117,7 @@
                                     <h5 class="mb-0 text-white nav-user-name">{{current_user.company_name}} </h5>
                                     <span class="status"></span><span class="ml-2">{{current_user.category}}</span>
                                 </div>
-                                <a class="dropdown-item" href="{{url_for('updateprofile', id=current_user.id)}}"><i class="fas fa-user mr-2"></i>Account</a>
+                                <a class="dropdown-item" href="{{url_for('updateprofile', id=current_user.id)}}"><i class="far fa-sun mr-2"></i>Settings</a>
                                 <a class="dropdown-item" href="{{url_for('logout')}}"><i class="fas fa-power-off mr-2"></i>Logout</a>
                             </div>
                         </li>
@@ -150,11 +157,11 @@
                                 <a class="nav-link" style="font-size:15px;" href="{{url_for('myproduct')}}"  aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-chart-pie"></i>My Product</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" style="font-size:15px;" href="{{url_for('cashflow')}}"  aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-money-bill-alt"></i>Cash Flow</a>
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('cashflow')}}"  aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="far fa-chart-bar"></i>Analytics</a>
                             </li>
-                           <!-- <li class="nav-item ">
-                                <a class="nav-link" style="font-size:15px;" href="{{url_for('reportme')}}"  aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fab fa-fw fa-wpforms"></i>Reports</a>
-                            </li>-->
+                            <li class="nav-item ">
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('reportme')}}"  aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-money-bill-alt"></i>Sales</a>
+                            </li>
                             
                             <li class="nav-divider">
                                 Shortcut
@@ -169,8 +176,37 @@
                             <li class="nav-item">
                                 <a class="nav-link" style="font-size:15px;" href="{{url_for('addemployee')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fas fa-fw fa-table"></i>Employees</a>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link" style="font-size:15px;" href="{{url_for('updateprofile', id=current_user.id)}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="far fa-sun fa-fw"></i>Settings</a>
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('integrationapp')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="far fa-list-alt fa-fw"></i>Integrations</a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('pricingme')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="far fa-gem fa-fw"></i>PRO</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:15px;" href="{{url_for('docs')}}"  aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="far fa-folder-open fa-fw"></i>Docs</a>
+                            </li>
+
+                           
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw far fa-sun"></i>Settings</a>
+                                <div id="submenu-3" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{url_for('updateprofile', id=current_user.id)}}">Settings</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{url_for('updateprofile', id=current_user.id)}}">My Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{url_for('logout')}}">Log Out</a>
+                                        </li>
+                                       
+                                    </ul>
+                                </div>
                             </li>
                             <!--
                             <li class="nav-item">
