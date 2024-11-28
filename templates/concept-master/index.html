@@ -123,7 +123,7 @@
     
 
 
-            <div class="card row">
+            <div class=" row">
             {% if total_ware > 0 and auth_task > 0 and total_ach > 0 %}
                 
             {% else %}
@@ -240,12 +240,12 @@
                                 <h5 class="text-muted">Total Income Budget</h5>
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1">
-                                        {{current_user.currency}}{{ total_budget }}.00
-                                        <!--{%if current_user.currency == None%}
-                                        0.00
+                                       <!-- {{current_user.currency}}{{ total_budget }}.00-->
+                                     {%if current_user.currency == None%}
+                                     {{ total_budget }}
                                         {%else%}
                                         {{current_user.currency}} {{ total_budget }}
-                                        {%endif%}-->
+                                        {%endif%}
                                     </h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success">
@@ -260,9 +260,17 @@
                         <a href="/myproduct">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="text-muted">Cost Of Goods</h5>
+                                <h5 class="text-muted">Total Sales Cost</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                    
+                                    <h1 class="mb-1">
+                                       
+                                        {%if current_user.currency == None%}
+                                         {{total_wholesale_price | int}}
+                                        {%else%}
+                                        {{current_user.currency}}  {{total_wholesale_price | int}}
+                                        {%endif%}
+                                    </h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-warning font-weight-bold">
                                     <i class="far fa-money-bill-alt fs-5"></i> 
@@ -277,9 +285,15 @@
                         <a href="/myproduct">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="text-muted">Total Sale</h5>
+                                <h5 class="text-muted">Total Cost Of Goods</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                    <h1 class="mb-1">
+                                        {%if current_user.currency == None%}
+                                        {{total_amount | int}}
+                                        {%else%}
+                                        {{current_user.currency}} {{total_amount | int}}
+                                        {%endif%}
+                                    </h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                     <i class="far fa-money-bill-alt fs-5"></i> 
@@ -296,7 +310,13 @@
                             <div class="card-body">
                                 <h5 class="text-muted">Gross Profit </h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">{{current_user.currency}}{{total_amount | int}}</h1>
+                                    <h1 class="mb-1">
+                                        {%if current_user.currency == None%}
+                                        {{profit_price | int}}
+                                        {%else%}
+                                        {{current_user.currency}} {{profit_price | int}}
+                                        {%endif%}
+                                    </h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
                                     <i class="far fa-money-bill-alt fs-5"></i> 
@@ -362,7 +382,7 @@
                             <div class="card-body">
                                 <h5 class="text-muted">My Task</h5>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">{{total_Faq}}</h1>
+                                    <h1 class="mb-1">{{taskme}}</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                     <i class="far fa-star fs-5"></i>  

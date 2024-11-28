@@ -113,7 +113,13 @@
                                                     </span>
                                                 {% endif %}</td>
                                                 <td>{{users.quantity}}</td>
-                                                <td>{{users.price}}</td>
+                                                <td>{%if current_user.currency == None%}
+                                                    {{users.price}}
+                                                    {%else%}
+                                                    {{current_user.currency}}{{users.price}}
+                                                    {%endif%}
+                                                    
+                                                    </td>
                                                <!-- <td><span class="badge-dot badge-brand mr-1"></span>InTransit </td>-->
                                                <td><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
                                             <td></td>

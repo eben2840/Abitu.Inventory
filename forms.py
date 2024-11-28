@@ -36,8 +36,6 @@ class LogForm(FlaskForm):
     challenges = StringField('challenges')
     future = StringField('future')
     date = DateField('Date', validators=[DataRequired()])
-    
-   
     submit = SubmitField('Send')
     
 class ChallengesForm(FlaskForm):
@@ -223,6 +221,7 @@ class AddItemForm(FlaskForm):
     des= StringField('Description')
     # start_date = DateField('Start Date', validators=[DataRequired()])
     tag= SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Medium','Medium'), ('Low','Low') ], default=None )
+    whole_price = StringField('Price', validators=[DataRequired()])
     price = StringField('Price', validators=[DataRequired()])
     submit = SubmitField('Add Item')
     

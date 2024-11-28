@@ -369,6 +369,7 @@ class Item(db.Model):
     unique_code = db.Column(db.String(12))
     name = db.Column(db.String())
     des=db.Column(db.String())
+    whole_price  = db.Column(db.Float)
     quantity = db.Column(db.Integer)  # Ensure this is Integer
     start_date = db.Column(db.Date)
     price = db.Column(db.Float)
@@ -3071,6 +3072,8 @@ def homepage():
     
     users = Budget.query.filter_by(budgetId=current_user.id).order_by(Budget.id.desc()).all()
     total_budget = sum(int(user.budget) for user in users) 
+    total_wholesale_price = db.session.query(func.sum(Item.whole_price)).filter_by(clientid=current_user.id).scalar()
+
     
     weekly_work = calculate_weekly_work()
     workload_limit = 1000  
@@ -3093,6 +3096,7 @@ def homepage():
         instock = Item.query.filter_by(clientid=current_user.id).count()
         total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
         total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
+        total_task = Faq.query.filter_by(faqid=current_user.id).count()
         total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
         total_message = Committee.query.filter_by(id=current_user.id).count()
         total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
@@ -3100,6 +3104,7 @@ def homepage():
         taskme = Challenge.query.filter_by(taskId=current_user.id).count()
         total_taskme = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()
         print("Total categories:", total_cat)
+        
     users_with_positions = db.session.query(User.fullname, User.position).filter(User.position.isnot(None)).all()
     total_people_with_positions = db.session.query(User).filter(User.position != '').count()
    
@@ -3119,6 +3124,9 @@ def homepage():
             # Handle invalid data
             flash('Invalid price or quantity found', 'warning')
             continue
+    
+    total_wholesale_price = total_wholesale_price or 0.0
+    profit_price = total_amount - total_wholesale_price
         
         
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
@@ -3165,7 +3173,7 @@ def homepage():
             return redirect('homepage')
     
 
-    return render_template('concept-master/index.html',total_sum=total_sum,total_amount=total_amount,chart_data=chart_data, title='addalumni',total_users=total_users,auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock,user=user, form=form,total_taskme=total_taskme,taskme=taskme,
+    return render_template('concept-master/index.html',profit_price=profit_price,total_wholesale_price=total_wholesale_price,total_sum=total_sum,total_amount=total_amount,chart_data=chart_data, title='addalumni',total_users=total_users,auth_task=auth_task,total_ach=total_ach,total_ware=total_ware,outstock=outstock, instock=instock,user=user, form=form,total_taskme=total_taskme,taskme=taskme,
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
@@ -3548,6 +3556,7 @@ def addproduct():
             tag=form.tag.data,
             des=form.des.data,
             price=form.price.data,
+            whole_price=form.whole_price.data,
             quantity=int(form.quantity.data),
         )
         try:
