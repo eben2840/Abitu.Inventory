@@ -4,6 +4,7 @@ import pprint
 import re
 import secrets
 import ssl
+import uuid
 from requests import post
 import smtplib
 import csv
@@ -108,6 +109,11 @@ class Person(db.Model, UserMixin):
     name= db.Column(db.String())
     latitude = db.Column(db.Float) 
     longitude = db.Column(db.Float) 
+    points = db.Column(db.Integer, default=0)  # Points for referral system
+    referred_by = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=True)  # Referrer ID
+    referred_by_user = db.relationship('Person', remote_side=[id])  # Relationship for referrer
+    
+    
     # role= db.Column(db.String())
     email= db.Column(db.String())
     bus_email= db.Column(db.String())
@@ -121,6 +127,8 @@ class Person(db.Model, UserMixin):
     image_file = db.Column(db.String())
     password = db.Column(db.String(128))
     confirm_password = db.Column(db.String(128))
+    
+   
     
     def __repr__(self):
         return f"Person('{self.id}', {self.name}')"
@@ -1492,7 +1500,7 @@ def update_goals_status(id,status):
         print(e)
         print("status:",goals.status)
         flash ("Status Successfully Changed")
-    return redirect (url_for('showchallenge'))
+    return redirect (url_for('taskme'))
 
 
 @app.route('/update_task_status/<int:id>/<string:status>', methods=['POST', 'GET'])
@@ -3177,66 +3185,102 @@ def homepage():
           total_budget=total_budget,   workload_percentage=workload_percentage,        current_time=current_time, total_cat=total_cat,  total_stock=total_stock, greeting=greeting, total_challenges=total_challenges,total_message=total_message,online=online,message=message,total_Faq=total_Faq, total_leaders=total_leaders,total_people_with_positions=total_people_with_positions, users=users, total_students=total_students,users_with_positions=users_with_positions, total_getfundstudents=total_getfundstudents,challenges=challenges)
 
 
+@app.route('/signreferral', methods=['GET', 'POST'])
+def signreferral():
+    referrer_id = request.args.get('ref')  # Get the referrer ID from the URL
 
-@app.route('/signmein', methods=['POST','GET'])
+    if request.method == 'POST':
+        company_name = request.form['company_name']
+        email = request.form['email']
+        password = request.form['password']
+        
+        # Create a new person record
+        new_person = Person(company_name=company_name, email=email, password=password, referred_by=referrer_id)
+
+        # Add new person to the database
+        db.session.add(new_person)
+        db.session.commit()
+
+        # If a referrer exists, give them a point
+        if referrer_id:
+            referrer = Person.query.get(referrer_id)
+            if referrer:
+                referrer.points += 1  # Award 1 point for a successful referral
+                db.session.commit()
+
+        flash('Account created successfully! You can now log in.', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('concept-master/pages/sign-up.html')
+@app.route('/signmein', methods=['POST', 'GET'])
 def signmein():
     print("Starting signup...")
+    
+    referrer_id = request.args.get('ref')
+    print(f"Referrer ID from URL: {referrer_id}")
+
     form = Registration()
     print(f"Form data: {form.data}")
+
     if form.validate_on_submit():
-        
         print("Form validated successfully")
+
         checkUser = Person.query.filter_by(email=form.email.data).first()
         if checkUser:
-            flash(f'This Email has already been used','danger')
+            flash(f'This Email has already been used', 'danger')
             print("Email already in use")
             return redirect(url_for('signmein'))
+
         if not is_gmail_address(form.email.data):
             flash('Please provide a valid email address.', 'danger')
-            print("Invalid email address") 
+            print("Invalid email address")
             return redirect(url_for('signmein'))
+
         password = form.password.data
         if len(password) < 6 or not re.search("[A-Z]", password) or not re.search("[!@#$%^&*(),.?\":{}|<>]", password):
             flash('Password must be at least 6 characters long, contain at least one uppercase letter, and include at least one symbol (!@#$%^&*(),.?":{}|<>).', 'danger')
             print("Invalid password")
             return redirect(url_for('signmein'))
-      
-        else:
-            user = Person(password=form.password.data,
-                        company_name=form.company_name.data,
-                      
-                        # category=form.category.data,
-                        email=form.email.data,
-                      
-                        )
-            db.session.add(user)
-            db.session.commit()
-            
-            email_body = render_template(
-                'email_template.html',
-                company_name=form.company_name.data,
-                # company_name=current_user.company_name,  
-            )
-            send_email(
-                email_receiver=form.email.data,
-                subject="Congratulations, You're in!🎉",
-                body=email_body
-            )
-            # send_email()
-            flash("Congratulation on creating your account.", 'success')
-            login_user(user, remember=True)
-            print("User created and logged in successfully")
-            return redirect (url_for('confirmpage'))
+
+        # Create the new user
+        user = Person(
+            password=form.password.data,
+            company_name=form.company_name.data,
+            email=form.email.data,
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        # Add points to the referrer after sign-up
+        if referrer_id:
+            referrer = Person.query.get(referrer_id)
+            if referrer:
+                print(f"Referrer Points Before: {referrer.points}")
+                if referrer.points is None:
+                    referrer.points = 0
+                referrer.points = (referrer.points or 0) + 10  # Safe increment
+                db.session.commit()
+                print(f"Referrer Points After: {referrer.points}")
+
+        # Send the email and other logic
+        email_body = render_template('email_template.html', company_name=form.company_name.data)
+        send_email(
+            email_receiver=form.email.data,
+            subject="Congratulations, You're in!🎉",
+            body=email_body
+        )
+
+        flash("Congratulations on creating your account.", 'success')
+        login_user(user, remember=True)
+        print("User created and logged in successfully")
+        return redirect(url_for('confirmpage'))
     else:
-        print(form.errors)
-        # flash("An error occupied, kindly fill the form again", 'danger')
         print("Form validation failed")
-        
         for field, errors in form.errors.items():
-        # for errors in form.errors.items():
             for error in errors:
-                # flash(f"{error}", 'danger')
-                flash(f"Error: {error}", 'danger')
+                flash(f"Error in {field}: {error}", 'danger')
+
+    return render_template('concept-master/pages/sign-up.html', form=form)
 
     return render_template('concept-master/pages/sign-up.html', form=form) 
 
@@ -3358,7 +3402,10 @@ def employee():
 @app.route('/reportme', methods=['POST','GET'])
 @login_required
 def reportme():
-    return render_template('concept-master/report.html') 
+    total_students = Item.query.filter_by(clientid=current_user.id).count()
+    users = Item.query.filter_by(clientid=current_user.id).order_by(Item.id.desc()).all()
+    return render_template('concept-master/report.html',total_students=total_students,users=users)  
+
     
 
 
@@ -3612,21 +3659,31 @@ def banner():
     return render_template('concept-master/banner.html')
 
 
-@app.route('/addemployee', methods=['POST','GET'])
+@app.route('/milestones', methods=['POST','GET'])
 @login_required
-def addemployee():
-    return render_template('concept-master/addempl.html')
+def milestones():
+    referral_link = url_for('signmein', _external=True) + f'?ref={current_user.id}'
+    return render_template('concept-master/addempl.html', points=current_user.points, user=current_user, referral_link=referral_link)
   
 @app.route('/taskme', methods=['POST','GET'])
 @login_required
 def taskme():
+    task_com = Faq.query.filter_by(faqid=current_user.id, status='completed').count()
+    task_pend = Faq.query.filter_by(faqid=current_user.id, status='pending').count()
+    task_In = Faq.query.filter_by(faqid=current_user.id, status='in-progress').count()
+    
+    if current_user.role =='admin':
+        users=Faq.query.order_by(Faq.id.desc()).all()
+    else:
+        users=Faq.query.filter_by(faqid=current_user.id).order_by(Faq.id.desc()).all()
+        
     status_version = Challenge.query.filter_by(status=None).all()
     for hospital in status_version:
         hospital.status = 'My Task'
     db.session.commit()
     auth_task = Challenge.query.filter_by(taskId=current_user.id).count()
     users = Challenge.query.filter_by(taskId=current_user.id).order_by(Challenge.id.desc()).all()
-    return render_template('concept-master/pages/sortable-nestable-lists.html',auth_task=auth_task,users=users)
+    return render_template('concept-master/pages/sortable-nestable-lists.html',task_In=task_In,task_com=task_com,task_pend=task_pend,auth_task=auth_task,users=users)
 
 @app.route('/createtask', methods=['POST','GET'])
 @login_required
@@ -3637,7 +3694,7 @@ def createtask():
                           taskId=current_user.id,
                         #   status=form.status.data,
                    tag=form.tag.data,
-                #    task=form.task.data,
+                   task=form.task.data,
                 #    start_date=form.start_date.data,  
                     end_date=form.end_date.data
                   )

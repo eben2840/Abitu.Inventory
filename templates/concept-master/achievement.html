@@ -91,7 +91,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="col-2 text-truncate">
-                                                    <span class="d-inline-block text-truncate" style="max-width: 70px;">
+                                                    <span class="d-inline-block text-truncate fs-6" style="max-width: 70px;">
                                                    {{users.answers}}
                                                       </span>
                                                         
@@ -99,15 +99,15 @@
                                             
 
                                                 <td> {% if users.campus == 'High' %}
-                                                    <span class="badge badge-pill bg-success text-white me-2">
+                                                    <span class="badge badge-pill  p-2 bg-success text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Favorite' %}
-                                                    <span class="badge badge-pill bg-warning text-white me-2">
+                                                    <span class="badge badge-pill bg-warning p-2 text-white me-2">
                                                         <i class=" fas fa-star fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                                                     {% elif users.campus == 'Low' %}
-                                                    <span class="badge badge-pill bg-danger text-white me-2">
+                                                    <span class="badge badge-pill bg-danger p-2 text-white me-2">
                                                         <i class=" fas fa-tags fs-9" aria-hidden="true"></i> {{ users.campus }}
                                                     </span>
                             
@@ -120,8 +120,8 @@
 
 
                                                 <td class="col-2 text-truncate">
-                                                    <span class="d-inline-block text-truncate" style="max-width: 250px;">
-                                                        <i class="far fa-file" aria-hidden="true"></i> {{users.caption}}
+                                                    <span class="d-inline-block text-truncate fs-6" style="max-width: 150px;">
+                                                        {{users.caption}}
                                                       </span>
                                                         
                                                 </td>
@@ -143,10 +143,10 @@
 
 
                                                     <td>
-                                                        <a href="#" class="btn "><i class=" fas fa-flag text-success" aria-hidden="true"></i> {{users.start_date}}</a></td>
+                                                        <a href="#" class="btn fs-6"><i class=" fas fa-flag text-success" aria-hidden="true"></i> {{users.start_date}}</a></td>
 
                                                     <td>
-                                                        <a href="#" class="btn "><i class=" fas fa-flag text-danger" aria-hidden="true"></i> {{users.end_date}}</a></td>
+                                                        <a href="#" class="btn fs-6"><i class=" fas fa-flag text-danger" aria-hidden="true"></i> {{users.end_date}}</a></td>
 
                                                    
                                                    
@@ -154,19 +154,20 @@
                                                     <td>
                                                         
                                                         <div class="dropdown"><button class="btn btn-sm  btn-outline-light " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                          <div class="dropdown">
+                                                            <div class="dropdown">
                                                               <i class="fas fa-list" aria-hidden="true"></i>
-                                                      
+                                                      <!--
                                                               <ul class="dropdown-menu">
-                                                                 <!-- <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
+                                                                <li><a  class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='pending')}}">Pending</a></li>
                                                                   <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='in-progress')}}">In-progress</a></li>
                                                                   <li><a class="dropdown-item" href="{{url_for('update_goals_status', id=users.id, status='completed')}}">Completed</a></li>
-                                                                 -->
+                                                                
                                                                  <li><a class="dropdown-item" href="#">View Details</a></li>
                                                                  <li><a class="dropdown-item" href="#">Update</a></li>
                                                                   <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                                </ul>
-                                                           </div>
+                                                                </ul>-->
+                                                         
+                                                        </div> 
                             
                                                 </td>
                                                   
@@ -186,6 +187,28 @@
                     </div>
                     
                 </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Celebrate Your Achievement </h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="https://www.shutterstock.com/shutterstock/videos/1072665914/thumb/7.jpg?ip=x480" style="width:100%;">
+                         <h4 class="mt-2"> Whether it's a personal goal or a professional achievement, our platform is designed to help you track, manage, and celebrate your progress every step of the way.
+<br><br>
+                            We understand that success is not just about the destination, but the journey. That's why we've created a space where you can reflect on your accomplishments, set new goals, and continue growing. </h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Let Go 🎉</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                
                 {% endif %}
                 
                 
@@ -197,4 +220,14 @@
     </div>
    
 </div>
+
+
+<script>
+    // Wait for the DOM to fully load
+    document.addEventListener("DOMContentLoaded", function () {
+      // Automatically show the modal
+      var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      modal.show();
+    });
+  </script>
 {% endblock body %}

@@ -31,58 +31,72 @@
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
              
+                <div class=" bg-holder text-center p-5 mb-5 z-index-2 alert alert-light alert-dismissible fade show shadow" role="alert" style="background-image:url();background-position:bottom right; background-size:cover;background-position: center;
+                    background-repeat: no-repeat; ">
+                    <img src="https://cdn.dribbble.com/users/1283120/screenshots/6323960/mib-giftbox-with-background.gif" style="width:200px;">
+                    <h4 class="fs-1"><b> Earn Points By Refering People.</b></h4>
+                    <h6 class="fs-6">Encourage business by sharing your unique referral link, Its that easy<h6>
+                        <p class="fs-4"><b>Your have earned: +{{ points }} Points</b></p>
+                    
+                        <div class="col col-sm-8 d-flex mt-3 mx-auto col-lg-8 offset-sm-1 offset-lg-0">
+                            <input type="text" required="" value="{{ referral_link }}" readonly onclick="this.select()" data-parsley-length="" placeholder="Type Price..." class="form-control">
+                            <button class="btn btn-space p-3 btn-outline-light" onclick="navigator.clipboard.writeText('{{ referral_link }}')">Copy</button>
+                        </div>
+                        
+                    <!-- Referral terms and conditions<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                </div>
+
+
                 <div class="row">
-                    <!-- ============================================================== -->
-                    <!-- valifation types -->
-                    <!-- ============================================================== -->
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <!-- metric -->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">Add Team Member</h5>
                             <div class="card-body">
-                                <form id="validationform" data-parsley-validate="" novalidate="">
-                                    
-                                    
-                                    
-                                    
-                                    <div class="form-group row">
-                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">First Name</label>
-                                        <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" required="" data-parsley-minlength="" placeholder="First Name..." class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Last Name</label>
-                                        <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" required="" data-parsley-minlength="" placeholder="Last Name..." class="form-control">
-                                        </div>
-                                    </div>
-                                  
-                                    
-                                    <div class="form-group row">
-                                        <label class="col-12 col-sm-3 col-form-label text-sm-right"> E-mail</label>
-                                        <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="email" required="" data-parsley-min="6" placeholder="E-mail" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Role</label>
-                                        <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="email" required="" data-parsley-min="6" placeholder="" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="form-group row text-right">
-                                        <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
-                                            <button class="btn btn-space btn-secondary">Reset</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <div class="row mx-auto justify-content-center">
+                                    <img src="https://store.toogoodtogo.com/static/dd9dae410f0e65fd9d8b.svg" style="width:200px;">
+                                    <h5 class="text-center">100+ Points</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mx-auto justify-content-center">
+                                    <img src="https://store.toogoodtogo.com/static/dd9dae410f0e65fd9d8b.svg" style="width:200px;">
+                                    <h5 class="text-center">350+ Points</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mx-auto justify-content-center">
+                                    <img src="https://store.toogoodtogo.com/static/dd9dae410f0e65fd9d8b.svg" style="width:200px;">
+                                    <h5 class="text-center">750+ Points</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mx-auto justify-content-center">
+                                    <img src="https://store.toogoodtogo.com/static/dd9dae410f0e65fd9d8b.svg" style="width:200px;">
+                                    <h5 class="text-center">1000+ Points</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                
+
+                                  
                     <!-- ============================================================== -->
                     <!-- end valifation types -->
                     <!-- ============================================================== -->

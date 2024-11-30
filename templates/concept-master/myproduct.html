@@ -74,7 +74,7 @@
                                                 <th class="border-0">WareHouse</th>
                                                 <th class="border-0">Condition</th>
                                                 <th class="border-0">Quantity</th>
-                                                <th class="border-0">Price</th>
+                                                <th class="border-0">Selling Price</th>
                                                 <th class="border-0"></th>
                                                 <th class="border-0"></th>
                                             </tr>
@@ -90,7 +90,7 @@
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>{{ users.unique_code }} </td>
+                                                <td><span class="bg-light p-1">{{ users.unique_code }}</span> </td>
 
                                                 <td class="col-2 text-truncate">
                                                     <span class="d-inline-block text-truncate" style="max-width: 50px;">
@@ -148,6 +148,26 @@
 
             </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product Into Your WareHouse</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="https://st.depositphotos.com/71310186/60630/i/450/depositphotos_606303182-stock-illustration-warehouse-worker-uniform-drive-forklift.jpg" style="width:100%;">
+             <h4 class="mt-2"> Seamlessly add products to your warehouse in just a few clicks. Whether you're stocking up on essentials or introducing new items, our system ensures accurate tracking and effortless organization.
+<br><br>
+                Streamline your operations with features like bulk uploads, real-time updates, and category tagging. Stay on top of your inventory levels, monitor stock movements, and always know what’s in store.</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Let Go 🎉</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
@@ -171,4 +191,14 @@
     <!-- end footer -->
     <!-- ============================================================== -->
 </div>
+
+<script>
+    // Wait for the DOM to fully load
+    document.addEventListener("DOMContentLoaded", function () {
+      // Automatically show the modal
+      var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      modal.show();
+    });
+  </script>
+
 {% endblock body %}

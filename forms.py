@@ -41,7 +41,7 @@ class LogForm(FlaskForm):
 class ChallengesForm(FlaskForm):
     name = StringField('name')
     tag = SelectField('tag', choices=[('Tag','Tag'),('High', 'High'), ('Favorite','Favorite'), ('Low','Low') ], default=None )
-    # task = StringField('task')
+    task = StringField('task')
     # start_date = DateField('Start Date', validators=[DataRequired()])
     end_date = DateField('End Date', validators=[DataRequired()])
     submit = SubmitField('Send')
