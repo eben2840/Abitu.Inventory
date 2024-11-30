@@ -1512,7 +1512,7 @@ def update_task_status(id,status):
     except Exception as e:
         print(e)
         flash ("Status Successfully Changed")
-    return redirect (url_for('task'))
+    return redirect (url_for('taskme'))
 
 
 
@@ -3663,6 +3663,10 @@ def banner():
 @login_required
 def milestones():
     referral_link = url_for('signmein', _external=True) + f'?ref={current_user.id}'
+    pointsme = Person.query.filter_by(points=None).all()
+    for pointsmile in pointsme:
+        pointsmile.points = 0
+    db.session.commit()
     return render_template('concept-master/addempl.html', points=current_user.points, user=current_user, referral_link=referral_link)
   
 @app.route('/taskme', methods=['POST','GET'])
