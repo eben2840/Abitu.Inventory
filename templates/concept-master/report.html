@@ -135,9 +135,9 @@
 
                                                     <td>
                                                         {%if current_user.currency == None%}
-                                                        {{users.price - users.whole_price}}0
+                                                        {{users.price - users.whole_price |int}}0
                                                             {%else%}
-                                                            {{current_user.currency}} {{users.price - users.whole_price}}0
+                                                            {{current_user.currency}} {{users.price - users.whole_price |int}}0
                                                             {%endif%}</td>
 
 
