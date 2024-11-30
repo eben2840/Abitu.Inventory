@@ -3096,7 +3096,7 @@ def homepage():
         instock = Item.query.filter_by(clientid=current_user.id).count()
         total_getfundstudents = Getfunds.query.filter_by(id=current_user.id).count()
         total_Faq = Faq.query.filter_by(faqid=current_user.id).count()
-        total_task = Faq.query.filter_by(faqid=current_user.id).count()
+        # total_task = Faq.query.filter_by(faqid=current_user.id).count()
         total_challenges = Challenge.query.filter_by(taskId=current_user.id).count()
         total_message = Committee.query.filter_by(id=current_user.id).count()
         total_stock = Item.query.filter(Item.clientid == current_user.id, Item.quantity > 10).count()
