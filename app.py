@@ -3322,7 +3322,7 @@ def updateprofile(id):
         print(f"Form data: {form.data}")
         # form.name.data = user.name
         # form.company_name.data =user.company_name
-        form.category.data=user.category
+        # form.category.data=user.category
         # form.email.data=user.email
         # form.phone.data=user.phone
         form.currency.data=user.currency
@@ -3332,7 +3332,7 @@ def updateprofile(id):
         # print(f"Form data: {form.data}")
         # user.name=form.name.data
         # user.company_name=form.company_name.data
-        user.category= form.category.data
+        # user.category= form.category.data
         # user.email=form.email.data
         # user.phone=form.phone.data
         user.currency=form.currency.data
