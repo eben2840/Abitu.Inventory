@@ -35,7 +35,7 @@
     <div class="splash-container">
         <div class="card ">
             <div class="card-header text-center">
-                <h3 class="mb-1 text-center">Log In to Abitrack</h3>
+                <h3 class="mb-1 text-center">Sign In to Abitrack</h3>
                 <p class="text-center">Please enter your user information.</p>
                 </div>
            
@@ -55,10 +55,12 @@
                     {% endwith %}
 
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="username" type="email" name="email" placeholder="Email" autocomplete="off">
+                        <label>Email Address</label>
+                        <input class="form-control form-control-lg" id="username" type="email" name="email" placeholder="Enter your email" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-lg" type="password" name="password" id="myInput" placeholder="Password">
+                        <label>Password</label>
+                        <input class="form-control form-control-lg" type="password" name="password" id="myInput" placeholder="Enter your password">
                     </div>
                    <!-- <div class="form-group">
                         <label class="custom-control custom-checkbox">
@@ -73,32 +75,27 @@
                     </div>
 
                   
-                    <button type="submit" class="fs-4 btn btn-block p-2 btn-primary shadow" type="submit" style="font-size:15px; background:#5e3bc1; border:none; border-radius:10px;">Sign in</button>
+                    <button type="submit" class="fs-4 btn btn-block p-3 btn-primary shadow" type="submit" style="font-size:15px; background:#5e3bc1; border:none; border-radius:10px;">Sign in</button>
                     <div class="form-group mt-0">
                       
                     </div>
                     <div class="form-group row pt-0">
                    
-                        <div class="form-check ">
-                            <!--<label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="" id="" value="checkedValue" >
-                              By registering you accept the terms.
-                            </label>-->
-                          </div>
+                        
 
-                       <!--  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
-                            <h4 class="text-center"></h4>
-
-                         <a href="/">  <button class="btn btn-block btn-social btn- shadow " style="background:#fff; border-radius:10px;" type="button">New User? Sign Up</button>
+                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                            <h4 class="text-center">Or </h4>
+                            <a href="/">  <button class="btn btn-block btn-social btn- shadow mb-3 p-2" style="background:#fff; border-radius:10px;" type="button"><img src="https://static-00.iconduck.com/assets.00/google-icon-1024x1024-ilkrdfcp.png" style="width:35px;"> Continue with Google</button>
+                                <a href="/signmein">  <button class="btn btn-block btn-social btn- shadow p-3" style="background:#fff; border-radius:10px;" type="button"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcazeHuAcZDzv4_61fPLT-S00XnaKXch2YWQ&s" style="width:30px;"> Use email Address</button>
                           </a>
-                        </div>-->
+                        </div>
                        
                     </div>
                 </form>
             </div>
            <div class="card-footer bg-white p-0  ">
                 <div class="card-footer-item card-footer-item-bordered">
-                    Dont Have An Account? <a href="/" class="footer-primary"> Create An Account.</a></div>
+                    Forgot Password? <a href="/" class="footer-primary">Click here.</a></div>
               <!-- <div class="card-footer-item card-footer-item-bordered">
                     <a href="#" class="footer-link">Forgot Password</a>
                 </div>-->

@@ -2055,7 +2055,14 @@ def homme():
                         )
             db.session.add(new)
             db.session.commit()
-            # send_email()
+            
+            email_body = render_template('request.html', company_name=form.fullname.data)
+            send_email(
+            email_receiver=form.email.data,
+            subject="Thank you for your interest in the free trial.!🎉",
+            body=email_body
+            )
+            print(send_email)
             print(form.email.data)
             flash("Email request sent successfully! kindly check your email", "success")
             return redirect(url_for('confirmpage'))
@@ -3212,6 +3219,7 @@ def signreferral():
         return redirect(url_for('login'))
 
     return render_template('concept-master/pages/sign-up.html')
+
 @app.route('/signmein', methods=['POST', 'GET'])
 def signmein():
     print("Starting signup...")
@@ -3269,6 +3277,7 @@ def signmein():
             subject="Congratulations, You're in!🎉",
             body=email_body
         )
+        print(send_email)
 
         flash("Congratulations on creating your account.", 'success')
         login_user(user, remember=True)
@@ -3282,7 +3291,6 @@ def signmein():
 
     return render_template('concept-master/pages/sign-up.html', form=form)
 
-    return render_template('concept-master/pages/sign-up.html', form=form) 
 
 @app.route('/confirmpage', methods=['GET', 'POST'])
 def confirmpage():
