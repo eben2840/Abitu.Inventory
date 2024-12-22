@@ -1921,9 +1921,9 @@ def gemini():
                 print("Generated AI response:", text_result)
 
                 # Append the result to session data
-                data.append({'input': input_text or "Receipt Scan", 'result': text_result})
-                session['data'] = data
-                print("Session data updated:", session['data'])
+                # data.append({'input': input_text or "Receipt Scan", 'result': text_result})
+                # session['data'] = data
+                # print("Session data updated:", session['data'])
                 return redirect(url_for('gemini'))    
             except ResourceExhausted as e:
                 print("Resource exhausted: ", e)
@@ -3581,14 +3581,16 @@ def create():
             # Parse the receipt data to extract item names, quantities, and prices
             receipt_items = parse_receipt_data(extracted_text)
             print("Parsed receipt items:", receipt_items)
-
+            unique_code = secrets.token_hex(6)
+            print("Generated unique code:", unique_code)
             # Categorize and insert each item into the database
             for item_data in receipt_items:
                 # Find the group (warehouse) associated with this item
                 group = Groups.query.filter_by(name="Scan Receipt").first()  # Assuming "Scan Receipt" is a group in your DB
-
+                
                 # Insert each item into the database
                 new_item = Item(
+                    unique_code=unique_code,
                     name=item_data['name'],
                     quantity=item_data['quantity'],
                     price=item_data['price'],
@@ -3611,6 +3613,32 @@ def create():
     
     return render_template('concept-master/create.html', data=data)
 
+
+import re
+
+def parse_receipt_data(extracted_text):
+    items = []
+    
+    # Split the extracted text into lines or words based on your receipt's structure
+    lines = extracted_text.split('\n')  # Assuming the extracted text is line-based
+    
+    for line in lines:
+        # Match lines with an expected pattern for name, quantity, and price
+        match = re.match(r"([\w\s]+)\s+(\d+)\s+(\d+(\.\d{1,2})?)\s+(\w+)?", line.strip())
+        
+        if match:
+            name = match.group(1).strip()
+            quantity = int(match.group(2))
+            price = float(match.group(3))
+            
+            item_data = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+            items.append(item_data)
+    
+    return items
 
 
 

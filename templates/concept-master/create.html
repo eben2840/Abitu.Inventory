@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Receipt</title>
-</head>
-<body>
-    <h1>Upload Receipt</h1>
+{% extends 'concept-master/basee.html' %}
+{% block body %}
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+   
     
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -19,14 +16,53 @@
             </ul>
         {% endif %}
     {% endwith %}
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="page-header">
+                <h2 class="pageheader-title">Hello {{current_user.company_name}},</h2>
+                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Upload Invoice </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card p-5">
+                    
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <h1 class="text-center">Upload Invoice</h1>
+                   
+               </div>
+                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <form method="POST" class="text-center" enctype="multipart/form-data">
+                            <input type="file" name="receipt_image" class="btn" id="receipt_image" required>
+                            <button type="submit" class="btn btn-primary text-center">Submit</button><br>
+                            <label class="mt-3">or</label>
+                            <h2 for="receipt_image"> Or Drop a file</h2>
+
+                        </form>
+                        
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <form method="POST" enctype="multipart/form-data">
-        <label for="receipt_image">Upload Receipt Image:</label>
-        <input type="file" name="receipt_image" id="receipt_image" required>
-        <button type="submit">Submit</button>
-    </form>
     
-    <h2>Receipt Data</h2>
+    
+    <h2 class="mt-5">Invoice Data</h2>
     {% if data %}
         <table>
             <thead>
@@ -51,5 +87,10 @@
             </tbody>
         </table>
     {% endif %}
-</body>
-</html>
+
+
+    </div>
+    </div>
+</div>
+
+    {% endblock body %}
