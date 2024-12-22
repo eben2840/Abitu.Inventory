@@ -7,6 +7,7 @@ import ssl
 import uuid
 from requests import post
 import smtplib
+from itsdangerous import URLSafeTimedSerializer
 import csv
 import pytesseract
 from PIL import Image
@@ -109,6 +110,7 @@ class Person(db.Model, UserMixin):
     name= db.Column(db.String())
     latitude = db.Column(db.Float) 
     longitude = db.Column(db.Float) 
+    is_active = db.Column(db.Boolean, default=False)
     points = db.Column(db.Integer, default=0)  # Points for referral system
     referred_by = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=True)  # Referrer ID
     referred_by_user = db.relationship('Person', remote_side=[id])  # Relationship for referrer
@@ -3017,6 +3019,9 @@ def login():
         user = Person.query.filter_by(email=form.email.data).first()
         if user:
             print("User found:", user.company_name)
+            if not user.is_active:
+                flash('Your account is not verified. Please check your email and verify your account.', 'danger')
+                return redirect(url_for('login'))
         if user and user.password==form.password.data:
             print("Password matches")
             login_user(user)
@@ -3220,6 +3225,20 @@ def signreferral():
 
     return render_template('concept-master/pages/sign-up.html')
 
+
+def generate_verification_token(user_id):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    return serializer.dumps(user_id, salt='email-verification')
+
+def verify_token(token):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try:
+        user_id = serializer.loads(token, salt='email-verification', max_age=3600)  # 1-hour expiration
+        return user_id
+    except Exception as e:
+        print(f"Token verification error: {e}")
+        return None
+
 @app.route('/signmein', methods=['POST', 'GET'])
 def signmein():
     print("Starting signup...")
@@ -3234,10 +3253,10 @@ def signmein():
         print("Form validated successfully")
 
         checkUser = Person.query.filter_by(email=form.email.data).first()
-        if checkUser:
-            flash(f'This Email has already been used', 'danger')
-            print("Email already in use")
-            return redirect(url_for('signmein'))
+        # if checkUser:
+        #     flash(f'This Email has already been used', 'danger')
+        #     print("Email already in use")
+        #     return redirect(url_for('signmein'))
 
         if not is_gmail_address(form.email.data):
             flash('Please provide a valid email address.', 'danger')
@@ -3270,8 +3289,11 @@ def signmein():
                 db.session.commit()
                 print(f"Referrer Points After: {referrer.points}")
 
+        token = generate_verification_token(user.id)
+        verification_link = url_for('verify_email', token=token, _external=True)
+
         # Send the email and other logic
-        email_body = render_template('email_template.html', company_name=form.company_name.data)
+        email_body = render_template('email_template.html', company_name=form.company_name.data,verification_link=verification_link)
         send_email(
             email_receiver=form.email.data,
             subject="Congratulations, You're in!🎉",
@@ -3279,7 +3301,7 @@ def signmein():
         )
         print(send_email)
 
-        flash("Congratulations on creating your account.", 'success')
+        # flash("Congratulations on creating your account.", 'success')
         login_user(user, remember=True)
         print("User created and logged in successfully")
         return redirect(url_for('confirmpage'))
@@ -3290,6 +3312,23 @@ def signmein():
                 flash(f"Error in {field}: {error}", 'danger')
 
     return render_template('concept-master/pages/sign-up.html', form=form)
+
+
+@app.route('/verify_email/<token>')
+def verify_email(token):
+    user_id = verify_token(token)
+    if user_id:
+        user = Person.query.get(user_id)
+        if user and not user.is_active:
+            user.is_active = True
+            db.session.commit()
+            flash('Your email has been verified! You can now log in.', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('Invalid or already verified token.', 'danger')
+    else:
+        flash('The verification link is invalid or has expired.', 'danger')
+    return redirect(url_for('signmein'))
 
 
 @app.route('/confirmpage', methods=['GET', 'POST'])
