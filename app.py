@@ -3407,7 +3407,7 @@ def updateuserinformation(id):
     form=Registrationuserinformation()
     user=Person.query.get_or_404(id)
     print(f"Updating user {user.name} with id {user.id}")
-     print('Profile Information Updated.')
+    print('Profile Information Updated.')
     if request.method== 'GET':
         print(f"Form data: {form.data}")
         # form.name.data = user.name
