@@ -4,6 +4,7 @@ alembic==1.13.1
 attrs==23.2.0
 blinker==1.7.0
 click==8.1.7
+apscheduler==3.11.0
 Flask==3.0.2
 Flask-Cors==4.0.0
 Flask-Login==0.6.3
