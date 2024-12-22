@@ -67,11 +67,10 @@
                                 <div class="d-flex flex-wrap justify-content-center">
                                     
                                     <h3 class="modal-title  justify-content-center">Hello {{current_user.company_name}}, Take A Quick Tour!</h3>
-                            <p class="lead justify-content-center"> Start by creating your warehouse to stay organised</p>
-                                            <p class="justify-content-center"> Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                                                <br> Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                                                <p> Finish Setting Up your Profile <a href="{{url_for('updateuserinformation', id=current_user.id)}}">My Profile</a></p>
-                                                <p> Choose your Currency <a href="{{url_for('updateprofile', id=current_user.id)}}">Settings</a></p>
+                            <p class="lead justify-content-center"> Start by completing your Profile Update</p>
+                            <p class=" text-left">- Create your new warehouse <a href="{{url_for('warehouse')}}" class="text-primary"><u>My Warehouse</u></a>
+                                <br>- Finish Setting Up your Profile <a href="{{url_for('updateuserinformation', id=current_user.id)}}" class="text-primary"><u>My Profile</u></a>
+                                              <br>- Choose your Currency <a href="{{url_for('updateprofile', id=current_user.id)}}" class="text-primary"><u>Settings</u></a></p>
                                                 
                                 </div>
                             </div>

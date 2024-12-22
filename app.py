@@ -3407,6 +3407,7 @@ def updateuserinformation(id):
     form=Registrationuserinformation()
     user=Person.query.get_or_404(id)
     print(f"Updating user {user.name} with id {user.id}")
+     print('Profile Information Updated.')
     if request.method== 'GET':
         print(f"Form data: {form.data}")
         # form.name.data = user.name
@@ -3430,6 +3431,7 @@ def updateuserinformation(id):
             # db.session.add(new)
             db.session.commit()
             flash('Profile Information Updated.', 'success')
+            print('Profile Information Updated.')
             return redirect(url_for('homepage')) 
         except Exception as e:
             db.session.rollback()
