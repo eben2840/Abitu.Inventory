@@ -1921,9 +1921,9 @@ def gemini():
                 print("Generated AI response:", text_result)
 
                 # Append the result to session data
-                # data.append({'input': input_text or "Receipt Scan", 'result': text_result})
-                # session['data'] = data
-                # print("Session data updated:", session['data'])
+                data.append({'input': input_text or "Receipt Scan", 'result': text_result})
+                session['data'] = data
+                print("Session data updated:", session['data'])
                 return redirect(url_for('gemini'))    
             except ResourceExhausted as e:
                 print("Resource exhausted: ", e)
