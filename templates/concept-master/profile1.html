@@ -1,0 +1,139 @@
+{% extends 'concept-master/pages/baseme.html' %}
+{% block body %}
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Hello {{current_user.company_name}}, </h2>
+                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Profile</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                
+
+                <div class="row">
+                    
+                    <!-- ============================================================== -->
+                    <!-- valifation types -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        
+                        <div class="card">
+                            
+                            <h5 class="card-header">My {{current_user.category}} Profile</h5>
+                            <div class="card-body">
+                                <!--<div class="card">
+                                    <h5 class="card-header"><a href="{{url_for('banneredit')}}"><i class="fa fa-fw fa-edit"></i> Edit Business Banner</a></h5>
+                                    <div class="card-body">
+                                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                {% for user in users %}
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100" src="{{ user.image_file }}" style="height:300px; object-fit:cover;" lazy="loading">
+                                                </div>
+                                                {% endfor %}
+        
+                                              <div class="carousel-item">
+                                                    <img class="d-block w-100" src="https://earlygrowthfinancialservices.com/wp-content/uploads/2020/07/AdobeStock_338508879.jpeg" alt="Second slide"style="height:300px; object-fit:cover;">
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <form id="validationform" method="POST", "GET"  action=""  data-parsley-validate="" novalidate="">
+                                    {{ form.hidden_tag() }}
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right"></label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                    <p class="text-lg-center bg-primary border-0 p-2 rounded">Change Your Currency</p>
+
+                                        </div>
+                                    </div>
+                                    
+
+                                    
+
+
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">User Name</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.company_name(class="form-control")}}
+                                        </div>
+                                       
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Business  Email</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.email(class="form-control")}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Personal  Email</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.bus_email(class="form-control")}}
+                                        </div>
+                                    </div>
+                                     
+
+                                   
+
+                                    
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Phone Number</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            {{form.phone(class="form-control")}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Bio</label>
+                                        <div class="col-12 col-sm-8 col-lg-6">
+                                            <textarea required="" name="bio" class="form-control" placeholder="Enter Your Bio information."></textarea>
+                                        </div>
+                                    </div>
+                                  
+
+
+
+                                    
+                                    <div class="form-group row text-right">
+                                        <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                            <button class="btn btn-space btn-secondary">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end valifation types -->
+                    <!-- ============================================================== -->
+                </div>
+           
+            </div>
+            {% endblock body %}

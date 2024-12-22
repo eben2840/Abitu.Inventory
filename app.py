@@ -4,6 +4,7 @@ import pprint
 import re
 import secrets
 import ssl
+from apscheduler.schedulers.background import BackgroundScheduler
 import uuid
 from requests import post
 import smtplib
@@ -27,7 +28,8 @@ from urllib import response
 import urllib.request, urllib.parse
 from sqlalchemy import func 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import distinct 
+from sqlalchemy import distinct
+import logging 
 from flask import Flask, redirect, render_template, send_file, url_for,request,jsonify,get_flashed_messages, send_from_directory,make_response
 from flask_migrate import Migrate
 import json
@@ -3146,7 +3148,7 @@ def homepage():
             continue
     
     total_wholesale_price = total_wholesale_price or 0.0
-    profit_price = total_amount - total_wholesale_price
+    profit_price =  total_wholesale_price - total_amount 
         
         
     # total_people_with_positions = db.session.query(User).filter(User.position.isnot(None)).count()
@@ -3400,6 +3402,43 @@ def updateprofile(id):
     return render_template('concept-master/profile.html',users=users, form=form) 
 
 
+@app.route("/updateuserinformation/<int:id>", methods=['POST', 'GET'])
+def updateuserinformation(id):
+    form=Registrationuserinformation()
+    user=Person.query.get_or_404(id)
+    print(f"Updating user {user.name} with id {user.id}")
+    if request.method== 'GET':
+        print(f"Form data: {form.data}")
+        # form.name.data = user.name
+        form.company_name.data =user.company_name
+        # form.category.data=user.category
+        form.email.data=user.email
+        form.phone.data=user.phone
+        # form.currency.data=user.currency
+        form.bus_email.data=user.bus_email
+        form.bio.data=user.bio     
+    if form.validate_on_submit():
+        # print(f"Form data: {form.data}")
+        user.company_name=form.company_name.data
+        user.email=form.email.data
+        user.phone=form.phone.data
+        user.bus_email=form.bus_email.data
+        user.bio=form.bio.data
+                #   )
+        # print(f"Updating user with data {form.data}")
+        try:    
+            # db.session.add(new)
+            db.session.commit()
+            flash('Profile Information Updated.', 'success')
+            return redirect(url_for('homepage')) 
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating user information: {e}', 'danger')
+    users = User.query.order_by(User.id.asc()).all()
+    print("Rendering profile page")
+    return render_template('concept-master/profile1.html',users=users, form=form) 
+
+
  
 
 @app.route('/warehouse', methods=['POST','GET'])
@@ -3579,6 +3618,55 @@ def create():
 @login_required
 def cashflow():
     return render_template('concept-master/dashboard-finance.html')
+
+# @app.teardown_appcontext
+# def shutdown_scheduler(exception=None):
+#     scheduler.shutdown(wait=False)
+
+logging.basicConfig(level=logging.INFO)
+
+def check_due_achievements():
+    print("Running check_due_achievements...")
+    try:
+        # Query for due achievements for the current user
+        due_achievements = Faq.query.filter(
+            Faq.end_date <= datetime.now(),
+            Faq.faqid == current_user.id  # Ensure it filters achievements for the current user
+        ).all()
+        print("======================")
+        for achievement in due_achievements:
+            email_body = f"""
+            Hello {current_user.company_name},\n\n
+            Your achievement '{achievement.caption}' is due.\n
+            Please review it or take any necessary actions.\n\n
+            Best regards,
+            Your Team
+            """
+            # Send the email to the current_user
+            send_email(
+                email_receiver=current_user.email,
+                subject="Achievement Due Notification",
+                body=email_body
+            )
+            # Log successful email
+            logging.info(f"Notification sent for achievement: {achievement.caption}")
+    except Exception as e:
+        # Log any errors
+        logging.error(f"Error while checking due achievements: {str(e)}")
+        
+        
+@app.route('/check-due-achievements', methods=['GET'])
+@login_required
+def trigger_check_due_achievements():
+    check_due_achievements()
+    flash("Checked for due achievements and sent notifications, if any.", "info")
+    print("Checked for due achievements and sent notifications, if any.", "info")
+    return redirect('homepage')
+
+# Initialize scheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=check_due_achievements, trigger="interval", hours=24)  # Run daily
+scheduler.start()
 
 
 @app.route('/createachievement', methods=['POST','GET'])

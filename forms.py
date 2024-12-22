@@ -244,6 +244,19 @@ class Registrationform(FlaskForm):
     currency = SelectField('currency', choices=[('Currency','Currency'),('$','$'),('₵','₵'),('€','€') ])
     # category= SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
     submit =SubmitField('submit')
+    
+    
+class Registrationuserinformation(FlaskForm):
+    bus_email = StringField('Personal Email')
+    # name = StringField('Name')
+    email = StringField('Business Email')
+    # password = PasswordField('password_hash') 
+    company_name = StringField('Username') 
+    bio = StringField('Bio') 
+    phone = StringField('Phone') 
+    # currency = SelectField('currency', choices=[('Currency','Currency'),('$','$'),('₵','₵'),('€','€') ])
+    # category= SelectField('category', choices=[('Category','Category'),('Business','Business'),('Personal','Personal') ])
+    submit =SubmitField('submit')
 
 
  
